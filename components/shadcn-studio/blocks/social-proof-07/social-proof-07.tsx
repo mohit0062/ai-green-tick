@@ -14,7 +14,7 @@ const SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {
   return (
     <section className='border-b px-4 sm:px-6 lg:px-8'>
       <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-24'>
-        <div className='bg-muted rounded-md px-4 py-10 sm:px-6 lg:px-8'>
+        <div className='bg-muted rounded-none border border-[#C5C4C2] px-4 py-10 sm:px-6 lg:px-8'>
           
           {/* Header */}
           <div className='mb-12 space-y-4 sm:mb-16 lg:mb-24 text-center flex flex-col items-center'>
@@ -29,7 +29,7 @@ const SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {
           {/* Grid */}
           <div className='grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4'>
             {metrics.map((metric, index) => (
-              <Card key={index}>
+              <Card key={index} className="rounded-none border-[#C5C4C2]">
                 <CardContent className='[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-5 sm:[&>svg]:size-7 p-4 sm:p-6 text-center'>
                   {metric.icon}
                   <CardTitle className='mt-2 mb-1 text-xl sm:text-2xl lg:text-4xl font-semibold text-foreground leading-snug'>
