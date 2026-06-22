@@ -129,10 +129,10 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
         </div>
 
         {/* 4-Tier Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 pb-6 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 snap-x snap-mandatory scrollbar-thin">
           {/* Starter Plan */}
           <div 
-            className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative"
+            className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-mono">
@@ -166,7 +166,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
 
           {/* Growth Plan - Most Popular */}
           <div 
-            className="border-2 border-[#00b259] bg-[#ECEBE9] flex flex-col group relative"
+            className="border-2 border-[#00b259] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <span className="absolute -top-3.5 left-6 px-3 py-0.5 text-[9px] font-bold text-white bg-[#00b259] font-mono tracking-widest uppercase z-10">
@@ -205,7 +205,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
 
           {/* Business Plan */}
           <div 
-            className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative"
+            className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-mono">
@@ -239,7 +239,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
 
           {/* Enterprise Plan */}
           <div 
-            className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative"
+            className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-mono">

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ShoppingBag, Activity, GraduationCap, Home, Shield, Plane, ArrowRight, Sparkles, Star, Users, MessageSquare, BookOpen } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
@@ -302,38 +303,63 @@ export default function IndustriesPage() {
           </div>
 
           {/* Responsive 3-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {industries.map((ind) => {
+          <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-6 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 snap-x snap-mandatory scrollbar-thin">
+            {industries.map((ind, idx) => {
               const Icon = ind.icon
               return (
                 <div 
                   key={ind.id}
                   onClick={() => setSelectedIndustry(ind.id)}
-                  className={`border p-6 flex flex-col justify-between gap-6 cursor-pointer group transition-all duration-300 ${
+                  className={cn(
+                    "relative border border-[#C5C4C2] h-[360px] flex flex-col justify-between p-6 overflow-hidden group cursor-pointer w-[280px] sm:w-[320px] md:w-auto shrink-0 snap-start transition-all duration-300",
                     selectedIndustry === ind.id
-                      ? 'border-[#00b259] bg-[#00b259]/5 shadow-sm'
-                      : 'border-[#C5C4C2] bg-[#ECEBE9] hover:border-black'
-                  }`}
-                  style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
+                      ? 'border-[#00b259] bg-[#00b259]/5'
+                      : 'bg-white hover:border-black'
+                  )}
                 >
-                  <div className="space-y-4 font-mono">
-                    <div className="flex items-center justify-between">
-                      <div className="p-2 border border-[#C5C4C2] bg-white text-black size-9 flex items-center justify-center shrink-0">
-                        <Icon className="size-5 text-[#00b259]" />
-                      </div>
-                      <span className="text-[10px] text-neutral-400 font-bold">{ind.metric}</span>
-                    </div>
+                  {/* Top row: marker + index number */}
+                  <div className="flex items-center justify-between w-full">
+                    <div className={cn("size-2 transition-colors", selectedIndustry === ind.id ? "bg-[#00b259]" : "bg-black")} />
+                    <span className="text-[11px] font-mono font-bold text-neutral-400">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                  </div>
 
-                    <h3 className="text-base font-serif font-medium text-black group-hover:text-[#00b259] transition-colors">
+                  {/* Center Chamfered Icon Box */}
+                  <div className="flex items-center justify-center flex-grow">
+                    <div 
+                      className={cn(
+                        "w-36 h-36 bg-[#ECEBE9]/30 border border-[#C5C4C2] flex items-center justify-center relative rounded-2xl transition-all duration-300",
+                        selectedIndustry === ind.id ? "bg-[#00b259]/10 border-[#00b259]/30" : "group-hover:bg-[#00b259]/5 group-hover:border-[#00b259]/20"
+                      )}
+                      style={{ 
+                        clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)' 
+                      }}
+                    >
+                      <div className={cn(
+                        "transition-all duration-300 transform group-hover:scale-105 [&>svg]:size-14 [&>svg]:stroke-[1]",
+                        selectedIndustry === ind.id ? "text-[#00b259]" : "text-neutral-800 group-hover:text-[#00b259]"
+                      )}>
+                        <Icon className="size-14" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom row: Industry Name & Impact (Metric) */}
+                  <div className="text-left w-full">
+                    <h3 className={cn(
+                      "text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-colors",
+                      selectedIndustry === ind.id ? "text-[#00b259]" : "text-black group-hover:text-[#00b259]"
+                    )}>
                       {ind.title}
                     </h3>
-
-                    <p className="text-xs text-neutral-500 font-sans leading-relaxed line-clamp-3">
-                      {ind.desc}
+                    <p className="text-[11px] font-mono text-neutral-500 mt-1 leading-relaxed transition-colors group-hover:text-neutral-700">
+                      {ind.metric}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-mono text-black">
+                  {/* Action Link row */}
+                  <div className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-mono text-black w-full mt-2">
                     <span className="text-[#00b259]">{selectedIndustry === ind.id ? 'SELECTED' : 'VIEW USE CASES'}</span>
                     <ArrowRight className="size-3.5 text-[#00b259] group-hover:translate-x-0.5 transition-transform" />
                   </div>
