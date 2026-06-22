@@ -25,9 +25,9 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
           </h2>
         </div>
 
-        <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+        <div className='grid grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-3'>
           {featuresList.map((item, index) => {
-            const colSpan = index === 0 ? 'sm:col-span-2 lg:col-span-1' : 'sm:col-span-1 lg:col-span-1'
+            const colSpan = index === 0 ? 'col-span-2 lg:col-span-1' : 'col-span-1 lg:col-span-1'
             return (
               <Card
                 key={index}
