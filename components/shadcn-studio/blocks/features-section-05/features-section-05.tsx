@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ArrowRightIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 type Features = {
   icon: ReactElement
@@ -24,23 +25,29 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
           </h2>
         </div>
 
-        <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-          {featuresList.map((item, index) => (
-            <Card
-              key={index}
-              className='hover:bg-primary hover:text-primary-foreground text-base transition-colors duration-300 border-[#C5C4C2] shadow-none rounded-none'
-            >
-              <CardContent className='p-6'>
-                <Avatar className='mb-4 size-9 after:border-0 rounded-none'>
-                  <AvatarFallback className='bg-muted text-card-foreground [&>svg]:size-5 rounded-none border border-[#C5C4C2] bg-white'>{item.icon}</AvatarFallback>
-                </Avatar>
-                <h6 className='mb-2 text-lg font-semibold font-sans'>{item.title}</h6>
-                <p className='text-muted-foreground group-hover/card:text-primary-foreground transition-colors duration-300 font-sans text-sm leading-relaxed'>
-                  {item.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+        <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
+          {featuresList.map((item, index) => {
+            const colSpan = index === 0 ? 'lg:col-span-2' : index === 1 ? 'lg:col-span-1' : 'lg:col-span-3'
+            return (
+              <Card
+                key={index}
+                className={cn(
+                  colSpan,
+                  'group hover:bg-primary hover:text-primary-foreground text-base transition-colors duration-300 border-[#C5C4C2] shadow-none rounded-none'
+                )}
+              >
+                <CardContent className='p-6'>
+                  <Avatar className='mb-4 size-9 after:border-0 rounded-none'>
+                    <AvatarFallback className='bg-muted text-card-foreground [&>svg]:size-5 rounded-none border border-[#C5C4C2] bg-white'>{item.icon}</AvatarFallback>
+                  </Avatar>
+                  <h6 className='mb-2 text-lg font-semibold font-sans'>{item.title}</h6>
+                  <p className='text-muted-foreground group-hover:text-primary-foreground transition-colors duration-300 font-sans text-sm leading-relaxed'>
+                    {item.description}
+                  </p>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
       </div>
     </section>
