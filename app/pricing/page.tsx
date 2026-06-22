@@ -576,7 +576,11 @@ export default function PricingPage() {
                     <th className="p-4 sm:p-5 text-neutral-400">AiSensy</th>
                     <th className="p-4 sm:p-5 text-neutral-400">WATI</th>
                     <th className="p-4 sm:p-5 text-neutral-400">Interakt</th>
-                    <th className="p-4 sm:p-5 text-[#00b259] font-black">AIGreenTick</th>
+                    <th className="p-4 sm:p-5 bg-[#ECEBE9] border-l border-r border-[#C5C4C2]">
+                      <div className="flex items-center justify-center">
+                        <img src="/logo-full.png" alt="AIGreenTick" className="h-6 w-auto select-none" />
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#C5C4C2]/50 text-neutral-800">
