@@ -573,11 +573,11 @@ const BlogSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
+        <div className="flex overflow-x-auto md:grid md:grid-cols-3 gap-6 font-mono pb-4 snap-x snap-mandatory -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 scrollbar-thin">
           {posts.map((post) => (
             <div 
               key={post.slug} 
-              className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative"
+              className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
             >
               <div className="aspect-video w-full overflow-hidden border-b border-[#C5C4C2] relative">
