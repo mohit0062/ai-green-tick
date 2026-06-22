@@ -6,6 +6,7 @@ import { Check, HelpCircle, Info, ShieldCheck, Zap, Sparkles, Globe, Building2, 
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
+import FAQ from '@/components/shadcn-studio/blocks/faq-component-04/faq-component-04'
 
 const navigationData: Navigation[] = [
   {
@@ -77,16 +78,69 @@ const navigationData: Navigation[] = [
   }
 ]
 
+const faqTabs = [
+  {
+    name: 'Pricing & Plans',
+    value: 'general',
+    faqs: [
+      {
+        id: 'faq-1',
+        question: 'Is there a free trial?',
+        answer: 'Yes. We offer a 14-day free trial on all Starter, Growth, and Business plans with full platform access. No credit card details are required to sign up.'
+      },
+      {
+        id: 'faq-2',
+        question: 'Do you charge per agent?',
+        answer: 'No. AIGreenTick does not charge per agent. All plans include unlimited agent seats (except for the Starter tier, which is capped at 3 agents) so your entire support and sales teams can collaborate.'
+      },
+      {
+        id: 'faq-3',
+        question: 'What happens if I exceed my plan\'s conversation limits?',
+        answer: 'There are no surprise charges. If you exceed the direct thresholds, extra conversation windows are billed directly at Meta\'s official rates. We never charge overage fees or platform penalty rates.'
+      },
+      {
+        id: 'faq-4',
+        question: 'Can I change plans mid-month?',
+        answer: 'Yes. Upgrades take effect immediately and are pro-rated. Downgrades take effect at the start of your next billing cycle, ensuring you get full access to what you paid for.'
+      },
+      {
+        id: 'faq-5',
+        question: 'Is there a discount for annual billing?',
+        answer: 'Yes. If you choose annual billing, we offer a significant 20% discount across all Starter, Growth, and Business plans, which is billed annually.'
+      }
+    ]
+  },
+  {
+    name: 'API & Verification',
+    value: 'api',
+    faqs: [
+      {
+        id: 'faq-6',
+        question: 'What is the WhatsApp Business API and do I need it?',
+        answer: 'WhatsApp Business API is the official Meta product designed for businesses that need to message customers at scale (5+ agents or 1000+ messages/day). Unlike the free WhatsApp Business app, the API supports automation, integrations and multi-agent inboxes. AI Greentick is an Official BSP — we get you set up in 10 minutes.'
+      },
+      {
+        id: 'faq-7',
+        question: 'Can I get the Green Tick verification?',
+        answer: 'Yes. We help you apply for the WhatsApp Green Tick (verified business badge) for free on all paid plans. Approval depends on Meta\'s criteria — typically requires public press mentions and active business presence.'
+      },
+      {
+        id: 'faq-8',
+        question: 'Will my existing WhatsApp Business app data transfer?',
+        answer: 'When you move to the WhatsApp Business API, you migrate the number — but the chat history in the WhatsApp Business app doesn\'t carry over. We recommend backing up important conversations before migration.'
+      },
+      {
+        id: 'faq-9',
+        question: 'Can I use my existing number?',
+        answer: 'Yes, but the number must be removed from the WhatsApp Business app or personal WhatsApp first. Once it\'s on the API, you can\'t use it in the consumer apps simultaneously.'
+      }
+    ]
+  }
+]
+
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
   const [currency, setCurrency] = useState<'INR' | 'USD'>('INR')
-  
-  // FAQ Collapsible States
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
-
-  const toggleFaq = (index: number) => {
-    setOpenFaq(openFaq === index ? null : index)
-  }
 
   // Pricing Data Config
   const pricingData = {
@@ -584,66 +638,9 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30 pb-16 sm:pb-24">
-        <div className="mx-auto max-w-3xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-10">
-          
-          <div className="text-center space-y-4">
-            <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
-              :: QUESTIONS & ANSWERS ::
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-medium text-black">
-              Frequently Asked Questions
-            </h2>
-          </div>
-
-          <div className="space-y-4 font-mono">
-            {[
-              {
-                q: 'Is there a free trial?',
-                a: 'Yes. We offer a 14-day free trial on all Starter, Growth, and Business plans with full platform access. No credit card details are required to sign up.'
-              },
-              {
-                q: 'Do you charge per agent?',
-                a: 'No. AIGreenTick does not charge per agent. All plans include unlimited agent seats (except for the Starter tier, which is capped at 3 agents) so your entire support and sales teams can collaborate.'
-              },
-              {
-                q: 'What happens if I exceed my plan\'s conversation limits?',
-                a: 'There are no surprise charges. If you exceed the direct thresholds, extra conversation windows are billed directly at Meta\'s official rates. We never charge overage fees or platform penalty rates.'
-              },
-              {
-                q: 'Can I change plans mid-month?',
-                a: 'Yes. Upgrades take effect immediately and are pro-rated. Downgrades take effect at the start of your next billing cycle, ensuring you get full access to what you paid for.'
-              },
-              {
-                q: 'Is there a discount for annual billing?',
-                a: 'Yes. If you choose annual billing, we offer a significant 20% discount across all Starter, Growth, and Business plans, which is billed annually.'
-              }
-            ].map((faq, idx) => (
-              <div 
-                key={idx}
-                className="border border-[#C5C4C2] bg-[#ECEBE9] overflow-hidden"
-                style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px))' }}
-              >
-                <button
-                  onClick={() => toggleFaq(idx)}
-                  className="w-full text-left px-5 py-4 flex items-center justify-between text-xs font-bold text-black hover:bg-white/20 transition-all select-none cursor-pointer"
-                >
-                  <span>Q: {faq.q}</span>
-                  <ChevronDown className={`size-4 text-[#00b259] transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`} />
-                </button>
-                <div 
-                  className={`px-5 font-sans text-xs text-neutral-600 border-t border-[#C5C4C2]/30 bg-white/40 transition-all duration-300 overflow-hidden ${
-                    openFaq === idx ? 'py-4 max-h-[200px] opacity-100' : 'max-h-0 py-0 opacity-0'
-                  }`}
-                >
-                  <p className="leading-relaxed">{faq.a}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
+      <div id="faq">
+        <FAQ tabs={faqTabs} />
+      </div>
 
       {/* CTA Footer Section */}
       <section className="px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]">
