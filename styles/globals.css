@@ -1,0 +1,22 @@
+@theme inline {
+  --animate-marquee-horizontal: marquee-horizontal var(--marquee-duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--marquee-duration) infinite linear;
+
+  @keyframes marquee-horizontal {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--marquee-gap)));
+    }
+  }
+
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--marquee-gap)));
+    }
+  }
+}

@@ -1,0 +1,110 @@
+Created At: 2026-06-20T03:20:39Z
+Completed At: 2026-06-20T03:20:39Z
+File Path: `file:///e:/AI%20GREEN%20TICK/components/shadcn-studio/blocks/features-section-14/features-section-14.tsx`
+Total Lines: 270
+Total Bytes: 9662
+Showing lines 1 to 270
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: 'use client'
+2: 
+3: import { useRef } from 'react'
+4: import { Badge } from '@/components/ui/badge'
+5: 
+6: import { MotionPreset } from '@/components/ui/motion-preset'
+7: import { AnimatedBeam } from '@/components/ui/animated-beam'
+8: 
+9: import { cn } from '@/lib/utils'
+10: 
+11: import LogoVector from '@/assets/svg/logo-vector'
+12: 
+13: const Features = () => {
+14:   const containerRef = useRef<HTMLDivElement>(null)
+15:   const div1Ref = useRef<HTMLDivElement>(null)
+16:   const div2Ref = useRef<HTMLDivElement>(null)
+17:   const div3Ref = useRef<HTMLDivElement>(null)
+18:   const div4Ref = useRef<HTMLDivElement>(null)
+19:   const div5Ref = useRef<HTMLDivElement>(null)
+20:   const span1Ref = useRef<HTMLSpanElement>(null)
+21:   const span2Ref = useRef<HTMLSpanElement>(null)
+22:   const span3Ref = useRef<HTMLSpanElement>(null)
+23:   const span4Ref = useRef<HTMLSpanElement>(null)
+24:   const span5Ref = useRef<HTMLSpanElement>(null)
+25:   const span6Ref = useRef<HTMLSpanElement>(null)
+26: 
+27:   return (
+28:     <section className='border-b px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-24'>
+29:       <div className='mx-auto max-w-7xl border-x px-4 sm:px-6 lg:px-8'>
+30:         {/* Header */}
+31:         <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>
+32:           <MotionPreset fade blur slide={{ direction: 'up', offset: 50 }} transition={{ duration: 0.5 }}>
+33:             <Badge className='h-auto text-sm font-normal' variant='outline'>
+34:               Our Features
+35:             </Badge>
+36:           </MotionPreset>
+37:   
+<truncated 7377 bytes>
+7: 
+208:           <AnimatedBeam
+209:             containerRef={containerRef}
+210:             fromRef={span2Ref}
+211:             toRef={span3Ref}
+212:             gradientStartColor='var(--primary)'
+213:             duration={4.5}
+214:             className='-z-1 max-lg:hidden'
+215:             reverse
+216:           />
+217: 
+218:           <AnimatedBeam
+219:             containerRef={containerRef}
+220:             fromRef={span3Ref}
+221:             toRef={div3Ref}
+222:             gradientStartColor='var(--primary)'
+223:             duration={4.5}
+224:             className='-z-1 max-lg:hidden'
+225:             reverse
+226:           />
+227: 
+228:           <AnimatedBeam
+229:             containerRef={containerRef}
+230:             fromRef={span5Ref}
+231:             toRef={span4Ref}
+232:             gradientStartColor='var(--primary)'
+233:             duration={4.5}
+234:             className='-z-1 max-lg:hidden'
+235:           />
+236: 
+237:           <AnimatedBeam
+238:             containerRef={containerRef}
+239:             fromRef={span4Ref}
+240:             toRef={div4Ref}
+241:             gradientStartColor='var(--primary)'
+242:             duration={4.5}
+243:             className='-z-1 max-lg:hidden'
+244:           />
+245: 
+246:           <AnimatedBeam
+247:             containerRef={containerRef}
+248:             fromRef={span5Ref}
+249:             toRef={span6Ref}
+250:             gradientStartColor='var(--primary)'
+251:             duration={4.5}
+252:             className='-z-1 max-lg:hidden'
+253:           />
+254: 
+255:           <AnimatedBeam
+256:             containerRef={containerRef}
+257:             fromRef={span6Ref}
+258:             toRef={div5Ref}
+259:             gradientStartColor='var(--primary)'
+260:             duration={4.5}
+261:             className='-z-1 max-lg:hidden'
+262:           />
+263:         </div>
+264:       </div>
+265:     </section>
+266:   )
+267: }
+268: 
+269: export default Features
+270: 
+The above content shows the entire, complete file contents of the requested file.

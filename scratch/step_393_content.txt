@@ -1,0 +1,64 @@
+Created At: 2026-06-19T18:52:24Z
+Completed At: 2026-06-19T18:52:25Z
+File Path: `file:///e:/AI%20GREEN%20TICK/app/page.tsx`
+Total Lines: 952
+Total Bytes: 31554
+Showing lines 425 to 480
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+425:     companyLogo: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-06.png',
+426:     message:
+427:       'Our marketing campaigns have reached new heights with this tool. The analytics insights are detailed and help us make data-driven decisions every day.'
+428:   }
+429: ]
+430: 
+431: const notifications: NotificationCard[] = [
+432:   {
+433:     id: '1',
+434:     name: 'Steve Rogers',
+435:     time: 'Today, 11:56',
+436:     amount: '$49',
+437:     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png',
+438:     fallback: 'SR'
+439:   },
+440:   {
+441:     id: '2',
+442:     name: 'Tony Stark',
+443:     time: 'Today, 10:32',
+444:     amount: '$89',
+445:     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png',
+446:     fallback: 'TS'
+447:   },
+448:   {
+449:     id: '3',
+450:     name: 'Bruce Banner',
+451:     time: 'Today, 09:15',
+452:     amount: '$156',
+453:     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png',
+454:     fallback: 'BB'
+455:   }
+456: ]
+457: 
+458: const avatars = [
+459:   {
+460:     src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png',
+461:     fallback: 'HL',
+462:     name: 'Olivia Sparks',
+463:     size: 'size-12'
+464:   },
+465:   {
+466:     src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-6.png',
+467:     fallback: 'HL',
+468:     name: 'Howard Lloyd',
+469:     size: 'size-16'
+470:   },
+471:   {
+472:     src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png',
+473:     fallback: 'HR',
+474:     name: 'Hallie Richards',
+475:     size: 'size-20'
+476:   },
+477:   {
+478:     src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-16.png',
+479:     fallback: 'JW',
+480:     name: 'Jenny Wilson',
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

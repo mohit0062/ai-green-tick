@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Share+Tech+Mono&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --animate-marquee-horizontal: marquee-horizontal var(--marquee-duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--marquee-duration) infinite linear;
+  --animate-orbit-clockwise: orbit-clockwise 10s linear infinite;
+  --animate-counter-rotate: counter-rotate 10s linear infinite;
+  --animate-heartbeat: heartbeat 2s infinite ease-in-out;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #ffffff;
+  --foreground: #042717; /* DoubleTick Dark Forest Green */
+  --card: #ffffff;
+  --card-foreground: #042717;
+  --popover: #ffffff;
+  --popover-foreground: #042717;
+  --primary: #005c2b; /* User-specified Dark Green */
+  --primary-foreground: #ffffff;
+  --secondary: #042717; /* DoubleTick Dark Green */
+  --secondary-foreground: #ffffff;
+  --muted: #fcfaf2; /* DoubleTick Cream background */
+  --muted-foreground: #475569;
+  --accent: #f4fef8; /* DoubleTick Mint accent */
+  --accent-foreground: #005c2b;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #d4d4d4; /* neutral-300 style */
+  --input: #d4d4d4;
+  --ring: #005c2b;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: #ffffff;
+  --sidebar-foreground: #042717;
+  --sidebar-primary: #005c2b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fcfaf2;
+  --sidebar-accent-foreground: #042717;
+  --sidebar-border: #d4d4d4;
+  --sidebar-ring: #005c2b;
+}
+
+.dark {
+  --background: #042717; /* DoubleTick Dark Forest Green background */
+  --foreground: #f4fef8; /* Light Mint Green text */
+  --card: #05331f; /* Slightly lighter green for card */
+  --card-foreground: #f4fef8;
+  --popover: #05331f;
+  --popover-foreground: #f4fef8;
+  --primary: #005c2b; /* Brand Green */
+  --primary-foreground: #ffffff;
+  --secondary: #f4fef8;
+  --secondary-foreground: #042717;
+  --muted: #032013;
+  --muted-foreground: #94a3b8;
+  --accent: #005c2b;
+  --accent-foreground: #ffffff;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #005c2b;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: #05331f;
+  --sidebar-foreground: #f4fef8;
+  --sidebar-primary: #005c2b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #032013;
+  --sidebar-accent-foreground: #f4fef8;
+  --sidebar-border: rgba(255, 255, 255, 0.15);
+  --sidebar-ring: #005c2b;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+@keyframes marquee-horizontal {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--marquee-gap)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--marquee-gap)));
+  }
+}
+
+@keyframes orbit-clockwise {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes counter-rotate {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: -360deg;
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    box-shadow: 0 0 0 0 var(--heartbeat-color, var(--destructive));
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 7px transparent;
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: scale(1);
+  }
+}
+
+.avatar-orbit-container {
+  animation-play-state: paused;
+}
+
+.group:hover .avatar-orbit-container {
+  animation: var(--animate-orbit-clockwise);
+  animation-delay: 0.5s;
+}
+
+.group:hover .avatar-orbit-container .avatar-counter-rotate {
+  animation: var(--animate-counter-rotate);
+  animation-delay: 0.5s;
+}
+
+@keyframes custom-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-custom-marquee {
+  animation: custom-marquee 20s linear infinite;
+}
+

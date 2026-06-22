@@ -1,0 +1,105 @@
+Created At: 2026-06-19T18:55:36Z
+Completed At: 2026-06-19T18:55:36Z
+File Path: `file:///e:/AI%20GREEN%20TICK/components/shadcn-studio/blocks/features-section-14/features-section-14.tsx`
+Total Lines: 453
+Total Bytes: 17732
+Showing lines 1 to 453
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: 'use client'
+2: 
+3: import { useRef } from 'react'
+4: import { Badge } from '@/components/ui/badge'
+5: import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+6: 
+7: import NotificationStack from '@/components/shadcn-studio/blocks/features-section-14/notification-stack'
+8: import type { NotificationCard } from '@/components/shadcn-studio/blocks/features-section-14/notification-stack'
+9: 
+10: import { MotionPreset } from '@/components/ui/motion-preset'
+11: import { Cursor, CursorFollow, CursorProvider } from '@/components/ui/cursor'
+12: import { AnimatedBeam } from '@/components/ui/animated-beam'
+13: 
+14: import { cn } from '@/lib/utils'
+15: 
+16: import LogoVector from '@/assets/svg/logo-vector'
+17: import { RepeatIcon, UserIcon, FileInputIcon } from 'lucide-react'
+18: 
+19: type AvatarData = {
+20:   src: string
+21:   fallback: string
+22:   name: string
+23:   size: string
+24: }
+25: 
+26: const Features = ({ notifications, avatarData }: { notifications: NotificationCard[]; avatarData: AvatarData[] }) => {
+27:   const containerRef = useRef<HTMLDivElement>(null)
+28:   const div1Ref = useRef<HTMLDivElement>(null)
+29:   const div2Ref = useRef<HTMLDivElement>(null)
+30:   const div3Ref = useRef<HTMLDivElement>(null)
+31:   const div4Ref = useRef<HTMLDivElement>(null)
+32:   const div5Ref = useRef<HTMLDivElement>(null)
+33:   const div6Ref = useRef<HTMLDivElement>(null)
+34:   const div7Ref = useRef<HTMLDivElement>(null)
+35:   const div8Ref = useRef<HTMLDivElement>(null)
+36:   const span1Ref = useRef<HTMLSpanElement>(null)
+37:
+<truncated 16363 bytes>
+            containerRef={containerRef}
+396:             fromRef={div1Ref}
+397:             toRef={span8Ref}
+398:             gradientStartColor='var(--primary)'
+399:             duration={4.5}
+400:             className='-z-1 max-lg:hidden'
+401:             startXOffset={5}
+402:             startYOffset={20}
+403:           />
+404:           <AnimatedBeam
+405:             containerRef={containerRef}
+406:             fromRef={span8Ref}
+407:             toRef={span7Ref}
+408:             gradientStartColor='var(--primary)'
+409:             duration={4.5}
+410:             reverse
+411:             className='-z-1 max-lg:hidden'
+412:           />
+413:           <AnimatedBeam
+414:             containerRef={containerRef}
+415:             fromRef={span8Ref}
+416:             toRef={span9Ref}
+417:             gradientStartColor='var(--primary)'
+418:             duration={4.5}
+419:             className='-z-1 max-lg:hidden'
+420:           />
+421:           <AnimatedBeam
+422:             containerRef={containerRef}
+423:             fromRef={span8Ref}
+424:             toRef={div7Ref}
+425:             gradientStartColor='var(--primary)'
+426:             duration={4.5}
+427:             className='-z-1 max-lg:hidden'
+428:           />
+429:           <AnimatedBeam
+430:             containerRef={containerRef}
+431:             fromRef={span7Ref}
+432:             toRef={div6Ref}
+433:             gradientStartColor='var(--primary)'
+434:             duration={4.5}
+435:             reverse
+436:             className='-z-1 max-lg:hidden'
+437:           />
+438:           <AnimatedBeam
+439:             containerRef={containerRef}
+440:             fromRef={span9Ref}
+441:             toRef={div8Ref}
+442:             gradientStartColor='var(--primary)'
+443:             duration={4.5}
+444:             className='-z-1 max-lg:hidden'
+445:           />
+446:         </div>
+447:       </div>
+448:     </section>
+449:   )
+450: }
+451: 
+452: export default Features
+453: 
+The above content shows the entire, complete file contents of the requested file.
