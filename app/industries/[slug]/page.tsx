@@ -8,6 +8,7 @@ import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import { industriesData } from '@/lib/industries-data'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
+import FAQ from '@/components/shadcn-studio/blocks/faq-component-04/faq-component-04'
 
 const navigationData: Navigation[] = [
   {
@@ -67,14 +68,9 @@ const iconMap: Record<string, any> = {
 export default function IndustryDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params)
   const router = useRouter()
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   const ind = industriesData.find((i) => i.id === slug)
   const Icon = ind ? iconMap[ind.id] || ShoppingBag : ShoppingBag
-
-  const toggleFaq = (index: number) => {
-    setOpenFaq(openFaq === index ? null : index)
-  }
 
   if (!ind) {
     return (
@@ -94,6 +90,72 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
       </div>
     )
   }
+
+  const faqTabs = [
+    {
+      name: `${ind.title} FAQs`,
+      value: 'general',
+      faqs: ind.faqs.map((faq, i) => ({
+        id: `faq-ind-${i}`,
+        question: faq.question,
+        answer: faq.answer
+      }))
+    },
+    {
+      name: 'General API',
+      value: 'api',
+      faqs: [
+        {
+          id: 'faq-gen-1',
+          question: 'What is the WhatsApp Business API and do I need it?',
+          answer:
+            'WhatsApp Business API is the official Meta product designed for businesses that need to message customers at scale (5+ agents or 1000+ messages/day). Unlike the free WhatsApp Business app, the API supports automation, integrations and multi-agent inboxes. AI Greentick is an Official BSP — we get you set up in 10 minutes.'
+        },
+        {
+          id: 'faq-gen-2',
+          question: 'Can I get the Green Tick verification?',
+          answer:
+            'Yes. We help you apply for the WhatsApp Green Tick (verified business badge) for free on all paid plans. Approval depends on Meta\'s criteria — typically requires public press mentions and active business presence.'
+        },
+        {
+          id: 'faq-gen-3',
+          question: 'Will my existing WhatsApp Business app data transfer?',
+          answer:
+            'When you move to the WhatsApp Business API, you migrate the number — but the chat history in the WhatsApp Business app doesn\'t carry over. We recommend backing up important conversations before migration.'
+        },
+        {
+          id: 'faq-gen-4',
+          question: 'How long does setup take?',
+          answer:
+            'Most customers go live in 24 hours. Meta verification typically takes 1-3 business days for new businesses.'
+        },
+        {
+          id: 'faq-gen-5',
+          question: 'Can I use my existing number?',
+          answer:
+            'Yes, but the number must be removed from the WhatsApp Business app or personal WhatsApp first. Once it\'s on the API, you can\'t use it in the consumer apps simultaneously.'
+        }
+      ]
+    },
+    {
+      name: 'Pricing & Trial',
+      value: 'pricing',
+      faqs: [
+        {
+          id: 'faq-pr-1',
+          question: 'How much does AI Greentick cost?',
+          answer:
+            'Plans start at ₹2,499/month for the Starter plan. WhatsApp also charges per-conversation fees directly (₹0.88 for marketing, ₹0.12 for utility messages in India). You pay AiSensy for the platform, Meta for conversations. No setup fees.'
+        },
+        {
+          id: 'faq-pr-2',
+          question: 'Is there a free trial?',
+          answer:
+            'Yes — 14-day free trial on all paid plans. No credit card required to start.'
+        }
+      ]
+    }
+  ]
 
   return (
     <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black">
@@ -251,46 +313,10 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
           </div>
         </section>
 
-        {/* Dynamic accordions */}
-        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30">
-          <div className="mx-auto max-w-3xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-10">
-            
-            <div className="text-center space-y-4 font-mono">
-              <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
-                :: INTEGRATION QUESTIONS ::
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-medium text-black">
-                Frequently Asked Questions
-              </h2>
-            </div>
-
-            <div className="space-y-4 font-mono">
-              {ind.faqs.map((faq, idx) => (
-                <div 
-                  key={idx}
-                  className="border border-[#C5C4C2] bg-[#ECEBE9] overflow-hidden"
-                  style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px))' }}
-                >
-                  <button
-                    onClick={() => toggleFaq(idx)}
-                    className="w-full text-left px-5 py-4 flex items-center justify-between text-xs font-bold text-black hover:bg-white/20 transition-all select-none cursor-pointer"
-                  >
-                    <span>Q: {faq.question}</span>
-                    <ChevronDown className={`size-4 text-[#00b259] transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`} />
-                  </button>
-                  <div 
-                    className={`px-5 font-sans text-xs text-neutral-600 border-t border-[#C5C4C2]/30 bg-white/40 transition-all duration-300 overflow-hidden ${
-                      openFaq === idx ? 'py-4 max-h-[200px] opacity-100' : 'max-h-0 py-0 opacity-0'
-                    }`}
-                  >
-                    <p className="leading-relaxed">{faq.answer}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          </div>
-        </section>
+        {/* Dynamic FAQ Section */}
+        <div id="faq">
+          <FAQ tabs={faqTabs} />
+        </div>
 
         {/* Bottom CTA */}
         <section className="px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]/50">
