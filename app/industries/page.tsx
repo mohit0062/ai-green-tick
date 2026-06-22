@@ -78,98 +78,24 @@ const navigationData: Navigation[] = [
   }
 ]
 
-interface Industry {
-  id: string
-  title: string
-  desc: string
-  metric: string
-  icon: any
-  useCases: string[]
+import { industriesData } from '@/lib/industries-data'
+
+const iconMap: Record<string, any> = {
+  ecommerce: ShoppingBag,
+  healthcare: Activity,
+  education: GraduationCap,
+  realestate: Home,
+  finance: Shield,
+  travel: Plane,
 }
 
 export default function IndustriesPage() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('ecommerce')
 
-  const industries: Industry[] = [
-    {
-      id: 'ecommerce',
-      title: 'eCommerce & Retail',
-      desc: 'Recover lost carts, send order alerts, and sell directly inside chats.',
-      metric: '35% Cart Recovery Rate',
-      icon: ShoppingBag,
-      useCases: [
-        'Broadcast new seasonal collections and special coupons',
-        'Automate abandoned cart notifications within 15 mins of dropout',
-        'Send instantaneous order confirmation and live shipping updates',
-        'Sync product inventory to Meta Catalogue and collect checkout payments'
-      ]
-    },
-    {
-      id: 'healthcare',
-      title: 'Healthcare & Wellness',
-      desc: 'Simplify consultation bookings, share reports, and push alerts.',
-      metric: '80% Fewer Missed Bookings',
-      icon: Activity,
-      useCases: [
-        'Automate appointment scheduling, rescheduling, and cancellation',
-        'Send secure diagnostic lab report PDF files to patients',
-        'Deploy automated reminders for medication intake and checkups',
-        'Route emergency patient requests instantly to doctor desks'
-      ]
-    },
-    {
-      id: 'education',
-      title: 'Education & EdTech',
-      desc: 'Enroll students, answer course queries, and automate alerts.',
-      metric: '3x Admissions Conversions',
-      icon: GraduationCap,
-      useCases: [
-        'Qualify student enrollment interest and resolve course fees FAQs',
-        'Automate schedules, timetables, and exam result alerts',
-        'Send secure course registration links and direct invoice reminders',
-        'Enable 24/7 AI-guided student onboarding and support'
-      ]
-    },
-    {
-      id: 'realestate',
-      title: 'Real Estate',
-      desc: 'Capture qualified buyer leads, schedule site viewings, and share brochures.',
-      metric: '60% More Site Visits',
-      icon: Home,
-      useCases: [
-        'Qualify inbound property buyers based on budget and location preferences',
-        'Share high-resolution site layout booklets and PDF catalog files',
-        'Schedule in-person properties inspection and site visits dynamically',
-        'Push automated alert updates to buyers when price changes happen'
-      ]
-    },
-    {
-      id: 'finance',
-      title: 'Banking & Finance',
-      desc: 'Send secure OTP verification alerts, statement updates, and loan tracking.',
-      metric: 'Bank-Grade Data Security',
-      icon: Shield,
-      useCases: [
-        'Broadcast secure verification OTP numbers with instant delivery',
-        'Trigger real-time transaction debit/credit alert logs',
-        'Let clients query account balances and request Statements via chatbot',
-        'Automate loan application tracking, status updates, and KYC followups'
-      ]
-    },
-    {
-      id: 'travel',
-      title: 'Travel & Hospitality',
-      desc: 'Send flight alerts, boarding passes, itineraries, and 24/7 support.',
-      metric: '92% Customer Satisfaction',
-      icon: Plane,
-      useCases: [
-        'Send instantaneous flight, hotel, and bus booking tickets',
-        'Distribute live check-in instructions and hotel location details',
-        'Share customized trip itineraries and travel guidance brochures',
-        'Deploy 24/7 AI concierge bots to resolve reservation FAQs'
-      ]
-    }
-  ]
+  const industries = industriesData.map(ind => ({
+    ...ind,
+    icon: iconMap[ind.id] || ShoppingBag
+  }))
 
   const activeIndustry = industries.find(ind => ind.id === selectedIndustry) || industries[0]
 
@@ -269,13 +195,22 @@ export default function IndustriesPage() {
                 </div>
 
                 <div className="pt-6 border-t border-[#C5C4C2]/30 flex flex-wrap items-center justify-between gap-4">
-                  <Link 
-                    href="#demo"
-                    className="inline-flex items-center gap-2 text-xs font-black text-black hover:text-[#00b259] transition-colors group"
-                  >
-                    <span>SCHEDULE SECTOR DEMO</span>
-                    <ArrowRight className="size-4 text-[#00b259] group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link 
+                      href="#demo"
+                      className="px-5 py-2.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-95 transition-opacity"
+                      style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
+                    >
+                      SCHEDULE DEMO
+                    </Link>
+                    <Link 
+                      href={`/industries/${selectedIndustry}`}
+                      className="px-5 py-2.5 text-xs font-black text-black border border-black hover:bg-black hover:text-[#ECEBE9] transition-all"
+                      style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
+                    >
+                      EXPLORE FULL BLUEPRINT &rarr;
+                    </Link>
+                  </div>
 
                   <span className="text-[9px] text-neutral-400 font-mono">SETUP IN 10 MINUTES</span>
                 </div>
@@ -359,10 +294,14 @@ export default function IndustriesPage() {
                   </div>
 
                   {/* Action Link row */}
-                  <div className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-mono text-black w-full mt-2">
-                    <span className="text-[#00b259]">{selectedIndustry === ind.id ? 'SELECTED' : 'VIEW USE CASES'}</span>
+                  <Link 
+                    href={`/industries/${ind.id}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-mono text-black w-full mt-2 hover:text-[#00b259] transition-colors"
+                  >
+                    <span className="text-[#00b259]">{selectedIndustry === ind.id ? 'VIEW DETAILED BLUEPRINT \u2192' : 'EXPLORE BLUEPRINT \u2192'}</span>
                     <ArrowRight className="size-3.5 text-[#00b259] group-hover:translate-x-0.5 transition-transform" />
-                  </div>
+                  </Link>
                 </div>
               )
             })}
