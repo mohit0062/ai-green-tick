@@ -24,6 +24,8 @@ const Header = ({ className, navigationData }: HeaderProps) => {
 
   const getHref = (hash: string) => {
     if (hash === '#blog') return '/blog'
+    if (hash === '#pricing') return '/pricing'
+    if (hash === '#solutions') return '/industries'
     if (isHomepage) return hash
     return hash.startsWith('#') ? `/${hash}` : hash
   }
@@ -179,10 +181,10 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               href={getHref('#solutions')}
               className={cn(
                 "relative py-1 transition-colors font-bold flex items-center gap-1.5",
-                activeSection === 'solutions' ? "text-black" : "text-neutral-500 hover:text-black"
+                pathname.startsWith('/industries') ? "text-black font-extrabold" : (activeSection === 'solutions' ? "text-black" : "text-neutral-500 hover:text-black")
               )}
             >
-              {activeSection === 'solutions' && (
+              {(pathname.startsWith('/industries') || activeSection === 'solutions') && (
                 <>
                   <span className="absolute -left-2 top-0 text-[#00b259] font-bold">┌</span>
                   <span className="absolute -right-2 bottom-0 text-[#00b259] font-bold">┘</span>
@@ -196,10 +198,10 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               href={getHref('#pricing')}
               className={cn(
                 "relative py-1 transition-colors font-bold flex items-center gap-1.5",
-                activeSection === 'pricing' ? "text-black" : "text-neutral-500 hover:text-black"
+                pathname.startsWith('/pricing') ? "text-black font-extrabold" : (activeSection === 'pricing' ? "text-black" : "text-neutral-500 hover:text-black")
               )}
             >
-              {activeSection === 'pricing' && (
+              {(pathname.startsWith('/pricing') || activeSection === 'pricing') && (
                 <>
                   <span className="absolute -left-2 top-0 text-[#00b259] font-bold">┌</span>
                   <span className="absolute -right-2 bottom-0 text-[#00b259] font-bold">┘</span>
@@ -404,7 +406,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               onClick={() => setMobileMenuOpen(false)}
               className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center gap-1.5"
             >
-              {activeSection === 'solutions' && <span className="text-[#00b259] font-bold">&gt;</span>}
+              {(pathname.startsWith('/industries') || activeSection === 'solutions') && <span className="text-[#00b259] font-bold">&gt;</span>}
               Solutions
             </a>
 
@@ -414,7 +416,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               onClick={() => setMobileMenuOpen(false)}
               className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center gap-1.5"
             >
-              {activeSection === 'pricing' && <span className="text-[#00b259] font-bold">&gt;</span>}
+              {(pathname.startsWith('/pricing') || activeSection === 'pricing') && <span className="text-[#00b259] font-bold">&gt;</span>}
               Pricing
             </a>
 

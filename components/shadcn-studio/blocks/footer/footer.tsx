@@ -9,15 +9,15 @@ const Footer = () => {
         {/* Comparison Links */}
         <div className='flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-sm text-muted-foreground mb-8 text-center'>
           <span className='font-medium text-foreground'>Compare AI Greentick:</span>
-          <a href='#' className='hover:text-primary transition-colors'>vs Wati</a>
+          <a href='/pricing#comparison-matrix' className='hover:text-primary transition-colors'>vs Wati</a>
           <span className='text-muted-foreground/30'>|</span>
-          <a href='#' className='hover:text-primary transition-colors'>vs AiSensy</a>
+          <a href='/pricing#comparison-matrix' className='hover:text-primary transition-colors'>vs AiSensy</a>
           <span className='text-muted-foreground/30'>|</span>
-          <a href='#' className='hover:text-primary transition-colors'>vs DoubleTick</a>
+          <a href='/pricing#comparison-matrix' className='hover:text-primary transition-colors'>vs DoubleTick</a>
           <span className='text-muted-foreground/30'>|</span>
-          <a href='#' className='hover:text-primary transition-colors'>vs Interakt</a>
+          <a href='/pricing#comparison-matrix' className='hover:text-primary transition-colors'>vs Interakt</a>
           <span className='text-muted-foreground/30'>|</span>
-          <a href='#' className='hover:text-primary transition-colors'>vs Gallabox</a>
+          <a href='/pricing#comparison-matrix' className='hover:text-primary transition-colors'>vs Gallabox</a>
         </div>
 
         <Separator className='bg-border/60' />
@@ -28,6 +28,10 @@ const Footer = () => {
             © 2026 AI Greentick. All rights reserved. | Made with <span className='text-destructive'>❤️</span> in India
           </div>
           <div className='flex flex-wrap items-center justify-center gap-x-3 gap-y-2'>
+            <a href='/pricing' className='hover:text-primary transition-colors font-medium'>Pricing</a>
+            <span className='text-muted-foreground/30'>|</span>
+            <a href='/industries' className='hover:text-primary transition-colors font-medium'>Industries</a>
+            <span className='text-muted-foreground/30'>|</span>
             <a href='#' className='hover:text-primary transition-colors'>Privacy Policy</a>
             <span className='text-muted-foreground/30'>|</span>
             <a href='#' className='hover:text-primary transition-colors'>Terms of Service</a>
@@ -36,7 +40,7 @@ const Footer = () => {
             <span className='text-muted-foreground/30'>|</span>
             <a href='#' className='hover:text-primary transition-colors'>Cookie Policy</a>
             <span className='text-muted-foreground/30'>|</span>
-            <a href='#' className='hover:text-primary transition-colors'>Trust Center</a>
+            <a href='/#faq' className='hover:text-primary transition-colors'>Trust Center</a>
           </div>
         </div>
       </div>
