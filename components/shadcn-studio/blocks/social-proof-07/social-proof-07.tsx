@@ -27,7 +27,7 @@ const SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {
           </div>
 
           {/* Grid */}
-          <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
+          <div className='grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4'>
             {metrics.map((metric, index) => (
               <Card key={index}>
                 <CardContent className='[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-7 p-6 text-center'>
