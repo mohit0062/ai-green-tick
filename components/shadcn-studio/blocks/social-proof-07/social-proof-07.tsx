@@ -30,13 +30,13 @@ const SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {
           <div className='grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4'>
             {metrics.map((metric, index) => (
               <Card key={index}>
-                <CardContent className='[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-7 p-6 text-center'>
+                <CardContent className='[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-5 sm:[&>svg]:size-7 p-4 sm:p-6 text-center'>
                   {metric.icon}
-                  <CardTitle className='mt-4 mb-2 text-2xl leading-10 font-semibold md:text-3xl lg:text-4xl text-foreground'>
+                  <CardTitle className='mt-2 mb-1 text-xl sm:text-2xl lg:text-4xl font-semibold text-foreground leading-snug'>
                     {metric.value}
                   </CardTitle>
-                  <h4 className='text-lg font-medium text-foreground'>{metric.title}</h4>
-                  <CardDescription className='text-base font-medium mt-1'>
+                  <h4 className='text-xs sm:text-base font-medium text-foreground'>{metric.title}</h4>
+                  <CardDescription className='text-[10px] sm:text-sm font-medium mt-0.5 leading-relaxed'>
                     {metric.subtitle}
                   </CardDescription>
                 </CardContent>
