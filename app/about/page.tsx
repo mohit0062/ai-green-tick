@@ -13,16 +13,16 @@ import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-
 import { BookOpen } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'About Apargo - The Team Behind AI Greentick',
+  title: 'About AI Greentick - WhatsApp Marketing & AI Automation',
   description:
-    'Meet Apargo - a product-engineering company building custom software, mobile apps and SaaS products. The team behind AI Greentick.',
+    'Learn about AI Greentick, our story, mission, and the team building modern WhatsApp marketing and automation systems.',
   alternates: {
     canonical: '/about',
   },
   openGraph: {
-    title: 'About Apargo - The Team Behind AI Greentick',
+    title: 'About AI Greentick - WhatsApp Marketing & AI Automation',
     description:
-      'Meet Apargo - a product-engineering company building custom software, mobile apps and SaaS products. The team behind AI Greentick.',
+      'Learn about AI Greentick, our story, mission, and the team building modern WhatsApp marketing and automation systems.',
     url: '/about',
     type: 'website',
   }
@@ -235,22 +235,22 @@ const teamMembers: TeamMember[] = [
 ]
 
 const hero = {
-  badgeText: "ABOUT APARGO",
-  heading: "We Build and Ship What Others Only Plan",
-  description: "Apargo started as a small group of engineers tired of seeing good ideas die in slide decks. Today we build production software for clients across the world and run our own SaaS products in parallel."
+  badgeText: "ABOUT AI GREENTICK",
+  heading: "Empowering Brands with Enterprise WhatsApp Automation",
+  description: "AI Greentick was built to solve a simple yet critical challenge: making customer communication on WhatsApp personal, scalable, and automated. We help modern businesses build trust, scale campaigns, and close deals using official WhatsApp APIs and smart AI workflows."
 }
 
 const story = {
   badgeText: "OUR STORY",
-  heading: "How Apargo started",
-  description: "Apargo was built for founders who needed real execution — not endless presentations, delays and outsourced confusion.",
+  heading: "Why we built AI Greentick",
+  description: "We realized that while WhatsApp is the most active messaging channel, businesses were struggling to run it at scale with traditional shared inboxes and rigid automation.",
   imageUrl: "https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-45.png",
-  contentHeading: "We build products the way ambitious teams actually need them built.",
+  contentHeading: "Conversations that convert, powered by official APIs and custom AI.",
   paragraphs: [
-    "Apargo started with one belief: growing businesses don’t fail because of ideas — they fail because execution is slow.",
-    "So we built a senior-heavy engineering team focused on shipping fast, solving real problems and working closely with founders.",
-    "As our clients grew, we faced the same operational challenges they did — especially around WhatsApp at scale. That led us to build AI Greentick, now used by businesses across India and beyond.",
-    "Today Apargo builds custom software for ambitious companies while also running and scaling our own SaaS products."
+    "AI Greentick started as an internal tool designed to solve scale and delivery bottlenecks for customer broadcasts.",
+    "We quickly recognized that modern teams needed more than just a broadcast list — they needed a unified hub where marketing, sales, and support could collaborate without losing context.",
+    "By integrating official WhatsApp Business API capabilities with custom large language models (LLMs), we built a platform that allows teams to broadcast campaigns, manage shared team inbox queues, and design smart AI chatbots.",
+    "Today, AI Greentick helps hundreds of high-growth brands across e-commerce, real estate, education, and finance to automate support and drive high-impact marketing campaigns at scale."
   ]
 }
 
@@ -263,13 +263,13 @@ export default function AboutPage() {
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    "name": "About Apargo Innovations",
+    "name": "About AI Greentick",
     "description": hero.description,
     "publisher": {
       "@type": "Organization",
-      "name": "Apargo Innovations",
-      "url": "https://www.apargoinnovations.com",
-      "logo": "https://www.apargoinnovations.com/group-2.svg"
+      "name": "AI Greentick",
+      "url": "https://ai-green-tick-theta.vercel.app",
+      "logo": "https://ai-green-tick-theta.vercel.app/group-2.svg"
     },
     "mainEntity": {
       "@type": "ItemList",
