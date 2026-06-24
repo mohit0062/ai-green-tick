@@ -18,7 +18,7 @@ const SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {
           
           {/* Header */}
           <div className='mb-12 space-y-4 sm:mb-16 lg:mb-24 text-center flex flex-col items-center'>
-            <h2 className='text-2xl font-medium md:text-3xl lg:text-4xl font-serif text-foreground'>
+            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-foreground'>
               Why WhatsApp beats every other marketing channel
             </h2>
             <p className='text-muted-foreground max-w-4xl text-xl mx-auto'>

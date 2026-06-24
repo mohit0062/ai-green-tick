@@ -83,17 +83,17 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
               :: PRICING PLANS ::
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-medium text-black">
+            <h2 className="text-3xl sm:text-4xl font-sans font-bold text-black">
               Simple pricing. No surprises. No markups.
             </h2>
-            <p className="text-neutral-500 font-mono text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
+            <p className="text-neutral-500 font-sans text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
               Choose the best plan for your business. One flat platform fee plus official Meta conversation charges with zero markups.
             </p>
           </div>
         )}
 
         {/* Interactive Controls Switch */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-2 font-mono">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-2 font-sans">
           {/* Currency switch */}
           <div className="flex items-center border border-[#C5C4C2] p-1 bg-[#ECEBE9] select-none">
             <button 
@@ -135,7 +135,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
-            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-mono">
+            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
               <h3 className="text-lg font-black text-black">STARTER</h3>
               <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{pricingData.Starter.desc}</p>
               <div className="pt-2">
@@ -145,7 +145,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                 <span className="text-xs text-neutral-400">/mo</span>
               </div>
             </div>
-            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-mono">
+            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
                 {pricingData.Starter.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -172,7 +172,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             <span className="absolute -top-3.5 left-6 px-3 py-0.5 text-[9px] font-bold text-white bg-[#00b259] font-mono tracking-widest uppercase z-10">
               MOST POPULAR
             </span>
-            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-mono">
+            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
               <h3 className="text-lg font-black text-black flex items-center gap-1.5">
                 GROWTH <Sparkles className="size-4.5 text-[#00b259]" />
               </h3>
@@ -184,7 +184,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                 <span className="text-xs text-neutral-400">/mo</span>
               </div>
             </div>
-            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-mono">
+            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
                 {pricingData.Growth.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -208,7 +208,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
-            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-mono">
+            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
               <h3 className="text-lg font-black text-black">BUSINESS</h3>
               <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{pricingData.Business.desc}</p>
               <div className="pt-2">
@@ -218,7 +218,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                 <span className="text-xs text-neutral-400">/mo</span>
               </div>
             </div>
-            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-mono">
+            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
                 {pricingData.Business.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -242,7 +242,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
-            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-mono">
+            <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
               <h3 className="text-lg font-black text-black">ENTERPRISE</h3>
               <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">Best for Large teams, agencies, and multi-brand operations</p>
               <div className="pt-2">
@@ -250,7 +250,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                 <span className="text-xs text-neutral-400">/mo</span>
               </div>
             </div>
-            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-mono">
+            <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
                 <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Unlimited numbers</span></li>
                 <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Unlimited agents</span></li>

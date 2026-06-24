@@ -19,7 +19,10 @@ const FAQ = ({ tabs }: { tabs: Tabs }) => {
       <div className='mx-auto max-w-7xl border-x px-4 sm:px-6 lg:px-8 border-[#C5C4C2] py-8 sm:py-16 lg:py-24'>
         {/* Header */}
         <div className='mb-12 text-center sm:mb-16 lg:mb-24'>
-          <h2 className='mb-4 text-2xl font-medium md:text-3xl lg:text-4xl font-serif text-black dark:text-white'>
+          <span className="mb-4 inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono">
+            :: FAQ ::
+          </span>
+          <h2 className='mb-4 text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white'>
             Answers to questions you might have
           </h2>
           <p className='text-muted-foreground text-xl max-w-2xl mx-auto'>
@@ -59,15 +62,7 @@ const FAQ = ({ tabs }: { tabs: Tabs }) => {
           ))}
         </Tabs>
 
-        {/* Support Link */}
-        <div className='mt-12 text-center sm:mt-16 lg:mt-24'>
-          <p className='text-muted-foreground'>
-            Didn&apos;t find the answer you are looking for?{' '}
-            <a href='#' className='text-foreground font-semibold hover:underline'>
-              Contact our support
-            </a>
-          </p>
-        </div>
+
       </div>
     </section>
   )

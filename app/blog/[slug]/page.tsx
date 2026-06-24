@@ -116,7 +116,7 @@ export default function BlogPostDetailPage({ params }: { params: Promise<{ slug:
 
   if (!post) {
     return (
-      <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black font-mono">
+      <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black font-sans">
         <Header navigationData={navigationData} />
         <main className="flex-grow flex flex-col items-center justify-center py-20 text-center space-y-6">
           <h1 className="text-2xl font-black">404 - POST NOT FOUND</h1>
@@ -157,7 +157,7 @@ export default function BlogPostDetailPage({ params }: { params: Promise<{ slug:
         <div className="mx-auto max-w-4xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-10 space-y-10">
           
           {/* Back Button */}
-          <div className="font-mono">
+          <div className="font-sans">
             <Link 
               href="/blog"
               className="inline-flex items-center gap-2 px-4 py-2 border border-[#C5C4C2] bg-[#ECEBE9] text-xs font-bold hover:border-black transition-colors"
@@ -170,7 +170,7 @@ export default function BlogPostDetailPage({ params }: { params: Promise<{ slug:
 
           {/* Article Header */}
           <article className="space-y-8">
-            <header className="space-y-6 font-mono">
+            <header className="space-y-6 font-sans">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="px-2 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
                   {post.category}
@@ -183,7 +183,7 @@ export default function BlogPostDetailPage({ params }: { params: Promise<{ slug:
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium font-serif leading-tight tracking-tight text-black">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-sans leading-tight tracking-tight text-black">
                 {post.title}
               </h1>
 
@@ -216,27 +216,27 @@ export default function BlogPostDetailPage({ params }: { params: Promise<{ slug:
 
             {/* Article Content */}
             <div 
-              className="font-serif text-neutral-800 leading-relaxed text-base sm:text-lg border-b border-[#C5C4C2]/40 pb-12
-                [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-black [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:tracking-tight
+              className="font-sans text-neutral-800 leading-relaxed text-base sm:text-lg border-b border-[#C5C4C2]/40 pb-12
+                [&_h2]:font-sans [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-black [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:tracking-tight
                 [&_p]:mb-6 [&_p]:text-neutral-700 [&_p]:leading-relaxed
                 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_ul]:font-sans [&_ul]:text-sm [&_ul]:text-neutral-600
                 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6 [&_ol]:font-sans [&_ol]:text-sm [&_ol]:text-neutral-600
                 [&_li]:mb-2
-                [&_blockquote]:border-l-4 [&_blockquote]:border-[#00b259] [&_blockquote]:pl-6 [&_blockquote]:my-8 [&_blockquote]:italic [&_blockquote]:text-black [&_blockquote]:text-xl [&_blockquote]:font-serif"
+                [&_blockquote]:border-l-4 [&_blockquote]:border-[#00b259] [&_blockquote]:pl-6 [&_blockquote]:my-8 [&_blockquote]:italic [&_blockquote]:text-black [&_blockquote]:text-xl [&_blockquote]:font-sans"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </article>
 
           {/* Newsletter Form */}
           <section 
-            className="border border-[#C5C4C2] bg-[#ECEBE9] p-8 sm:p-12 text-center space-y-6 font-mono"
+            className="border border-[#C5C4C2] bg-[#ECEBE9] p-8 sm:p-12 text-center space-y-6 font-sans"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))' }}
           >
             <div className="flex flex-col items-center gap-3">
               <span className="px-2 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
                 :: NEWSLETTER SUBSCRIBE ::
               </span>
-              <h3 className="text-xl sm:text-2xl font-serif font-medium text-black">
+              <h3 className="text-xl sm:text-2xl font-sans font-bold text-black">
                 Get Future Insights Direct to Inbox
               </h3>
               <p className="text-neutral-500 text-xs max-w-md mx-auto leading-relaxed">
@@ -276,7 +276,7 @@ export default function BlogPostDetailPage({ params }: { params: Promise<{ slug:
           </section>
 
           {/* Related Articles */}
-          <section className="space-y-6 font-mono">
+          <section className="space-y-6 font-sans">
             <div className="flex items-center gap-2 text-xs text-neutral-400">
               <span>[ RELATED READINGS ]</span>
               <div className="h-px bg-[#C5C4C2] flex-grow" />
@@ -307,7 +307,7 @@ export default function BlogPostDetailPage({ params }: { params: Promise<{ slug:
                       <span>{rPost.readTime}</span>
                     </div>
 
-                    <h4 className="text-xs font-black text-black group-hover:text-[#00b259] transition-colors line-clamp-2 font-serif leading-snug">
+                    <h4 className="text-xs font-extrabold text-black group-hover:text-[#00b259] transition-colors line-clamp-2 font-sans leading-snug">
                       {rPost.title}
                     </h4>
 

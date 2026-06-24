@@ -208,38 +208,39 @@ const CTWAPreview = () => (
 
 const BentoGrid = () => {
   return (
-    <section className='border-b px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]/50 dark:bg-neutral-950/20'>
-      <div className='mx-auto max-w-7xl border-x space-y-12 px-4 sm:space-y-16 sm:px-6 lg:space-y-24 lg:px-8 border-[#C5C4C2] py-8 sm:py-16 lg:py-24'>
-        
-        {/* Diagonal Striped Divider Line */}
-        <div 
-          className="h-12 border-y border-[#C5C4C2] -mx-4 w-[calc(100%+2rem)] sm:-mx-6 sm:w-[calc(100%+3rem)] lg:-mx-8 lg:w-[calc(100%+4rem)]"
-          style={{
-            backgroundImage: 'repeating-linear-gradient(45deg, #C5C4C2, #C5C4C2 1.5px, transparent 1.5px, transparent 8px)',
-          }}
-        />
+    <div className="w-full flex flex-col">
+      {/* Diagonal Striped Divider Line between sections */}
+      <div 
+        className="h-8 border-b border-[#C5C4C2] w-full"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(45deg, #C5C4C2, #C5C4C2 1.5px, transparent 1.5px, transparent 8px)',
+        }}
+      />
 
-        {/* Header Section */}
+      <section className='border-b px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]/50 dark:bg-neutral-950/20'>
+        <div className='mx-auto max-w-7xl border-x space-y-12 px-4 sm:space-y-16 sm:px-6 lg:space-y-24 lg:px-8 border-[#C5C4C2] py-8 sm:py-16 lg:py-24'>
+          
+          {/* Header Section */}
         <div className='flex flex-col items-center gap-4 text-center'>
           <MotionPreset
             component='h2'
             fade
             slide={{ direction: 'down', offset: 50 }}
             transition={{ duration: 0.5 }}
-            className='text-2xl font-medium sm:text-3xl lg:text-4xl font-serif text-black dark:text-white'
+            className='text-2xl font-bold sm:text-3xl lg:text-4xl font-sans text-black dark:text-white'
           >
             Everything you need to win on WhatsApp
           </MotionPreset>
 
           <MotionPreset fade slide={{ direction: 'down', offset: 50 }} delay={0.3} transition={{ duration: 0.5 }}>
-            <p className='text-neutral-500 max-w-2xl text-xs sm:text-sm font-mono'>
+            <p className='text-neutral-500 max-w-2xl text-xs sm:text-sm font-sans'>
               Automate campaigns, collaborate via shared inbox, build AI agents, and run high-converting click-to-chat ads.
             </p>
           </MotionPreset>
         </div>
 
         <MotionPreset fade blur transition={{ duration: 0.5 }} delay={0.6}>
-          <div className='bg-[#ECEBE9] dark:bg-neutral-900 border border-[#C5C4C2] grid grid-cols-1 gap-6 rounded-none p-6 max-sm:p-2 sm:grid-cols-2 lg:grid-cols-6'>
+          <div className='bg-[#C5C4C2] dark:bg-neutral-800 border border-[#C5C4C2] grid grid-cols-1 gap-px rounded-none sm:grid-cols-2 lg:grid-cols-6 overflow-hidden'>
             
             {/* WhatsApp Broadcasts */}
             <MotionPreset
@@ -250,7 +251,7 @@ const BentoGrid = () => {
               className='h-full sm:col-span-2 lg:col-span-3'
               delay={0.7}
             >
-              <Card className='shadow-none ring-0 border border-[#C5C4C2] rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
+              <Card className='shadow-none ring-0 border-none rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
                 <CardContent className="pt-6">
                   <BroadcastVisual />
                 </CardContent>
@@ -260,7 +261,7 @@ const BentoGrid = () => {
                     Send approved promotional and transactional campaigns to 100,000+ contacts with industry-best delivery. Schedule, segment and track every send.
                   </CardDescription>
                   <div className='pt-2'>
-                    <a href='#broadcasts' className='text-xs font-mono font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
+                    <a href='#broadcasts' className='text-xs font-sans font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
                       Explore Broadcasts <ArrowRight className='size-3.5' />
                     </a>
                   </div>
@@ -277,7 +278,7 @@ const BentoGrid = () => {
               className='h-full sm:col-span-2 lg:col-span-3'
               delay={0.8}
             >
-              <Card className='shadow-none ring-0 border border-[#C5C4C2] rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
+              <Card className='shadow-none ring-0 border-none rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
                 <CardContent className="pt-6">
                   <InboxVisual />
                 </CardContent>
@@ -287,7 +288,7 @@ const BentoGrid = () => {
                     Multiple agents on one WhatsApp number. Assign chats, add private notes, tag teammates and never miss a customer again.
                   </CardDescription>
                   <div className='pt-2'>
-                    <a href='#inbox' className='text-xs font-mono font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
+                    <a href='#inbox' className='text-xs font-sans font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
                       Explore Team Inbox <ArrowRight className='size-3.5' />
                     </a>
                   </div>
@@ -304,7 +305,7 @@ const BentoGrid = () => {
               className='h-full lg:col-span-2'
               delay={0.9}
             >
-              <Card className='shadow-none ring-0 border border-[#C5C4C2] rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
+              <Card className='shadow-none ring-0 border-none rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
                 <CardContent className="pt-6">
                   <ChatbotVisual />
                 </CardContent>
@@ -314,7 +315,7 @@ const BentoGrid = () => {
                     Drag-and-drop bot builder. No code. Connect to OpenAI, train on your data, and let bots qualify leads, answer FAQs and route conversations 24/7.
                   </CardDescription>
                   <div className='pt-2'>
-                    <a href='#chatbot' className='text-xs font-mono font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
+                    <a href='#chatbot' className='text-xs font-sans font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
                       Build a Chatbot <ArrowRight className='size-3.5' />
                     </a>
                   </div>
@@ -331,7 +332,7 @@ const BentoGrid = () => {
               className='h-full lg:col-span-2'
               delay={1.0}
             >
-              <Card className='shadow-none ring-0 border border-[#C5C4C2] rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
+              <Card className='shadow-none ring-0 border-none rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
                 <CardContent className="pt-6">
                   <CampaignVisual />
                 </CardContent>
@@ -341,7 +342,7 @@ const BentoGrid = () => {
                     Plan, launch and analyze every WhatsApp campaign. See delivery, opens, clicks, replies and conversions in real-time.
                   </CardDescription>
                   <div className='pt-2'>
-                    <a href='#campaign' className='text-xs font-mono font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
+                    <a href='#campaign' className='text-xs font-sans font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
                       See Campaign Manager <ArrowRight className='size-3.5' />
                     </a>
                   </div>
@@ -358,7 +359,7 @@ const BentoGrid = () => {
               className='h-full lg:col-span-2'
               delay={1.1}
             >
-              <Card className='shadow-none ring-0 border border-[#C5C4C2] rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
+              <Card className='shadow-none ring-0 border-none rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
                 <CardContent className="pt-6">
                   <AutomationVisual />
                 </CardContent>
@@ -368,7 +369,7 @@ const BentoGrid = () => {
                     Trigger messages on actions, time, tags and journeys. Abandoned cart recovery, post-purchase nurture, win-back — all on autopilot.
                   </CardDescription>
                   <div className='pt-2'>
-                    <a href='#automation' className='text-xs font-mono font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
+                    <a href='#automation' className='text-xs font-sans font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
                       View Automation <ArrowRight className='size-3.5' />
                     </a>
                   </div>
@@ -385,7 +386,7 @@ const BentoGrid = () => {
               className='h-full lg:col-span-6'
               delay={1.2}
             >
-              <Card className='shadow-none ring-0 border border-[#C5C4C2] rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
+              <Card className='shadow-none ring-0 border-none rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
                 <div className='grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#C5C4C2]'>
                   <div className='p-6 flex flex-col justify-center gap-3'>
                     <CardTitle className='text-xl sm:text-2xl font-semibold'>CTWA Ads</CardTitle>
@@ -393,7 +394,7 @@ const BentoGrid = () => {
                       Run Facebook and Instagram ads that click to WhatsApp. 5× your lead quality and 2-3× conversions with native lead capture.
                     </CardDescription>
                     <div className='pt-2'>
-                      <a href='#ads' className='text-xs font-mono font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
+                      <a href='#ads' className='text-xs font-sans font-bold text-[#00b259] hover:underline flex items-center gap-1.5'>
                         Launch CTWA <ArrowRight className='size-3.5' />
                       </a>
                     </div>
@@ -409,6 +410,7 @@ const BentoGrid = () => {
         </MotionPreset>
       </div>
     </section>
+    </div>
   )
 }
 

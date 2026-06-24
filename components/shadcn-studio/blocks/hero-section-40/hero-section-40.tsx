@@ -198,7 +198,7 @@ const HeroSection = () => {
             </svg>
           </a>
           {/* Medium */}
-          <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors font-serif font-black text-lg text-black select-none">
+          <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors font-sans font-extrabold text-lg text-black select-none">
             M
           </a>
           {/* LinkedIn */}

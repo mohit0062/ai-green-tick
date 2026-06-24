@@ -62,7 +62,7 @@ export default function DemoModalProvider() {
         }}
       >
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-[#C5C4C2] flex items-center justify-between bg-white font-mono shrink-0">
+        <div className="px-6 py-4 border-b border-[#C5C4C2] flex items-center justify-between bg-white font-sans shrink-0">
           <div className="flex items-center gap-2">
             <span className="text-[#00b259] font-bold">::</span>
             <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">

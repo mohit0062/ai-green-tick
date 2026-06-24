@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingBag, Activity, GraduationCap, Home, Shield, Plane, ArrowRight, Sparkles, Star, Users, MessageSquare, BookOpen } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -91,6 +91,8 @@ const iconMap: Record<string, any> = {
 
 export default function IndustriesPage() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('ecommerce')
+  const [progress, setProgress] = useState<number>(0)
+  const [isAutoplay, setIsAutoplay] = useState<boolean>(true)
 
   const industries = industriesData.map(ind => ({
     ...ind,
@@ -98,6 +100,33 @@ export default function IndustriesPage() {
   }))
 
   const activeIndustry = industries.find(ind => ind.id === selectedIndustry) || industries[0]
+
+  useEffect(() => {
+    if (!isAutoplay) return
+
+    const duration = 5000 // 5 seconds per tab
+    const intervalTime = 50 // Update progress every 50ms
+    const totalSteps = duration / intervalTime
+    let stepCount = 0
+
+    const timer = setInterval(() => {
+      stepCount++
+      const currentProgress = (stepCount / totalSteps) * 100
+      setProgress(currentProgress)
+
+      if (stepCount >= totalSteps) {
+        setSelectedIndustry((prev) => {
+          const currentIndex = industriesData.findIndex((ind) => ind.id === prev)
+          const nextIndex = (currentIndex + 1) % industriesData.length
+          return industriesData[nextIndex].id
+        })
+        stepCount = 0
+        setProgress(0)
+      }
+    }, intervalTime)
+
+    return () => clearInterval(timer)
+  }, [isAutoplay, selectedIndustry])
 
   return (
     <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black">
@@ -110,36 +139,49 @@ export default function IndustriesPage() {
           <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
             :: TAILORED WORKFLOWS ::
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium font-serif tracking-tight leading-none text-black">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-sans tracking-tight leading-none text-black">
             WhatsApp Automation for Every Industry
           </h1>
-          <p className="text-neutral-500 max-w-3xl mx-auto text-sm sm:text-base font-mono">
+          <p className="text-neutral-500 max-w-3xl mx-auto text-sm sm:text-base font-sans">
             AIGreenTick powers WhatsApp automation for eCommerce, healthcare, education, real estate, finance, and travel businesses. Industry-specific chatbots, campaigns, and integrations.
           </p>
         </div>
       </section>
 
       {/* Main Selector Section */}
-      <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30">
-        <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
+      <section className="px-4 sm:px-6 lg:px-8 border-b border-[#022c16] bg-gradient-to-b from-[#020e06] via-[#011a0c] to-[#020e06] text-white relative">
+        {/* Glow highlight in top-left */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-[#00b259]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="mx-auto max-w-7xl border-x border-[#022c16] px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12 relative z-10">
           
           {/* Tabs Selector list */}
-          <div className="flex flex-wrap justify-center gap-2 font-mono">
+          <div className="border border-[#022c16] bg-[#011207]/90 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 rounded-none overflow-hidden select-none font-sans text-xs backdrop-blur-xs">
             {industries.map(ind => {
               const Icon = ind.icon
+              const isActive = selectedIndustry === ind.id
               return (
                 <button
                   key={ind.id}
-                  onClick={() => setSelectedIndustry(ind.id)}
-                  className={`px-4 py-3 border text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                    selectedIndustry === ind.id
-                      ? 'bg-black text-[#ECEBE9] border-black shadow-md'
-                      : 'border-[#C5C4C2] bg-[#ECEBE9]/50 hover:bg-[#ECEBE9] text-neutral-600 hover:text-black'
-                  }`}
-                  style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
+                  onClick={() => {
+                    setSelectedIndustry(ind.id)
+                    setIsAutoplay(false)
+                    setProgress(0)
+                  }}
+                  className={cn(
+                    "px-4 py-4 sm:py-5 text-center font-bold tracking-wide transition-all border-r border-[#022c16] border-b border-[#022c16] lg:border-b-0 last:border-r-0 cursor-pointer select-none text-[10px] sm:text-xs outline-none flex items-center justify-center gap-2 relative overflow-hidden",
+                    isActive
+                      ? "bg-[#022c16] text-white border-t-2 border-t-[#00b259] -mt-[1px]"
+                      : "text-neutral-400 hover:text-white hover:bg-[#022c16]/30"
+                  )}
                 >
-                  <Icon className={`size-4 ${selectedIndustry === ind.id ? 'text-[#00b259]' : 'text-neutral-400'}`} />
+                  <Icon className={cn("size-4 shrink-0 transition-colors", isActive ? "text-[#00b259]" : "text-neutral-500")} />
                   <span>{ind.title.toUpperCase()}</span>
+                  {isActive && isAutoplay && (
+                    <div 
+                      className="absolute bottom-0 left-0 h-0.5 bg-[#00b259] transition-all duration-75"
+                      style={{ width: `${progress}%` }}
+                    />
+                  )}
                 </button>
               )
             })}
@@ -148,21 +190,20 @@ export default function IndustriesPage() {
           {/* Active Industry Panel */}
           {activeIndustry && (
             <div 
-              className="border border-[#C5C4C2] bg-[#ECEBE9] grid grid-cols-1 lg:grid-cols-12 overflow-hidden"
-              style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))' }}
+              className="border border-[#022c16] bg-gradient-to-br from-[#011a0c]/95 to-[#010e06]/95 grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-none shadow-2xl"
             >
               {/* Left Info Column */}
-              <div className="lg:col-span-5 p-8 sm:p-12 border-b lg:border-b-0 lg:border-r border-[#C5C4C2] flex flex-col justify-between gap-8 font-mono">
+              <div className="lg:col-span-5 p-8 sm:p-12 border-b lg:border-b-0 lg:border-r border-[#022c16] flex flex-col justify-between gap-8 font-sans text-left">
                 <div className="space-y-4">
-                  <span className="px-2 py-0.5 text-[9px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase">
+                  <span className="px-2 py-0.5 text-[9px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/10 uppercase">
                     Vertical Insight
                   </span>
                   
-                  <h3 className="text-2xl font-serif font-medium text-black">
+                  <h3 className="text-2xl font-sans font-bold text-white leading-snug tracking-tight">
                     {activeIndustry.title}
                   </h3>
                   
-                  <p className="text-xs text-neutral-500 font-sans leading-relaxed">
+                  <p className="text-xs text-neutral-300 font-sans leading-relaxed">
                     {activeIndustry.desc}
                   </p>
                 </div>
@@ -171,22 +212,22 @@ export default function IndustriesPage() {
                   <div className="size-2 bg-[#00b259] rounded-full animate-ping" />
                   <div>
                     <div className="text-[10px] text-neutral-400 font-bold">KEY RESULT</div>
-                    <div className="text-sm font-black text-black">{activeIndustry.metric}</div>
+                    <div className="text-sm font-black text-white">{activeIndustry.metric}</div>
                   </div>
                 </div>
               </div>
 
               {/* Right Use Cases Column */}
-              <div className="lg:col-span-7 p-8 sm:p-12 bg-white flex flex-col justify-between gap-8 font-mono">
+              <div className="lg:col-span-7 p-8 sm:p-12 bg-[#011207]/40 flex flex-col justify-between gap-8 font-sans text-left">
                 <div className="space-y-6">
                   <h4 className="text-xs font-black text-neutral-400 uppercase tracking-widest">[ AUTOMATED WORKFLOWS ]</h4>
                   <ul className="space-y-4">
                     {activeIndustry.useCases.map((uc, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="flex items-center justify-center size-5 border border-[#C5C4C2] rounded-full text-[10px] text-[#00b259] font-bold shrink-0 mt-0.5 font-mono">
+                        <span className="flex items-center justify-center size-5 border border-[#00b259]/30 bg-[#00b259]/10 rounded-full text-[10px] text-[#00b259] font-bold shrink-0 mt-0.5 font-mono">
                           {i + 1}
                         </span>
-                        <span className="text-xs sm:text-sm text-neutral-700 font-sans leading-relaxed">
+                        <span className="text-xs sm:text-sm text-neutral-200 font-sans leading-relaxed font-normal">
                           {uc}
                         </span>
                       </li>
@@ -194,18 +235,18 @@ export default function IndustriesPage() {
                   </ul>
                 </div>
 
-                <div className="pt-6 border-t border-[#C5C4C2]/30 flex flex-wrap items-center justify-between gap-4">
+                <div className="pt-6 border-t border-[#022c16] flex flex-wrap items-center justify-between gap-4">
                   <div className="flex flex-wrap items-center gap-3">
                     <Link 
                       href="#demo"
-                      className="px-5 py-2.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-95 transition-opacity"
+                      className="px-5 py-2.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:from-[#00c864] hover:to-[#006633] transition-all shadow-[0_0_15px_rgba(0,178,89,0.2)]"
                       style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
                     >
                       SCHEDULE DEMO
                     </Link>
                     <Link 
-                      href={`/industries/${selectedIndustry}`}
-                      className="px-5 py-2.5 text-xs font-black text-black border border-black hover:bg-black hover:text-[#ECEBE9] transition-all"
+                      href={`/industries/${selectedIndustry || 'ecommerce'}`}
+                      className="px-5 py-2.5 text-xs font-black text-white border border-[#00b259]/30 hover:border-[#00b259] hover:bg-[#00b259]/10 transition-all"
                       style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
                     >
                       EXPLORE FULL BLUEPRINT &rarr;
@@ -229,10 +270,10 @@ export default function IndustriesPage() {
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: INDUSTRY COMPARISON ::
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-medium text-black">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-black">
               Explore all industry blueprints.
             </h2>
-            <p className="text-neutral-500 font-mono text-xs sm:text-sm leading-relaxed">
+            <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed">
               Click any industry card to load specific automation use-cases and schedule a customized platform tour.
             </p>
           </div>
@@ -244,7 +285,11 @@ export default function IndustriesPage() {
               return (
                 <div 
                   key={ind.id}
-                  onClick={() => setSelectedIndustry(ind.id)}
+                  onClick={() => {
+                    setSelectedIndustry(ind.id)
+                    setIsAutoplay(false)
+                    setProgress(0)
+                  }}
                   className={cn(
                     "relative border border-[#C5C4C2] h-[360px] flex flex-col justify-between p-6 overflow-hidden group cursor-pointer w-[280px] sm:w-[320px] md:w-auto shrink-0 snap-start transition-all duration-300",
                     selectedIndustry === ind.id
@@ -255,7 +300,7 @@ export default function IndustriesPage() {
                   {/* Top row: marker + index number */}
                   <div className="flex items-center justify-between w-full">
                     <div className={cn("size-2 transition-colors", selectedIndustry === ind.id ? "bg-[#00b259]" : "bg-black")} />
-                    <span className="text-[11px] font-mono font-bold text-neutral-400">
+                    <span className="text-[11px] font-sans font-bold text-neutral-400">
                       {String(idx + 1).padStart(2, '0')}
                     </span>
                   </div>
@@ -283,12 +328,12 @@ export default function IndustriesPage() {
                   {/* Bottom row: Industry Name & Impact (Metric) */}
                   <div className="text-left w-full">
                     <h3 className={cn(
-                      "text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-colors",
+                      "text-xs sm:text-sm font-sans font-bold uppercase tracking-wider transition-colors",
                       selectedIndustry === ind.id ? "text-[#00b259]" : "text-black group-hover:text-[#00b259]"
                     )}>
                       {ind.title}
                     </h3>
-                    <p className="text-[11px] font-mono text-neutral-500 mt-1 leading-relaxed transition-colors group-hover:text-neutral-700">
+                    <p className="text-[11px] font-sans text-neutral-500 mt-1 leading-relaxed transition-colors group-hover:text-neutral-700">
                       {ind.metric}
                     </p>
                   </div>
@@ -297,7 +342,7 @@ export default function IndustriesPage() {
                   <Link 
                     href={`/industries/${ind.id}`}
                     onClick={(e) => e.stopPropagation()}
-                    className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-mono text-black w-full mt-2 hover:text-[#00b259] transition-colors"
+                    className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-sans text-black w-full mt-2 hover:text-[#00b259] transition-colors"
                   >
                     <span className="text-[#00b259]">{selectedIndustry === ind.id ? 'VIEW DETAILED BLUEPRINT \u2192' : 'EXPLORE BLUEPRINT \u2192'}</span>
                     <ArrowRight className="size-3.5 text-[#00b259] group-hover:translate-x-0.5 transition-transform" />
@@ -314,7 +359,7 @@ export default function IndustriesPage() {
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 space-y-12">
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center font-mono">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center font-sans">
             
             {/* Feature 1 */}
             <div className="space-y-3">
@@ -357,13 +402,13 @@ export default function IndustriesPage() {
       {/* CTA Footer Section */}
       <section className="px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-serif font-medium text-black">
+          <h2 className="text-3xl sm:text-4xl font-sans font-bold text-black">
             Start free. Scale as you grow.
           </h2>
-          <p className="text-neutral-500 font-mono text-xs sm:text-sm max-w-md mx-auto">
+          <p className="text-neutral-500 font-sans text-xs sm:text-sm max-w-md mx-auto">
             Ready to deploy official WhatsApp API automation inside your workflows? Start your 14-day free trial now or book a consultation.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-mono">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-sans">
             <Link 
               href="#demo"
               className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"

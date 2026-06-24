@@ -12,6 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { SolutionsMegaMenu } from './solutions-mega-menu'
+import { FeaturesMegaMenu } from './features-mega-menu'
 
 type HeaderProps = {
   className?: string
@@ -32,9 +34,11 @@ const Header = ({ className, navigationData }: HeaderProps) => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mobileFeaturesOpen, setMobileFeaturesOpen] = useState(false)
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
   const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false)
   
   const [featuresOpen, setFeaturesOpen] = useState(false)
+  const [solutionsOpen, setSolutionsOpen] = useState(false)
   const [companyOpen, setCompanyOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
 
@@ -71,12 +75,14 @@ const Header = ({ className, navigationData }: HeaderProps) => {
 
   return (
     <header className={cn('w-full bg-[#ECEBE9] z-50 sticky top-0 py-2 px-4 sm:px-6 lg:px-8', className)}>
-      <div 
-        className="mx-auto max-w-7xl border border-[#C5C4C2] bg-[#ECEBE9] relative"
-        style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
-      >
+      <div className="mx-auto max-w-7xl relative">
+        {/* Background layer with clip-path and border */}
+        <div 
+          className="absolute inset-0 border border-[#C5C4C2] bg-[#ECEBE9] pointer-events-none z-0"
+          style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
+        />
         {/* Desktop 9-Column Grid Navigation */}
-        <div className="hidden lg:grid grid-cols-9 h-16 w-full items-center select-none text-black font-mono">
+        <div className="hidden lg:grid grid-cols-9 h-16 w-full items-center select-none text-black font-sans relative z-10">
           
           {/* Col 1-2: Logo */}
           <div className="col-span-2 h-full border-r border-[#C5C4C2] flex items-center pl-6">
@@ -84,114 +90,73 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               <AiGreenTickLogo />
             </a>
           </div>
-
+ 
           {/* Col 3-7: Navigation Links */}
           <div className="col-span-5 h-full border-r border-[#C5C4C2] flex items-center justify-center gap-8 text-xs">
             
-            {/* Features Dropdown Option */}
-            <DropdownMenu open={featuresOpen} onOpenChange={setFeaturesOpen}>
-              <div
-                onMouseEnter={() => setFeaturesOpen(true)}
-                onMouseLeave={() => setFeaturesOpen(false)}
-                className="h-full flex items-center"
-              >
-                <DropdownMenuTrigger asChild>
-                  <a
-                    href={getHref('#features')}
-                    className={cn(
-                      "relative py-1 transition-colors font-bold flex items-center gap-1 cursor-pointer select-none",
-                      activeSection === 'features' ? "text-black" : "text-neutral-500 hover:text-black"
-                    )}
-                  >
-                    {activeSection === 'features' && (
-                      <>
-                        <span className="absolute -left-2 top-0 text-[#00b259] font-bold">┌</span>
-                        <span className="absolute -right-2 bottom-0 text-[#00b259] font-bold">┘</span>
-                      </>
-                    )}
-                    Features
-                    <ChevronDown className={cn("size-3.5 transition-transform duration-200", featuresOpen && "rotate-180")} />
-                  </a>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="center"
-                  sideOffset={14}
-                  className="bg-[#ECEBE9] border border-[#C5C4C2] rounded-none shadow-lg p-1 w-64 font-mono text-black"
-                  onMouseEnter={() => setFeaturesOpen(true)}
-                  onMouseLeave={() => setFeaturesOpen(false)}
-                >
-                  <DropdownMenuItem asChild>
-                    <a
-                      href={getHref('#features')}
-                      className="px-4 py-2 hover:bg-[#00b259]/10 text-xs text-neutral-600 transition-colors flex flex-col gap-0.5 border-b border-[#C5C4C2]/30 last:border-b-0 cursor-pointer"
-                    >
-                      <span className="font-bold flex items-center gap-1 text-black">
-                        <span className="text-[#00b259]">::</span> Shared Inbox
-                      </span>
-                      <span className="text-[10px] text-neutral-500 font-normal leading-normal">
-                        Collaborate with your team on customer chats.
-                      </span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a
-                      href={getHref('#features')}
-                      className="px-4 py-2 hover:bg-[#00b259]/10 text-xs text-neutral-600 transition-colors flex flex-col gap-0.5 border-b border-[#C5C4C2]/30 last:border-b-0 cursor-pointer"
-                    >
-                      <span className="font-bold flex items-center gap-1 text-black">
-                        <span className="text-[#00b259]">::</span> WhatsApp Broadcast
-                      </span>
-                      <span className="text-[10px] text-neutral-500 font-normal leading-normal">
-                        Send bulk updates & campaigns easily.
-                      </span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a
-                      href={getHref('#features')}
-                      className="px-4 py-2 hover:bg-[#00b259]/10 text-xs text-neutral-600 transition-colors flex flex-col gap-0.5 border-b border-[#C5C4C2]/30 last:border-b-0 cursor-pointer"
-                    >
-                      <span className="font-bold flex items-center gap-1 text-black">
-                        <span className="text-[#00b259]">::</span> Chatbot Builder
-                      </span>
-                      <span className="text-[10px] text-neutral-500 font-normal leading-normal">
-                        Automate replies with a codeless editor.
-                      </span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a
-                      href={getHref('#features')}
-                      className="px-4 py-2 hover:bg-[#00b259]/10 text-xs text-neutral-600 transition-colors flex flex-col gap-0.5 cursor-pointer"
-                    >
-                      <span className="font-bold flex items-center gap-1 text-black">
-                        <span className="text-[#00b259]">::</span> API & Integrations
-                      </span>
-                      <span className="text-[10px] text-neutral-500 font-normal leading-normal">
-                        Connect with CRM, Shopify, Zoho & more.
-                      </span>
-                    </a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </div>
-            </DropdownMenu>
-
-            {/* Solutions Link */}
-            <a
-              href={getHref('#solutions')}
-              className={cn(
-                "relative py-1 transition-colors font-bold flex items-center gap-1.5",
-                pathname.startsWith('/industries') ? "text-black font-extrabold" : (activeSection === 'solutions' ? "text-black" : "text-neutral-500 hover:text-black")
-              )}
+            {/* Features Option */}
+            <div
+              onMouseEnter={() => setFeaturesOpen(true)}
+              onMouseLeave={() => setFeaturesOpen(false)}
+              className="h-full flex items-center"
             >
-              {(pathname.startsWith('/industries') || activeSection === 'solutions') && (
-                <>
-                  <span className="absolute -left-2 top-0 text-[#00b259] font-bold">┌</span>
-                  <span className="absolute -right-2 bottom-0 text-[#00b259] font-bold">┘</span>
-                </>
+              <a
+                href={getHref('#features')}
+                className={cn(
+                  "relative py-1 transition-colors font-bold flex items-center gap-1 cursor-pointer select-none",
+                  activeSection === 'features' ? "text-black" : "text-neutral-500 hover:text-black"
+                )}
+              >
+                {activeSection === 'features' && (
+                  <>
+                    <span className="absolute -left-2 top-0 text-[#00b259] font-bold">┌</span>
+                    <span className="absolute -right-2 bottom-0 text-[#00b259] font-bold">┘</span>
+                  </>
+                )}
+                Features
+                <ChevronDown className={cn("size-3.5 transition-transform duration-200", featuresOpen && "rotate-180")} />
+              </a>
+              {featuresOpen && (
+                <div
+                  className="absolute top-full left-[22.222%] z-50 bg-[#ECEBE9] border border-[#C5C4C2] border-t-0 shadow-lg p-0 font-sans text-black overflow-hidden animate-in fade-in-0 duration-100"
+                  style={{ width: '55.556%' }}
+                >
+                  <FeaturesMegaMenu />
+                </div>
               )}
-              Solutions
-            </a>
+            </div>
+
+            {/* Solutions Option */}
+            <div
+              onMouseEnter={() => setSolutionsOpen(true)}
+              onMouseLeave={() => setSolutionsOpen(false)}
+              className="h-full flex items-center"
+            >
+              <a
+                href={getHref('#solutions')}
+                className={cn(
+                  "relative py-1 transition-colors font-bold flex items-center gap-1 cursor-pointer select-none",
+                  pathname.startsWith('/industries') ? "text-black font-extrabold" : (activeSection === 'solutions' ? "text-black" : "text-neutral-500 hover:text-black")
+                )}
+              >
+                {(pathname.startsWith('/industries') || activeSection === 'solutions') && (
+                  <>
+                    <span className="absolute -left-2 top-0 text-[#00b259] font-bold">┌</span>
+                    <span className="absolute -right-2 bottom-0 text-[#00b259] font-bold">┘</span>
+                  </>
+                )}
+                Solutions
+                <ChevronDown className={cn("size-3.5 transition-transform duration-200", solutionsOpen && "rotate-180")} />
+              </a>
+              {solutionsOpen && (
+                <div
+                  className="absolute top-full left-[22.222%] z-50 bg-[#ECEBE9] border border-[#C5C4C2] border-t-0 shadow-lg p-0 font-sans text-black overflow-hidden animate-in fade-in-0 duration-100"
+                  style={{ width: '55.556%' }}
+                >
+                  <SolutionsMegaMenu />
+                </div>
+              )}
+            </div>
 
             {/* Pricing Link */}
             <a
@@ -255,7 +220,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
                 <DropdownMenuContent
                   align="center"
                   sideOffset={14}
-                  className="bg-[#ECEBE9] border border-[#C5C4C2] rounded-none shadow-lg p-1 w-64 font-mono text-black"
+                  className="bg-[#ECEBE9] border border-[#C5C4C2] rounded-none shadow-lg p-1 w-64 font-sans text-black"
                   onMouseEnter={() => setCompanyOpen(true)}
                   onMouseLeave={() => setCompanyOpen(false)}
                 >
@@ -337,8 +302,10 @@ const Header = ({ className, navigationData }: HeaderProps) => {
           </div>
         </div>
 
+
+
         {/* Mobile Navigation Header */}
-        <div className="lg:hidden flex h-16 items-center justify-between px-4 text-black font-mono">
+        <div className="lg:hidden flex h-16 items-center justify-between px-4 text-black font-sans relative z-10">
           <a href="/" className="hover:opacity-90 transition-opacity">
             <AiGreenTickLogo />
           </a>
@@ -358,7 +325,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
             <div className="flex flex-col">
               <button
                 onClick={() => setMobileFeaturesOpen(!mobileFeaturesOpen)}
-                className="w-full text-left px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between cursor-pointer"
+                className="w-full text-center px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span className="flex items-center gap-1.5">
                   {activeSection === 'features' && <span className="text-[#00b259] font-bold">&gt;</span>}
@@ -369,52 +336,125 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               {mobileFeaturesOpen && (
                 <div className="bg-[#E4E3E0] flex flex-col divide-y divide-[#C5C4C2]/50 border-t border-[#C5C4C2]">
                   <a
-                    href={getHref('#features')}
+                    href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
-                    <span className="text-[#00b259]">::</span> Shared Inbox
+                    <span className="text-[#00b259]">::</span> Unified Inbox
                   </a>
                   <a
-                    href={getHref('#features')}
+                    href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
-                    <span className="text-[#00b259]">::</span> WhatsApp Broadcast
+                    <span className="text-[#00b259]">::</span> Ads Manager
                   </a>
                   <a
-                    href={getHref('#features')}
+                    href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> WhatsApp Broadcasting
+                  </a>
+                  <a
+                    href={getHref('#about')}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> Campaign Drips
+                  </a>
+                  <a
+                    href={getHref('#about')}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Chatbot Builder
                   </a>
                   <a
-                    href={getHref('#features')}
+                    href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
-                    <span className="text-[#00b259]">::</span> API & Integrations
+                    <span className="text-[#00b259]">::</span> AI Analytics
                   </a>
                 </div>
               )}
             </div>
 
             {/* Solutions Mobile Option */}
-            <a
-              href={getHref('#solutions')}
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center gap-1.5"
-            >
-              {(pathname.startsWith('/industries') || activeSection === 'solutions') && <span className="text-[#00b259] font-bold">&gt;</span>}
-              Solutions
-            </a>
+            <div className="flex flex-col">
+              <button
+                onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+                className="w-full text-center px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span className="flex items-center gap-1.5">
+                  {(pathname.startsWith('/industries') || activeSection === 'solutions') && <span className="text-[#00b259] font-bold">&gt;</span>}
+                  Solutions
+                </span>
+                <ChevronDown className={cn("size-4 transition-transform duration-200", mobileSolutionsOpen && "rotate-180")} />
+              </button>
+              {mobileSolutionsOpen && (
+                <div className="bg-[#E4E3E0] flex flex-col divide-y divide-[#C5C4C2]/50 border-t border-[#C5C4C2]">
+                  {/* Consumer Verticals */}
+                  <div className="px-8 py-2 text-[9px] font-black text-neutral-400 bg-[#ECEBE9] tracking-wider text-center">
+                    :: CONSUMER VERTICALS
+                  </div>
+                  <a
+                    href="/industries/ecommerce"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> eCommerce & Retail
+                  </a>
+                  <a
+                    href="/industries/realestate"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> Real Estate
+                  </a>
+                  <a
+                    href="/industries/travel"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> Travel & Hospitality
+                  </a>
+                  
+                  {/* Professional Services */}
+                  <div className="px-8 py-2 text-[9px] font-black text-neutral-400 bg-[#ECEBE9] tracking-wider border-t border-[#C5C4C2]/50 text-center">
+                    :: PROFESSIONAL SERVICES
+                  </div>
+                  <a
+                    href="/industries/healthcare"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> Healthcare & Wellness
+                  </a>
+                  <a
+                    href="/industries/education"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> Education & EdTech
+                  </a>
+                  <a
+                    href="/industries/finance"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                  >
+                    <span className="text-[#00b259]">::</span> Banking & Finance
+                  </a>
+                </div>
+              )}
+            </div>
 
             {/* Pricing Mobile Option */}
             <a
               href={getHref('#pricing')}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center gap-1.5"
+              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-1.5"
             >
               {(pathname.startsWith('/pricing') || activeSection === 'pricing') && <span className="text-[#00b259] font-bold">&gt;</span>}
               Pricing
@@ -424,7 +464,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
             <a
               href={getHref('#blog')}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center gap-1.5"
+              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-1.5"
             >
               {pathname.startsWith('/blog') && <span className="text-[#00b259] font-bold">&gt;</span>}
               Blog
@@ -434,7 +474,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
             <div className="flex flex-col">
               <button
                 onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
-                className="w-full text-left px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between cursor-pointer"
+                className="w-full text-center px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span className="flex items-center gap-1.5">
                   {(activeSection === 'about' || activeSection === 'contact') && <span className="text-[#00b259] font-bold">&gt;</span>}
@@ -447,28 +487,28 @@ const Header = ({ className, navigationData }: HeaderProps) => {
                   <a
                     href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> About Us
                   </a>
                   <a
                     href={getHref('#contact')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Contact Us
                   </a>
                   <a
                     href={getHref('#careers')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Careers
                   </a>
                   <a
                     href={getHref('#faq')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
+                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Trust Center
                   </a>
@@ -480,7 +520,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
             <a
               href={getHref('#faq')}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center gap-1.5"
+              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-1.5"
             >
               <span className="text-[#00b259] font-bold">::</span> Ecosystem
             </a>

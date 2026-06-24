@@ -77,7 +77,7 @@ const IndustriesCarousel = () => {
             <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit">
               :: INDUSTRIES ::
             </span>
-            <h2 className='text-2xl font-medium md:text-3xl lg:text-4xl font-serif text-black dark:text-white leading-tight'>
+            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
               Built for businesses that live on WhatsApp
             </h2>
             <p className='text-neutral-500 text-xs sm:text-sm font-sans max-w-lg'>

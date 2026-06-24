@@ -152,10 +152,10 @@ export default function PricingPage() {
           <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
             :: FLAT RATE FEES ::
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium font-serif tracking-tight leading-none text-black">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-sans tracking-tight leading-none text-black">
             Simple pricing. No surprises. No markups.
           </h1>
-          <p className="text-neutral-500 max-w-3xl mx-auto text-sm sm:text-base font-mono">
+          <p className="text-neutral-500 max-w-3xl mx-auto text-sm sm:text-base font-sans">
             One flat monthly fee based on your plan. WhatsApp conversation charges billed at Meta's official rates — we don't mark them up. What you see is what you pay.
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function PricingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Principle 1 */}
-            <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 font-mono space-y-3 relative"
+            <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 font-sans space-y-3 relative"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
             >
               <span className="absolute top-2 right-2 text-xs font-bold text-[#00b259]">[ 01 ]</span>
@@ -178,7 +178,7 @@ export default function PricingPage() {
             </div>
 
             {/* Principle 2 */}
-            <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 font-mono space-y-3 relative"
+            <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 font-sans space-y-3 relative"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
             >
               <span className="absolute top-2 right-2 text-xs font-bold text-[#00b259]">[ 02 ]</span>
@@ -189,7 +189,7 @@ export default function PricingPage() {
             </div>
 
             {/* Principle 3 */}
-            <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 font-mono space-y-3 relative"
+            <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 font-sans space-y-3 relative"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
             >
               <span className="absolute top-2 right-2 text-xs font-bold text-[#00b259]">[ 03 ]</span>
@@ -214,16 +214,16 @@ export default function PricingPage() {
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: META CONVERSATION FEES ::
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-medium text-black">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-black">
               How WhatsApp conversation charges work.
             </h2>
-            <p className="text-neutral-500 font-mono text-xs sm:text-sm leading-relaxed">
+            <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed">
               Meta charges per 24-hour conversation window, not per message. Rates vary by conversation category. AIGreenTick charges Meta's official rates with <strong>zero markup.</strong>
             </p>
           </div>
 
           {/* Grid Layout of table and info cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 font-mono">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 font-sans">
             <div 
               className="lg:col-span-8 border border-[#C5C4C2] bg-[#ECEBE9] overflow-hidden"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
@@ -306,17 +306,17 @@ export default function PricingPage() {
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: COMPARE CAPABILITIES ::
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-medium text-black">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-black">
               What you get vs what competitors charge.
             </h2>
-            <p className="text-neutral-500 font-mono text-xs sm:text-sm leading-relaxed">
+            <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed">
               Before choosing a WhatsApp platform, check the fine print. See how AIGreenTick eliminates billing barriers.
             </p>
           </div>
 
           {/* Matrix Table */}
           <div 
-            className="border border-[#C5C4C2] bg-[#ECEBE9] overflow-hidden font-mono"
+            className="border border-[#C5C4C2] bg-[#ECEBE9] overflow-hidden font-sans"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <div className="overflow-x-auto">
@@ -400,13 +400,13 @@ export default function PricingPage() {
       {/* CTA Footer Section */}
       <section className="px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-serif font-medium text-black">
+          <h2 className="text-3xl sm:text-4xl font-sans font-bold text-black">
             Start free. Scale as you grow.
           </h2>
-          <p className="text-neutral-500 font-mono text-xs sm:text-sm max-w-md mx-auto">
+          <p className="text-neutral-500 font-sans text-xs sm:text-sm max-w-md mx-auto">
             Ready to unleash official WhatsApp API power? Sign up for your 14-day free trial now or schedule a consultation.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-mono">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-sans">
             <Link 
               href="#demo"
               className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"

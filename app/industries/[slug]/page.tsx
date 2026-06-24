@@ -74,7 +74,7 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
 
   if (!ind) {
     return (
-      <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black font-mono">
+      <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black font-sans">
         <Header navigationData={navigationData} />
         <main className="flex-grow flex flex-col items-center justify-center py-20 text-center space-y-6">
           <h1 className="text-2xl font-black">404 - BLUEPRINT NOT FOUND</h1>
@@ -169,7 +169,7 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
         <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-10 space-y-8">
             {/* Back Button */}
-            <div className="font-mono">
+            <div className="font-sans">
               <Link 
                 href="/industries"
                 className="inline-flex items-center gap-2 px-4 py-2 border border-[#C5C4C2] bg-[#ECEBE9] text-xs font-bold hover:border-black transition-colors"
@@ -183,7 +183,7 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
             {/* Split Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-8">
               {/* Left Details */}
-              <div className="lg:col-span-6 space-y-6 font-mono">
+              <div className="lg:col-span-6 space-y-6 font-sans">
                 <div className="flex items-center gap-2">
                   <div className="p-2 border border-[#C5C4C2] bg-white text-black size-9 flex items-center justify-center shrink-0">
                     <Icon className="size-5 text-[#00b259]" />
@@ -193,7 +193,7 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
                   </span>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium font-serif leading-tight text-black tracking-tight font-serif">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-sans leading-tight text-black tracking-tight font-sans">
                   WhatsApp Solutions for {ind.title}
                 </h1>
 
@@ -244,16 +244,16 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
         <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-12">
             
-            <div className="text-center space-y-4 max-w-3xl mx-auto font-mono">
+            <div className="text-center space-y-4 max-w-3xl mx-auto font-sans">
               <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
                 :: KEY CAPABILITIES ::
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-medium text-black">
+              <h2 className="text-2xl sm:text-3xl font-sans font-bold text-black">
                 Why {ind.title} brands leverage AIGreenTick.
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 font-mono">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 font-sans">
               {ind.keyBenefits.map((benefit, i) => (
                 <div 
                   key={i} 
@@ -276,12 +276,12 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
               {/* Left Column: Description */}
-              <div className="lg:col-span-5 font-mono space-y-6 flex flex-col justify-center">
+              <div className="lg:col-span-5 font-sans space-y-6 flex flex-col justify-center">
                 <span className="px-2 py-0.5 text-[9px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase w-fit">
                   Workflow Execution
                 </span>
                 
-                <h3 className="text-2xl sm:text-3xl font-serif font-medium text-black leading-tight">
+                <h3 className="text-2xl sm:text-3xl font-sans font-bold text-black leading-tight">
                   Step-by-step automation blueprints.
                 </h3>
                 
@@ -291,14 +291,14 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
               </div>
 
               {/* Right Column: Numeric Workflows */}
-              <div className="lg:col-span-7 bg-white border border-[#C5C4C2] p-8 sm:p-12 flex flex-col gap-8 font-mono"
+              <div className="lg:col-span-7 bg-white border border-[#C5C4C2] p-8 sm:p-12 flex flex-col gap-8 font-sans"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))' }}
               >
                 <h4 className="text-xs font-black text-neutral-400 uppercase tracking-widest">[ AUTOMATED SEQUENCE ]</h4>
                 <ul className="space-y-6">
                   {ind.useCases.map((uc, i) => (
                     <li key={i} className="flex items-start gap-4">
-                      <span className="flex items-center justify-center size-6 border border-[#C5C4C2] rounded-full text-xs text-[#00b259] font-bold shrink-0 mt-0.5 font-mono">
+                      <span className="flex items-center justify-center size-6 border border-[#C5C4C2] rounded-full text-xs text-[#00b259] font-bold shrink-0 mt-0.5 font-sans">
                         {i + 1}
                       </span>
                       <span className="text-xs sm:text-sm text-neutral-700 font-sans leading-relaxed">
@@ -321,13 +321,13 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
         {/* Bottom CTA */}
         <section className="px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]/50">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center space-y-6">
-            <h2 className="text-3xl sm:text-4xl font-serif font-medium text-black">
+            <h2 className="text-3xl sm:text-4xl font-sans font-bold text-black">
               Power WhatsApp automation for {ind.title}.
             </h2>
-            <p className="text-neutral-500 font-mono text-xs sm:text-sm max-w-md mx-auto">
+            <p className="text-neutral-500 font-sans text-xs sm:text-sm max-w-md mx-auto">
               Unlock the official WhatsApp Business API with AIGreenTick. Seamless integration, premium automation workflows, and zero markups.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-mono">
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-sans">
               <Link 
                 href="#demo"
                 className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"

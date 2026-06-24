@@ -39,7 +39,7 @@ const Features = () => {
           </MotionPreset>
           <MotionPreset
             component="h2"
-            className="text-2xl font-medium md:text-3xl lg:text-4xl font-serif text-black dark:text-white"
+            className="text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white"
             fade
             blur
             slide={{ direction: 'up', offset: 50 }}

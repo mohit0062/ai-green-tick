@@ -51,7 +51,7 @@ const Process = ({ steps }: ProcessProps) => {
         <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>
           <p className='text-[#00b259] text-xs font-bold font-mono uppercase tracking-widest'>:: How It Works ::</p>
 
-          <h2 className='text-2xl font-medium md:text-3xl lg:text-4xl font-serif text-black dark:text-white'>Live in 24 hours. Scale in weeks.</h2>
+          <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white'>Live in 24 hours. Scale in weeks.</h2>
 
           <p className='text-neutral-500 mx-auto max-w-2xl text-xs sm:text-sm font-sans'>
             We guide you through onboarding to the official API, importing contacts, launching campaigns, and scaling automation workflows.

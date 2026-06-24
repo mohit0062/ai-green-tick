@@ -6,6 +6,7 @@ import { Search, ArrowRight, Clock, Calendar, Tag, ChevronRight, BookOpen } from
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import { blogPosts } from '@/lib/blog-data'
+import BlogCard from '@/components/shadcn-studio/blocks/blog-card'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 
 const navigationData: Navigation[] = [
@@ -116,10 +117,10 @@ export default function BlogIndexPage() {
           <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
             :: INTEL & KNOWLEDGE HUB ::
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium font-serif tracking-tight leading-none text-black">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-sans tracking-tight leading-none text-black">
             The AI Greentick Blog
           </h1>
-          <p className="text-neutral-500 max-w-2xl mx-auto text-sm sm:text-base font-mono">
+          <p className="text-neutral-500 max-w-2xl mx-auto text-sm sm:text-base font-sans">
             Deep dives into WhatsApp API automation, customer engagement strategies, and scaling business workflows using conversational AI.
           </p>
         </div>
@@ -132,7 +133,7 @@ export default function BlogIndexPage() {
           {/* Featured Post (Only show if not searching or filtering, or show if it matches) */}
           {searchQuery === '' && selectedCategory === 'All' && featuredPost && (
             <div className="space-y-6">
-              <div className="flex items-center gap-2 font-mono text-xs text-neutral-400">
+              <div className="flex items-center gap-2 font-sans text-xs text-neutral-400">
                 <span>[ FEATURED INSIGHT ]</span>
                 <div className="h-px bg-[#C5C4C2] flex-grow" />
               </div>
@@ -152,7 +153,7 @@ export default function BlogIndexPage() {
                 </div>
 
                 {/* Details */}
-                <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between font-mono lg:h-full gap-4">
+                <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between font-sans lg:h-full gap-4">
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <span className="px-2 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
@@ -163,7 +164,7 @@ export default function BlogIndexPage() {
                       </span>
                     </div>
 
-                    <h2 className="text-xl sm:text-2xl font-black text-black group-hover:text-[#00b259] transition-colors leading-tight font-serif">
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-black group-hover:text-[#00b259] transition-colors leading-tight font-sans">
                       {featuredPost.title}
                     </h2>
 
@@ -199,7 +200,7 @@ export default function BlogIndexPage() {
           )}
 
           {/* Search & Filter Bar */}
-          <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-4 sm:p-6 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between gap-6 font-mono"
+          <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-4 sm:p-6 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between gap-6 font-sans"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
           >
             {/* Search Input */}
@@ -245,68 +246,14 @@ export default function BlogIndexPage() {
             {filteredPosts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post) => (
-                  <div 
+                  <BlogCard 
                     key={post.slug} 
-                    className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative"
-                    style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
-                  >
-                    {/* Card Header Image */}
-                    <div className="aspect-video w-full overflow-hidden border-b border-[#C5C4C2] relative">
-                      <img 
-                        src={post.image} 
-                        alt={post.title} 
-                        className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300" 
-                      />
-                      <div className="absolute inset-0 bg-[#00b259]/10 mix-blend-multiply group-hover:opacity-0 transition-opacity" />
-                      
-                      {/* Tag pill */}
-                      <span className="absolute top-3 left-3 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 font-mono backdrop-blur-xs">
-                        {post.category}
-                      </span>
-                    </div>
-
-                    {/* Card Body */}
-                    <div className="p-6 flex flex-col flex-grow gap-4 font-mono">
-                      <div className="flex items-center justify-between text-[10px] text-neutral-400">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="size-3" /> {post.date}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="size-3" /> {post.readTime}
-                        </span>
-                      </div>
-
-                      <h3 className="text-sm font-black text-black group-hover:text-[#00b259] transition-colors line-clamp-2 leading-snug font-serif">
-                        {post.title}
-                      </h3>
-
-                      <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed font-sans">
-                        {post.excerpt}
-                      </p>
-
-                      {/* Author */}
-                      <div className="flex items-center gap-2 mt-2 pt-4 border-t border-[#C5C4C2]/30">
-                        <img 
-                          src={post.author.avatar} 
-                          alt={post.author.name} 
-                          className="size-6 rounded-full border border-[#C5C4C2] grayscale"
-                        />
-                        <span className="text-[10px] font-bold text-neutral-600">{post.author.name}</span>
-                      </div>
-
-                      {/* Card Footer Link */}
-                      <div className="mt-auto pt-4 flex justify-between items-center text-xs font-bold">
-                        <Link href={`/blog/${post.slug}`} className="flex items-center gap-1.5 hover:text-[#00b259] transition-colors group/btn">
-                          <span>READ POST</span>
-                          <span className="text-[#00b259] group-hover/btn:translate-x-0.5 transition-transform">-&gt;</span>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+                    post={post}
+                  />
                 ))}
               </div>
             ) : (
-              <div className="border border-dashed border-[#C5C4C2] py-20 text-center font-mono">
+              <div className="border border-dashed border-[#C5C4C2] py-20 text-center font-sans">
                 <p className="text-neutral-500 text-sm">NO ARTICLES FOUND MATCHING YOUR CRITERIA.</p>
                 <button 
                   onClick={() => { setSearchQuery(''); setSelectedCategory('All') }}

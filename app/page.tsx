@@ -20,6 +20,7 @@ import type { StackProps } from '@/components/shadcn-studio/blocks/bento-grid-18
 import type { Testimonial } from '@/components/shadcn-studio/blocks/testimonials-component-23/testimonials-component-23'
 import Link from 'next/link'
 import { blogPosts } from '@/lib/blog-data'
+import BlogCard from '@/components/shadcn-studio/blocks/blog-card'
 
 const navigationData: Navigation[] = [
   {
@@ -521,48 +522,21 @@ const BlogSection = () => {
           <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono">
             :: BLOG & RESOURCES ::
           </span>
-          <h2 className="text-2xl font-medium sm:text-3xl lg:text-4xl text-black font-serif">
+          <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl text-black font-sans">
             Latest Insights from Our Experts
           </h2>
-          <p className="text-neutral-500 max-w-xl text-xs sm:text-sm font-mono">
+          <p className="text-neutral-500 max-w-xl text-xs sm:text-sm font-sans">
             Stay updated with the latest trends, strategies, and tips on conversational AI and automation.
           </p>
         </div>
 
-        <div className="flex overflow-x-auto md:grid md:grid-cols-3 gap-6 font-mono pb-4 snap-x snap-mandatory -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 scrollbar-thin">
+        <div className="flex overflow-x-auto md:grid md:grid-cols-3 gap-6 font-sans pb-4 snap-x snap-mandatory -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 scrollbar-thin">
           {posts.map((post) => (
-            <div 
+            <BlogCard 
               key={post.slug} 
-              className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
-              style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
-            >
-              <div className="aspect-video w-full overflow-hidden border-b border-[#C5C4C2] relative">
-                <img 
-                  src={post.image} 
-                  alt={post.title} 
-                  className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300" 
-                />
-                <div className="absolute inset-0 bg-[#00b259]/10 mix-blend-multiply group-hover:opacity-0 transition-opacity" />
-              </div>
-              <div className="p-6 flex flex-col flex-grow gap-4">
-                <div className="flex items-center justify-between text-[10px] text-neutral-500">
-                  <span>{post.date}</span>
-                  <span>{post.readTime}</span>
-                </div>
-                <h3 className="text-sm font-black text-black group-hover:text-[#00b259] transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed">
-                  {post.excerpt}
-                </p>
-                <div className="mt-auto pt-4 flex justify-between items-center border-t border-[#C5C4C2]/40 text-xs font-bold">
-                  <Link href={`/blog/${post.slug}`} className="flex items-center gap-1 hover:text-[#00b259] transition-colors group/btn">
-                    <span>READ POST</span>
-                    <span className="text-[#00b259] group-hover/btn:translate-x-0.5 transition-transform">-&gt;</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
+              post={post}
+              className="w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
+            />
           ))}
         </div>
 
@@ -570,7 +544,7 @@ const BlogSection = () => {
         <div className="flex justify-center pt-4">
           <Link
             href="/blog"
-            className="px-8 py-3 text-xs font-bold text-white bg-black hover:bg-black/90 transition-colors tracking-widest font-mono"
+            className="px-8 py-3 text-xs font-bold text-white bg-black hover:bg-black/90 transition-colors tracking-widest font-sans"
             style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}
           >
             VIEW ALL ARTICLES
@@ -676,9 +650,9 @@ const LandingPage = () => {
 
       <BentoGrid18Block />
 
-      <FeaturesSection26Block />
-
       <BentoGrid07Block />
+
+      <FeaturesSection26Block />
 
       <TimelineComponent03Block />
 

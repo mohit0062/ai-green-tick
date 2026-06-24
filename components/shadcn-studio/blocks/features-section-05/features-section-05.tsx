@@ -20,7 +20,7 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
           <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-2">
             :: SECURITY & COMPLIANCE ::
           </span>
-          <h2 className='text-2xl font-medium md:text-3xl lg:text-4xl font-serif text-black dark:text-white leading-tight'>
+          <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
             Enterprise-grade security from day one
           </h2>
         </div>

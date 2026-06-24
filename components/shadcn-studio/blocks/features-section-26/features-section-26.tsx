@@ -34,7 +34,7 @@ const Features = ({ data }: { data: DataType[] }) => {
                 <span className='text-xs font-mono font-bold uppercase tracking-widest text-[#00b259]'>
                   :: THE SOLUTION ::
                 </span>
-                <h2 className='text-2xl sm:text-3xl lg:text-[34px] font-serif font-medium tracking-tight text-black dark:text-white leading-tight'>
+                <h2 className='text-2xl sm:text-3xl lg:text-[34px] font-sans font-bold tracking-tight text-black dark:text-white leading-tight'>
                   One platform. Every WhatsApp workflow. Powered by AI.
                 </h2>
                 <p className='text-muted-foreground text-xs sm:text-sm leading-relaxed max-w-xl font-sans'>

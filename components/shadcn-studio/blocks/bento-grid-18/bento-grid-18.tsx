@@ -21,7 +21,7 @@ const BentoGrid = () => {
 
           <MotionPreset
             component='h2'
-            className='text-2xl font-medium md:text-3xl lg:text-4xl text-foreground max-w-2xl mt-2 font-serif whitespace-normal md:whitespace-nowrap'
+            className='text-2xl font-bold md:text-3xl lg:text-4xl text-foreground max-w-2xl mt-2 font-sans whitespace-normal md:whitespace-nowrap'
             fade
             slide={{ direction: 'down', offset: 30 }}
             delay={0.2}
@@ -30,9 +30,6 @@ const BentoGrid = () => {
             WhatsApp is leaking your revenue. Why
           </MotionPreset>
         </div>
-
-        {/* Top border line */}
-        <div className="border-t border-[#C5C4C2] -mx-4 sm:-mx-6 lg:-mx-8 my-8" />
 
         {/* 3-Card Grid */}
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>

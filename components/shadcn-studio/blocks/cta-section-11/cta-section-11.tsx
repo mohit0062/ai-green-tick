@@ -25,16 +25,10 @@ const CTA = () => {
           className='bg-accent absolute -top-10 left-4 -z-1 hidden size-46 rotate-[8deg] flex-col items-center justify-center gap-3 rounded-lg border-3 shadow-[inset_0_0_15px_color-mix(in_oklab,var(--primary)60%,transparent)] sm:left-8 lg:left-16 xl:flex'
         >
           <GrowLogo className='size-14' />
-          <img
-            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/cta/grow-text.png'
-            alt='Website Mockups Grid'
-            className='w-28 dark:hidden'
-          />
-          <img
-            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/cta/grow-text-dark.png'
-            alt='Website Mockups Grid'
-            className='hidden w-28 dark:inline-block'
-          />
+          <div className="flex flex-col items-center font-mono leading-none tracking-wider select-none text-center">
+            <span className="text-xs font-black text-black dark:text-white">AI</span>
+            <span className="text-[10px] font-bold text-[#00b259] uppercase tracking-widest mt-1">GREENTICK</span>
+          </div>
         </motion.div>
 
         <motion.div
@@ -45,23 +39,17 @@ const CTA = () => {
           className='bg-accent absolute -right-5 -bottom-[20%] -z-1 flex size-29 rotate-[8deg] flex-col items-center justify-center gap-3 rounded-lg border-3 shadow-[inset_0_0_15px_color-mix(in_oklab,var(--primary)60%,transparent)] md:size-46 lg:right-16 lg:-bottom-[25%]'
         >
           <GrowLogo className='size-7 md:size-14' />
-          <img
-            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/cta/grow-text.png'
-            alt='Website Mockups Grid'
-            className='w-22 md:w-28 dark:hidden'
-          />
-          <img
-            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/cta/grow-text-dark.png'
-            alt='Website Mockups Grid'
-            className='hidden w-22 md:w-28 dark:inline-block'
-          />
+          <div className="flex flex-col items-center font-mono leading-none tracking-wider select-none text-center">
+            <span className="text-[8px] md:text-xs font-black text-black dark:text-white">AI</span>
+            <span className="text-[6px] md:text-[10px] font-bold text-[#00b259] uppercase tracking-widest mt-1">GREENTICK</span>
+          </div>
         </motion.div>
 
         {/* Main Content */}
         <div className='space-y-8 text-center'>
           <div className='space-y-4'>
             <MotionPreset fade slide={{ direction: 'down', offset: 50 }} transition={{ duration: 0.7 }}>
-              <h2 className='text-2xl font-medium md:text-3xl lg:text-4xl font-serif text-black dark:text-white leading-tight'>
+              <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
                 Ready to make WhatsApp your #1 channel?
               </h2>
             </MotionPreset>
