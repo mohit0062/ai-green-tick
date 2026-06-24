@@ -64,10 +64,10 @@ const Footer = () => {
           <div className="col-span-6 sm:col-span-4 lg:col-span-3 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-black">Company</h4>
             <ul className="space-y-2.5 text-xs text-neutral-500">
-              <li><a href="/#about" className="hover:text-[#00b259] transition-colors">About Us</a></li>
+              <li><a href="/about" className="hover:text-[#00b259] transition-colors">About Us</a></li>
               <li><a href="/industries" className="hover:text-[#00b259] transition-colors">Solutions</a></li>
-              <li><a href="/#careers" className="hover:text-[#00b259] transition-colors">Careers</a></li>
-              <li><a href="/#contact" className="hover:text-[#00b259] transition-colors">Contact</a></li>
+              <li><a href="/careers" className="hover:text-[#00b259] transition-colors">Careers</a></li>
+              <li><a href="/contact" className="hover:text-[#00b259] transition-colors">Contact</a></li>
             </ul>
           </div>
 

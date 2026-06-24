@@ -28,6 +28,9 @@ const Header = ({ className, navigationData }: HeaderProps) => {
     if (hash === '#blog') return '/blog'
     if (hash === '#pricing') return '/pricing'
     if (hash === '#solutions') return '/industries'
+    if (hash === '#about') return '/about'
+    if (hash === '#careers') return '/careers'
+    if (hash === '#contact') return '/contact'
     if (isHomepage) return hash
     return hash.startsWith('#') ? `/${hash}` : hash
   }
