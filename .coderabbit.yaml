@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: en-US
+tone_instructions: "You are a senior engineer. Be assertive, concise, and focus on performance and security."
+
+# Customize which files to review
+path_filters:
+  - "!node_modules/**"
+  - "!.next/**"
+  - "!.vercel/**"
+  - "!*.lock"
+  - "!package-lock.json"
+  - "app/**"
+  - "components/**"
+  - "lib/**"
+
+# Review preferences
+reviews:
+  profile: "assertive"
+  high_level_summary: true
+
+ignore_draft_pr: true
+disable_poem: true
