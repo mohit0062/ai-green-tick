@@ -1,7 +1,6 @@
 'use client'
 import { ArrowRightIcon } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
 import { NumberTicker } from '@/components/ui/number-ticker'
@@ -23,9 +22,9 @@ interface AboutUsProps {
 
 const AboutUs = ({
   stats,
-  badgeText = "ABOUT APARGO",
+  badgeText = "ABOUT AI GREENTICK",
   heading = "We Build and Ship What Others Only Plan",
-  description = "Apargo started as a small group of engineers tired of seeing good ideas die in slide decks. Today we build production software for clients across the world and run our own SaaS products in parallel."
+  description = "AI Greentick was built to help brands automate customer engagement on WhatsApp at scale. Today we build enterprise-grade communication infrastructure and smart AI workflows."
 }: AboutUsProps) => {
   return (
     <section className='relative z-1 overflow-hidden py-8 sm:py-16 lg:py-24'>
@@ -50,11 +49,11 @@ const AboutUs = ({
             {/* Header */}
             <MotionPreset fade blur slide={{ direction: 'left', offset: 50 }} transition={{ duration: 0.7 }}>
               <div className='space-y-4'>
-                <Badge variant='outline' className='text-sm font-normal uppercase tracking-wider'>
-                  {badgeText}
-                </Badge>
-                <h1 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>{heading}</h1>
-                <p className='text-muted-foreground text-xl leading-relaxed'>
+                <span className='inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-widest text-[#00b259] border border-[#00b259] bg-[#00b259]/10'>
+                  <span className='text-[#00b259]'>■</span> {badgeText}
+                </span>
+                <h1 className='text-2xl font-black text-black md:text-3xl lg:text-4xl'>{heading}</h1>
+                <p className='text-neutral-600 text-base sm:text-lg leading-relaxed'>
                   {description}
                 </p>
                 <Button
@@ -82,10 +81,10 @@ const AboutUs = ({
                     transition={{ duration: 0.6 }}
                     className='flex-1'
                   >
-                    <div className='text-xl font-semibold sm:text-2xl lg:text-3xl'>
+                    <div className='text-2xl font-black sm:text-3xl lg:text-4xl text-black leading-none font-display'>
                       <NumberTicker startValue={0} value={stat.value} delay={0.8 + index * 0.2} stiffness={170} />+
                     </div>
-                    <div className='text-muted-foreground text-xs sm:text-sm'>{stat.description}</div>
+                    <div className='text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-500 mt-1'>{stat.description}</div>
                   </MotionPreset>
                   {index < stats.length - 1 && (
                     <MotionPreset fade blur delay={0.5 + index * 0.2} transition={{ duration: 0.4 }}>

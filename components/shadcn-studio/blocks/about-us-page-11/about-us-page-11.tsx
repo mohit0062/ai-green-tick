@@ -28,18 +28,18 @@ interface AboutUsStoryProps {
 }
 
 const defaultParagraphs = [
-  "Apargo started with one belief: growing businesses don’t fail because of ideas — they fail because execution is slow.",
+  "AI Greentick started with one belief: growing businesses don’t fail because of ideas — they fail because communication is slow.",
   "So we built a senior-heavy engineering team focused on shipping fast, solving real problems and working closely with founders.",
   "As our clients grew, we faced the same operational challenges they did — especially around WhatsApp at scale. That led us to build AI Greentick, now used by businesses across India and beyond.",
-  "Today Apargo builds custom software for ambitious companies while also running and scaling our own SaaS products."
+  "Today AI Greentick builds custom communication software for ambitious companies while also running and scaling our own SaaS products."
 ]
 
 const AboutUs = ({
   avatars,
   logos,
   badgeText = "Our story",
-  heading = "How Apargo started",
-  description = "Apargo was built for founders who needed real execution — not endless presentations, delays and outsourced confusion.",
+  heading = "How AI Greentick started",
+  description = "AI Greentick was built for founders who needed real execution — not endless presentations, delays and outsourced confusion.",
   imageUrl = "https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-45.png",
   contentHeading = "We build products the way ambitious teams actually need them built.",
   paragraphs = defaultParagraphs
@@ -49,7 +49,7 @@ const AboutUs = ({
   const firstWords = headingWords.join(" ")
 
   return (
-    <section className='bg-[#E5E2DA] relative overflow-hidden py-8 sm:py-16 lg:py-24 text-black'>
+    <section className='bg-[#E5E2DA] border-b px-4 sm:px-6 lg:px-8 relative overflow-hidden text-black'>
       <motion.svg
         width='1em'
         height='1em'
@@ -113,10 +113,12 @@ const AboutUs = ({
         />
       </motion.svg>
 
-      <div className='relative mx-auto max-w-7xl space-y-12 px-4 sm:px-6 md:space-y-16 lg:space-y-24 lg:px-8'>
-        <div className='space-y-4 text-center'>
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
-            <span className='text-[#00b259] mb-2 block text-sm font-bold uppercase tracking-wider'>{badgeText}</span>
+      <div className='relative mx-auto max-w-7xl border-x border-[#C5C4C2] space-y-12 px-4 sm:px-6 md:space-y-16 lg:space-y-24 lg:px-8 py-8 sm:py-16 lg:py-24'>
+        <div className='space-y-6 text-center'>
+          <span className='inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold font-mono uppercase tracking-widest text-[#00b259] border border-[#00b259] bg-[#00b259]/10'>
+            <span className='text-[#00b259]'>■</span> {badgeText}
+          </span>
+          <h2 className='text-2xl font-black text-black md:text-3xl lg:text-4xl'>
             {firstWords}{' '}
             {lastWord && (
               <span className='relative'>
@@ -125,7 +127,7 @@ const AboutUs = ({
               </span>
             )}
           </h2>
-          <p className='text-neutral-600 mx-auto max-w-4xl text-lg sm:text-xl font-normal'>
+          <p className='text-neutral-600 mx-auto max-w-4xl text-base sm:text-lg font-normal leading-relaxed'>
             {description}
           </p>
         </div>
@@ -139,7 +141,7 @@ const AboutUs = ({
 
           <div className='space-y-6 max-lg:text-center text-left'>
             {contentHeading && (
-              <h3 className='text-xl font-semibold text-black'>
+              <h3 className='text-base font-black text-black uppercase tracking-wide'>
                 {contentHeading}
               </h3>
             )}

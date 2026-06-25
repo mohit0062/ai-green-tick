@@ -41,7 +41,7 @@ const BentoGrid = () => {
           <div className='mt-auto px-6'>
             <h3 className='text-lg font-semibold leading-snug text-foreground sm:text-xl'>We&apos;re senior-heavy</h3>
             <p className='mt-3 text-sm leading-relaxed text-muted-foreground'>
-              Roughly four out of five engineers at Apargo are mid-to-senior. That&apos;s deliberate. We charge less than a big consultancy and ship faster than a junior-heavy agency.
+              Roughly four out of five engineers at AI Greentick are mid-to-senior. That&apos;s deliberate. We charge less than a big consultancy and ship faster than a junior-heavy agency.
             </p>
           </div>
         </MotionPreset>

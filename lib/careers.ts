@@ -17,13 +17,13 @@ export type CareerRole = {
   applyHref: string
 }
 
-const careersEmail = 'hello@apargo.com'
+const careersEmail = 'hello@aigreentick.com'
 
 function mailto(subject: string) {
   return `mailto:${careersEmail}?subject=${encodeURIComponent(subject)}`
 }
 
-export const openApplicationHref = mailto('Open application for Apargo')
+export const openApplicationHref = mailto('Open application for AI Greentick')
 
 export const openRoles: CareerRole[] = [
   {
@@ -33,9 +33,9 @@ export const openRoles: CareerRole[] = [
     employmentType: 'Full-time',
     team: 'Engineering',
     summary:
-      'Own production services, queues, APIs, and integrations for client products and AI Greentick.',
+      'Own production services, queues, APIs, and integrations for AI Greentick.',
     about: [
-      'You will work on the services that make Apargo products reliable: APIs, worker queues, event pipelines, billing integrations, WhatsApp workflows, and the operational tooling behind them.',
+      'You will work on the services that make AI Greentick reliable: APIs, worker queues, event pipelines, billing integrations, WhatsApp workflows, and the operational tooling behind them.',
       'In the first 90 days, you will ship a real production module, harden one existing service, and write the runbook that future engineers use when something breaks.',
     ],
     first90: [
@@ -109,13 +109,13 @@ export const openRoles: CareerRole[] = [
     summary:
       'Design serious SaaS workflows for operators, founders, support teams, and internal product users.',
     about: [
-      'You will design the interfaces Apargo uses to make complex work feel manageable: admin panels, AI review queues, onboarding flows, analytics, and customer-facing SaaS surfaces.',
+      'You will design the interfaces AI Greentick uses to make complex work feel manageable: admin panels, AI review queues, onboarding flows, analytics, and customer-facing SaaS surfaces.',
       'In the first 90 days, you will redesign one high-traffic workflow, define reusable interface patterns, and work with engineers until the shipped UI matches the intent.',
     ],
     first90: [
       'Audit a live workflow and identify where users lose confidence, speed, or context.',
       'Prototype a cleaner version and validate it with internal users or customers.',
-      'Document a small set of reusable product patterns for future Apargo work.',
+      'Document a small set of reusable product patterns for future AI Greentick work.',
     ],
     responsibilities: [
       'Create flows, wireframes, prototypes, high-fidelity UI, and implementation-ready specs.',

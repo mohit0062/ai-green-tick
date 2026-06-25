@@ -153,7 +153,7 @@ export default function IndustriesPage() {
         {/* Glow highlight in top-left */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-[#00b259]/5 rounded-full blur-3xl pointer-events-none" />
         <div className="mx-auto max-w-7xl border-x border-[#022c16] px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12 relative z-10">
-          
+
           {/* Tabs Selector list */}
           <div className="border border-[#022c16] bg-[#011207]/90 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 rounded-none overflow-hidden select-none font-sans text-xs backdrop-blur-xs">
             {industries.map(ind => {
@@ -177,7 +177,7 @@ export default function IndustriesPage() {
                   <Icon className={cn("size-4 shrink-0 transition-colors", isActive ? "text-[#00b259]" : "text-neutral-500")} />
                   <span>{ind.title.toUpperCase()}</span>
                   {isActive && isAutoplay && (
-                    <div 
+                    <div
                       className="absolute bottom-0 left-0 h-0.5 bg-[#00b259] transition-all duration-75"
                       style={{ width: `${progress}%` }}
                     />
@@ -189,7 +189,7 @@ export default function IndustriesPage() {
 
           {/* Active Industry Panel */}
           {activeIndustry && (
-            <div 
+            <div
               className="border border-[#022c16] bg-gradient-to-br from-[#011a0c]/95 to-[#010e06]/95 grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-none shadow-2xl"
             >
               {/* Left Info Column */}
@@ -198,11 +198,11 @@ export default function IndustriesPage() {
                   <span className="px-2 py-0.5 text-[9px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/10 uppercase">
                     Vertical Insight
                   </span>
-                  
+
                   <h3 className="text-2xl font-sans font-bold text-white leading-snug tracking-tight">
                     {activeIndustry.title}
                   </h3>
-                  
+
                   <p className="text-xs text-neutral-300 font-sans leading-relaxed">
                     {activeIndustry.desc}
                   </p>
@@ -237,14 +237,14 @@ export default function IndustriesPage() {
 
                 <div className="pt-6 border-t border-[#022c16] flex flex-wrap items-center justify-between gap-4">
                   <div className="flex flex-wrap items-center gap-3">
-                    <Link 
+                    <Link
                       href="#demo"
                       className="px-5 py-2.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:from-[#00c864] hover:to-[#006633] transition-all shadow-[0_0_15px_rgba(0,178,89,0.2)]"
                       style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
                     >
                       SCHEDULE DEMO
                     </Link>
-                    <Link 
+                    <Link
                       href={`/industries/${selectedIndustry || 'ecommerce'}`}
                       className="px-5 py-2.5 text-xs font-black text-white border border-[#00b259]/30 hover:border-[#00b259] hover:bg-[#00b259]/10 transition-all"
                       style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
@@ -265,7 +265,7 @@ export default function IndustriesPage() {
       {/* Grid of All Verticals (For SEO and mobile layouts) */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/50">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-24 space-y-12">
-          
+
           <div className="text-center space-y-4 max-w-3xl mx-auto">
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: INDUSTRY COMPARISON ::
@@ -283,7 +283,7 @@ export default function IndustriesPage() {
             {industries.map((ind, idx) => {
               const Icon = ind.icon
               return (
-                <div 
+                <div
                   key={ind.id}
                   onClick={() => {
                     setSelectedIndustry(ind.id)
@@ -307,13 +307,13 @@ export default function IndustriesPage() {
 
                   {/* Center Chamfered Icon Box */}
                   <div className="flex items-center justify-center flex-grow">
-                    <div 
+                    <div
                       className={cn(
                         "w-36 h-36 bg-[#ECEBE9]/30 border border-[#C5C4C2] flex items-center justify-center relative rounded-2xl transition-all duration-300",
                         selectedIndustry === ind.id ? "bg-[#00b259]/10 border-[#00b259]/30" : "group-hover:bg-[#00b259]/5 group-hover:border-[#00b259]/20"
                       )}
-                      style={{ 
-                        clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)' 
+                      style={{
+                        clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)'
                       }}
                     >
                       <div className={cn(
@@ -339,7 +339,7 @@ export default function IndustriesPage() {
                   </div>
 
                   {/* Action Link row */}
-                  <Link 
+                  <Link
                     href={`/industries/${ind.id}`}
                     onClick={(e) => e.stopPropagation()}
                     className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-sans text-black w-full mt-2 hover:text-[#00b259] transition-colors"
@@ -358,9 +358,9 @@ export default function IndustriesPage() {
       {/* Trust & Capabilities Section */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 space-y-12">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center font-sans">
-            
+
             {/* Feature 1 */}
             <div className="space-y-3">
               <div className="mx-auto size-12 border border-[#C5C4C2] bg-white flex items-center justify-center text-[#00b259]">
@@ -409,14 +409,14 @@ export default function IndustriesPage() {
             Ready to deploy official WhatsApp API automation inside your workflows? Start your 14-day free trial now or book a consultation.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-sans">
-            <Link 
+            <Link
               href="#demo"
               className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"
               style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}
             >
               START 14-DAY FREE TRIAL
             </Link>
-            <Link 
+            <Link
               href="#demo"
               className="px-6 py-3 text-xs font-black text-black border border-[#C5C4C2] hover:bg-neutral-200/50 transition-colors"
               style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}

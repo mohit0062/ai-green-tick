@@ -79,7 +79,7 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
         <main className="flex-grow flex flex-col items-center justify-center py-20 text-center space-y-6">
           <h1 className="text-2xl font-black">404 - BLUEPRINT NOT FOUND</h1>
           <p className="text-neutral-500 text-sm max-w-md">The industry vertical you are looking for does not exist.</p>
-          <Link 
+          <Link
             href="/industries"
             className="px-6 py-2 border border-black hover:bg-black hover:text-[#ECEBE9] transition-all text-xs font-bold"
           >
@@ -164,13 +164,13 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
 
       {/* Main Container */}
       <main className="flex-grow bg-[#ECEBE9]/50 pb-20 sm:pb-28">
-        
+
         {/* Top Hero Section */}
         <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-10 space-y-8">
             {/* Back Button */}
             <div className="font-sans">
-              <Link 
+              <Link
                 href="/industries"
                 className="inline-flex items-center gap-2 px-4 py-2 border border-[#C5C4C2] bg-[#ECEBE9] text-xs font-bold hover:border-black transition-colors"
                 style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
@@ -211,7 +211,7 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
                 </div>
 
                 <div className="pt-4 flex flex-wrap gap-4">
-                  <Link 
+                  <Link
                     href="#demo"
                     className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"
                     style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}
@@ -223,14 +223,14 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
 
               {/* Right Image */}
               <div className="lg:col-span-6">
-                <div 
+                <div
                   className="border border-[#C5C4C2] bg-white overflow-hidden aspect-video relative shadow-lg"
                   style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))' }}
                 >
-                  <img 
-                    src={ind.image} 
-                    alt={`${ind.title} WhatsApp flows illustration`} 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src={ind.image}
+                    alt={`${ind.title} WhatsApp flows illustration`}
+                    className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-[#00b259]/5 mix-blend-multiply pointer-events-none" />
                 </div>
@@ -243,7 +243,7 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
         {/* Benefits Grid */}
         <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-12">
-            
+
             <div className="text-center space-y-4 max-w-3xl mx-auto font-sans">
               <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
                 :: KEY CAPABILITIES ::
@@ -255,8 +255,8 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 font-sans">
               {ind.keyBenefits.map((benefit, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 space-y-3 relative"
                   style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
                 >
@@ -273,18 +273,18 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
         {/* Use cases workflows section */}
         <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/50">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-12">
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
               {/* Left Column: Description */}
               <div className="lg:col-span-5 font-sans space-y-6 flex flex-col justify-center">
                 <span className="px-2 py-0.5 text-[9px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase w-fit">
                   Workflow Execution
                 </span>
-                
+
                 <h3 className="text-2xl sm:text-3xl font-sans font-bold text-black leading-tight">
                   Step-by-step automation blueprints.
                 </h3>
-                
+
                 <p className="text-xs text-neutral-500 font-sans leading-relaxed">
                   These custom-tailored automation paths plug directly into CRM dashboards, shipping modules, scheduling software, and communication databases.
                 </p>
@@ -328,14 +328,14 @@ export default function IndustryDetailPage({ params }: { params: Promise<{ slug:
               Unlock the official WhatsApp Business API with AIGreenTick. Seamless integration, premium automation workflows, and zero markups.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-sans">
-              <Link 
+              <Link
                 href="#demo"
                 className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"
                 style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}
               >
                 START 14-DAY FREE TRIAL
               </Link>
-              <Link 
+              <Link
                 href="#demo"
                 className="px-6 py-3 text-xs font-black text-black border border-[#C5C4C2] hover:bg-neutral-200/50 transition-colors"
                 style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}

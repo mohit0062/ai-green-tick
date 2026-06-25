@@ -11,23 +11,38 @@ type Features = {
   description: string
 }[]
 
-const Features = ({ featuresList }: { featuresList: Features }) => {
+interface FeaturesProps {
+  badge?: string
+  heading?: string
+  featuresList: Features
+}
+
+const Features = ({
+  badge = "SECURITY & COMPLIANCE",
+  heading = "Enterprise-grade security from day one",
+  featuresList
+}: FeaturesProps) => {
+  const isFour = featuresList.length === 4
   return (
     <section className='border-b px-4 sm:px-6 lg:px-8 bg-white dark:bg-neutral-900'>
       <div className='mx-auto max-w-7xl border-x px-4 sm:px-6 lg:px-8 border-[#C5C4C2] py-8 sm:py-16 lg:py-24'>
         {/* Header */}
         <div className='mx-auto mb-12 space-y-4 text-center sm:mb-16 lg:mb-24 flex flex-col items-center'>
-          <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-2">
-            :: SECURITY & COMPLIANCE ::
-          </span>
-          <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
-            Enterprise-grade security from day one
-          </h2>
+          {badge && (
+            <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-2">
+              :: {badge} ::
+            </span>
+          )}
+          {heading && (
+            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
+              {heading}
+            </h2>
+          )}
         </div>
 
-        <div className='grid grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-3'>
+        <div className={cn('grid grid-cols-2 gap-4 sm:gap-8', isFour ? 'lg:grid-cols-4' : 'lg:grid-cols-3')}>
           {featuresList.map((item, index) => {
-            const colSpan = index === 0 ? 'col-span-2 lg:col-span-1' : 'col-span-1 lg:col-span-1'
+            const colSpan = (!isFour && index === 0) ? 'col-span-2 lg:col-span-1' : 'col-span-1'
             return (
               <Card
                 key={index}

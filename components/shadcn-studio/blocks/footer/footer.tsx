@@ -10,17 +10,17 @@ const Footer = () => {
       <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 lg:py-16 space-y-12">
         {/* Main Grid */}
         <div className="grid grid-cols-12 gap-8">
-          
+
           {/* Column 1: Brand details (4 cols) */}
           <div className="col-span-12 lg:col-span-4 space-y-6">
             <div className="flex items-center">
               <AiGreenTickLogo />
             </div>
-            
+
             <p className="text-xs text-neutral-500 max-w-sm leading-relaxed">
               AI Greentick is an enterprise-grade WhatsApp Business API platform offering automated marketing campaigns, shared team inboxes, smart routing, and custom AI agents.
             </p>
-            
+
             {/* Social Icons */}
             <div className="flex items-center gap-4 text-neutral-600">
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#00b259] transition-colors">
@@ -31,7 +31,7 @@ const Footer = () => {
               </a>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#00b259] transition-colors">
                 <svg className="size-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
               <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF0000] transition-colors">
@@ -92,7 +92,7 @@ const Footer = () => {
             {/* ThemeSelection Checkmark Badge */}
             <div className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
               <svg className="h-4 w-auto" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 3L5.5 11.5L2 8" stroke="#5664F5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M14 3L5.5 11.5L2 8" stroke="#5664F5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <span className="text-xs font-extrabold text-neutral-800 tracking-tight">ThemeSelection</span>
             </div>
@@ -128,7 +128,7 @@ const Footer = () => {
               <a href="#" className="hover:text-[#00b259] transition-colors">Terms of Service</a>
             </div>
           </div>
-          
+
           <div className="flex flex-wrap items-center gap-4">
             {/* Secure Payment */}
             <div className="flex items-center gap-1 bg-[#F1F5F9] border border-[#E2E8F0] px-2 py-1 rounded-sm text-[10px] font-semibold text-neutral-700">

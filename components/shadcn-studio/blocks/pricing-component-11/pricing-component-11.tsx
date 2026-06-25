@@ -77,7 +77,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
   return (
     <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/50">
       <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-24 space-y-12">
-        
+
         {showHeaders && (
           <div className="text-center space-y-4 max-w-3xl mx-auto">
             <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
@@ -96,13 +96,13 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-2 font-sans">
           {/* Currency switch */}
           <div className="flex items-center border border-[#C5C4C2] p-1 bg-[#ECEBE9] select-none">
-            <button 
+            <button
               onClick={() => setCurrency('INR')}
               className={`px-4 py-1.5 text-xs font-bold cursor-pointer transition-colors ${currency === 'INR' ? 'bg-black text-[#ECEBE9]' : 'text-neutral-500 hover:text-black'}`}
             >
               INR (₹)
             </button>
-            <button 
+            <button
               onClick={() => setCurrency('USD')}
               className={`px-4 py-1.5 text-xs font-bold cursor-pointer transition-colors ${currency === 'USD' ? 'bg-black text-[#ECEBE9]' : 'text-neutral-500 hover:text-black'}`}
             >
@@ -113,11 +113,11 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
           {/* Billing Cycle Switch */}
           <div className="flex items-center gap-3">
             <span className={`text-xs font-bold ${billingCycle === 'monthly' ? 'text-black' : 'text-neutral-500'}`}>Monthly</span>
-            <button 
+            <button
               onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
               className="w-12 h-6 border border-[#C5C4C2] bg-white rounded-none relative transition-colors focus:outline-none"
             >
-              <div 
+              <div
                 className="w-4 h-4 bg-[#00b259] absolute top-1/2 -translate-y-1/2 transition-all duration-300"
                 style={{ left: billingCycle === 'annual' ? '26px' : '4px' }}
               />
@@ -131,7 +131,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
         {/* 4-Tier Grid */}
         <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 pb-6 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 snap-x snap-mandatory scrollbar-thin">
           {/* Starter Plan */}
-          <div 
+          <div
             className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
@@ -154,7 +154,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                   </li>
                 ))}
               </ul>
-              <Link 
+              <Link
                 href="#demo"
                 className="w-full text-center py-2.5 text-xs font-black text-black border border-black hover:bg-black hover:text-[#ECEBE9] transition-all"
                 style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
@@ -165,7 +165,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
           </div>
 
           {/* Growth Plan - Most Popular */}
-          <div 
+          <div
             className="border-2 border-[#00b259] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
@@ -193,7 +193,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                   </li>
                 ))}
               </ul>
-              <Link 
+              <Link
                 href="#demo"
                 className="w-full text-center py-2.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-95 transition-opacity"
                 style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
@@ -204,7 +204,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
           </div>
 
           {/* Business Plan */}
-          <div 
+          <div
             className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
@@ -227,7 +227,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                   </li>
                 ))}
               </ul>
-              <Link 
+              <Link
                 href="#demo"
                 className="w-full text-center py-2.5 text-xs font-black text-black border border-black hover:bg-black hover:text-[#ECEBE9] transition-all"
                 style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
@@ -238,7 +238,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
           </div>
 
           {/* Enterprise Plan */}
-          <div 
+          <div
             className="border border-[#C5C4C2] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
@@ -260,7 +260,7 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
                 <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>SSO + role-based access + SLA</span></li>
                 <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Custom onboarding program</span></li>
               </ul>
-              <Link 
+              <Link
                 href="#demo"
                 className="w-full text-center py-2.5 text-xs font-black text-white bg-black hover:bg-neutral-800 transition-colors"
                 style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}

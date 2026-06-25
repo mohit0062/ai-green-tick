@@ -33,14 +33,14 @@ const LogoCloud = ({ brandLogos }: { brandLogos: brandLogos[] }) => {
           <div className='w-full overflow-hidden border-b h-13 lg:h-18 flex items-center'>
             <Marquee pauseOnHover duration={35} gap={0}>
               {brandLogos.slice(0, 7).map((logo, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
                 >
-                  <img 
-                    src={logo.image} 
-                    alt={logo.name} 
-                    className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300' 
+                  <img
+                    src={logo.image}
+                    alt={logo.name}
+                    className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
                   />
                 </div>
               ))}
@@ -51,14 +51,14 @@ const LogoCloud = ({ brandLogos }: { brandLogos: brandLogos[] }) => {
           <div className='w-full overflow-hidden h-13 lg:h-18 flex items-center'>
             <Marquee pauseOnHover duration={35} gap={0} reverse>
               {brandLogos.slice(7).map((logo, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
                 >
-                  <img 
-                    src={logo.image} 
-                    alt={logo.name} 
-                    className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300' 
+                  <img
+                    src={logo.image}
+                    alt={logo.name}
+                    className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
                   />
                 </div>
               ))}

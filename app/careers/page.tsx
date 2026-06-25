@@ -41,16 +41,17 @@ import { openApplicationHref, openRoles, type CareerRole } from '@/lib/careers'
 import { cn } from '@/lib/utils'
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
+import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
 
 export const metadata: Metadata = {
-  title: 'Careers at Apargo — Build Software That Ships',
-  description: 'Open engineering, design, AI and product roles at Apargo. Remote-friendly, senior-heavy team. Builders of AI Greentick.',
+  title: 'Careers at AI Greentick — Build WhatsApp-First Systems',
+  description: 'Open engineering, AI, design, and product roles at AI Greentick. Remote-friendly, senior-heavy team building India\'s leading WhatsApp marketing platform.',
   alternates: {
     canonical: '/careers',
   },
   openGraph: {
-    title: 'Careers at Apargo — Build Software That Ships',
-    description: 'Open engineering, design, AI and product roles at Apargo. Remote-friendly, senior-heavy team. Builders of AI Greentick.',
+    title: 'Careers at AI Greentick — Build WhatsApp-First Systems',
+    description: 'Open engineering, AI, design, and product roles at AI Greentick. Remote-friendly, senior-heavy team building India\'s leading WhatsApp marketing platform.',
     url: '/careers',
     type: 'website',
   }
@@ -153,8 +154,8 @@ function getLucideIcon(name: string) {
 const content = {
   hero: {
     badge: "CAREERS",
-    heading: "Join a team that builds — and operates — what it builds.",
-    description: "Apargo is a small, senior-heavy team that ships software for clients and runs its own SaaS products. You'll write code that goes live in days, not quarters. You'll see your work used by real people. You won't sit through three rounds of \"culture fit\" interviews."
+    heading: "Join the team building India's leading WhatsApp marketing platform.",
+    description: "AI Greentick is a small, senior-heavy team building modern communication and AI automation infrastructure. You'll write code that goes live in days, see your work used by thousands of businesses, and operate with high autonomy without bureaucratic friction."
   },
   fitSignals: [
     {
@@ -259,14 +260,14 @@ function SectionIntro({
   description: string
 }) {
   return (
-    <div className="mx-auto max-w-3xl text-center">
-      <Badge variant="outline" className="mb-4 border-primary/25 bg-primary/5 text-[#00b259]">
-        {eyebrow}
-      </Badge>
-      <h2 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+    <div className="mx-auto max-w-3xl text-center flex flex-col items-center">
+      <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
+        :: {eyebrow.toUpperCase()} ::
+      </span>
+      <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-sans">
         {title}
       </h2>
-      <p className="mt-4 text-base leading-7 text-muted-foreground md:text-lg">
+      <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-lg font-sans">
         {description}
       </p>
     </div>
@@ -277,15 +278,15 @@ function SignalCard({ item }: { item: any }) {
   const Icon = getLucideIcon(item.iconName)
 
   return (
-    <Card className="h-full border border-[#C5C4C2] bg-white text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-[#00b259] hover:shadow-lg">
+    <Card className="h-full border border-[#C5C4C2] bg-white text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)] rounded-none">
       <CardHeader>
-        <div className="mb-2 flex size-11 items-center justify-center rounded-xl bg-[#00b259]/10 text-[#00b259]">
+        <div className="mb-2 flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]">
           <Icon className="size-5" />
         </div>
-        <CardTitle className="text-xl">{item.title}</CardTitle>
+        <CardTitle className="text-xl font-sans font-bold">{item.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <CardDescription className="text-base leading-7 text-neutral-500">
+        <CardDescription className="text-base leading-7 text-neutral-500 font-sans">
           {item.description}
         </CardDescription>
       </CardContent>
@@ -295,23 +296,23 @@ function SignalCard({ item }: { item: any }) {
 
 function RoleCard({ role }: { role: CareerRole }) {
   return (
-    <Card className="group h-full border border-[#C5C4C2] bg-white text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-[#00b259] hover:shadow-lg">
+    <Card className="group h-full border border-[#C5C4C2] bg-white text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)] rounded-none">
       <CardHeader className="gap-4">
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="secondary">{role.team}</Badge>
-          <Badge variant="outline">{role.employmentType}</Badge>
-          <Badge variant="outline">{role.location}</Badge>
+          <Badge variant="secondary" className="rounded-none bg-[#00b259]/10 text-[#00b259] hover:bg-[#00b259]/20">{role.team}</Badge>
+          <Badge variant="outline" className="rounded-none border-[#C5C4C2]">{role.employmentType}</Badge>
+          <Badge variant="outline" className="rounded-none border-[#C5C4C2]">{role.location}</Badge>
         </div>
         <div className="space-y-3">
-          <CardTitle className="text-2xl tracking-tight text-left">{role.title}</CardTitle>
-          <CardDescription className="text-base leading-7 text-left text-neutral-500">
+          <CardTitle className="text-2xl font-bold tracking-tight text-left font-sans">{role.title}</CardTitle>
+          <CardDescription className="text-base leading-7 text-left text-neutral-500 font-sans">
             {role.summary}
           </CardDescription>
         </div>
       </CardHeader>
       <CardContent className="mt-auto space-y-5">
         <Separator className="bg-[#C5C4C2]/50" />
-        <div className="grid gap-3 text-sm text-neutral-500 sm:grid-cols-2 text-left">
+        <div className="grid gap-3 text-sm text-neutral-500 sm:grid-cols-2 text-left font-sans">
           <div>
             <p className="font-semibold text-black">Compensation</p>
             <p>{role.compensation.range}</p>
@@ -322,15 +323,15 @@ function RoleCard({ role }: { role: CareerRole }) {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="justify-between gap-3 bg-neutral-100/50">
-        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
-          Active role
+      <CardFooter className="justify-between gap-3 bg-neutral-50 border-t border-[#C5C4C2]/50 p-6">
+        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#00b259] font-mono">
+          :: Active role ::
         </span>
         <Link
           href={`/careers/${role.slug}`}
           className={cn(
             buttonVariants({ variant: 'outline', size: 'lg' }),
-            'h-10 rounded-full bg-white px-4 border-[#C5C4C2] hover:border-[#00b259] hover:text-[#00b259]'
+            'h-10 rounded-none bg-white px-4 border-[#C5C4C2] hover:border-[#00b259] hover:text-[#00b259] font-sans'
           )}
         >
           View role
@@ -345,9 +346,9 @@ export default function CareersPage() {
   const careersSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "Apargo Innovations - Open Engineering & Product Careers",
+    "name": "AI Greentick - Open Engineering & Product Careers",
     "description": content.hero.description,
-    "url": "https://www.apargoinnovations.com/careers",
+    "url": "https://aigreentick.com/careers",
     "itemListElement": openRoles.map((role, idx) => ({
       "@type": "ListItem",
       "position": idx + 1,
@@ -355,28 +356,30 @@ export default function CareersPage() {
         "@type": "JobPosting",
         "title": role.title,
         "description": role.summary,
-        "url": `https://www.apargoinnovations.com/careers/${role.slug}`
+        "url": `https://aigreentick.com/careers/${role.slug}`
       }
     }))
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#ECEBE9] text-black">
+    <div className="flex min-h-screen flex-col bg-white text-black">
       <JsonLd data={careersSchema} />
       <Header navigationData={navigationData} />
 
-      <main className="flex-1 overflow-hidden pt-12">
-        <section className="relative border-b border-[#C5C4C2] bg-neutral-100">
+      <main className="flex-1 overflow-hidden">
+
+        {/* Hero Section */}
+        <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8 relative">
           <div className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_18%_22%,rgba(0,178,89,0.08),transparent_28rem),radial-gradient(circle_at_88%_8%,rgba(0,178,89,0.05),transparent_24rem)]" />
-          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[minmax(0,1fr)_28rem] lg:px-8 text-left">
-            <div className="max-w-4xl">
-              <Badge className="mb-6 bg-[#00b259] text-white">
-                {content.hero.badge}
-              </Badge>
-              <h1 className="max-w-5xl text-4xl font-bold tracking-tight text-black sm:text-5xl lg:text-6xl font-sans">
-                {content.hero.heading}
+          <div className="relative mx-auto grid max-w-7xl gap-10 border-x border-[#C5C4C2] px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[minmax(0,1fr)_28rem] lg:px-8 text-left">
+            <div className="max-w-4xl flex flex-col justify-center">
+              <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-6">
+                :: {content.hero.badge} ::
+              </span>
+              <h1 className="max-w-5xl text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl leading-tight">
+                Join the team building India's leading WhatsApp marketing platform.
               </h1>
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-500 md:text-xl font-sans">
+              <p className="mt-6 max-w-3xl text-base leading-relaxed text-neutral-600 md:text-lg font-sans">
                 {content.hero.description}
               </p>
 
@@ -385,7 +388,7 @@ export default function CareersPage() {
                   href="#open-roles"
                   className={cn(
                     buttonVariants({ size: 'lg' }),
-                    'h-12 rounded-full px-6 text-base bg-[#00b259] text-white hover:opacity-90 shadow-md'
+                    'h-12 rounded-none px-6 text-base bg-[#00b259] text-white hover:opacity-90 transition-opacity font-sans'
                   )}
                 >
                   See Open Roles
@@ -395,7 +398,7 @@ export default function CareersPage() {
                   href={openApplicationHref}
                   className={cn(
                     buttonVariants({ variant: 'outline', size: 'lg' }),
-                    'h-12 rounded-full bg-white px-6 text-base border-[#C5C4C2] text-black hover:border-black'
+                    'h-12 rounded-none bg-white px-6 text-base border-[#C5C4C2] text-black hover:border-black transition-colors font-sans'
                   )}
                 >
                   Send an Open Application
@@ -404,18 +407,18 @@ export default function CareersPage() {
               </div>
             </div>
 
-            <Card className="relative h-fit border-[#C5C4C2] bg-white p-2 shadow-lg backdrop-blur text-black">
+            <Card className="relative h-fit border-[#C5C4C2] bg-white p-2 shadow-lg rounded-none text-black">
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
-                  <Badge variant="outline" className="border-[#00b259]/30 text-[#00b259]">
-                    Operating agreement
+                  <Badge variant="outline" className="border-[#00b259]/30 text-[#00b259] rounded-none font-mono">
+                    :: OPERATING AGREEMENT ::
                   </Badge>
                   <Code2 className="size-5 text-[#00b259]" />
                 </div>
-                <CardTitle className="text-2xl text-left">
+                <CardTitle className="text-2xl text-left font-sans font-bold mt-2">
                   Builders who stay close to production.
                 </CardTitle>
-                <CardDescription className="text-base leading-7 text-left text-neutral-500">
+                <CardDescription className="text-base leading-7 text-left text-neutral-500 font-sans">
                   We hire for people who can move through ambiguity, write clearly, and keep systems alive after launch.
                 </CardDescription>
               </CardHeader>
@@ -423,10 +426,10 @@ export default function CareersPage() {
                 {content.heroStats.map((stat) => (
                   <div
                     key={stat.value}
-                    className="rounded-xl border border-[#C5C4C2] bg-neutral-50 p-4"
+                    className="rounded-none border border-[#C5C4C2] bg-neutral-50 p-4"
                   >
-                    <p className="text-2xl font-bold text-black">{stat.value}</p>
-                    <p className="mt-1 text-sm leading-6 text-neutral-500">
+                    <p className="text-2xl font-black text-[#00b259] font-sans">{stat.value}</p>
+                    <p className="mt-1 text-sm leading-6 text-neutral-500 font-sans">
                       {stat.label}
                     </p>
                   </div>
@@ -436,12 +439,13 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-          <div className="mx-auto max-w-7xl">
+        {/* What We Look For Section */}
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
+          <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <SectionIntro
               eyebrow="What we look for"
               title="The bar is high, but refreshingly practical."
-              description="Apargo works best for senior builders who can make good calls, write down tradeoffs, and keep ownership after launch."
+              description="AI Greentick works best for senior builders who can make good calls, write down tradeoffs, and keep ownership after launch."
             />
 
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -452,16 +456,18 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="bg-neutral-100/50 px-4 py-16 sm:px-6 lg:px-8 lg:py-24 border-y border-[#C5C4C2]">
-          <div className="mx-auto grid max-w-7xl items-start gap-10 lg:grid-cols-[0.82fr_1.18fr] text-left">
+        {/* Benefits Section */}
+        <section className="bg-neutral-50 px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
+          <div className="mx-auto grid max-w-7xl items-start gap-10 border-x border-[#C5C4C2] px-4 py-16 sm:px-6 lg:px-8 lg:py-24 lg:grid-cols-[0.82fr_1.18fr] text-left">
             <div className="max-w-xl lg:sticky lg:top-24 lg:self-start">
-              <Badge variant="outline" className="mb-4 border-[#00b259]/30 bg-white text-[#00b259]">
-                What we offer
-              </Badge>
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Fewer perks-as-theater. More conditions for good work.
+              <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
+                :: WHAT WE OFFER ::
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-neutral-900 leading-tight">
+                Fewer perks-as-theater. <br />
+                <span className="text-[#00b259]">More conditions for good work.</span>
               </h2>
-              <p className="mt-4 text-base leading-7 text-neutral-500 md:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-lg font-sans">
                 We optimize for autonomy, strong peers, clear compensation, and the boring operational support that lets senior people do serious work.
               </p>
             </div>
@@ -474,8 +480,9 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-          <div className="mx-auto max-w-7xl">
+        {/* How We Hire Section */}
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
+          <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <SectionIntro
               eyebrow="How we hire"
               title="No theater. Just enough signal to decide well."
@@ -484,18 +491,18 @@ export default function CareersPage() {
 
             <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3 text-left">
               {content.hiringSteps.map((step, index) => (
-                <Card key={step.title} className="border border-[#C5C4C2] bg-white text-black shadow-none">
+                <Card key={step.title} className="border border-[#C5C4C2] bg-white text-black shadow-none rounded-none transition-all duration-300 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]">
                   <CardHeader>
                     <div className="flex items-center justify-between gap-4">
                       <span className="font-mono text-sm text-[#00b259] font-bold">
-                        {String(index + 1).padStart(2, '0')}
+                        [ {String(index + 1).padStart(2, '0')} ]
                       </span>
                       <TimerReset className="size-4 text-neutral-400" />
                     </div>
-                    <CardTitle className="text-xl">{step.title}</CardTitle>
+                    <CardTitle className="text-xl font-sans font-bold">{step.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base leading-7 text-neutral-500">
+                    <CardDescription className="text-base leading-7 text-neutral-500 font-sans">
                       {step.description}
                     </CardDescription>
                   </CardContent>
@@ -505,50 +512,23 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="bg-neutral-900 px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-24">
-          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] text-left">
-            <div>
-              <Badge className="mb-4 bg-[#00b259] text-white">
-                Wrong fit filter
-              </Badge>
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-white">
-                You might not enjoy Apargo if...
-              </h2>
-              <p className="mt-4 text-base leading-7 text-neutral-400 md:text-lg">
-                This page should attract the right people and save the wrong people a long process. Tiny kindness, big leverage.
-              </p>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              {content.notForYou.map((item) => (
-                <div
-                  key={item}
-                  className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-5"
-                >
-                  <XCircle className="mt-1 size-5 shrink-0 text-red-500" />
-                  <p className="text-sm leading-6 text-neutral-300">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="open-roles" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-24 border-b border-[#C5C4C2]">
-          <div className="mx-auto max-w-7xl">
+        {/* Open Roles Section */}
+        <section id="open-roles" className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
+          <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end text-left">
               <div className="max-w-2xl">
-                <Badge variant="outline" className="mb-4 border-[#00b259]/30 bg-white text-[#00b259]">
-                  Open roles
-                </Badge>
-                <h2 className="text-3xl font-semibold tracking-tight md:text-4xl text-black">
+                <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
+                  :: OPEN ROLES ::
+                </span>
+                <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-black leading-tight">
                   Active roles for senior builders.
                 </h2>
-                <p className="mt-4 text-base leading-7 text-neutral-500 md:text-lg">
+                <p className="mt-4 text-base leading-relaxed text-neutral-500 md:text-lg font-sans">
                   Each role has a dedicated page with scope, compensation, equity, and what the first 90 days look like.
                 </p>
               </div>
-              <div className="rounded-full border border-[#C5C4C2] bg-white px-4 py-2 text-sm text-neutral-500 shrink-0 h-fit">
-                {openRoles.length} roles open now
+              <div className="rounded-none border border-[#C5C4C2] bg-white px-4 py-2 text-sm text-neutral-500 shrink-0 h-fit font-mono">
+                [ {openRoles.length} roles open now ]
               </div>
             </div>
 
@@ -560,33 +540,9 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="px-4 py-16 sm:px-6 lg:px-8">
-          <Card className="mx-auto max-w-7xl border border-[#00b259]/30 bg-[#00b259] text-white shadow-xl">
-            <CardContent className="grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-10 text-left">
-              <div>
-                <Badge className="mb-4 bg-white text-[#00b259]">
-                  Open application
-                </Badge>
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-white">
-                  Don&apos;t see your role?
-                </h2>
-                <p className="mt-4 max-w-3xl text-base leading-7 text-emerald-100 md:text-lg">
-                  If you&apos;re a senior engineer, designer or PM who wants to work with us, send us a note. We open roles based on the team we want to build, not just slot-filling.
-                </p>
-              </div>
-              <a
-                href={openApplicationHref}
-                className={cn(
-                  buttonVariants({ variant: 'outline', size: 'lg' }),
-                  'h-12 rounded-full border-white bg-white px-6 text-base text-[#00b259] hover:bg-neutral-100 shrink-0'
-                )}
-              >
-                Send an Open Application
-                <Mail className="size-4 ml-1.5" />
-              </a>
-            </CardContent>
-          </Card>
-        </section>
+        {/* CTA Section */}
+        <CTA />
+
       </main>
 
       <Footer />

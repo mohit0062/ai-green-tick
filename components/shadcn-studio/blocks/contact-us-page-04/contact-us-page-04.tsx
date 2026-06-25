@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import ContactForm from '@/components/shadcn-studio/blocks/contact-us-page-04/contact-form'
 
 type ContactCard = {
-  icon: ComponentType
+  icon: ComponentType<{ className?: string }>
   title: string
   description: string
   ctaText: string
@@ -16,23 +16,26 @@ type ContactCard = {
 
 const ContactUs = ({ contactCards, heading = 'Get in Touch', subtitle = 'Have a question? Drop us a message.' }: { contactCards: ContactCard; heading?: string; subtitle?: string }) => {
   return (
-    <section className='bg-muted py-8 sm:py-16 lg:py-24'>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='mb-12 text-center sm:mb-16 lg:mb-24'>
-          <h2 className='mb-4 text-2xl font-semibold md:text-3xl lg:text-4xl'>{heading}</h2>
-          <p className='text-muted-foreground text-xl'>
+    <section className='px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-neutral-50/30'>
+      <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24'>
+        <div className='mb-12 text-center sm:mb-16 lg:mb-24 flex flex-col items-center'>
+          <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
+            :: CONTACT US ::
+          </span>
+          <h2 className='mb-4 text-2xl font-bold md:text-3xl lg:text-4xl text-black font-sans'>{heading}</h2>
+          <p className='text-neutral-500 text-base sm:text-lg max-w-2xl font-sans'>
             {subtitle}
           </p>
         </div>
 
-        <Card className='shadow-none'>
-          <CardContent className='grid gap-6 md:grid-cols-2'>
+        <Card className='shadow-none rounded-none border-[#C5C4C2] bg-white'>
+          <CardContent className='grid gap-6 md:grid-cols-2 p-6'>
             <ContactForm />
 
             {/* Map Section */}
             <div>
               <iframe
-                className='size-full min-h-[400px] rounded-md'
+                className='size-full min-h-[400px] rounded-none border border-[#C5C4C2]'
                 src='https://maps.google.com/maps?hl=en&amp;q=Jaipur+Rajasthan+India&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed'
                 title='Google Maps'
               />
@@ -45,24 +48,26 @@ const ContactUs = ({ contactCards, heading = 'Get in Touch', subtitle = 'Have a 
           {contactCards.map((contact, index) => (
             <Card
               key={index}
-              className='hover:bg-primary hover:border-primary group shadow-none transition-all duration-300'
+              className='rounded-none border-[#C5C4C2] bg-white text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)] group flex flex-col justify-between'
             >
-              <CardContent className='flex flex-col gap-6'>
-                <Avatar className='size-11.5 rounded-lg'>
-                  <AvatarFallback className='bg-primary/10 group-hover:bg-primary-foreground group-hover:text-primary rounded-lg transition-all duration-300 [&>svg]:size-7'>
-                    <contact.icon />
-                  </AvatarFallback>
-                </Avatar>
-                <div className='space-y-2'>
-                  <h3 className='group-hover:text-primary-foreground text-lg font-semibold transition-all duration-300'>
-                    {contact.title}
-                  </h3>
-                  <p className='text-muted-foreground group-hover:text-primary-foreground transition-all duration-300'>
-                    {contact.description}
-                  </p>
+              <CardContent className='flex flex-col gap-6 p-6 h-full justify-between'>
+                <div className='space-y-4'>
+                  <div className='size-11 flex items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
+                    <contact.icon className='size-5' />
+                  </div>
+                  <div className='space-y-2'>
+                    <h3 className='text-lg font-bold font-sans text-black'>
+                      {contact.title}
+                    </h3>
+                    <p className='text-neutral-500 font-sans text-sm leading-relaxed'>
+                      {contact.description}
+                    </p>
+                  </div>
                 </div>
                 <Button
-                  className='bg-primary/10 text-primary hover:bg-primary/20 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/40 group-hover:bg-secondary group-hover:text-secondary-foreground group-hover:hover:bg-secondary text-base'
+                  asChild
+                  variant='outline'
+                  className='rounded-none border-[#C5C4C2] hover:border-[#00b259] hover:text-[#00b259] hover:bg-[#00b259]/5 text-black bg-white transition-all font-sans w-full mt-4 font-semibold'
                   size='lg'
                 >
                   <a href={contact.ctaLink}>{contact.ctaText}</a>

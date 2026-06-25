@@ -165,7 +165,7 @@ export default function PricingPage() {
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
+
             {/* Principle 1 */}
             <div className="border border-[#C5C4C2] bg-[#ECEBE9] p-6 font-sans space-y-3 relative"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
@@ -209,7 +209,7 @@ export default function PricingPage() {
       {/* Meta Conversation Charges */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30 pb-16 sm:pb-24">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-12">
-          
+
           <div className="text-center space-y-4 max-w-3xl mx-auto">
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: META CONVERSATION FEES ::
@@ -224,7 +224,7 @@ export default function PricingPage() {
 
           {/* Grid Layout of table and info cards */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 font-sans">
-            <div 
+            <div
               className="lg:col-span-8 border border-[#C5C4C2] bg-[#ECEBE9] overflow-hidden"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
             >
@@ -271,7 +271,7 @@ export default function PricingPage() {
               </div>
             </div>
 
-            <div 
+            <div
               className="lg:col-span-4 border border-[#C5C4C2] bg-[#ECEBE9] p-6 space-y-6 flex flex-col justify-between"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
             >
@@ -283,7 +283,7 @@ export default function PricingPage() {
               </div>
 
               <div className="pt-4 border-t border-[#C5C4C2]/40">
-                <a 
+                <a
                   href="https://developers.facebook.com/docs/whatsapp/pricing"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -301,7 +301,7 @@ export default function PricingPage() {
       {/* Competitor Matrix Section */}
       <section id="comparison-matrix" className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/50">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-24 space-y-12">
-          
+
           <div className="text-center space-y-4 max-w-3xl mx-auto">
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: COMPARE CAPABILITIES ::
@@ -315,7 +315,7 @@ export default function PricingPage() {
           </div>
 
           {/* Matrix Table */}
-          <div 
+          <div
             className="border border-[#C5C4C2] bg-[#ECEBE9] overflow-hidden font-sans"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
@@ -407,14 +407,14 @@ export default function PricingPage() {
             Ready to unleash official WhatsApp API power? Sign up for your 14-day free trial now or schedule a consultation.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-sans">
-            <Link 
+            <Link
               href="#demo"
               className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"
               style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}
             >
               START 14-DAY FREE TRIAL
             </Link>
-            <Link 
+            <Link
               href="#demo"
               className="px-6 py-3 text-xs font-black text-black border border-[#C5C4C2] hover:bg-neutral-200/50 transition-colors"
               style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}

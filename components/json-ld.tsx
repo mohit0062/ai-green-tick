@@ -23,8 +23,8 @@ export function ServicePageSchema({ data, serviceName, fallbackDescription }: Se
     "description": data?.hero?.description || fallbackDescription,
     "provider": {
       "@type": "Organization",
-      "name": "Apargo Innovations",
-      "url": "https://www.apargoinnovations.com"
+      "name": "AI Greentick",
+      "url": "https://ai-green-tick-theta.vercel.app"
     }
   }
 

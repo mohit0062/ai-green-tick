@@ -234,13 +234,13 @@ const BentoGrid = () => {
                     <div className='bg-yellow-500/80 size-1 rounded-full' />
                     <div className='bg-green-500/80 size-1 rounded-full' />
                   </div>
-                  
+
                   {/* Dashboard Content */}
                   <div className='p-2 flex flex-col flex-1 min-h-0 text-left'>
                     <span className='text-[8px] font-black text-foreground mb-1 block'>
                       WhatsApp Analytics
                     </span>
-                    
+
                     <div className='space-y-0.5 text-[7px] text-muted-foreground flex-grow'>
                       <div className='flex justify-between border-b border-border/40 pb-0.5'>
                         <span>Opens</span>
@@ -259,7 +259,7 @@ const BentoGrid = () => {
                         <span className='text-red-500 font-bold'>--</span>
                       </div>
                     </div>
-                    
+
                     {/* Charts Footer */}
                     <div className='mt-1 p-1 bg-muted/40 rounded-xs border border-border/30 flex justify-between items-end h-7 shrink-0'>
                       <div className='flex gap-0.5 items-end h-full'>
@@ -342,7 +342,7 @@ const BentoGrid = () => {
               >
                 {/* Main Outer Circle */}
                 <div className='relative w-[230px] h-[230px] rounded-full border border-border bg-card/30 flex items-center justify-center shadow-xs'>
-                  
+
                   {/* SVG Connecting Dashed Lines */}
                   <svg className="absolute inset-0 size-full pointer-events-none text-red-500/50" viewBox="0 0 100 100">
                     <defs>

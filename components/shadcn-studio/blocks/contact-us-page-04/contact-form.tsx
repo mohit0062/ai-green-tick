@@ -68,19 +68,19 @@ const ContactForm = () => {
 
   if (isSuccess) {
     return (
-      <div className="flex h-full min-h-[400px] flex-col items-center justify-center space-y-4 rounded-xl border bg-emerald-50/50 p-8 text-center dark:bg-emerald-950/20">
-        <div className="flex size-16 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/50">
-          <CheckCircle2 className="size-8 text-emerald-600 dark:text-emerald-400" />
+      <div className="flex h-full min-h-[400px] flex-col items-center justify-center space-y-4 rounded-none border border-[#00b259]/30 bg-emerald-50/20 p-8 text-center">
+        <div className="flex size-16 items-center justify-center rounded-full bg-emerald-100">
+          <CheckCircle2 className="size-8 text-emerald-600" />
         </div>
         <div className="space-y-2">
-          <h3 className="text-2xl font-bold tracking-tight text-emerald-900 dark:text-emerald-100">Message Sent!</h3>
-          <p className="text-muted-foreground text-sm max-w-[300px]">
-            Thank you for reaching out. An engineer will review your enquiry and get back to you within one working day.
+          <h3 className="text-2xl font-bold tracking-tight text-emerald-950">Message Sent!</h3>
+          <p className="text-neutral-500 text-sm max-w-[300px] font-sans">
+            Thank you for reaching out. An expert will review your enquiry and get back to you within one working day.
           </p>
         </div>
         <Button 
           variant="outline" 
-          className="mt-4"
+          className="mt-4 rounded-none border-[#C5C4C2] hover:border-[#00b259] hover:text-[#00b259] bg-white transition-all"
           onClick={() => setIsSuccess(false)}
         >
           Send another message
@@ -90,9 +90,9 @@ const ContactForm = () => {
   }
 
   return (
-    <form className='space-y-5' onSubmit={handleSubmit}>
+    <form className='space-y-5 font-sans' onSubmit={handleSubmit}>
       {error && (
-        <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+        <div className="rounded-none border border-destructive bg-destructive/10 p-3 text-sm text-destructive">
           {error}
         </div>
       )}
@@ -100,29 +100,29 @@ const ContactForm = () => {
       {/* Row 1: Name + Work Email */}
       <div className='grid gap-5 sm:grid-cols-2'>
         <div className='space-y-2'>
-          <Label htmlFor='name'>
+          <Label htmlFor='name' className="font-semibold text-black">
             Name <span className='text-destructive'>*</span>
           </Label>
-          <Input type='text' id='name' value={formData.name} onChange={handleChange} className='h-10' placeholder='Your full name' required disabled={isSubmitting} />
+          <Input type='text' id='name' value={formData.name} onChange={handleChange} className='h-10 rounded-none border-[#C5C4C2] bg-white focus-visible:ring-[#00b259]/20' placeholder='Your full name' required disabled={isSubmitting} />
         </div>
 
         <div className='space-y-2'>
-          <Label htmlFor='work-email'>
+          <Label htmlFor='work-email' className="font-semibold text-black">
             Work email <span className='text-destructive'>*</span>
           </Label>
-          <Input type='email' id='work-email' value={formData.email} onChange={handleChange} className='h-10' placeholder='you@company.com' required disabled={isSubmitting} />
+          <Input type='email' id='work-email' value={formData.email} onChange={handleChange} className='h-10 rounded-none border-[#C5C4C2] bg-white focus-visible:ring-[#00b259]/20' placeholder='you@company.com' required disabled={isSubmitting} />
         </div>
       </div>
 
       {/* Row 2: Company + Phone Number */}
       <div className='grid gap-5 sm:grid-cols-2'>
         <div className='space-y-2'>
-          <Label htmlFor='company'>Company name</Label>
-          <Input type='text' id='company' value={formData.company} onChange={handleChange} className='h-10' placeholder='Your company' disabled={isSubmitting} />
+          <Label htmlFor='company' className="font-semibold text-black">Company name</Label>
+          <Input type='text' id='company' value={formData.company} onChange={handleChange} className='h-10 rounded-none border-[#C5C4C2] bg-white focus-visible:ring-[#00b259]/20' placeholder='Your company' disabled={isSubmitting} />
         </div>
 
         <div className='space-y-2'>
-          <Label htmlFor='phone'>Phone number</Label>
+          <Label htmlFor='phone' className="font-semibold text-black">Phone number</Label>
           <div className='flex gap-2'>
             {isCustomCode ? (
               <div className='flex gap-1 items-center shrink-0'>
@@ -136,14 +136,14 @@ const ContactForm = () => {
                     }
                     setCustomCode(val);
                   }}
-                  className='w-[80px] h-10 bg-background text-center'
+                  className='w-[80px] h-10 bg-white text-center rounded-none border-[#C5C4C2]'
                   placeholder='+31'
                   disabled={isSubmitting}
                 />
                 <Button
                   type="button"
                   variant="ghost"
-                  className="h-10 w-8 px-0 shrink-0 text-muted-foreground hover:text-foreground"
+                  className="h-10 w-8 px-0 shrink-0 text-muted-foreground hover:text-foreground rounded-none"
                   onClick={() => {
                     setIsCustomCode(false);
                     setCountryCode('+91');
@@ -165,10 +165,10 @@ const ContactForm = () => {
                 }} 
                 disabled={isSubmitting}
               >
-                <SelectTrigger className='w-[110px] h-10 shrink-0 bg-background'>
+                <SelectTrigger className='w-[110px] h-10 shrink-0 bg-white rounded-none border-[#C5C4C2]'>
                   <SelectValue placeholder='+91' />
                 </SelectTrigger>
-                <SelectContent className='max-h-[300px] overflow-y-auto'>
+                <SelectContent className='max-h-[300px] overflow-y-auto rounded-none'>
                   <SelectItem value='+91'>🇮🇳 +91</SelectItem>
                   <SelectItem value='+1'>🇺🇸 +1</SelectItem>
                   <SelectItem value='+44'>🇬🇧 +44</SelectItem>
@@ -188,7 +188,7 @@ const ContactForm = () => {
               id='phone'
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              className='h-10'
+              className='h-10 rounded-none border-[#C5C4C2] bg-white focus-visible:ring-[#00b259]/20'
               placeholder='12345 67890'
               disabled={isSubmitting}
             />
@@ -198,36 +198,35 @@ const ContactForm = () => {
 
       {/* What can we help with? */}
       <div className='space-y-2'>
-        <Label htmlFor='help-type'>What can we help with?</Label>
+        <Label htmlFor='help-type' className="font-semibold text-black">What can we help with?</Label>
         <Select value={formData.help_type} onValueChange={(val) => handleSelectChange('help_type', val || '')} disabled={isSubmitting}>
-          <SelectTrigger id='help-type' className='h-10 w-full'>
+          <SelectTrigger id='help-type' className='h-10 w-full rounded-none border-[#C5C4C2] bg-white'>
             <SelectValue placeholder='Select an option' />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='new-project'>New project</SelectItem>
-            <SelectItem value='existing-project'>Existing project</SelectItem>
-            <SelectItem value='hiring-team'>Hiring us as a team</SelectItem>
-            <SelectItem value='partnership'>Partnership</SelectItem>
-            <SelectItem value='press'>Press</SelectItem>
+          <SelectContent className="rounded-none">
+            <SelectItem value='whatsapp-marketing'>WhatsApp Marketing Campaigns</SelectItem>
+            <SelectItem value='api-integration'>API Access & Integration</SelectItem>
+            <SelectItem value='ai-chatbots'>Custom AI Chatbots</SelectItem>
+            <SelectItem value='shared-inbox'>Support & Sales Shared Inbox</SelectItem>
+            <SelectItem value='partnership'>Partnership / Agency Program</SelectItem>
             <SelectItem value='careers'>Careers</SelectItem>
-            <SelectItem value='other'>Other</SelectItem>
+            <SelectItem value='other'>Other / General Query</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      {/* Project budget */}
+      {/* Message scale/budget */}
       <div className='space-y-2'>
-        <Label htmlFor='budget'>Project budget (optional)</Label>
+        <Label htmlFor='budget' className="font-semibold text-black">Expected monthly messages (optional)</Label>
         <Select value={formData.budget} onValueChange={(val) => handleSelectChange('budget', val || '')} disabled={isSubmitting}>
-          <SelectTrigger id='budget' className='h-10 w-full'>
-            <SelectValue placeholder='Select a range' />
+          <SelectTrigger id='budget' className='h-10 w-full rounded-none border-[#C5C4C2] bg-white'>
+            <SelectValue placeholder='Select expected volume' />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='under-5l'>Under ₹5 Lakh</SelectItem>
-            <SelectItem value='5l-15l'>₹5 – 15 Lakh</SelectItem>
-            <SelectItem value='15l-50l'>₹15 – 50 Lakh</SelectItem>
-            <SelectItem value='50l-1cr'>₹50 Lakh – 1 Crore</SelectItem>
-            <SelectItem value='above-1cr'>Above ₹1 Crore</SelectItem>
+          <SelectContent className="rounded-none">
+            <SelectItem value='under-50k'>Under 50,000 / month</SelectItem>
+            <SelectItem value='50k-250k'>50,000 – 250,000 / month</SelectItem>
+            <SelectItem value='250k-1m'>250,000 – 1,000,000 / month</SelectItem>
+            <SelectItem value='above-1m'>Above 1,000,000 / month</SelectItem>
             <SelectItem value='not-sure'>Not sure yet</SelectItem>
           </SelectContent>
         </Select>
@@ -235,28 +234,33 @@ const ContactForm = () => {
 
       {/* Message */}
       <div className='space-y-2'>
-        <Label htmlFor='message'>
+        <Label htmlFor='message' className="font-semibold text-black">
           Tell us briefly what you&apos;re building
         </Label>
         <Textarea
           id='message'
           value={formData.message}
           onChange={handleChange}
-          className='h-28 resize-none'
+          className='h-28 resize-none rounded-none border-[#C5C4C2] bg-white focus-visible:ring-[#00b259]/20'
           placeholder='Describe your project, goals, or questions...'
           maxLength={1000}
           disabled={isSubmitting}
         />
-        <p className='text-muted-foreground text-xs'>Max 1000 characters</p>
+        <p className='text-neutral-400 text-xs font-sans'>Max 1000 characters</p>
       </div>
 
       {/* Where did you hear about us */}
       <div className='space-y-2'>
-        <Label htmlFor='source'>Where did you hear about us? (optional)</Label>
-        <Input type='text' id='source' value={formData.source} onChange={handleChange} className='h-10' placeholder='e.g. Google, LinkedIn, Referral' disabled={isSubmitting} />
+        <Label htmlFor='source' className="font-semibold text-black">Where did you hear about us? (optional)</Label>
+        <Input type='text' id='source' value={formData.source} onChange={handleChange} className='h-10 rounded-none border-[#C5C4C2] bg-white focus-visible:ring-[#00b259]/20' placeholder='e.g. Google, LinkedIn, Referral' disabled={isSubmitting} />
       </div>
 
-      <Button type='submit' className='w-full rounded-lg text-base' size='lg' disabled={isSubmitting}>
+      <Button 
+        type='submit' 
+        className='w-full rounded-none text-base bg-[#00b259] hover:bg-[#00b259]/90 text-white font-sans font-bold h-12 shadow-md cursor-pointer transition-colors' 
+        size='lg' 
+        disabled={isSubmitting}
+      >
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

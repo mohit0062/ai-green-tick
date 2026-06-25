@@ -17,14 +17,14 @@ import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 
 export const metadata: Metadata = {
-  title: 'Contact Us — Get in Touch with Apargo',
-  description: 'Reach out to Apargo for project enquiries, partnerships, or support. Based in Jaipur, serving clients globally.',
+  title: 'Contact Us — Get in Touch with AI Greentick',
+  description: 'Reach out to AI Greentick for WhatsApp Business API setup, marketing campaigns, automation support, or partnership inquiries.',
   alternates: {
     canonical: '/contact',
   },
   openGraph: {
-    title: 'Contact Us — Get in Touch with Apargo',
-    description: 'Reach out to Apargo for project enquiries, partnerships, or support. Based in Jaipur, serving clients globally.',
+    title: 'Contact Us — Get in Touch with AI Greentick',
+    description: 'Reach out to AI Greentick for WhatsApp Business API setup, marketing campaigns, automation support, or partnership inquiries.',
     url: '/contact',
     type: 'website',
   }
@@ -104,16 +104,16 @@ const contactCards = [
   {
     icon: Mail,
     title: "Chat to Sales",
-    description: "Talk to our team about your project",
-    ctaText: "hello@apargo.com",
-    ctaLink: "mailto:hello@apargo.com"
+    description: "Talk to our team about WhatsApp API setup and integration",
+    ctaText: "hello@aigreentick.com",
+    ctaLink: "mailto:hello@aigreentick.com"
   },
   {
     icon: Mail,
     title: "Email Support",
-    description: "Get help with an existing project",
-    ctaText: "support@apargo.com",
-    ctaLink: "mailto:support@apargo.com"
+    description: "Get help with your existing AI Greentick workspace",
+    ctaText: "support@aigreentick.com",
+    ctaLink: "mailto:support@aigreentick.com"
   },
   {
     icon: MapPin,
@@ -126,8 +126,8 @@ const contactCards = [
     icon: Phone,
     title: "Phone / WhatsApp",
     description: "10am - 7pm IST, Mon - Fri",
-    ctaText: "hello@apargo.com",
-    ctaLink: "mailto:hello@apargo.com"
+    ctaText: "hello@aigreentick.com",
+    ctaLink: "mailto:hello@aigreentick.com"
   }
 ]
 
@@ -139,18 +139,18 @@ const steps = [
   },
   {
     number: "2",
-    title: "Engineer reviews",
-    description: "Within one working day, a real engineer or PM reviews your enquiry."
+    title: "Expert reviews",
+    description: "Within one working day, a team member reviews your enquiry."
   },
   {
     number: "3",
     title: "Honest reply",
-    description: "We reply with either a 30-minute call slot, a written response, or an honest \"not a fit\"."
+    description: "We reply with either a 30-minute call slot, a written response, or clear next steps."
   },
   {
     number: "4",
-    title: "Scope & quote",
-    description: "If we move forward – written scope and a fixed quote within a week."
+    title: "Onboarding & setup",
+    description: "If we move forward – we handle verification, API onboarding, and workspace setup."
   }
 ]
 
@@ -158,15 +158,15 @@ export default function ContactPage() {
   const contactSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact Apargo Innovations",
-    "description": "Reach out to Apargo Innovations for custom software engineering consultations, support pathways, or career enquiries.",
-    "url": "https://www.apargoinnovations.com/contact",
+    "name": "Contact AI Greentick",
+    "description": "Reach out to AI Greentick for WhatsApp Business API integration, support pathways, or partner inquiries.",
+    "url": "https://ai-green-tick-theta.vercel.app/contact",
     "mainEntity": {
       "@type": "ProfessionalService",
-      "name": "Apargo Innovations",
-      "image": "https://www.apargoinnovations.com/group-2.svg",
+      "name": "AI Greentick",
+      "image": "https://ai-green-tick-theta.vercel.app/group-2.svg",
       "telephone": "",
-      "email": "hello@apargo.com",
+      "email": "hello@aigreentick.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Jaipur",
@@ -178,7 +178,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className='flex min-h-screen flex-col bg-[#ECEBE9] text-black'>
+    <div className='flex min-h-screen flex-col bg-white text-black'>
       <JsonLd data={contactSchema} />
       <Header navigationData={navigationData} />
 
@@ -187,22 +187,31 @@ export default function ContactPage() {
         <ContactUs
           contactCards={contactCards}
           heading="Tell Us What You're Building."
-          subtitle="Fill the form below or email us directly. You'll hear back within one working day from a real engineer, not an account manager."
+          subtitle="Fill the form below or email us directly. You'll hear back within one working day from a team member."
         />
 
         {/* Office & Hours */}
-        <section className='py-12 sm:py-16 lg:py-24 border-t border-[#C5C4C2]'>
-          <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <section className='px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-neutral-50'>
+          <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24'>
+            <div className='mb-12 text-center flex flex-col items-center'>
+              <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
+                :: CHANNELS & AVAILABILITY ::
+              </span>
+              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-sans'>
+                Where to find us.
+              </h2>
+            </div>
+
             <div className='grid gap-8 md:grid-cols-3'>
               {/* Phone / WhatsApp */}
               <MotionPreset fade slide={{ direction: 'up', offset: 20 }} transition={{ duration: 0.5 }}>
-                <Card className='h-full shadow-none border-[#C5C4C2] bg-white text-black'>
-                  <CardContent className='flex flex-col gap-4 p-6 text-left'>
-                    <div className='flex size-12 items-center justify-center rounded-xl bg-emerald-600/10'>
-                      <Phone className='size-6 text-emerald-600' />
+                <Card className='h-full shadow-none border-[#C5C4C2] bg-white text-black rounded-none transition-all duration-300 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]'>
+                  <CardContent className='flex flex-col gap-4 p-6 text-left font-sans'>
+                    <div className='flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
+                      <Phone className='size-5' />
                     </div>
-                    <h3 className='text-lg font-bold'>Phone / WhatsApp</h3>
-                    <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1'>
+                    <h3 className='text-lg font-bold font-sans'>Phone / WhatsApp</h3>
+                    <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1 font-sans'>
                       <p>10am – 7pm IST, Mon – Fri</p>
                       <p>WhatsApp preferred for quick questions</p>
                     </div>
@@ -212,13 +221,13 @@ export default function ContactPage() {
 
               {/* Office */}
               <MotionPreset fade slide={{ direction: 'up', offset: 20 }} delay={0.1} transition={{ duration: 0.5 }}>
-                <Card className='h-full shadow-none border-[#C5C4C2] bg-white text-black'>
-                  <CardContent className='flex flex-col gap-4 p-6 text-left'>
-                    <div className='flex size-12 items-center justify-center rounded-xl bg-blue-600/10'>
-                      <MapPin className='size-6 text-blue-650' />
+                <Card className='h-full shadow-none border-[#C5C4C2] bg-white text-black rounded-none transition-all duration-300 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]'>
+                  <CardContent className='flex flex-col gap-4 p-6 text-left font-sans'>
+                    <div className='flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
+                      <MapPin className='size-5' />
                     </div>
-                    <h3 className='text-lg font-bold'>Office</h3>
-                    <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1'>
+                    <h3 className='text-lg font-bold font-sans'>Office</h3>
+                    <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1 font-sans'>
                       <p>Remote-first team</p>
                       <p>Headquartered in Jaipur, Rajasthan, India</p>
                     </div>
@@ -228,13 +237,13 @@ export default function ContactPage() {
 
               {/* Office hours */}
               <MotionPreset fade slide={{ direction: 'up', offset: 20 }} delay={0.2} transition={{ duration: 0.5 }}>
-                <Card className='h-full shadow-none border-[#C5C4C2] bg-white text-black'>
-                  <CardContent className='flex flex-col gap-4 p-6 text-left'>
-                    <div className='flex size-12 items-center justify-center rounded-xl bg-amber-600/10'>
-                      <Clock className='size-6 text-amber-600' />
+                <Card className='h-full shadow-none border-[#C5C4C2] bg-white text-black rounded-none transition-all duration-300 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]'>
+                  <CardContent className='flex flex-col gap-4 p-6 text-left font-sans'>
+                    <div className='flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
+                      <Clock className='size-5' />
                     </div>
-                    <h3 className='text-lg font-bold'>Office Hours</h3>
-                    <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1'>
+                    <h3 className='text-lg font-bold font-sans'>Office Hours</h3>
+                    <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1 font-sans'>
                       <p><strong className='text-black'>Mon – Fri:</strong> 10:00am – 7:00pm IST</p>
                       <p><strong className='text-black'>Saturday:</strong> On-call only for production issues</p>
                       <p><strong className='text-black'>Sunday:</strong> Closed</p>
@@ -247,13 +256,16 @@ export default function ContactPage() {
         </section>
 
         {/* What happens after you submit */}
-        <section className='bg-neutral-100/50 py-12 sm:py-16 lg:py-24 border-t border-[#C5C4C2]'>
-          <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-            <MotionPreset fade slide={{ direction: 'down', offset: 20 }} transition={{ duration: 0.5 }}>
-              <h2 className='mb-12 text-center text-2xl font-bold md:text-3xl lg:text-4xl text-black'>
+        <section className='px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white'>
+          <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24'>
+            <div className='mb-12 text-center flex flex-col items-center'>
+              <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
+                :: RESPONSE PROCESS ::
+              </span>
+              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-sans'>
                 What happens after you submit
               </h2>
-            </MotionPreset>
+            </div>
 
             <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
               {steps.map((step, idx) => (
@@ -264,13 +276,13 @@ export default function ContactPage() {
                   delay={idx * 0.1}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card className='h-full border border-[#C5C4C2] bg-white text-black shadow-sm'>
-                    <CardContent className='flex h-full flex-col gap-4 p-6 text-left'>
-                      <div className='flex size-10 items-center justify-center rounded-full bg-[#00b259] text-white text-sm font-bold'>
-                        {step.number}
-                      </div>
-                      <h3 className='text-lg font-bold'>{step.title}</h3>
-                      <p className='text-neutral-500 text-[15px] leading-relaxed'>{step.description}</p>
+                  <Card className='h-full border border-[#C5C4C2] bg-white text-black shadow-none rounded-none transition-all duration-300 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]'>
+                    <CardContent className='flex h-full flex-col gap-4 p-6 text-left font-sans'>
+                      <span className="font-mono text-sm text-[#00b259] font-bold">
+                        [ {String(step.number).padStart(2, '0')} ]
+                      </span>
+                      <h3 className='text-lg font-bold font-sans'>{step.title}</h3>
+                      <p className='text-neutral-500 text-[15px] leading-relaxed font-sans'>{step.description}</p>
                     </CardContent>
                   </Card>
                 </MotionPreset>

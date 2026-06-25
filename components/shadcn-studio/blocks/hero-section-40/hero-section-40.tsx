@@ -417,15 +417,19 @@ const HeroSection = () => {
                     key={value}
                     value={value}
                     className={cn(
-                      "border-r border-[#C5C4C2] text-neutral-500 focus-visible:outline-neutral-300 data-[state=active]:bg-white data-[state=active]:text-black! h-14 md:h-20 flex-1 data-[state=active]:flex-[2.5] md:data-[state=active]:flex-1 flex flex-col items-center justify-center gap-1 md:gap-1.5 cursor-pointer rounded-none px-1 md:px-4 py-1.5 md:py-2.5 text-[10px] md:text-xs font-mono uppercase tracking-normal md:tracking-widest hover:text-black transition-all focus-visible:ring-0 focus-visible:outline-none relative group z-20 pointer-events-auto",
+                      "border-r border-[#C5C4C2] text-neutral-400 focus-visible:outline-neutral-300 h-14 md:h-20 flex-1 flex flex-col items-center justify-center gap-1 md:gap-1.5 cursor-pointer rounded-none px-1 md:px-4 py-1.5 md:py-2.5 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest hover:text-neutral-700 hover:bg-white/60 transition-all focus-visible:ring-0 focus-visible:outline-none relative group z-20 pointer-events-auto",
+                      "data-[state=active]:bg-white data-[state=active]:text-black! data-[state=active]:shadow-none",
                       value === 'broadcasting' && "hidden md:flex"
                     )}
                   >
-                    {/* Green brackets when active */}
-                    <span className="absolute left-2 top-2 text-[#00b259] font-bold opacity-0 group-data-[state=active]:opacity-100 transition-opacity">┌</span>
-                    <span className="absolute right-2 bottom-2 text-[#00b259] font-bold opacity-0 group-data-[state=active]:opacity-100 transition-opacity">┘</span>
-                    <div className="size-5 flex items-center justify-center shrink-0 [&>svg]:size-full">{icon}</div>
-                    <span className="font-semibold hidden md:block group-data-[state=active]:block text-center w-full truncate px-0.5">{name}</span>
+                    {/* Green top border line when active */}
+                    <span className="absolute top-0 inset-x-0 h-[2.5px] bg-[#00b259] opacity-0 group-data-[state=active]:opacity-100 transition-opacity" />
+
+                    {/* Icon */}
+                    <div className="size-[18px] md:size-5 flex items-center justify-center shrink-0 [&>svg]:size-full">{icon}</div>
+
+                    {/* Label — always visible */}
+                    <span className="text-center w-full truncate px-0.5 leading-tight">{name}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>

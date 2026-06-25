@@ -50,11 +50,11 @@ export async function generateMetadata({
 
   if (!role) {
     return {
-      title: 'Role not found | Careers at Apargo',
+      title: 'Role not found | Careers at AI Greentick',
     }
   }
 
-  const title = `${role.title} | Careers at Apargo`
+  const title = `${role.title} | Careers at AI Greentick`
   const description = `${role.summary} ${role.location}. ${role.employmentType}. Compensation: ${role.compensation.range}.`
 
   return {
@@ -173,9 +173,9 @@ export default async function CareerRolePage({ params }: RolePageProps) {
     "employmentType": role.employmentType === "Full-time" ? "FULL_TIME" : "CONTRACTOR",
     "hiringOrganization": {
       "@type": "Organization",
-      "name": "Apargo Innovations",
-      "sameAs": "https://www.apargoinnovations.com",
-      "logo": "https://www.apargoinnovations.com/group-2.svg"
+      "name": "AI Greentick",
+      "sameAs": "https://aigreentick.com",
+      "logo": "https://aigreentick.com/group-2.svg"
     },
     "jobLocation": {
       "@type": "Place",
@@ -204,18 +204,20 @@ export default async function CareerRolePage({ params }: RolePageProps) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#ECEBE9] text-black">
+    <div className="flex min-h-screen flex-col bg-white text-black">
       <JsonLd data={jobSchema} />
       <Header navigationData={navigationData} />
 
-      <main className="flex-1 pt-12">
-        <section className="border-b border-[#C5C4C2] bg-neutral-100/50">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20 text-left">
+      <main className="flex-1">
+        
+        {/* Role Hero Snapshot */}
+        <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 py-14 sm:px-6 lg:px-8 lg:py-20 text-left">
             <Link
               href="/careers"
               className={cn(
                 buttonVariants({ variant: 'ghost', size: 'sm' }),
-                '-ml-2 mb-8 rounded-full text-neutral-500 hover:text-black hover:bg-neutral-200/50'
+                '-ml-2 mb-8 rounded-none text-neutral-500 hover:text-black hover:bg-neutral-200/50 font-sans'
               )}
             >
               <ArrowLeft className="size-4 mr-1.5" />
@@ -225,26 +227,26 @@ export default async function CareerRolePage({ params }: RolePageProps) {
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-end">
               <div>
                 <div className="mb-5 flex flex-wrap gap-2">
-                  <Badge className="bg-[#00b259] text-white">{role.team}</Badge>
-                  <Badge variant="outline" className="border-[#C5C4C2] bg-white text-black">{role.employmentType}</Badge>
-                  <Badge variant="outline" className="border-[#C5C4C2] bg-white text-black">{role.location}</Badge>
+                  <Badge className="bg-[#00b259] text-white rounded-none">{role.team}</Badge>
+                  <Badge variant="outline" className="border-[#C5C4C2] bg-white text-black rounded-none">{role.employmentType}</Badge>
+                  <Badge variant="outline" className="border-[#C5C4C2] bg-white text-black rounded-none">{role.location}</Badge>
                 </div>
-                <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-black sm:text-5xl font-sans">
+                <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-black sm:text-5xl leading-tight">
                   {role.title}
                 </h1>
-                <p className="mt-5 max-w-3xl text-lg leading-8 text-neutral-500 font-sans">
+                <p className="mt-5 max-w-3xl text-lg leading-relaxed text-neutral-600 font-sans">
                   {role.summary}
                 </p>
               </div>
 
-              <Card className="border-[#C5C4C2] bg-white shadow-lg text-black">
+              <Card className="border-[#C5C4C2] bg-white shadow-lg text-black rounded-none">
                 <CardHeader>
-                  <CardTitle className="text-xl text-left">Role snapshot</CardTitle>
-                  <CardDescription className="text-left text-neutral-500">
+                  <CardTitle className="text-xl text-left font-sans font-bold">Role snapshot</CardTitle>
+                  <CardDescription className="text-left text-neutral-500 font-sans">
                     Closed ranges, clear team, and a process that respects senior candidates.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4 text-left">
+                <CardContent className="space-y-4 text-left font-sans">
                   <div className="flex gap-3">
                     <MapPin className="mt-0.5 size-5 shrink-0 text-[#00b259]" />
                     <div>
@@ -272,139 +274,146 @@ export default async function CareerRolePage({ params }: RolePageProps) {
           </div>
         </section>
 
-        <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(0,1fr)_24rem]">
-            <div className="space-y-6">
-              <Card className="shadow-none border-[#C5C4C2] bg-white text-black">
-                <CardHeader>
-                  <Badge variant="outline" className="w-fit border-[#00b259]/30 bg-white text-[#00b259]">
-                    About the role
-                  </Badge>
-                  <CardTitle className="text-2xl text-left">What you will own</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 text-left">
-                  {role.about.map((paragraph) => (
-                    <p key={paragraph} className="text-base leading-8 text-neutral-500">
-                      {paragraph}
-                    </p>
-                  ))}
-                </CardContent>
-              </Card>
-
-              <Card className="shadow-none border-[#C5C4C2] bg-white text-black">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <Clock className="size-5 text-[#00b259]" />
-                    <CardTitle className="text-2xl">First 90 days</CardTitle>
-                  </div>
-                  <CardDescription className="text-left text-neutral-500">
-                    You should see meaningful production impact quickly.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <DetailList items={role.first90} />
-                </CardContent>
-              </Card>
-
-              <div className="grid gap-6 lg:grid-cols-2">
-                <Card className="shadow-none border-[#C5C4C2] bg-white text-black">
+        {/* Role Content Details */}
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white">
+          <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 py-14 sm:px-6 lg:px-8 lg:py-20 text-left">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem]">
+              <div className="space-y-6">
+                <Card className="shadow-none border-[#C5C4C2] bg-white text-black rounded-none">
                   <CardHeader>
-                    <CardTitle className="text-2xl text-left">What you&apos;ll do</CardTitle>
+                    <Badge variant="outline" className="w-fit border-[#00b259]/30 bg-white text-[#00b259] rounded-none font-mono">
+                      :: ABOUT THE ROLE ::
+                    </Badge>
+                    <CardTitle className="text-2xl text-left font-sans font-bold mt-2">What you will own</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <DetailList items={role.responsibilities} />
+                  <CardContent className="space-y-4 text-left font-sans">
+                    {role.about.map((paragraph) => (
+                      <p key={paragraph} className="text-base leading-relaxed text-neutral-600">
+                        {paragraph}
+                      </p>
+                    ))}
                   </CardContent>
                 </Card>
 
-                <Card className="shadow-none border-[#C5C4C2] bg-white text-black">
+                <Card className="shadow-none border-[#C5C4C2] bg-white text-black rounded-none">
                   <CardHeader>
-                    <CardTitle className="text-2xl text-left">What we&apos;re looking for</CardTitle>
+                    <div className="flex items-center gap-3">
+                      <Clock className="size-5 text-[#00b259]" />
+                      <CardTitle className="text-2xl font-sans font-bold">First 90 days</CardTitle>
+                    </div>
+                    <CardDescription className="text-left text-neutral-500 font-sans mt-1">
+                      You should see meaningful production impact quickly.
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <DetailList items={role.requirements} />
+                    <DetailList items={role.first90} />
+                  </CardContent>
+                </Card>
+
+                <div className="grid gap-6 lg:grid-cols-2">
+                  <Card className="shadow-none border-[#C5C4C2] bg-white text-black rounded-none">
+                    <CardHeader>
+                      <CardTitle className="text-2xl text-left font-sans font-bold">What you&apos;ll do</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <DetailList items={role.responsibilities} />
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="grid gap-6 lg:grid-cols-2">
+                  <Card className="shadow-none border-[#C5C4C2] bg-white text-black rounded-none">
+                    <CardHeader>
+                      <CardTitle className="text-2xl text-left font-sans font-bold">What we&apos;re looking for</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <DetailList items={role.requirements} />
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <Card className="border-[#00b259]/30 bg-[#00b259]/5 shadow-none text-black rounded-none">
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <Sparkles className="size-5 text-[#00b259]" />
+                      <CardTitle className="text-2xl font-sans font-bold">Nice to have</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <DetailList items={role.niceToHave} />
                   </CardContent>
                 </Card>
               </div>
 
-              <Card className="border-[#00b259]/30 bg-[#00b259]/5 shadow-none text-black">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <Sparkles className="size-5 text-[#00b259]" />
-                    <CardTitle className="text-2xl">Nice to have</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <DetailList items={role.niceToHave} />
-                </CardContent>
-              </Card>
+              <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+                <Card className="border-[#C5C4C2] bg-white text-black shadow-lg rounded-none">
+                  <CardHeader>
+                    <div className="flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]">
+                      <CircleDollarSign className="size-5" />
+                    </div>
+                    <CardTitle className="text-2xl text-left font-sans font-bold mt-2">Compensation</CardTitle>
+                    <CardDescription className="text-left text-neutral-500 font-sans">
+                      Closed ranges signal trust. We would rather be specific up front.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-5 text-left font-sans">
+                    <div>
+                      <p className="text-sm font-semibold text-neutral-500">Range</p>
+                      <p className="mt-1 text-lg font-bold text-black">
+                        {role.compensation.range}
+                      </p>
+                    </div>
+                    <Separator className="bg-[#C5C4C2]/50" />
+                    <div>
+                      <p className="text-sm font-semibold text-neutral-500">Equity</p>
+                      <p className="mt-1 text-lg font-bold text-black">
+                        {role.compensation.equity}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-neutral-950 border border-neutral-800 text-white rounded-none shadow-xl relative overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_40%)]" />
+                  <CardHeader className="relative z-10">
+                    <Badge className="w-fit bg-[#00b259] text-white rounded-none font-mono">
+                      :: HOW TO APPLY ::
+                    </Badge>
+                    <CardTitle className="text-2xl text-left text-white font-black font-sans mt-2">
+                      Send signal, <br />not a novel.
+                    </CardTitle>
+                    <CardDescription className="text-left text-neutral-400 font-sans">
+                      Include links to shipped work, a short note on why this role fits, and any constraints we should know early.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-3 relative z-10 font-sans">
+                    <a
+                      href={role.applyHref}
+                      className={cn(
+                        buttonVariants({ size: 'lg' }),
+                        'h-12 w-full rounded-none px-5 text-base bg-[#00b259] text-white hover:opacity-90 transition-opacity font-sans font-bold flex items-center justify-center gap-1.5'
+                      )}
+                    >
+                      Apply for this role
+                      <Mail className="size-4" />
+                    </a>
+                    <a
+                      href={openApplicationHref}
+                      className={cn(
+                        buttonVariants({ variant: 'outline', size: 'lg' }),
+                        'h-12 w-full rounded-none border-neutral-800 bg-white/5 px-5 text-base text-white hover:bg-white/10 hover:text-white transition-colors font-sans flex items-center justify-center gap-1.5'
+                      )}
+                    >
+                      Open application instead
+                      <ArrowRight className="size-4" />
+                    </a>
+                  </CardContent>
+                </Card>
+              </aside>
             </div>
-
-            <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-              <Card className="border-[#C5C4C2] bg-white text-black shadow-lg">
-                <CardHeader>
-                  <div className="flex size-11 items-center justify-center rounded-xl bg-[#00b259]/10 text-[#00b259]">
-                    <CircleDollarSign className="size-5" />
-                  </div>
-                  <CardTitle className="text-2xl text-left">Compensation</CardTitle>
-                  <CardDescription className="text-left text-neutral-500">
-                    Closed ranges signal trust. We would rather be specific up front.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-5 text-left">
-                  <div>
-                    <p className="text-sm font-semibold text-neutral-500">Range</p>
-                    <p className="mt-1 text-lg font-bold text-black">
-                      {role.compensation.range}
-                    </p>
-                  </div>
-                  <Separator className="bg-[#C5C4C2]/50" />
-                  <div>
-                    <p className="text-sm font-semibold text-neutral-500">Equity</p>
-                    <p className="mt-1 text-lg font-bold text-black">
-                      {role.compensation.equity}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-neutral-900 text-white shadow-xl">
-                <CardHeader>
-                  <Badge className="w-fit bg-[#00b259] text-white">
-                    How to apply
-                  </Badge>
-                  <CardTitle className="text-2xl text-left text-white font-bold">
-                    Send signal, not a novel.
-                  </CardTitle>
-                  <CardDescription className="text-left text-neutral-400">
-                    Include links to shipped work, a short note on why this role fits, and any constraints we should know early.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <a
-                    href={role.applyHref}
-                    className={cn(
-                      buttonVariants({ size: 'lg' }),
-                      'h-12 w-full rounded-full px-5 text-base bg-[#00b259] text-white hover:opacity-90 transition-opacity'
-                    )}
-                  >
-                    Apply for this role
-                    <Mail className="size-4 ml-1.5" />
-                  </a>
-                  <a
-                    href={openApplicationHref}
-                    className={cn(
-                      buttonVariants({ variant: 'outline', size: 'lg' }),
-                      'h-12 w-full rounded-full border-white/20 bg-white/10 px-5 text-base text-white hover:bg-white/15'
-                    )}
-                  >
-                    Open application instead
-                    <ArrowRight className="size-4 ml-1.5" />
-                  </a>
-                </CardContent>
-              </Card>
-            </aside>
           </div>
         </section>
+
       </main>
 
       <Footer />
