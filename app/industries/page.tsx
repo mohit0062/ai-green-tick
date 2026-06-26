@@ -6,6 +6,7 @@ import { ShoppingBag, Activity, GraduationCap, Home, Shield, Plane, ArrowRight, 
 import { cn } from '@/lib/utils'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
+import SolutionsJourney from '@/components/shadcn-studio/blocks/solutions-journey'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 
 const navigationData: Navigation[] = [
@@ -135,16 +136,23 @@ export default function IndustriesPage() {
 
       {/* Hero Header */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
-        <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center space-y-6">
+        <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 pb-0 text-center space-y-6">
           <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
             :: TAILORED WORKFLOWS ::
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-sans tracking-tight leading-none text-black">
-            WhatsApp Automation for Every Industry
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-sans tracking-tight leading-tight text-black">
+            WhatsApp Automation <br /> for Every Industry
           </h1>
           <p className="text-neutral-500 max-w-3xl mx-auto text-sm sm:text-base font-sans">
             AIGreenTick powers WhatsApp automation for eCommerce, healthcare, education, real estate, finance, and travel businesses. Industry-specific chatbots, campaigns, and integrations.
           </p>
+          <div className="mt-10 -mx-4 sm:mx-auto max-w-5xl overflow-hidden">
+            <img
+              src="/wdececpng.png"
+              alt="WhatsApp Automation Blueprint"
+              className="w-full h-auto object-cover block"
+            />
+          </div>
         </div>
       </section>
 
@@ -282,6 +290,7 @@ export default function IndustriesPage() {
           <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-6 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 snap-x snap-mandatory scrollbar-thin">
             {industries.map((ind, idx) => {
               const Icon = ind.icon
+              const isSelected = selectedIndustry === ind.id && !isAutoplay
               return (
                 <div
                   key={ind.id}
@@ -292,14 +301,14 @@ export default function IndustriesPage() {
                   }}
                   className={cn(
                     "relative border border-[#C5C4C2] h-[360px] flex flex-col justify-between p-6 overflow-hidden group cursor-pointer w-[280px] sm:w-[320px] md:w-auto shrink-0 snap-start transition-all duration-300",
-                    selectedIndustry === ind.id
+                    isSelected
                       ? 'border-[#00b259] bg-[#00b259]/5'
                       : 'bg-white hover:border-black'
                   )}
                 >
                   {/* Top row: marker + index number */}
                   <div className="flex items-center justify-between w-full">
-                    <div className={cn("size-2 transition-colors", selectedIndustry === ind.id ? "bg-[#00b259]" : "bg-black")} />
+                    <div className={cn("size-2 transition-colors", isSelected ? "bg-[#00b259]" : "bg-black")} />
                     <span className="text-[11px] font-sans font-bold text-neutral-400">
                       {String(idx + 1).padStart(2, '0')}
                     </span>
@@ -310,7 +319,7 @@ export default function IndustriesPage() {
                     <div
                       className={cn(
                         "w-36 h-36 bg-[#ECEBE9]/30 border border-[#C5C4C2] flex items-center justify-center relative rounded-2xl transition-all duration-300",
-                        selectedIndustry === ind.id ? "bg-[#00b259]/10 border-[#00b259]/30" : "group-hover:bg-[#00b259]/5 group-hover:border-[#00b259]/20"
+                        isSelected ? "bg-[#00b259]/10 border-[#00b259]/30" : "group-hover:bg-[#00b259]/5 group-hover:border-[#00b259]/20"
                       )}
                       style={{
                         clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)'
@@ -318,7 +327,7 @@ export default function IndustriesPage() {
                     >
                       <div className={cn(
                         "transition-all duration-300 transform group-hover:scale-105 [&>svg]:size-14 [&>svg]:stroke-[1]",
-                        selectedIndustry === ind.id ? "text-[#00b259]" : "text-neutral-800 group-hover:text-[#00b259]"
+                        isSelected ? "text-[#00b259]" : "text-neutral-800 group-hover:text-[#00b259]"
                       )}>
                         <Icon className="size-14" />
                       </div>
@@ -329,7 +338,7 @@ export default function IndustriesPage() {
                   <div className="text-left w-full">
                     <h3 className={cn(
                       "text-xs sm:text-sm font-sans font-bold uppercase tracking-wider transition-colors",
-                      selectedIndustry === ind.id ? "text-[#00b259]" : "text-black group-hover:text-[#00b259]"
+                      isSelected ? "text-[#00b259]" : "text-black group-hover:text-[#00b259]"
                     )}>
                       {ind.title}
                     </h3>
@@ -344,7 +353,7 @@ export default function IndustriesPage() {
                     onClick={(e) => e.stopPropagation()}
                     className="pt-4 border-t border-[#C5C4C2]/30 flex items-center justify-between text-[10px] font-bold font-sans text-black w-full mt-2 hover:text-[#00b259] transition-colors"
                   >
-                    <span className="text-[#00b259]">{selectedIndustry === ind.id ? 'VIEW DETAILED BLUEPRINT \u2192' : 'EXPLORE BLUEPRINT \u2192'}</span>
+                    <span className="text-[#00b259]">{isSelected ? 'VIEW DETAILED BLUEPRINT \u2192' : 'EXPLORE BLUEPRINT \u2192'}</span>
                     <ArrowRight className="size-3.5 text-[#00b259] group-hover:translate-x-0.5 transition-transform" />
                   </Link>
                 </div>
@@ -354,6 +363,9 @@ export default function IndustriesPage() {
 
         </div>
       </section>
+
+      {/* Solutions Journey Section */}
+      <SolutionsJourney />
 
       {/* Trust & Capabilities Section */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30 py-16 sm:py-24">
