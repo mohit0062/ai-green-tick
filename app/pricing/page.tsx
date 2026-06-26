@@ -8,6 +8,7 @@ import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 import FAQ from '@/components/shadcn-studio/blocks/faq-component-04/faq-component-04'
 import Pricing from '@/components/shadcn-studio/blocks/pricing-component-11/pricing-component-11'
+import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
 
 const navigationData: Navigation[] = [
   {
@@ -397,33 +398,8 @@ export default function PricingPage() {
         <FAQ tabs={faqTabs} />
       </div>
 
-      {/* CTA Footer Section */}
-      <section className="px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]">
-        <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-sans font-bold text-black">
-            Start free. Scale as you grow.
-          </h2>
-          <p className="text-neutral-500 font-sans text-xs sm:text-sm max-w-md mx-auto">
-            Ready to unleash official WhatsApp API power? Sign up for your 14-day free trial now or schedule a consultation.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 font-sans">
-            <Link
-              href="#demo"
-              className="px-6 py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity"
-              style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}
-            >
-              START 14-DAY FREE TRIAL
-            </Link>
-            <Link
-              href="#demo"
-              className="px-6 py-3 text-xs font-black text-black border border-[#C5C4C2] hover:bg-neutral-200/50 transition-colors"
-              style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}
-            >
-              TALK TO SALES
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Homepage CTA Section */}
+      <CTA />
 
       {/* Footer */}
       <Footer />
