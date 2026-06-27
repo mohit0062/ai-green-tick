@@ -373,82 +373,105 @@ export default function CareersPage() {
 
       <main className="flex-1 overflow-hidden">
 
-        {/* Hero Section */}
-        <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8 relative">
-          <div className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_18%_22%,rgba(0,178,89,0.08),transparent_28rem),radial-gradient(circle_at_88%_8%,rgba(0,178,89,0.05),transparent_24rem)]" />
-          
-          {/* Lanyard component at top center of banner */}
-          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-6 flex justify-center">
-            <div className="w-full max-w-2xl h-[480px] relative z-20">
-              <Lanyard position={[0, 0, 12]} gravity={[0, -30, 0]} lanyardWidth={1.2} />
+        {/* Hero Banner Section */}
+        <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+          {/* Radar circles background */}
+          <div className="absolute inset-0 pointer-events-none opacity-40 [background-image:radial-gradient(circle_at_50%_120%,rgba(0,178,89,0.08),transparent_35rem)]">
+            <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full border border-neutral-300/30" />
+            <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full border border-neutral-300/30" />
+            <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full border border-neutral-300/30" />
+            {/* Floating green dots */}
+            <div className="absolute top-[20%] left-[15%] w-2 h-2 rounded-full bg-[#00b259] opacity-60 animate-pulse" />
+            <div className="absolute top-[60%] left-[8%] w-3 h-3 rounded-full bg-[#00b259] opacity-40" />
+            <div className="absolute top-[40%] right-[10%] w-2.5 h-2.5 rounded-full bg-[#00b259] opacity-50" />
+            <div className="absolute top-[75%] right-[20%] w-2 h-2 rounded-full bg-[#00b259] opacity-60 animate-pulse" />
+          </div>
+
+          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-16 md:pt-24 flex flex-col items-center text-center">
+            <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-6">
+              :: {content.hero.badge} ::
+            </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 font-sans leading-tight max-w-3xl">
+              Build the Future<br />With Us
+            </h1>
+            <p className="mt-6 text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto font-sans leading-relaxed">
+              Join a senior team building AI-powered WhatsApp automation for thousands of businesses.
+            </p>
+
+            <div className="mt-8 flex justify-center relative">
+              <Link
+                href="#open-roles"
+                className="rounded-full bg-neutral-950 text-white px-8 py-3.5 font-sans font-semibold text-sm cursor-target border border-neutral-800 shadow-lg hover:bg-neutral-800 transition-all z-30"
+              >
+                Explore Careers
+              </Link>
+            </div>
+
+            {/* Lanyard container centered directly below/under the button */}
+            <div className="w-full max-w-3xl h-[480px] relative z-20 -mt-[14px]">
+              <Lanyard position={[0, 0, 11.5]} gravity={[0, -25, 0]} lanyardWidth={0.8} />
             </div>
           </div>
-          
-          <div className="relative mx-auto grid max-w-7xl gap-10 border-x border-[#C5C4C2] px-4 pb-16 pt-8 sm:px-6 md:pb-24 lg:grid-cols-[minmax(0,1fr)_28rem] lg:px-8 text-left">
-            <div className="max-w-4xl flex flex-col justify-center">
-              <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-6">
-                :: {content.hero.badge} ::
-              </span>
-              <h1 className="max-w-5xl text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl leading-tight">
-                Join the team building India's leading WhatsApp marketing platform.
-              </h1>
-              <p className="mt-6 max-w-3xl text-base leading-relaxed text-neutral-600 md:text-lg font-sans">
-                {content.hero.description}
-              </p>
+        </section>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="#open-roles"
-                  className={cn(
-                    buttonVariants({ size: 'lg' }),
-                    'h-12 rounded-none px-6 text-base bg-[#00b259] text-white hover:opacity-90 transition-opacity font-sans'
-                  )}
-                >
-                  See Open Roles
-                  <ArrowRight className="size-4 ml-1.5" />
-                </Link>
-                <a
-                  href={openApplicationHref}
-                  className={cn(
-                    buttonVariants({ variant: 'outline', size: 'lg' }),
-                    'h-12 rounded-none bg-white px-6 text-base border-[#C5C4C2] text-black hover:border-black transition-colors font-sans'
-                  )}
-                >
-                  Send an Open Application
-                  <Mail className="size-4 ml-1.5" />
-                </a>
-              </div>
-            </div>
-
-            <Card className="relative h-fit border-[#C5C4C2] bg-white p-2 shadow-lg rounded-none text-black">
-              <CardHeader>
-                <div className="flex items-center justify-between gap-3">
-                  <Badge variant="outline" className="border-[#00b259]/30 text-[#00b259] rounded-none font-mono">
-                    :: OPERATING AGREEMENT ::
-                  </Badge>
-                  <Code2 className="size-5 text-[#00b259]" />
-                </div>
-                <CardTitle className="text-2xl text-left font-sans font-bold mt-2">
-                  Builders who stay close to production.
-                </CardTitle>
-                <CardDescription className="text-base leading-7 text-left text-neutral-500 font-sans">
-                  We hire for people who can move through ambiguity, write clearly, and keep systems alive after launch.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4 text-left">
-                {content.heroStats.map((stat) => (
-                  <div
-                    key={stat.value}
-                    className="rounded-none border border-[#C5C4C2] bg-neutral-50 p-4"
+        {/* Operating Agreement & Stats Section */}
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-neutral-50/30">
+          <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 py-16 sm:px-6 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_28rem] items-center">
+              <div className="space-y-6 text-left">
+                <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit">
+                  :: THE MISSION ::
+                </span>
+                <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 font-sans">
+                  Join the team building India's leading WhatsApp marketing platform.
+                </h2>
+                <p className="text-neutral-600 font-sans leading-relaxed text-base">
+                  {content.hero.description}
+                </p>
+                <div className="flex flex-col gap-3 sm:flex-row pt-4">
+                  <a
+                    href={openApplicationHref}
+                    className={cn(
+                      buttonVariants({ variant: 'outline', size: 'lg' }),
+                      'h-12 rounded-none bg-white px-6 text-base border-[#C5C4C2] text-black hover:border-black transition-colors font-sans'
+                    )}
                   >
-                    <p className="text-2xl font-black text-[#00b259] font-sans">{stat.value}</p>
-                    <p className="mt-1 text-sm leading-6 text-neutral-500 font-sans">
-                      {stat.label}
-                    </p>
+                    Send an Open Application
+                    <Mail className="size-4 ml-1.5" />
+                  </a>
+                </div>
+              </div>
+
+              <Card className="relative h-fit border-[#C5C4C2] bg-white p-2 shadow-lg rounded-none text-black">
+                <CardHeader>
+                  <div className="flex items-center justify-between gap-3">
+                    <Badge variant="outline" className="border-[#00b259]/30 text-[#00b259] rounded-none font-mono">
+                      :: OPERATING AGREEMENT ::
+                    </Badge>
+                    <Code2 className="size-5 text-[#00b259]" />
                   </div>
-                ))}
-              </CardContent>
-            </Card>
+                  <CardTitle className="text-2xl text-left font-sans font-bold mt-2">
+                    Builders who stay close to production.
+                  </CardTitle>
+                  <CardDescription className="text-base leading-7 text-left text-neutral-500 font-sans">
+                    We hire for people who can move through ambiguity, write clearly, and keep systems alive after launch.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4 text-left">
+                  {content.heroStats.map((stat) => (
+                    <div
+                      key={stat.value}
+                      className="rounded-none border border-[#C5C4C2] bg-neutral-50 p-4"
+                    >
+                      <p className="text-2xl font-black text-[#00b259] font-sans">{stat.value}</p>
+                      <p className="mt-1 text-sm leading-6 text-neutral-500 font-sans">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </section>
 

@@ -159,8 +159,6 @@ function Band({
   // half, back = right half). Each image is drawn aspect-preserving (no stretch).
   const cardMap = useMemo(() => {
     const baseMap = materials.base.map
-    if (!frontImage && !backImage) return baseMap
-
     const baseImg = baseMap.image
     const W = baseImg.width
     const H = baseImg.height
@@ -191,8 +189,56 @@ function Band({
       ctx.restore()
     }
 
-    if (frontImage && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT)
-    if (backImage && backTex.image) drawFitted(backTex.image, BACK_UV_RECT)
+    // Draw the custom front face
+    if (frontImage && frontTex.image) {
+      drawFitted(frontTex.image, FRONT_UV_RECT)
+    } else {
+      const rx = FRONT_UV_RECT.x * W
+      const ry = FRONT_UV_RECT.y * H
+      const rw = FRONT_UV_RECT.w * W
+      const rh = FRONT_UV_RECT.h * H
+
+      ctx.fillStyle = '#ffffff'
+      ctx.fillRect(rx, ry, rw, rh)
+
+      const cx = rx + rw / 2
+      const cy = ry + rh * 0.42
+      const r = rw * 0.18
+
+      ctx.strokeStyle = '#000000'
+      ctx.lineWidth = 14
+      ctx.lineCap = 'round'
+
+      ctx.save()
+      ctx.translate(cx, cy)
+      ctx.rotate(-Math.PI / 5)
+      ctx.beginPath()
+      ctx.ellipse(0, 0, r * 1.25, r * 0.52, 0, 0, Math.PI * 2)
+      ctx.stroke()
+      ctx.restore()
+
+      ctx.save()
+      ctx.translate(cx, cy)
+      ctx.rotate(Math.PI / 5)
+      ctx.beginPath()
+      ctx.ellipse(0, 0, r * 1.25, r * 0.52, 0, 0, Math.PI * 2)
+      ctx.stroke()
+      ctx.restore()
+
+      ctx.fillStyle = '#000000'
+      ctx.beginPath()
+      ctx.arc(cx - (rw * 0.03), cy + (rw * 0.03), rw * 0.038, 0, Math.PI * 2)
+      ctx.fill()
+
+      ctx.fillStyle = '#000000'
+      ctx.font = `bold ${Math.round(rw * 0.095)}px sans-serif`
+      ctx.textAlign = 'center'
+      ctx.fillText('AI Greentick', cx, ry + rh * 0.76)
+    }
+
+    if (backImage && backTex.image) {
+      drawFitted(backTex.image, BACK_UV_RECT)
+    }
 
     const composite = new THREE.CanvasTexture(canvas)
     composite.colorSpace = THREE.SRGBColorSpace
