@@ -378,9 +378,9 @@ export default function CareersPage() {
           <div className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_18%_22%,rgba(0,178,89,0.08),transparent_28rem),radial-gradient(circle_at_88%_8%,rgba(0,178,89,0.05),transparent_24rem)]" />
           
           {/* Lanyard component at top center of banner */}
-          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-12 flex justify-center">
-            <div className="w-full max-w-md h-[260px] relative z-20">
-              <Lanyard position={[0, 0, 16]} gravity={[0, -25, 0]} lanyardWidth={0.8} />
+          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-6 flex justify-center">
+            <div className="w-full max-w-2xl h-[480px] relative z-20">
+              <Lanyard position={[0, 0, 12]} gravity={[0, -30, 0]} lanyardWidth={1.2} />
             </div>
           </div>
           
