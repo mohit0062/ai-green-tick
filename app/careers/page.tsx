@@ -26,6 +26,7 @@ import {
 
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
+import Lanyard from '@/components/Lanyard'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import {
@@ -375,7 +376,15 @@ export default function CareersPage() {
         {/* Hero Section */}
         <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8 relative">
           <div className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_18%_22%,rgba(0,178,89,0.08),transparent_28rem),radial-gradient(circle_at_88%_8%,rgba(0,178,89,0.05),transparent_24rem)]" />
-          <div className="relative mx-auto grid max-w-7xl gap-10 border-x border-[#C5C4C2] px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[minmax(0,1fr)_28rem] lg:px-8 text-left">
+          
+          {/* Lanyard component at top center of banner */}
+          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-12 flex justify-center">
+            <div className="w-full max-w-md h-[260px] relative z-20">
+              <Lanyard position={[0, 0, 16]} gravity={[0, -25, 0]} lanyardWidth={0.8} />
+            </div>
+          </div>
+          
+          <div className="relative mx-auto grid max-w-7xl gap-10 border-x border-[#C5C4C2] px-4 pb-16 pt-8 sm:px-6 md:pb-24 lg:grid-cols-[minmax(0,1fr)_28rem] lg:px-8 text-left">
             <div className="max-w-4xl flex flex-col justify-center">
               <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-6">
                 :: {content.hero.badge} ::

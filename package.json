@@ -9,17 +9,22 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/rapier": "^2.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gsap": "^3.15.0",
     "lucide-react": "^0.577.0",
     "matter-js": "latest",
+    "meshline": "^3.3.1",
     "motion": "latest",
     "next": "16.1.7",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-use": "latest",
-    "tailwind-merge": "^3.5.0"
+    "tailwind-merge": "^3.5.0",
+    "three": "^0.185.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
