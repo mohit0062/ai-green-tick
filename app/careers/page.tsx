@@ -390,7 +390,7 @@ export default function CareersPage() {
           {/* Lanyard - full height, starts from top (navbar), absolute behind text */}
           <div className="absolute inset-0 z-10 flex justify-center">
             <div className="w-full max-w-4xl h-full">
-              <Lanyard position={[0, 0, 9]} gravity={[0, -25, 0]} lanyardWidth={1} />
+              <Lanyard position={[0, 0, 10.5]} gravity={[0, -25, 0]} lanyardWidth={1} />
             </div>
           </div>
 
@@ -406,14 +406,6 @@ export default function CareersPage() {
               Join a senior team building AI-powered WhatsApp automation for thousands of businesses.
             </p>
 
-            <div className="mt-8 flex justify-center relative pointer-events-auto">
-              <Link
-                href="#open-roles"
-                className="rounded-full bg-neutral-950 text-white px-8 py-3.5 font-sans font-semibold text-sm cursor-target border border-neutral-800 shadow-lg hover:bg-neutral-800 transition-all"
-              >
-                Explore Careers
-              </Link>
-            </div>
           </div>
         </section>
 
