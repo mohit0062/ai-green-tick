@@ -53,7 +53,7 @@ const Footer = () => {
               <li><a href="/#features" className="hover:text-[#00b259] transition-colors">Features</a></li>
               <li><a href="/#features" className="hover:text-[#00b259] transition-colors">Broadcasts</a></li>
               <li><a href="/#features" className="hover:text-[#00b259] transition-colors">AI Chatbot</a></li>
-              <li><a href="/#features" className="hover:text-[#00b259] transition-colors">Shared Inbox</a></li>
+              <li><a href="/team-inbox" className="hover:text-[#00b259] transition-colors">Shared Inbox</a></li>
               <li><a href="/#features" className="hover:text-[#00b259] transition-colors">Campaigns</a></li>
               <li><a href="/#features" className="hover:text-[#00b259] transition-colors">Integrations</a></li>
               <li><a href="/pricing" className="hover:text-[#00b259] transition-colors">Pricing</a></li>
@@ -124,8 +124,8 @@ const Footer = () => {
             <span>© 2026 AI Greentick, Made with <span className="text-red-500">❤️</span> for a better web.</span>
             <span className="hidden md:inline text-neutral-300">|</span>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-[#00b259] transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-[#00b259] transition-colors">Terms of Service</a>
+              <a href="/privacy-policy" className="hover:text-[#00b259] transition-colors">Privacy Policy</a>
+              <a href="/terms-of-service" className="hover:text-[#00b259] transition-colors">Terms of Service</a>
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { 
   ArrowRight, 
   ArrowUpRight, 
@@ -32,9 +33,9 @@ export type Category = {
 
 const featuresMenuData: Category[] = [
   {
-    id: 'inbox-bot',
-    title: 'Inbox & Bot Operations',
-    tagline: 'Shared inbox & chatbot builder',
+    id: 'platform-features',
+    title: 'Core Platform',
+    tagline: 'Inbox, bots, & campaigns',
     features: [
       {
         id: 'unified-inbox',
@@ -42,7 +43,7 @@ const featuresMenuData: Category[] = [
         shortDesc: 'Single numbers for multi-agent support',
         description: 'Empower hundreds of support reps to log in and reply from a single business number. Collaborate seamlessly on customer chats.',
         icon: <Inbox className="size-5" />,
-        link: '/#about',
+        link: '/team-inbox',
         previewType: 'shared-inbox-feat'
       },
       {
@@ -62,14 +63,7 @@ const featuresMenuData: Category[] = [
         icon: <BarChart2 className="size-5" />,
         link: '/#about',
         previewType: 'perf-reports'
-      }
-    ]
-  },
-  {
-    id: 'marketing-campaigns',
-    title: 'Marketing & Campaigns',
-    tagline: 'Broadcasts & Meta campaigns',
-    features: [
+      },
       {
         id: 'broadcasting',
         title: 'WhatsApp Broadcasting',
@@ -102,7 +96,7 @@ const featuresMenuData: Category[] = [
 ]
 
 export const FeaturesMegaMenu = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('inbox-bot')
+  const [activeCategory, setActiveCategory] = useState<string>('platform-features')
   const [activeFeatureId, setActiveFeatureId] = useState<string>('unified-inbox')
 
   const currentCategory = featuresMenuData.find(c => c.id === activeCategory) || featuresMenuData[0]
@@ -239,20 +233,13 @@ export const FeaturesMegaMenu = () => {
       {/* Row 1: Header Row */}
       <div className="grid grid-cols-12 border-b border-[#C5C4C2] bg-[#ECEBE9] relative select-none">
         {/* Col 1 Header */}
-        <div className="col-span-4 border-r border-[#C5C4C2] p-3 text-[10px] font-bold text-neutral-400 tracking-widest relative">
-          :: FEATURE CATEGORIES ::
+        <div className="col-span-8 border-r border-[#C5C4C2] p-3 text-[10px] font-bold text-neutral-400 tracking-widest relative">
+          :: TOOLS & CAPABILITIES ::
           {/* Intersection Diamond 1 */}
           <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-[#ECEBE9] z-20" />
         </div>
         
         {/* Col 2 Header */}
-        <div className="col-span-4 border-r border-[#C5C4C2] p-3 text-[10px] font-bold text-neutral-400 tracking-widest relative">
-          :: TOOLS & CAPABILITIES ::
-          {/* Intersection Diamond 2 */}
-          <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-[#ECEBE9] z-20" />
-        </div>
-        
-        {/* Col 3 Header */}
         <div className="col-span-4 p-3 text-[9px] font-bold text-neutral-400 tracking-widest flex justify-between items-center">
           <span>:: COMPONENT SPEC ::</span>
           <span className="text-[#00b259] font-bold font-mono">STABLE API</span>
@@ -260,57 +247,16 @@ export const FeaturesMegaMenu = () => {
       </div>
 
       {/* Row 2: Content Row */}
-      <div className="grid grid-cols-12 min-h-[300px]">
-        {/* Column 1: Categories (Col-span 4) */}
-        <div className="col-span-4 border-r border-[#C5C4C2] flex flex-col p-4 gap-3 bg-[#ECEBE9]">
-          {featuresMenuData.map((category) => {
-            const isActive = activeCategory === category.id
-            return (
-              <div
-                key={category.id}
-                onMouseEnter={() => handleCategoryHover(category.id)}
-                className={cn(
-                  "p-3 flex items-center justify-between border cursor-pointer transition-all duration-200 select-none group/role",
-                  isActive
-                    ? "bg-[#00b259]/10 border-[#00b259] text-black shadow-xs translate-x-1"
-                    : "bg-white/40 border-[#C5C4C2] hover:bg-white/70 text-neutral-600 hover:text-black hover:translate-x-0.5"
-                )}
-                style={{
-                  clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px))'
-                }}
-              >
-                <div className="flex flex-col gap-0.5">
-                  <span className={cn(
-                    "text-[11px] font-extrabold transition-colors duration-200", 
-                    isActive ? "text-[#00b259]" : "text-black"
-                  )}>
-                    {category.title}
-                  </span>
-                  <span className="text-[9px] text-neutral-500 leading-normal font-normal">
-                    {category.tagline}
-                  </span>
-                </div>
-                <div className={cn(
-                  "size-5 rounded-full border flex items-center justify-center transition-all duration-300",
-                  isActive 
-                    ? "border-[#00b259] bg-[#00b259]/10 text-[#00b259] rotate-45" 
-                    : "border-neutral-300 bg-white text-neutral-400 group-hover/role:text-black group-hover/role:border-black"
-                )}>
-                  <ArrowRight className="size-3" />
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Column 2: Specific Tools (Col-span 4) */}
-        <div className="col-span-4 border-r border-[#C5C4C2] flex flex-col p-4 gap-2 bg-[#ECEBE9]/30">
-          <div className="flex flex-col gap-1.5 overflow-y-auto max-h-[300px] pr-1">
+      <div className="grid grid-cols-12 min-h-[260px]">
+        {/* Column 1: Specific Tools (Col-span 8) - Rendered as a 2-column grid */}
+        <div className="col-span-8 border-r border-[#C5C4C2] flex flex-col p-4 gap-2 bg-[#ECEBE9]/30 justify-center">
+          <div className="grid grid-cols-2 gap-2 overflow-hidden">
             {currentCategory.features.map((feature) => {
               const isFeatureActive = activeFeatureId === feature.id
               return (
-                <div
+                <Link
                   key={feature.id}
+                  href={feature.link}
                   onMouseEnter={() => setActiveFeatureId(feature.id)}
                   className={cn(
                     "p-2.5 flex gap-3 items-start border transition-all duration-200 cursor-pointer select-none group/feat",
@@ -327,21 +273,21 @@ export const FeaturesMegaMenu = () => {
                   )}>
                     {feature.icon}
                   </div>
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-[10px] font-bold leading-normal">
+                  <div className="flex flex-col gap-0.5 min-w-0">
+                    <span className="text-[10px] font-bold leading-normal truncate">
                       {feature.title}
                     </span>
-                    <span className="text-[8px] text-neutral-500 leading-normal font-normal">
+                    <span className="text-[8px] text-neutral-500 leading-normal font-normal line-clamp-2">
                       {feature.shortDesc}
                     </span>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>
         </div>
 
-        {/* Column 3: Feature Details (Col-span 4) */}
+        {/* Column 2: Feature Details (Col-span 4) */}
         <div className="col-span-4 flex flex-col p-4 justify-between bg-white text-black">
           <div className="flex flex-col gap-2.5">
             <h3 className="text-xs font-black text-black tracking-tight leading-tight">

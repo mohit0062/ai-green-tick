@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Orbitron } from 'next/font/google'
 import './globals.css'
 import DemoModalProvider from '@/components/shadcn-studio/blocks/demo-modal-provider'
+import Preloader from '@/components/preloader'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang='en' className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}>
       <body>
+        <Preloader />
         {children}
         <DemoModalProvider />
       </body>
     </html>
   )
 }
+

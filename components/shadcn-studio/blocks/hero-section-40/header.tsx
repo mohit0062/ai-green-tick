@@ -266,19 +266,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
                       </span>
                     </a>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a
-                      href={getHref('#faq')}
-                      className="px-4 py-2 hover:bg-[#00b259]/10 text-xs text-neutral-600 transition-colors flex flex-col gap-0.5 cursor-pointer"
-                    >
-                      <span className="font-bold flex items-center gap-1 text-black">
-                        <span className="text-[#00b259]">::</span> Trust Center
-                      </span>
-                      <span className="text-[10px] text-neutral-500 font-normal leading-normal">
-                        Security, compliance, and systems.
-                      </span>
-                    </a>
-                  </DropdownMenuItem>
+
                 </DropdownMenuContent>
               </div>
             </DropdownMenu>
@@ -322,13 +310,13 @@ const Header = ({ className, navigationData }: HeaderProps) => {
 
         {/* Mobile Navigation Dropdown */}
         {mobileMenuOpen && (
-          <div className="lg:hidden absolute top-16 left-0 right-0 bg-[#ECEBE9] border-b border-[#C5C4C2] z-50 flex flex-col divide-y divide-[#C5C4C2] border-t border-[#C5C4C2] font-mono">
+          <div className="lg:hidden absolute top-16 left-0 right-0 bg-[#ECEBE9] border-b border-[#C5C4C2] z-50 flex flex-col divide-y divide-[#C5C4C2] border-t border-[#C5C4C2] font-sans">
             
             {/* Features Mobile Option */}
             <div className="flex flex-col">
               <button
                 onClick={() => setMobileFeaturesOpen(!mobileFeaturesOpen)}
-                className="w-full text-center px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full text-left px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between cursor-pointer"
               >
                 <span className="flex items-center gap-1.5">
                   {activeSection === 'features' && <span className="text-[#00b259] font-bold">&gt;</span>}
@@ -339,44 +327,44 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               {mobileFeaturesOpen && (
                 <div className="bg-[#E4E3E0] flex flex-col divide-y divide-[#C5C4C2]/50 border-t border-[#C5C4C2]">
                   <a
-                    href={getHref('#about')}
+                    href="/team-inbox"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Unified Inbox
                   </a>
                   <a
                     href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Ads Manager
                   </a>
                   <a
                     href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> WhatsApp Broadcasting
                   </a>
                   <a
                     href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Campaign Drips
                   </a>
                   <a
                     href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Chatbot Builder
                   </a>
                   <a
                     href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> AI Analytics
                   </a>
@@ -388,7 +376,7 @@ const Header = ({ className, navigationData }: HeaderProps) => {
             <div className="flex flex-col">
               <button
                 onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                className="w-full text-center px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full text-left px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between cursor-pointer"
               >
                 <span className="flex items-center gap-1.5">
                   {(pathname.startsWith('/industries') || activeSection === 'solutions') && <span className="text-[#00b259] font-bold">&gt;</span>}
@@ -399,53 +387,53 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               {mobileSolutionsOpen && (
                 <div className="bg-[#E4E3E0] flex flex-col divide-y divide-[#C5C4C2]/50 border-t border-[#C5C4C2]">
                   {/* Consumer Verticals */}
-                  <div className="px-8 py-2 text-[9px] font-black text-neutral-400 bg-[#ECEBE9] tracking-wider text-center">
+                  <div className="px-6 py-2 text-[9px] font-black text-neutral-400 bg-[#ECEBE9] tracking-wider text-left">
                     :: CONSUMER VERTICALS
                   </div>
                   <a
                     href="/industries/ecommerce"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> eCommerce & Retail
                   </a>
                   <a
                     href="/industries/realestate"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Real Estate
                   </a>
                   <a
                     href="/industries/travel"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Travel & Hospitality
                   </a>
                   
                   {/* Professional Services */}
-                  <div className="px-8 py-2 text-[9px] font-black text-neutral-400 bg-[#ECEBE9] tracking-wider border-t border-[#C5C4C2]/50 text-center">
+                  <div className="px-6 py-2 text-[9px] font-black text-neutral-400 bg-[#ECEBE9] tracking-wider border-t border-[#C5C4C2]/50 text-left">
                     :: PROFESSIONAL SERVICES
                   </div>
                   <a
                     href="/industries/healthcare"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Healthcare & Wellness
                   </a>
                   <a
                     href="/industries/education"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Education & EdTech
                   </a>
                   <a
                     href="/industries/finance"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-700 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Banking & Finance
                   </a>
@@ -457,27 +445,31 @@ const Header = ({ className, navigationData }: HeaderProps) => {
             <a
               href={getHref('#pricing')}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-1.5"
+              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between"
             >
-              {(pathname.startsWith('/pricing') || activeSection === 'pricing') && <span className="text-[#00b259] font-bold">&gt;</span>}
-              Pricing
+              <span className="flex items-center gap-1.5">
+                {(pathname.startsWith('/pricing') || activeSection === 'pricing') && <span className="text-[#00b259] font-bold">&gt;</span>}
+                Pricing
+              </span>
             </a>
 
             {/* Blog Mobile Option */}
             <a
               href={getHref('#blog')}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-1.5"
+              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between"
             >
-              {pathname.startsWith('/blog') && <span className="text-[#00b259] font-bold">&gt;</span>}
-              Blog
+              <span className="flex items-center gap-1.5">
+                {pathname.startsWith('/blog') && <span className="text-[#00b259] font-bold">&gt;</span>}
+                Blog
+              </span>
             </a>
 
             {/* Company Mobile Option */}
             <div className="flex flex-col">
               <button
                 onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
-                className="w-full text-center px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full text-left px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between cursor-pointer"
               >
                 <span className="flex items-center gap-1.5">
                   {(activeSection === 'about' || activeSection === 'contact') && <span className="text-[#00b259] font-bold">&gt;</span>}
@@ -490,30 +482,23 @@ const Header = ({ className, navigationData }: HeaderProps) => {
                   <a
                     href={getHref('#about')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> About Us
                   </a>
                   <a
                     href={getHref('#contact')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Contact Us
                   </a>
                   <a
                     href={getHref('#careers')}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
+                    className="px-6 pl-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center gap-1.5"
                   >
                     <span className="text-[#00b259]">::</span> Careers
-                  </a>
-                  <a
-                    href={getHref('#faq')}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="px-10 py-3 text-xs text-neutral-600 hover:bg-black/5 flex items-center justify-center gap-1.5"
-                  >
-                    <span className="text-[#00b259]">::</span> Trust Center
                   </a>
                 </div>
               )}
@@ -523,17 +508,19 @@ const Header = ({ className, navigationData }: HeaderProps) => {
             <a
               href={getHref('#faq')}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-center gap-1.5"
+              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between"
             >
-              <span className="text-[#00b259] font-bold">::</span> Ecosystem
+              <span className="flex items-center gap-1.5">
+                <span className="text-[#00b259] font-bold">::</span> Ecosystem
+              </span>
             </a>
 
             {/* Book a Demo Option */}
-            <div className="px-6 py-4 flex justify-center">
+            <div className="px-6 py-6 flex justify-center bg-[#ECEBE9]">
               <a
                 href={getHref('#demo')}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-3 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity shadow-xs"
+                className="w-full text-center py-3.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity shadow-xs"
                 style={{
                   clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
                 }}

@@ -96,12 +96,16 @@ const navigationData: Navigation[] = [
     ]
   },
   {
+    title: 'Team Inbox',
+    href: '/team-inbox'
+  },
+  {
     title: 'Testimonials',
-    href: '#'
+    href: '#testimonials'
   },
   {
     title: 'Pricing',
-    href: '#'
+    href: '/pricing'
   }
 ]
 

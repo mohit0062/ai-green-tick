@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { 
   ArrowUpRight, 
   ShoppingBag, 
@@ -57,7 +58,7 @@ const teamsData: TeamItem[] = [
     tagline: 'Offer instant, 24/7 customer care',
     description: 'Collaborate with a shared team inbox on a single WhatsApp number. Auto-route chats, assign agents, and measure CSAT automatically.',
     previewType: 'support-preview',
-    link: '/#features'
+    link: '/team-inbox'
   }
 ]
 
@@ -306,8 +307,9 @@ export const SolutionsMegaMenu = () => {
           {teamsData.map((team) => {
             const isActive = activeType === 'team' && activeId === team.id
             return (
-              <div
+              <Link
                 key={team.id}
+                href={team.link}
                 onMouseEnter={() => {
                   setActiveType('team')
                   setActiveId(team.id)
@@ -333,7 +335,7 @@ export const SolutionsMegaMenu = () => {
                     {team.tagline}
                   </span>
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
@@ -344,8 +346,9 @@ export const SolutionsMegaMenu = () => {
             {solutionsData.map((solution) => {
               const isSolutionActive = activeType === 'solution' && activeId === solution.id
               return (
-                <div
+                <Link
                   key={solution.id}
+                  href={solution.link}
                   onMouseEnter={() => {
                     setActiveType('solution')
                     setActiveId(solution.id)
@@ -373,7 +376,7 @@ export const SolutionsMegaMenu = () => {
                       {solution.shortDesc}
                     </span>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>

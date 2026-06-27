@@ -71,6 +71,10 @@ const navigationData: Navigation[] = [
     ]
   },
   {
+    title: 'Team Inbox',
+    href: '/team-inbox'
+  },
+  {
     title: 'Testimonials',
     href: '/#testimonials'
   },

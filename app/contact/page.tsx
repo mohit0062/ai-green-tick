@@ -91,6 +91,10 @@ const navigationData: Navigation[] = [
     ]
   },
   {
+    title: 'Team Inbox',
+    href: '/team-inbox'
+  },
+  {
     title: 'Testimonials',
     href: '/#testimonials'
   },
@@ -182,7 +186,7 @@ export default function ContactPage() {
       <JsonLd data={contactSchema} />
       <Header navigationData={navigationData} />
 
-      <main className='flex-1 pt-12'>
+      <main className='flex-1'>
         {/* Contact Section */}
         <ContactUs
           contactCards={contactCards}
