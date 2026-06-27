@@ -592,8 +592,9 @@ const LandingPage = () => {
         hideDefaultCursor={true}
         parallaxOn={true}
         targetSelector=".cursor-target"
-        cursorColor="#00b259"
-        cursorColorOnTarget="#005c2b"
+        containerSelector="#about"
+        cursorColor="#facc15"
+        cursorColorOnTarget="#ca8a04"
       />
       <Header navigationData={navigationData} />
 

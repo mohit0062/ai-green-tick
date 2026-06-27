@@ -36,6 +36,7 @@ const getContainingBlockOffset = (block: HTMLElement | null) => {
 
 interface TargetCursorProps {
   targetSelector?: string
+  containerSelector?: string
   spinDuration?: number
   hideDefaultCursor?: boolean
   hoverDuration?: number
@@ -46,12 +47,13 @@ interface TargetCursorProps {
 
 const TargetCursor = ({
   targetSelector = '.cursor-target',
+  containerSelector,
   spinDuration = 2,
   hideDefaultCursor = true,
   hoverDuration = 0.2,
   parallaxOn = true,
-  cursorColor = '#00b259', // Default to brand green for AI Greentick
-  cursorColorOnTarget = '#005c2b'
+  cursorColor = '#facc15', // Vibrant yellow
+  cursorColorOnTarget = '#ca8a04' // Gold/darker yellow when target locked
 }: TargetCursorProps) => {
   const cursorRef = useRef<HTMLDivElement>(null)
   const cornersRef = useRef<NodeListOf<HTMLDivElement> | null>(null)
@@ -97,9 +99,6 @@ const TargetCursor = ({
     if (isMobile || !cursorRef.current) return
 
     const originalCursor = document.body.style.cursor
-    if (hideDefaultCursor) {
-      document.body.style.cursor = 'none'
-    }
 
     const cursor = cursorRef.current
     cornersRef.current = cursor.querySelectorAll('.target-cursor-corner')
@@ -122,6 +121,7 @@ const TargetCursor = ({
     gsap.set(cursor, {
       xPercent: -50,
       yPercent: -50,
+      opacity: 0,
       x: window.innerWidth / 2 - initialOffset.x,
       y: window.innerHeight / 2 - initialOffset.y
     })
@@ -173,10 +173,50 @@ const TargetCursor = ({
 
     tickerFnRef.current = tickerFn
 
-    const moveHandler = (e: MouseEvent) => moveCursor(e.clientX, e.clientY)
+    let isInsideContainer = false
+    const updateCursorVisibility = (clientX: number, clientY: number) => {
+      const container = containerSelector ? document.querySelector(containerSelector) as HTMLElement : null
+      let isInside = true
+      if (container) {
+        const rect = container.getBoundingClientRect()
+        isInside = (
+          clientX >= rect.left &&
+          clientX <= rect.right &&
+          clientY >= rect.top &&
+          clientY <= rect.bottom
+        )
+      }
+
+      if (isInside) {
+        if (!isInsideContainer) {
+          isInsideContainer = true
+          gsap.to(cursor, { opacity: 1, duration: 0.15, overwrite: 'auto' })
+          if (hideDefaultCursor) {
+            document.body.style.cursor = 'none'
+          }
+        }
+      } else {
+        if (isInsideContainer) {
+          isInsideContainer = false
+          gsap.to(cursor, { opacity: 0, duration: 0.15, overwrite: 'auto' })
+          document.body.style.cursor = originalCursor
+        }
+      }
+    }
+
+    let lastX = window.innerWidth / 2
+    let lastY = window.innerHeight / 2
+
+    const moveHandler = (e: MouseEvent) => {
+      lastX = e.clientX
+      lastY = e.clientY
+      updateCursorVisibility(e.clientX, e.clientY)
+      moveCursor(e.clientX, e.clientY)
+    }
     window.addEventListener('mousemove', moveHandler)
 
     const scrollHandler = () => {
+      updateCursorVisibility(lastX, lastY)
       if (!activeTarget || !cursorRef.current) return
       const { x: offsetX, y: offsetY } = getOffset()
       const mouseX = (gsap.getProperty(cursorRef.current, 'x') as number) + offsetX
@@ -394,6 +434,7 @@ const TargetCursor = ({
     }
   }, [
     targetSelector,
+    containerSelector,
     spinDuration,
     moveCursor,
     constants,
