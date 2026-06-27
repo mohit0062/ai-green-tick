@@ -22,6 +22,7 @@ import Link from 'next/link'
 import { blogPosts } from '@/lib/blog-data'
 import BlogCard from '@/components/shadcn-studio/blocks/blog-card'
 import { brandLogos } from '@/lib/brand-logos'
+import TargetCursor from '@/components/TargetCursor'
 
 const navigationData: Navigation[] = [
   {
@@ -586,6 +587,14 @@ const FooterBlock = () => {
 const LandingPage = () => {
   return (
     <div className='flex flex-col'>
+      <TargetCursor 
+        spinDuration={2}
+        hideDefaultCursor={true}
+        parallaxOn={true}
+        targetSelector=".cursor-target"
+        cursorColor="#00b259"
+        cursorColorOnTarget="#005c2b"
+      />
       <Header navigationData={navigationData} />
 
       <HeroSection40Block />

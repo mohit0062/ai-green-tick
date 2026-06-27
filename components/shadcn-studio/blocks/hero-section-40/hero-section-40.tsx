@@ -186,23 +186,23 @@ const HeroSection = () => {
             </svg>
           </div>
           {/* Twitter */}
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="cursor-target h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors">
             <svg className="size-4.5 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
           {/* Telegram */}
-          <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors">
+          <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="cursor-target h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors">
             <svg className="size-4.5 fill-black translate-x-[1px]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M21.9 2.19a1 1 0 0 0-.99-.08l-19 8a1 1 0 0 0-.1 1.82l4.9 2.22 11.27-7.27c.18-.12.4-.04.47.16s-.04.43-.22.55l-9.45 6.1v4.33a1 1 0 0 0 1.76.65l2.77-3.33 4.8 2.18a1 1 0 0 0 1.38-.63l4-14a1 1 0 0 0-.24-.78z"/>
             </svg>
           </a>
           {/* Medium */}
-          <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors font-sans font-extrabold text-lg text-black select-none">
+          <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="cursor-target h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors font-sans font-extrabold text-lg text-black select-none">
             M
           </a>
           {/* LinkedIn */}
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors">
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="cursor-target h-12 flex items-center justify-center hover:bg-neutral-200/50 transition-colors">
             <svg className="size-4.5 fill-black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
             </svg>
@@ -334,7 +334,7 @@ const HeroSection = () => {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href="#demo"
-                  className="px-6 py-3 text-xs font-mono font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity border border-transparent shadow-xs"
+                  className="cursor-target px-6 py-3 text-xs font-mono font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity border border-transparent shadow-xs"
                   style={{
                     clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
                   }}
@@ -343,7 +343,7 @@ const HeroSection = () => {
                 </a>
                 <a
                   href="#trial"
-                  className="px-6 py-3 text-xs font-mono font-bold uppercase tracking-wider text-black border border-[#C5C4C2] hover:bg-neutral-200/50 transition-colors"
+                  className="cursor-target px-6 py-3 text-xs font-mono font-bold uppercase tracking-wider text-black border border-[#C5C4C2] hover:bg-neutral-200/50 transition-colors"
                   style={{
                     clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
                   }}
@@ -384,7 +384,7 @@ const HeroSection = () => {
               <div className="col-span-1 h-full">
                 <a
                   href="#get-started"
-                  className="h-full w-full flex items-center justify-center bg-[#00b259]/15 hover:bg-[#00b259]/25 text-black hover:text-[#005c2b] transition-all font-bold group"
+                  className="cursor-target h-full w-full flex items-center justify-center bg-[#00b259]/15 hover:bg-[#00b259]/25 text-black hover:text-[#005c2b] transition-all font-bold group"
                 >
                   <ArrowRight className="size-4 sm:size-5 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -417,7 +417,7 @@ const HeroSection = () => {
                     key={value}
                     value={value}
                     className={cn(
-                      "border-r border-[#C5C4C2] text-neutral-400 focus-visible:outline-neutral-300 h-14 md:h-20 flex-1 flex flex-col items-center justify-center gap-1 md:gap-1.5 cursor-pointer rounded-none px-1 md:px-4 py-1.5 md:py-2.5 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest hover:text-neutral-700 hover:bg-white/60 transition-all focus-visible:ring-0 focus-visible:outline-none relative group z-20 pointer-events-auto",
+                      "cursor-target border-r border-[#C5C4C2] text-neutral-400 focus-visible:outline-neutral-300 h-14 md:h-20 flex-1 flex flex-col items-center justify-center gap-1 md:gap-1.5 cursor-pointer rounded-none px-1 md:px-4 py-1.5 md:py-2.5 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest hover:text-neutral-700 hover:bg-white/60 transition-all focus-visible:ring-0 focus-visible:outline-none relative group z-20 pointer-events-auto",
                       "data-[state=active]:bg-white data-[state=active]:text-black! data-[state=active]:shadow-none",
                       value === 'broadcasting' && "hidden md:flex"
                     )}
