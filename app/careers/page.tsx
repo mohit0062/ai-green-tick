@@ -374,7 +374,7 @@ export default function CareersPage() {
       <main className="flex-1 overflow-hidden">
 
         {/* Hero Banner Section */}
-        <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ minHeight: '100vh' }}>
           {/* Radar circles background */}
           <div className="absolute inset-0 pointer-events-none opacity-40 [background-image:radial-gradient(circle_at_50%_120%,rgba(0,178,89,0.08),transparent_35rem)]">
             <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full border border-neutral-300/30" />
@@ -387,8 +387,16 @@ export default function CareersPage() {
             <div className="absolute top-[75%] right-[20%] w-2 h-2 rounded-full bg-[#00b259] opacity-60 animate-pulse" />
           </div>
 
-          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-16 md:pt-24 flex flex-col items-center text-center">
-            <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-6">
+          {/* Lanyard - full height, starts from top (navbar), absolute behind text */}
+          <div className="absolute inset-0 z-10 flex justify-center">
+            <div className="w-full max-w-4xl h-full">
+              <Lanyard position={[0, 0, 9]} gravity={[0, -25, 0]} lanyardWidth={1} />
+            </div>
+          </div>
+
+          {/* Text content overlaid on top */}
+          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-16 md:pt-24 flex flex-col items-center text-center z-20 pointer-events-none" style={{ minHeight: '100vh' }}>
+            <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-6 pointer-events-auto">
               :: {content.hero.badge} ::
             </span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 font-sans leading-tight max-w-3xl">
@@ -398,18 +406,13 @@ export default function CareersPage() {
               Join a senior team building AI-powered WhatsApp automation for thousands of businesses.
             </p>
 
-            <div className="mt-8 flex justify-center relative">
+            <div className="mt-8 flex justify-center relative pointer-events-auto">
               <Link
                 href="#open-roles"
-                className="rounded-full bg-neutral-950 text-white px-8 py-3.5 font-sans font-semibold text-sm cursor-target border border-neutral-800 shadow-lg hover:bg-neutral-800 transition-all z-30"
+                className="rounded-full bg-neutral-950 text-white px-8 py-3.5 font-sans font-semibold text-sm cursor-target border border-neutral-800 shadow-lg hover:bg-neutral-800 transition-all"
               >
                 Explore Careers
               </Link>
-            </div>
-
-            {/* Lanyard container centered directly below/under the button */}
-            <div className="w-full max-w-3xl h-[480px] relative z-20 -mt-[14px]">
-              <Lanyard position={[0, 0, 11.5]} gravity={[0, -25, 0]} lanyardWidth={0.8} />
             </div>
           </div>
         </section>
