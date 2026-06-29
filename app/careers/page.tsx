@@ -308,10 +308,10 @@ function SignalCard({ item, idx }: { item: any; idx: number }) {
 
       {/* Bottom row: Title & Description */}
       <div className="text-left w-full">
-        <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-black dark:text-white group-hover:text-[#00b259] transition-colors">
+        <h3 className="text-base sm:text-lg font-sans font-bold text-black dark:text-white group-hover:text-[#00b259] transition-colors">
           {item.title}
         </h3>
-        <p className="text-[11px] font-mono text-neutral-500 mt-1.5 leading-relaxed group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
+        <p className="text-sm font-sans text-neutral-600 mt-2 leading-relaxed group-hover:text-neutral-800 dark:group-hover:text-neutral-200 transition-colors">
           {item.description}
         </p>
       </div>
