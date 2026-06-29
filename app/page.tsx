@@ -23,6 +23,7 @@ import { blogPosts } from '@/lib/blog-data'
 import BlogCard from '@/components/shadcn-studio/blocks/blog-card'
 import { brandLogos } from '@/lib/brand-logos'
 import TargetCursor from '@/components/TargetCursor'
+import Preloader from '@/components/preloader'
 
 const navigationData: Navigation[] = [
   {
@@ -587,6 +588,7 @@ const FooterBlock = () => {
 const LandingPage = () => {
   return (
     <div className='flex flex-col'>
+      <Preloader />
       <TargetCursor 
         spinDuration={2}
         hideDefaultCursor={true}
