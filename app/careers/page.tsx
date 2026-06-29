@@ -166,7 +166,7 @@ const content = {
     {
       iconName: "ShieldCheckIcon",
       title: "Senior judgement",
-      description: "You've shipped real software at scale. You know when to refactor and when to leave it alone."
+      description: "You have a proven track record of building and deploying scalable systems. You understand the delicate balance between shipping quickly and maintaining code quality."
     },
     {
       iconName: "MessageSquareTextIcon",
