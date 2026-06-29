@@ -12,6 +12,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { SolutionsMegaMenu } from './solutions-mega-menu'
 import { FeaturesMegaMenu } from './features-mega-menu'
 
@@ -273,14 +286,9 @@ const Header = ({ className, navigationData }: HeaderProps) => {
 
           </div>
 
-          {/* Col 8-9: Ecosystem & Book a Demo Button */}
-          <div className="col-span-2 h-full flex items-center justify-between px-6 gap-4">
-            <a
-              href={getHref('#faq')}
-              className="flex items-center gap-1.5 text-xs font-bold text-neutral-500 hover:text-black transition-colors"
-            >
-              <span className="text-[#00b259] font-bold tracking-tight">::</span> Ecosystem
-            </a>
+          {/* Col 8-9: Book a Demo Button */}
+          <div className="col-span-2 h-full flex items-center justify-end px-6 gap-4">
+
             <a
               href={getHref('#demo')}
               className="px-6 py-2 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity shadow-xs shrink-0"
@@ -300,17 +308,29 @@ const Header = ({ className, navigationData }: HeaderProps) => {
           <a href="/" className="hover:opacity-90 transition-opacity">
             <AiGreenTickLogo />
           </a>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-black hover:bg-black/5 rounded-md transition-colors"
-          >
-            {mobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation Dropdown */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden absolute top-16 left-0 right-0 bg-[#ECEBE9] border-b border-[#C5C4C2] z-50 flex flex-col divide-y divide-[#C5C4C2] border-t border-[#C5C4C2] font-sans">
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <button
+                className="p-2 text-black hover:bg-black/5 rounded-md transition-colors cursor-pointer"
+              >
+                <Menu className="size-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[85vw] sm:max-w-sm bg-[#ECEBE9] border-l border-[#C5C4C2] p-0 font-sans flex flex-col h-full z-[100] [&>button]:hidden">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <div className="flex h-16 items-center justify-between px-4 border-b border-[#C5C4C2] shrink-0">
+                <a href="/" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-90 transition-opacity">
+                  <AiGreenTickLogo />
+                </a>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 text-black hover:bg-black/5 rounded-md transition-colors cursor-pointer"
+                >
+                  <X className="size-6" />
+                </button>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto flex flex-col divide-y divide-[#C5C4C2] pb-6">
             
             {/* Features Mobile Option */}
             <div className="flex flex-col">
@@ -504,19 +524,10 @@ const Header = ({ className, navigationData }: HeaderProps) => {
               )}
             </div>
 
-            {/* Ecosystem Option */}
-            <a
-              href={getHref('#faq')}
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-6 py-4 text-sm font-bold text-neutral-800 hover:bg-black/5 transition-colors flex items-center justify-between"
-            >
-              <span className="flex items-center gap-1.5">
-                <span className="text-[#00b259] font-bold">::</span> Ecosystem
-              </span>
-            </a>
+
 
             {/* Book a Demo Option */}
-            <div className="px-6 py-6 flex justify-center bg-[#ECEBE9]">
+            <div className="px-6 mt-auto pt-6 pb-6 flex justify-center">
               <a
                 href={getHref('#demo')}
                 onClick={() => setMobileMenuOpen(false)}
@@ -528,8 +539,10 @@ const Header = ({ className, navigationData }: HeaderProps) => {
                 BOOK A DEMO
               </a>
             </div>
-          </div>
-        )}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   )
