@@ -540,38 +540,22 @@ export default function CareersPage() {
 
             <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3 text-left">
               {content.hiringSteps.map((step, index) => (
-                <div 
-                  key={step.title} 
-                  className="group relative flex flex-col p-6 overflow-hidden rounded-2xl border border-[#C5C4C2]/50 bg-white shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] transition-all duration-500 hover:-translate-y-1 hover:border-[#00b259]/50 hover:shadow-[0_10px_30px_-10px_rgba(0,178,89,0.15)]"
-                >
-                  {/* Subtle background gradient on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#00b259]/[0.03] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  
-                  {/* Top Header */}
-                  <div className="relative z-10 flex items-center justify-between mb-4">
-                    <div className="flex items-center justify-center size-10 rounded-full bg-neutral-100 text-neutral-600 transition-colors duration-500 group-hover:bg-[#00b259] group-hover:text-white">
-                      <span className="font-mono text-sm font-bold">
-                        {String(index + 1).padStart(2, '0')}
+                <Card key={step.title} className="border border-[#C5C4C2] bg-white text-black shadow-none rounded-none transition-all duration-300 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]">
+                  <CardHeader>
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="font-mono text-sm text-[#00b259] font-bold">
+                        [ {String(index + 1).padStart(2, '0')} ]
                       </span>
+                      <TimerReset className="size-4 text-neutral-400" />
                     </div>
-                    <div className="flex items-center justify-center size-10 rounded-full bg-neutral-50 text-neutral-400 transition-all duration-500 group-hover:bg-[#00b259]/10 group-hover:text-[#00b259] group-hover:rotate-12">
-                      <TimerReset className="size-5" />
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="relative z-10 mt-2 flex-grow">
-                    <h3 className="text-xl font-sans font-bold text-neutral-900 mb-2 transition-colors duration-300 group-hover:text-[#00b259]">
-                      {step.title}
-                    </h3>
-                    <p className="text-base font-sans text-neutral-500 leading-relaxed transition-colors duration-300 group-hover:text-neutral-700">
+                    <CardTitle className="text-xl font-sans font-bold">{step.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base leading-7 text-neutral-500 font-sans">
                       {step.description}
-                    </p>
-                  </div>
-
-                  {/* Decorative progress bar at the bottom */}
-                  <div className="absolute bottom-0 left-0 h-1 w-0 bg-[#00b259] transition-all duration-700 ease-out group-hover:w-full" />
-                </div>
+                    </CardDescription>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
