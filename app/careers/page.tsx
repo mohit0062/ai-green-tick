@@ -279,23 +279,43 @@ function SectionIntro({
   )
 }
 
-function SignalCard({ item }: { item: any }) {
+function SignalCard({ item, idx }: { item: any; idx: number }) {
   const Icon = getLucideIcon(item.iconName)
 
   return (
-    <Card className="h-full border border-[#C5C4C2] bg-white text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)] rounded-none">
-      <CardHeader>
-        <div className="mb-2 flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]">
-          <Icon className="size-5" />
+    <div className="relative border border-[#C5C4C2] bg-white dark:bg-neutral-950 h-[360px] flex flex-col justify-between p-6 overflow-hidden group">
+      {/* Top row: marker + index number */}
+      <div className="flex items-center justify-between w-full">
+        <div className="size-2 bg-black dark:bg-white" />
+        <span className="text-[11px] font-mono font-bold text-neutral-400 dark:text-neutral-500">
+          {String(idx + 1).padStart(2, '0')}
+        </span>
+      </div>
+
+      {/* Center Chamfered Icon Box */}
+      <div className="flex items-center justify-center flex-grow">
+        <div 
+          className="w-36 h-36 bg-[#ECEBE9]/30 dark:bg-neutral-900/50 border border-[#C5C4C2] flex items-center justify-center relative rounded-2xl transition-all duration-300 group-hover:bg-[#00b259]/5 group-hover:border-[#00b259]/20"
+          style={{ 
+            clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)' 
+          }}
+        >
+          <div className="text-neutral-800 dark:text-neutral-200 group-hover:text-[#00b259] transition-all duration-300 transform group-hover:scale-105">
+            <Icon strokeWidth={1} className="size-14" />
+          </div>
         </div>
-        <CardTitle className="text-xl font-sans font-bold">{item.title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <CardDescription className="text-base leading-7 text-neutral-500 font-sans">
+      </div>
+
+      {/* Bottom row: Title & Description */}
+      <div className="text-left w-full">
+        <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-black dark:text-white group-hover:text-[#00b259] transition-colors">
+          {item.title}
+        </h3>
+        <p className="text-[11px] font-mono text-neutral-500 mt-1.5 leading-relaxed group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
           {item.description}
-        </CardDescription>
-      </CardContent>
-    </Card>
+        </p>
+      </div>
+    </div>
   )
 }
 
@@ -371,7 +391,7 @@ export default function CareersPage() {
       <JsonLd data={careersSchema} />
       <Header navigationData={navigationData} />
 
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1">
 
         {/* Hero Banner Section */}
         <section className="border-b border-[#C5C4C2] bg-neutral-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ minHeight: '100vh' }}>
@@ -395,14 +415,12 @@ export default function CareersPage() {
           </div>
 
           {/* Text content overlaid on top */}
-          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 pt-16 md:pt-24 flex flex-col items-center text-center z-20 pointer-events-none" style={{ minHeight: '100vh' }}>
-            <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-6 pointer-events-auto">
-              :: {content.hero.badge} ::
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 font-sans leading-tight max-w-3xl">
-              Build the Future<br />With Us
+          <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 flex flex-col items-center text-center z-20 pointer-events-none" style={{ minHeight: '100vh', paddingTop: '100px' }}>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 font-sans leading-tight max-w-4xl" style={{ textShadow: '0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.7)' }}>
+              Build the Future With Us
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto font-sans leading-relaxed">
+            <p className="mt-6 text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto font-sans leading-relaxed" style={{ textShadow: '0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,1), 0 0 50px rgba(255,255,255,0.9), 0 0 70px rgba(255,255,255,0.7)' }}>
               Join a senior team building AI-powered WhatsApp automation for thousands of businesses.
             </p>
 
@@ -480,8 +498,8 @@ export default function CareersPage() {
             />
 
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {content.fitSignals.map((item) => (
-                <SignalCard key={item.title} item={item} />
+              {content.fitSignals.map((item, idx) => (
+                <SignalCard key={item.title} item={item} idx={idx} />
               ))}
             </div>
           </div>
@@ -504,8 +522,8 @@ export default function CareersPage() {
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
-              {content.benefits.map((item) => (
-                <SignalCard key={item.title} item={item} />
+              {content.benefits.map((item, idx) => (
+                <SignalCard key={item.title} item={item} idx={idx} />
               ))}
             </div>
           </div>
