@@ -91,14 +91,24 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
     return feats
       .filter(feat => feat !== null && feat !== undefined)
       .map((feat, index) => {
+        const seoKeywords = typeof feat.seoKeywords === 'string' 
+          ? feat.seoKeywords 
+          : Array.isArray(feat.seoKeywords) 
+            ? (feat.seoKeywords as string[]).join(', ') 
+            : ''
+            
+        const title = feat.title || 'Untitled Feature'
+        const focusKeyword = feat.focusKeyword || seoKeywords.split(',')[0]?.trim() || title.split(' ')[0]
+
         return {
           ...feat,
           id: feat.id || `feature-${index}`,
-          title: feat.title || 'Untitled Feature',
+          title,
           status: feat.status || 'published',
           seoScore: feat.seoScore !== undefined ? feat.seoScore : 70 + (index * 4) % 30, // 70 to 98
           created_at: feat.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
-          focusKeyword: feat.focusKeyword || feat.seoKeywords?.split(',')[0]?.trim() || (feat.title || '').split(' ')[0],
+          seoKeywords,
+          focusKeyword,
           schemaStatus: feat.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
           linksCount: feat.linksCount || '0 | 0 | 0',
           previewType: feat.previewType || 'default'

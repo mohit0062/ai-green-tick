@@ -97,14 +97,24 @@ export default function SolutionsManagerClient({ initialSolutions }: SolutionsMa
     return sols
       .filter(sol => sol !== null && sol !== undefined)
       .map((sol, index) => {
+        const seoKeywords = typeof sol.seoKeywords === 'string' 
+          ? sol.seoKeywords 
+          : Array.isArray(sol.seoKeywords) 
+            ? (sol.seoKeywords as string[]).join(', ') 
+            : ''
+            
+        const title = sol.title || 'Untitled Solution'
+        const focusKeyword = sol.focusKeyword || seoKeywords.split(',')[0]?.trim() || title.split(' ')[0]
+
         return {
           ...sol,
           id: sol.id || `solution-${index}`,
-          title: sol.title || 'Untitled Solution',
+          title,
           status: sol.status || 'published',
           seoScore: sol.seoScore !== undefined ? sol.seoScore : 70 + (index * 4) % 30, // 70 to 98
           created_at: sol.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
-          focusKeyword: sol.focusKeyword || sol.seoKeywords?.split(',')[0]?.trim() || (sol.title || '').split(' ')[0],
+          seoKeywords,
+          focusKeyword,
           schemaStatus: sol.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
           linksCount: sol.linksCount || '0 | 0 | 0',
           previewType: sol.previewType || 'default'
