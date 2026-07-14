@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { updateSiteSectionAction } from '../cms-actions'
 import SolutionForm from './solution-form'
@@ -85,19 +85,31 @@ interface SolutionsManagerClientProps {
 }
 
 export default function SolutionsManagerClient({ initialSolutions }: SolutionsManagerClientProps) {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // Normalize solutions to have mock WP fields if missing
   const normalizeSolutions = (sols: Solution[]): Solution[] => {
-    return sols.map((sol, index) => {
-      return {
-        ...sol,
-        status: sol.status || 'published',
-        seoScore: sol.seoScore !== undefined ? sol.seoScore : 70 + (index * 4) % 30, // 70 to 98
-        created_at: sol.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
-        focusKeyword: sol.focusKeyword || sol.seoKeywords?.split(',')[0]?.trim() || (sol.title || '').split(' ')[0],
-        schemaStatus: sol.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
-        linksCount: sol.linksCount || '0 | 0 | 0'
-      }
-    })
+    if (!Array.isArray(sols)) return []
+    return sols
+      .filter(sol => sol !== null && sol !== undefined)
+      .map((sol, index) => {
+        return {
+          ...sol,
+          id: sol.id || `solution-${index}`,
+          title: sol.title || 'Untitled Solution',
+          status: sol.status || 'published',
+          seoScore: sol.seoScore !== undefined ? sol.seoScore : 70 + (index * 4) % 30, // 70 to 98
+          created_at: sol.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
+          focusKeyword: sol.focusKeyword || sol.seoKeywords?.split(',')[0]?.trim() || (sol.title || '').split(' ')[0],
+          schemaStatus: sol.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
+          linksCount: sol.linksCount || '0 | 0 | 0',
+          previewType: sol.previewType || 'default'
+        }
+      })
   }
 
   const [solutions, setSolutions] = useState<Solution[]>(() => normalizeSolutions(initialSolutions))
@@ -405,7 +417,7 @@ export default function SolutionsManagerClient({ initialSolutions }: SolutionsMa
 
   // Format Date for table
   const displayDate = (dateStr?: string) => {
-    if (!dateStr) return '—'
+    if (!isMounted || !dateStr) return '—'
     const date = new Date(dateStr)
     const yyyy = date.getFullYear()
     const mm = String(date.getMonth() + 1).padStart(2, '0')

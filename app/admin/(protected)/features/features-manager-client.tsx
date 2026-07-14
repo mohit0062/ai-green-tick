@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { updateSiteSectionAction } from '../cms-actions'
 import FeatureForm from './feature-form'
@@ -79,19 +79,31 @@ interface FeaturesManagerClientProps {
 }
 
 export default function FeaturesManagerClient({ initialFeatures }: FeaturesManagerClientProps) {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // Normalize features to have mock WP fields if missing
   const normalizeFeatures = (feats: Feature[]): Feature[] => {
-    return feats.map((feat, index) => {
-      return {
-        ...feat,
-        status: feat.status || 'published',
-        seoScore: feat.seoScore !== undefined ? feat.seoScore : 70 + (index * 4) % 30, // 70 to 98
-        created_at: feat.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
-        focusKeyword: feat.focusKeyword || feat.seoKeywords?.split(',')[0]?.trim() || (feat.title || '').split(' ')[0],
-        schemaStatus: feat.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
-        linksCount: feat.linksCount || '0 | 0 | 0'
-      }
-    })
+    if (!Array.isArray(feats)) return []
+    return feats
+      .filter(feat => feat !== null && feat !== undefined)
+      .map((feat, index) => {
+        return {
+          ...feat,
+          id: feat.id || `feature-${index}`,
+          title: feat.title || 'Untitled Feature',
+          status: feat.status || 'published',
+          seoScore: feat.seoScore !== undefined ? feat.seoScore : 70 + (index * 4) % 30, // 70 to 98
+          created_at: feat.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
+          focusKeyword: feat.focusKeyword || feat.seoKeywords?.split(',')[0]?.trim() || (feat.title || '').split(' ')[0],
+          schemaStatus: feat.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
+          linksCount: feat.linksCount || '0 | 0 | 0',
+          previewType: feat.previewType || 'default'
+        }
+      })
   }
 
   const [features, setFeatures] = useState<Feature[]>(() => normalizeFeatures(initialFeatures))
@@ -399,7 +411,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
 
   // Format Date for table
   const displayDate = (dateStr?: string) => {
-    if (!dateStr) return '—'
+    if (!isMounted || !dateStr) return '—'
     const date = new Date(dateStr)
     const yyyy = date.getFullYear()
     const mm = String(date.getMonth() + 1).padStart(2, '0')
