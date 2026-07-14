@@ -75,12 +75,33 @@ export async function updateSiteSectionAction(key: string, content: any) {
     } else if (category === 'industries') {
       revalidatePath('/industries')
       revalidatePath('/') // Revalidate homepage too since it might display industries
+      if (Array.isArray(content)) {
+        content.forEach((item: any) => {
+          if (item.id) {
+            revalidatePath(`/industries/${item.id}`)
+          }
+        })
+      }
     } else if (category === 'features') {
       revalidatePath('/features')
       revalidatePath('/', 'layout') // Revalidate layout to update navigation links/dropdowns
+      if (Array.isArray(content)) {
+        content.forEach((item: any) => {
+          if (item.id) {
+            revalidatePath(`/features/${item.id}`)
+          }
+        })
+      }
     } else if (category === 'solutions') {
       revalidatePath('/solutions')
       revalidatePath('/', 'layout')
+      if (Array.isArray(content)) {
+        content.forEach((item: any) => {
+          if (item.id) {
+            revalidatePath(`/solutions/${item.id}`)
+          }
+        })
+      }
     } else if (category === 'services') {
       revalidatePath('/services')
     } else if (category === 'contact') {
