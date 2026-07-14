@@ -55,7 +55,7 @@ const Footer = () => {
               <li><a href="/#features" className="hover:text-[#00b259] transition-colors">AI Chatbot</a></li>
               <li><a href="/team-inbox" className="hover:text-[#00b259] transition-colors">Shared Inbox</a></li>
               <li><a href="/#features" className="hover:text-[#00b259] transition-colors">Campaigns</a></li>
-              <li><a href="/#features" className="hover:text-[#00b259] transition-colors">Integrations</a></li>
+              <li><a href="/integrations" className="hover:text-[#00b259] transition-colors">Integrations</a></li>
               <li><a href="/pricing" className="hover:text-[#00b259] transition-colors">Pricing</a></li>
             </ul>
           </div>

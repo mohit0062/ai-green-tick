@@ -7,63 +7,99 @@ import { cn } from '@/lib/utils'
 
 type PricingProps = {
   showHeaders?: boolean
+  data?: {
+    headerSubtitle?: string
+    headerDescription?: string
+    plans?: Record<string, any>
+  }
 }
 
-const Pricing = ({ showHeaders = true }: PricingProps) => {
+const Pricing = ({ showHeaders = true, data }: PricingProps) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly')
   const [currency, setCurrency] = useState<'INR' | 'USD'>('INR')
 
-  // Pricing Data Config
-  const pricingData = {
-    Starter: {
-      desc: 'Best for Small businesses and solo operators',
-      price: {
-        INR: { monthly: 1999, annual: 1599 },
-        USD: { monthly: 25, annual: 20 }
+  // Pricing Data Config Fallbacks
+  const fallback = {
+    headerSubtitle: 'Simple pricing. No surprises. No markups.',
+    headerDescription: 'Choose the best plan for your business. One flat platform fee plus official Meta conversation charges with zero markups.',
+    plans: {
+      Starter: {
+        desc: 'Best for Small businesses and solo operators',
+        price: {
+          INR: { monthly: 1999, annual: 1599 },
+          USD: { monthly: 25, annual: 20 }
+        },
+        features: [
+          '1 WhatsApp number',
+          'Up to 3 agents',
+          'Basic chatbot (5 flows)',
+          'Bulk campaigns',
+          'Shopify integration',
+          'Standard support'
+        ]
       },
-      features: [
-        '1 WhatsApp number',
-        'Up to 3 agents',
-        'Basic chatbot (5 flows)',
-        'Bulk campaigns',
-        'Shopify integration',
-        'Standard support'
-      ]
-    },
-    Growth: {
-      desc: 'Best for Growing SMBs and D2C brands',
-      price: {
-        INR: { monthly: 4999, annual: 3999 },
-        USD: { monthly: 65, annual: 52 }
+      Growth: {
+        desc: 'Best for Growing SMBs and D2C brands',
+        price: {
+          INR: { monthly: 4999, annual: 3999 },
+          USD: { monthly: 65, annual: 52 }
+        },
+        features: [
+          '1 WhatsApp number',
+          'Unlimited agents',
+          'Advanced chatbot (unlimited flows)',
+          'Bulk campaigns + segmentation',
+          'All integrations (100+)',
+          'WhatsApp Commerce',
+          'Campaign analytics',
+          'Priority support + onboarding'
+        ],
+        popular: true
       },
-      features: [
-        '1 WhatsApp number',
-        'Unlimited agents',
-        'Advanced chatbot (unlimited flows)',
-        'Bulk campaigns + segmentation',
-        'All integrations (100+)',
-        'WhatsApp Commerce',
-        'Campaign analytics',
-        'Priority support + onboarding'
-      ],
-      popular: true
-    },
-    Business: {
-      desc: 'Best for Established businesses with high volume',
-      price: {
-        INR: { monthly: 14999, annual: 11999 },
-        USD: { monthly: 199, annual: 159 }
+      Business: {
+        desc: 'Best for Established businesses with high volume',
+        price: {
+          INR: { monthly: 14999, annual: 11999 },
+          USD: { monthly: 199, annual: 159 }
+        },
+        features: [
+          '3 WhatsApp numbers',
+          'Unlimited agents',
+          'AI chatbot with NLU',
+          'Advanced automation workflows',
+          'Full CRM integrations',
+          'WhatsApp Commerce + analytics',
+          'Green Tick application support',
+          'Dedicated account manager'
+        ]
       },
-      features: [
-        '3 WhatsApp numbers',
-        'Unlimited agents',
-        'AI chatbot with NLU',
-        'Advanced automation workflows',
-        'Full CRM integrations',
-        'WhatsApp Commerce + analytics',
-        'Green Tick application support',
-        'Dedicated account manager'
-      ]
+      Enterprise: {
+        desc: 'Best for Large teams, agencies, and multi-brand operations',
+        price: {
+          INR: { monthly: 0, annual: 0 },
+          USD: { monthly: 0, annual: 0 }
+        },
+        features: [
+          'Unlimited numbers',
+          'Unlimited agents',
+          'Custom AI chatbot',
+          'Advanced automation + custom API',
+          'White-label reporting (agencies)',
+          'SSO + role-based access + SLA',
+          'Custom onboarding program'
+        ]
+      }
+    }
+  }
+
+  const mergedData = {
+    headerSubtitle: data?.headerSubtitle || fallback.headerSubtitle,
+    headerDescription: data?.headerDescription || fallback.headerDescription,
+    plans: {
+      Starter: { ...fallback.plans.Starter, ...data?.plans?.Starter },
+      Growth: { ...fallback.plans.Growth, ...data?.plans?.Growth },
+      Business: { ...fallback.plans.Business, ...data?.plans?.Business },
+      Enterprise: { ...fallback.plans.Enterprise, ...data?.plans?.Enterprise }
     }
   }
 
@@ -83,11 +119,11 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
               :: PRICING PLANS ::
             </span>
-            <h2 className="text-3xl sm:text-4xl font-sans font-bold text-black">
-              Simple pricing. No surprises. No markups.
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-black">
+              {mergedData.headerSubtitle}
             </h2>
-            <p className="text-neutral-500 font-sans text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
-              Choose the best plan for your business. One flat platform fee plus official Meta conversation charges with zero markups.
+            <p className="text-neutral-500 font-sans text-base max-w-2xl mx-auto leading-relaxed">
+              {mergedData.headerDescription}
             </p>
           </div>
         )}
@@ -136,18 +172,18 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
-              <h3 className="text-lg font-black text-black">STARTER</h3>
-              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{pricingData.Starter.desc}</p>
+              <h3 className="text-lg font-black text-black font-display">STARTER</h3>
+              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{mergedData.plans.Starter.desc}</p>
               <div className="pt-2">
-                <span className="text-3xl font-black text-black">
-                  {formatPrice(pricingData.Starter.price[currency][billingCycle])}
+                <span className="text-3xl font-black text-black font-display">
+                  {formatPrice(mergedData.plans.Starter.price?.[currency]?.[billingCycle] || 0)}
                 </span>
                 <span className="text-xs text-neutral-400">/mo</span>
               </div>
             </div>
             <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
-                {pricingData.Starter.features.map((feature, i) => (
+                {(mergedData.plans.Starter.features || []).map((feature: string, i: number) => (
                   <li key={i} className="flex items-start gap-2">
                     <Check className="size-4 text-[#00b259] shrink-0 mt-0.5" />
                     <span>{feature}</span>
@@ -169,24 +205,26 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             className="border-2 border-[#00b259] bg-[#ECEBE9] flex flex-col group relative w-[82vw] sm:w-[360px] md:w-auto shrink-0 snap-start"
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
-            <span className="absolute -top-3.5 left-6 px-3 py-0.5 text-[9px] font-bold text-white bg-[#00b259] font-mono tracking-widest uppercase z-10">
-              MOST POPULAR
-            </span>
+            {mergedData.plans.Growth.popular && (
+              <span className="absolute -top-3.5 left-6 px-3 py-0.5 text-[9px] font-bold text-white bg-[#00b259] font-mono tracking-widest uppercase z-10">
+                MOST POPULAR
+              </span>
+            )}
             <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
               <h3 className="text-lg font-black text-black flex items-center gap-1.5">
                 GROWTH <Sparkles className="size-4.5 text-[#00b259]" />
               </h3>
-              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{pricingData.Growth.desc}</p>
+              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{mergedData.plans.Growth.desc}</p>
               <div className="pt-2">
-                <span className="text-3xl font-black text-black">
-                  {formatPrice(pricingData.Growth.price[currency][billingCycle])}
+                <span className="text-3xl font-black text-black font-display">
+                  {formatPrice(mergedData.plans.Growth.price?.[currency]?.[billingCycle] || 0)}
                 </span>
                 <span className="text-xs text-neutral-400">/mo</span>
               </div>
             </div>
             <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
-                {pricingData.Growth.features.map((feature, i) => (
+                {(mergedData.plans.Growth.features || []).map((feature: string, i: number) => (
                   <li key={i} className="flex items-start gap-2">
                     <Check className="size-4 text-[#00b259] shrink-0 mt-0.5" />
                     <span className="font-medium text-neutral-800">{feature}</span>
@@ -209,18 +247,18 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
-              <h3 className="text-lg font-black text-black">BUSINESS</h3>
-              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{pricingData.Business.desc}</p>
+              <h3 className="text-lg font-black text-black font-display">BUSINESS</h3>
+              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{mergedData.plans.Business.desc}</p>
               <div className="pt-2">
-                <span className="text-3xl font-black text-black">
-                  {formatPrice(pricingData.Business.price[currency][billingCycle])}
+                <span className="text-3xl font-black text-black font-display">
+                  {formatPrice(mergedData.plans.Business.price?.[currency]?.[billingCycle] || 0)}
                 </span>
                 <span className="text-xs text-neutral-400">/mo</span>
               </div>
             </div>
             <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
-                {pricingData.Business.features.map((feature, i) => (
+                {(mergedData.plans.Business.features || []).map((feature: string, i: number) => (
                   <li key={i} className="flex items-start gap-2">
                     <Check className="size-4 text-[#00b259] shrink-0 mt-0.5" />
                     <span>{feature}</span>
@@ -243,8 +281,8 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px))' }}
           >
             <div className="p-6 border-b border-[#C5C4C2] space-y-4 font-sans">
-              <h3 className="text-lg font-black text-black">ENTERPRISE</h3>
-              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">Best for Large teams, agencies, and multi-brand operations</p>
+              <h3 className="text-lg font-black text-black font-display">ENTERPRISE</h3>
+              <p className="text-[10px] text-neutral-400 leading-snug font-sans h-8">{mergedData.plans.Enterprise.desc || 'Best for Large teams, agencies, and multi-brand operations'}</p>
               <div className="pt-2">
                 <span className="text-3xl font-black text-black uppercase">Custom</span>
                 <span className="text-xs text-neutral-400">/mo</span>
@@ -252,13 +290,12 @@ const Pricing = ({ showHeaders = true }: PricingProps) => {
             </div>
             <div className="p-6 flex-grow flex flex-col justify-between gap-6 font-sans">
               <ul className="space-y-3 font-sans text-xs text-neutral-600">
-                <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Unlimited numbers</span></li>
-                <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Unlimited agents</span></li>
-                <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Custom AI chatbot</span></li>
-                <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Advanced automation + custom API</span></li>
-                <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>White-label reporting (agencies)</span></li>
-                <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>SSO + role-based access + SLA</span></li>
-                <li className="flex items-start gap-2"><Check className="size-4 text-[#00b259] shrink-0 mt-0.5" /> <span>Custom onboarding program</span></li>
+                {(mergedData.plans.Enterprise.features || []).map((feature: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Check className="size-4 text-[#00b259] shrink-0 mt-0.5" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
               </ul>
               <Link
                 href="#demo"

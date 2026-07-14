@@ -1,0 +1,65 @@
+# Allow all search engines and AI crawlers for Search & AI Engine Optimization (SEO/AEO)
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# OpenAI ChatGPT Crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Anthropic Claude Crawlers
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Google Gemini / AI Crawlers
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Perplexity Crawler
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Apple AI Crawler
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Cohere AI Crawler
+User-agent: cohere-ai
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Meta AI Crawler
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap Link for Crawlers
+Sitemap: https://aigreentick.com/sitemap.xml

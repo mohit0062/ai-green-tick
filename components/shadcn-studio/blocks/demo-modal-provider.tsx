@@ -4,9 +4,21 @@ import { useState, useEffect } from 'react'
 import { X, Calendar } from 'lucide-react'
 
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
+import { getSiteSectionClient } from '@/utils/cms-client'
 
 export default function DemoModalProvider() {
   const [isOpen, setIsOpen] = useState(false)
+  const [calendlyUrl, setCalendlyUrl] = useState('https://calendly.com/demo-apargoinnovations/30min')
+
+  useEffect(() => {
+    async function loadCalendlyUrl() {
+      const dbNavbar = await getSiteSectionClient('navbar')
+      if (dbNavbar && dbNavbar.calendlyUrl) {
+        setCalendlyUrl(dbNavbar.calendlyUrl)
+      }
+    }
+    loadCalendlyUrl()
+  }, [])
 
   useEffect(() => {
     // Intercept clicks on links that point to #demo
@@ -70,7 +82,7 @@ export default function DemoModalProvider() {
         {/* Modal Body / Calendly Iframe */}
         <div className="flex-1 w-full bg-white relative overflow-hidden">
           <iframe
-            src="https://calendly.com/demo-apargoinnovations/30min?hide_landing_page_details=1&hide_gdpr_banner=1"
+            src={calendlyUrl + (calendlyUrl.includes('?') ? '&' : '?') + 'hide_landing_page_details=1&hide_gdpr_banner=1'}
             width="100%"
             height="100%"
             frameBorder="0"

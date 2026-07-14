@@ -1,3 +1,6 @@
+'use client'
+
+import { useRef, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardDescription, CardHeader } from '@/components/ui/card'
 import { MotionPreset } from '@/components/ui/motion-preset'
@@ -8,8 +11,42 @@ import DataTriangle from '@/assets/svg/data-triangle'
 import { SmartphoneIcon, LineChartIcon, ShieldBanIcon, EyeOff, Mail, MousePointerClick, Undo2, DollarSign, AlertTriangle, UserX, Ban, Flag } from 'lucide-react'
 
 const BentoGrid = () => {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const handleScroll = () => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    const scrollLeft = container.scrollLeft
+    const childWidth = container.children[0]?.clientWidth || 0
+    if (childWidth > 0) {
+      const index = Math.round(scrollLeft / (childWidth + 24))
+      setActiveIndex(Math.min(2, Math.max(0, index)))
+    }
+  }
+
+  const scrollToSlide = (index: number) => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    const childWidth = container.children[0]?.clientWidth || 0
+    container.scrollTo({
+      left: index * (childWidth + 24),
+      behavior: 'smooth'
+    })
+    setActiveIndex(index)
+  }
+
   return (
-    <section className='border-b px-4 sm:px-6 lg:px-8 bg-muted'>
+    <section className='border-b px-4 sm:px-6 lg:px-8 bg-muted relative'>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .scrollbar-none::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-none {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
       <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-24'>
         {/* Section Header */}
         <div className='flex flex-col items-center gap-4 text-center mb-12 md:mb-16'>
@@ -21,7 +58,7 @@ const BentoGrid = () => {
 
           <MotionPreset
             component='h2'
-            className='text-2xl font-bold md:text-3xl lg:text-4xl text-foreground max-w-2xl mt-2 font-sans whitespace-normal md:whitespace-nowrap'
+            className='text-2xl font-bold md:text-3xl lg:text-4xl text-foreground max-w-2xl mt-2 font-display whitespace-normal md:whitespace-nowrap'
             fade
             slide={{ direction: 'down', offset: 30 }}
             delay={0.2}
@@ -32,14 +69,18 @@ const BentoGrid = () => {
         </div>
 
         {/* 3-Card Grid */}
-        <div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>
+        <div 
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          className='flex overflow-x-auto snap-x snap-mandatory gap-6 lg:grid lg:grid-cols-3 lg:overflow-visible lg:snap-none pb-6 lg:pb-0 scrollbar-none w-full'
+        >
           {/* Card 1: One Phone, Many People */}
           <MotionPreset
             fade
             blur
             slide={{ direction: 'down', offset: 50 }}
             transition={{ duration: 0.45 }}
-            className='overflow-hidden min-h-120'
+            className='overflow-hidden min-h-120 w-full shrink-0 lg:shrink snap-center snap-always'
           >
             <Card className='h-full justify-between shadow-none ring-0 rounded-none border border-[#C5C4C2]'>
               <CardHeader className='flex gap-4'>
@@ -54,14 +95,15 @@ const BentoGrid = () => {
                 </MotionPreset>
                 <div className='flex flex-col gap-2'>
                   <MotionPreset
-                    component='h3'
-                    className='text-xl font-medium text-muted-foreground'
+                    component='div'
                     fade
                     slide={{ direction: 'down', offset: 50 }}
                     delay={0.1}
                     transition={{ duration: 0.45 }}
                   >
-                    One Phone, Many People
+                    <h3 className='text-lg font-bold text-foreground font-display'>
+                      One Phone, Many People
+                    </h3>
                   </MotionPreset>
                   <MotionPreset
                     fade
@@ -69,7 +111,7 @@ const BentoGrid = () => {
                     delay={0.2}
                     transition={{ duration: 0.45 }}
                   >
-                    <CardDescription className='text-base leading-relaxed'>
+                    <CardDescription className='text-sm leading-relaxed font-sans text-neutral-500'>
                       Sharing a single WhatsApp number across a team means missed chats, slow replies and zero accountability. You&apos;re losing leads in your own inbox.
                     </CardDescription>
                   </MotionPreset>
@@ -128,7 +170,7 @@ const BentoGrid = () => {
             slide={{ direction: 'down', offset: 50 }}
             delay={0.2}
             transition={{ duration: 0.45 }}
-            className='overflow-hidden min-h-120'
+            className='overflow-hidden min-h-120 w-full shrink-0 lg:shrink snap-center snap-always'
           >
             <Card className='h-full text-base shadow-none ring-0 rounded-none border border-[#C5C4C2]'>
               <CardHeader className='flex gap-4'>
@@ -143,14 +185,15 @@ const BentoGrid = () => {
                 </MotionPreset>
                 <div className='flex flex-col gap-2'>
                   <MotionPreset
-                    component='h3'
-                    className='text-xl font-medium text-muted-foreground'
+                    component='div'
                     fade
                     slide={{ direction: 'down', offset: 50 }}
                     delay={0.3}
                     transition={{ duration: 0.45 }}
                   >
-                    No Visibility, No Strategy
+                    <h3 className='text-lg font-bold text-foreground font-display'>
+                      No Visibility, No Strategy
+                    </h3>
                   </MotionPreset>
                   <MotionPreset
                     fade
@@ -158,7 +201,7 @@ const BentoGrid = () => {
                     delay={0.4}
                     transition={{ duration: 0.45 }}
                   >
-                    <CardDescription className='text-base leading-relaxed'>
+                    <CardDescription className='text-sm leading-relaxed font-sans text-neutral-500'>
                       Without analytics on opens, clicks and replies, your WhatsApp marketing is a guessing game. You can&apos;t optimize what you can&apos;t measure.
                     </CardDescription>
                   </MotionPreset>
@@ -295,7 +338,7 @@ const BentoGrid = () => {
             slide={{ direction: 'down', offset: 50 }}
             delay={0.4}
             transition={{ duration: 0.45 }}
-            className='overflow-hidden min-h-120'
+            className='overflow-hidden min-h-120 w-full shrink-0 lg:shrink snap-center snap-always'
           >
             <Card className='group h-full justify-between shadow-none ring-0 rounded-none border border-[#C5C4C2]'>
               <CardHeader className='flex gap-4'>
@@ -310,14 +353,15 @@ const BentoGrid = () => {
                 </MotionPreset>
                 <div className='flex flex-col gap-2'>
                   <MotionPreset
-                    component='h3'
-                    className='text-xl font-medium text-muted-foreground'
+                    component='div'
                     fade
                     slide={{ direction: 'down', offset: 50 }}
                     delay={0.5}
                     transition={{ duration: 0.45 }}
                   >
-                    Manual Broadcasts Don&apos;t Scale
+                    <h3 className='text-lg font-bold text-foreground font-display'>
+                      Manual Broadcasts Don&apos;t Scale
+                    </h3>
                   </MotionPreset>
                   <MotionPreset
                     fade
@@ -325,7 +369,7 @@ const BentoGrid = () => {
                     delay={0.6}
                     transition={{ duration: 0.45 }}
                   >
-                    <CardDescription className='text-base leading-relaxed'>
+                    <CardDescription className='text-sm leading-relaxed font-sans text-neutral-500'>
                       Copy-pasting offers to 500 contacts gets your number flagged, banned or ignored. Personal WhatsApp was never built for business.
                     </CardDescription>
                   </MotionPreset>
@@ -428,6 +472,22 @@ const BentoGrid = () => {
               </MotionPreset>
             </Card>
           </MotionPreset>
+        </div>
+
+        {/* Pagination Dots (Mobile only) */}
+        <div className='flex justify-center gap-2 mt-6 lg:hidden'>
+          {[0, 1, 2].map((idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollToSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeIndex === idx 
+                  ? 'w-5 bg-[#00b259]' 
+                  : 'w-2 bg-neutral-300 hover:bg-neutral-400'
+              }`}
+            />
+          ))}
         </div>
 
         {/* Bottom border line */}

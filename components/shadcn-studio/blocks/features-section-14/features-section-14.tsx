@@ -1,272 +1,116 @@
 'use client'
 
-import { useRef } from 'react'
-import { Badge } from '@/components/ui/badge'
-
+import { useState } from 'react'
+import Link from 'next/link'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { MotionPreset } from '@/components/ui/motion-preset'
-import { AnimatedBeam } from '@/components/ui/animated-beam'
 
-import LogoVector from '@/assets/svg/logo-vector'
+type Integration = {
+  name: string
+  image: string
+}[]
 
-const Features = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const div1Ref = useRef<HTMLDivElement>(null)
-  const div2Ref = useRef<HTMLDivElement>(null)
-  const div3Ref = useRef<HTMLDivElement>(null)
-  const div4Ref = useRef<HTMLDivElement>(null)
-  const div5Ref = useRef<HTMLDivElement>(null)
-  const span1Ref = useRef<HTMLSpanElement>(null)
-  const span2Ref = useRef<HTMLSpanElement>(null)
-  const span3Ref = useRef<HTMLSpanElement>(null)
-  const span4Ref = useRef<HTMLSpanElement>(null)
-  const span5Ref = useRef<HTMLSpanElement>(null)
-  const span6Ref = useRef<HTMLSpanElement>(null)
+const defaultIntegrations: Integration = [
+  {
+    name: 'Mailchimp',
+    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/mailchimp-icon-circle.png'
+  },
+  {
+    name: 'Webflow',
+    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/webflow-icon-circle.png'
+  },
+  { name: 'Airbnb', image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/airbnb-icon-circle.png' },
+  { name: 'Tata', image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/tata-icon-circle.png' },
+  { name: 'Paypal', image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/paypal-icon-circle.png' },
+  {
+    name: 'Stackoverflow',
+    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/stackoverflow-icon-circle.png'
+  },
+  { name: 'Huawei', image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/huawei-icon-circle.png' },
+  { name: 'Asana', image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/asana-icon-circle.png' },
+  { name: 'Hopin', image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/hopin-icon-circle.png' }
+]
+
+const AppIntegration = ({ integrations = defaultIntegrations }: { integrations?: Integration }) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <section className="border-b px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-24">
+    <section className='py-8 sm:py-16 lg:py-24 border-b px-4 sm:px-6 lg:px-8 bg-muted/30'>
+      <div className='mx-auto max-w-7xl border border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 bg-background rounded-none'>
         {/* Header */}
-        <div className="mb-12 space-y-4 text-center sm:mb-16 lg:mb-24">
+        <div className='mb-8 space-y-4 text-center'>
           <MotionPreset
+            component='h2'
+            className='relative inline-block text-2xl font-bold md:text-3xl lg:text-4xl text-black font-display'
             fade
+            slide={{ direction: 'down', offset: 50 }}
             blur
-            slide={{ direction: 'up', offset: 50 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge className="h-auto text-sm font-normal" variant="outline">
-              Our Features
-            </Badge>
+            <span>All types of </span>
+            <span className='relative z-10'>
+              integration
+              <span className='bg-[#00b259] absolute bottom-0.5 left-0 -z-10 h-1 w-full' aria-hidden='true'></span>
+            </span>
           </MotionPreset>
+
           <MotionPreset
-            component="h2"
-            className="text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white"
+            component='p'
+            className='text-muted-foreground text-base max-w-xl mx-auto font-sans'
             fade
             blur
-            slide={{ direction: 'up', offset: 50 }}
+            slide={{ direction: 'down', offset: 50 }}
             delay={0.3}
             transition={{ duration: 0.5 }}
           >
-            Offer your clients a better retainer experience, scale your agency
-          </MotionPreset>
-          <MotionPreset
-            component="p"
-            className="text-muted-foreground text-base max-w-xl mx-auto font-sans"
-            fade
-            blur
-            slide={{ direction: 'up', offset: 50 }}
-            delay={0.5}
-            transition={{ duration: 0.5 }}
-          >
-            Using technology to make finance simpler, smarter and more rewarding.
+            Connect your favourites apps and service to enhance your experience and boost productivity
           </MotionPreset>
         </div>
 
-        <div ref={containerRef} className="relative flex w-full flex-col items-center gap-18">
-          {/* Mobile Shadcn Hub Badge */}
-          <MotionPreset
-            fade
-            blur
-            delay={0.05}
-            transition={{ duration: 0.5 }}
-            className="animate-heartbeat bg-primary z-1 flex h-14.5 w-fit items-center gap-4 rounded-full px-3.5 text-2xl font-medium text-white shadow-2xl [--heartbeat-color:var(--primary)] lg:hidden dark:text-black"
-          >
-            <div className="bg-primary flex size-10 items-center justify-center rounded-full border-2 border-white dark:border-black">
-              <LogoVector className="size-16 text-white dark:text-black" />
+        {/* App Integration */}
+        <div className='flex flex-col items-center gap-8'>
+          <MotionPreset fade blur slide={{ direction: 'down', offset: 50 }} delay={0.6} transition={{ duration: 0.5 }}>
+            <div className='flex -space-x-2 sm:-space-x-4 flex-wrap justify-center max-w-2xl px-4 py-2'>
+              {integrations.map((integration, index) => (
+                <div 
+                  key={index} 
+                  className="relative"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <Avatar className='size-12 sm:size-14 border-2 border-background shadow-xs hover:z-10 hover:-translate-y-1 hover:shadow-md transition-all duration-300 ease-in-out cursor-pointer bg-white'>
+                    <AvatarImage src={integration.image} alt={integration.name} className="object-cover p-1.5" />
+                    <AvatarFallback className='text-[10px]'>{integration.name.substring(0, 2)}</AvatarFallback>
+                  </Avatar>
+                  
+                  {/* Custom Symmetrical Tooltip */}
+                  {hoveredIndex === index && (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 z-50 bg-black text-white text-[10px] font-sans font-bold px-2.5 py-1.5 shadow-md border border-[#C5C4C2] whitespace-nowrap animate-in fade-in-0 slide-in-from-bottom-1 duration-150">
+                      {integration.name}
+                      {/* Downward pointer triangle */}
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4 border-t-black" />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-            Shadcn
           </MotionPreset>
 
-          <div className="relative flex w-full items-center justify-center max-lg:flex-wrap max-lg:gap-6 lg:justify-between">
-            {/* Left side column: Stripe, Filament */}
-            <div className="flex gap-6 lg:flex-col lg:gap-18">
-              <MotionPreset
-                fade
-                blur
-                delay={0.05}
-                transition={{ duration: 0.5 }}
-                ref={div2Ref}
-                className="bg-background flex h-11 w-fit items-center gap-2 rounded-md border px-2 text-lg shadow-sm"
+          <MotionPreset fade blur slide={{ direction: 'down', offset: 50 }} delay={0.9} transition={{ duration: 0.5 }}>
+            <Link href="/integrations" passHref>
+              <Button
+                className='bg-primary/10 text-primary hover:bg-primary/20 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/40 rounded-full px-6 cursor-pointer'
+                size='lg'
               >
-                <img
-                  src="https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/features/image-22.png"
-                  alt="Stripe"
-                  className="relative size-6.5 rounded-md object-cover"
-                />
-                Stripe
-              </MotionPreset>
-
-              <MotionPreset
-                fade
-                blur
-                delay={0.05}
-                transition={{ duration: 0.5 }}
-                ref={div3Ref}
-                className="bg-background flex h-11 w-fit items-center gap-2 rounded-md border px-2 text-lg shadow-sm"
-              >
-                <img
-                  src="https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/features/image-21.png"
-                  alt="Filament"
-                  className="relative size-6.5 rounded-md object-cover"
-                />
-                Filament
-              </MotionPreset>
-            </div>
-
-            {/* Left spans for beams */}
-            <div className="flex flex-col gap-14 max-lg:hidden">
-              <span ref={span1Ref} className="size-0.5" />
-              <span ref={span2Ref} className="size-0.5" />
-              <span ref={span3Ref} className="size-0.5" />
-            </div>
-
-            {/* Center Node (Desktop) */}
-            <MotionPreset
-              fade
-              blur
-              delay={0.05}
-              transition={{ duration: 0.5 }}
-              ref={div1Ref}
-              className="animate-heartbeat bg-primary z-1 flex h-14.5 w-fit items-center gap-4 rounded-full px-3.5 text-2xl font-medium text-white shadow-2xl [--heartbeat-color:var(--primary)] max-lg:hidden dark:text-black"
-            >
-              <div className="bg-primary flex size-10 items-center justify-center rounded-full border-2 border-white dark:border-black">
-                <LogoVector className="size-16 text-white dark:text-black" />
-              </div>
-              Shadcn
-            </MotionPreset>
-
-            {/* Right spans for beams */}
-            <div className="flex flex-col gap-14 max-lg:hidden">
-              <span ref={span4Ref} className="size-0.5" />
-              <span ref={span5Ref} className="size-0.5" />
-              <span ref={span6Ref} className="size-0.5" />
-            </div>
-
-            {/* Right side column: Supabase, UserAuth */}
-            <div className="flex gap-6 lg:flex-col lg:gap-18">
-              <MotionPreset
-                fade
-                blur
-                delay={0.05}
-                transition={{ duration: 0.5 }}
-                ref={div4Ref}
-                className="bg-background flex h-11 w-fit items-center gap-2 rounded-md border px-2 text-lg shadow-sm"
-              >
-                <img
-                  src="https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/features/image-19.png"
-                  alt="Supabase"
-                  className="relative size-6.5 rounded-md object-cover"
-                />
-                Supabase
-              </MotionPreset>
-
-              <MotionPreset
-                fade
-                blur
-                delay={0.05}
-                transition={{ duration: 0.5 }}
-                ref={div5Ref}
-                className="bg-background flex h-11 w-fit items-center gap-2 rounded-md border px-2 text-lg shadow-sm"
-              >
-                <img
-                  src="https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/features/image-20.png"
-                  alt="User"
-                  className="relative size-6.5 rounded-md object-cover"
-                />
-                UserAuth
-              </MotionPreset>
-            </div>
-          </div>
-
-          {/* Animated Beams connecting nodes */}
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={div1Ref}
-            toRef={span2Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-            reverse
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={div1Ref}
-            toRef={span5Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span2Ref}
-            toRef={span1Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-            reverse
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span1Ref}
-            toRef={div2Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-            reverse
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span2Ref}
-            toRef={span3Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-            reverse
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span3Ref}
-            toRef={div3Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-            reverse
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span5Ref}
-            toRef={span4Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span4Ref}
-            toRef={div4Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span5Ref}
-            toRef={span6Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={span6Ref}
-            toRef={div5Ref}
-            gradientStartColor="var(--primary)"
-            duration={4.5}
-            className="-z-1 max-lg:hidden"
-          />
+                See all integration
+              </Button>
+            </Link>
+          </MotionPreset>
         </div>
       </div>
     </section>
   )
 }
 
-export default Features
+export default AppIntegration

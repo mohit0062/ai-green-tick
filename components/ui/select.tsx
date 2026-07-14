@@ -20,11 +20,13 @@ export function Select({
   value,
   onValueChange,
   disabled,
+  className,
 }: {
   children: React.ReactNode
   value?: string
   onValueChange?: (val: string) => void
   disabled?: boolean
+  className?: string
 }) {
   const [open, setOpen] = React.useState(false)
   const [label, setLabel] = React.useState<React.ReactNode>(null)
@@ -50,7 +52,7 @@ export function Select({
 
   return (
     <SelectContext.Provider value={{ value, onValueChange, open, setOpen, label, setLabel, disabled, triggerRef }}>
-      <div className="relative w-full">{children}</div>
+      <div className={cn("relative w-full", className)}>{children}</div>
     </SelectContext.Provider>
   )
 }

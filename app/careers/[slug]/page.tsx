@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
@@ -207,6 +208,7 @@ export default async function CareerRolePage({ params }: RolePageProps) {
     <div className="flex min-h-screen flex-col bg-white text-black">
       <JsonLd data={jobSchema} />
       <Header navigationData={navigationData} />
+      <Breadcrumb />
 
       <main className="flex-1">
         

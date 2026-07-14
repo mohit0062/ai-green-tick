@@ -44,7 +44,7 @@ const AboutUs = ({
           </MotionPreset>
           <MotionPreset
             component='h2'
-            className='text-2xl font-semibold md:text-3xl lg:text-4xl'
+            className='text-2xl font-bold md:text-3xl lg:text-4xl font-display'
             fade
             slide={{ direction: 'down', offset: 50 }}
             delay={0.2}
@@ -54,7 +54,7 @@ const AboutUs = ({
           </MotionPreset>
           {subheading && (
             <MotionPreset fade slide={{ direction: 'down', offset: 50 }} delay={0.3} transition={{ duration: 0.7 }}>
-              <p className='text-lg opacity-80 md:text-xl'>
+              <p className='text-lg opacity-80 md:text-xl font-sans'>
                 {subheading}
               </p>
             </MotionPreset>
@@ -84,14 +84,15 @@ const AboutUs = ({
                 </span>
                 
                 {/* Title */}
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 font-sans group-hover:text-[#00b259] transition-colors leading-tight">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 font-display group-hover:text-[#00b259] transition-colors leading-tight">
                   {section.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
-                  {section.description}
-                </p>
+                <div 
+                  className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans [&_strong]:font-bold [&_strong]:text-white [&_a]:text-[#00b259] [&_a]:underline [&_img]:inline-block [&_img]:max-w-full"
+                  dangerouslySetInnerHTML={{ __html: section.description }}
+                />
               </div>
             </MotionPreset>
           ))}

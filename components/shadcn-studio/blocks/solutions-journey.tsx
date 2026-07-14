@@ -14,7 +14,7 @@ export default function SolutionsJourney() {
           <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
             :: END-TO-END CUSTOMER JOURNEY ::
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-black font-sans leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-black font-display leading-tight">
             Use conversations to fuel every point in the buyer journey and empower your teams
           </h2>
         </div>
@@ -28,15 +28,15 @@ export default function SolutionsJourney() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="bg-[#EAF3FF] border border-[#C5C4C2] rounded-none grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-sm"
+            className="bg-marketing-bg border border-[#C5C4C2] rounded-none grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-sm"
           >
             {/* Left Info Column */}
             <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between gap-10 text-left">
               <div className="space-y-6">
-                <span className="text-[10px] font-bold tracking-wider text-blue-600 bg-blue-100 border border-blue-200 px-2.5 py-1 uppercase font-sans">
+                <span className="text-[10px] font-bold tracking-wider text-marketing-accent bg-blue-100 border border-blue-200 px-2.5 py-1 uppercase font-sans">
                   AIGreenTick for Marketing
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-black font-sans leading-snug">
+                <h3 className="text-2xl sm:text-3xl font-bold text-black font-display leading-snug">
                   Acquire, engage, and qualify leads with personalized campaigns at scale
                 </h3>
                 <ul className="space-y-3.5">
@@ -47,7 +47,7 @@ export default function SolutionsJourney() {
                     "Stay on top with powerful insights to improve your messaging, campaign, and ad performance"
                   ].map((bullet, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span className="flex items-center justify-center size-5 bg-blue-100 text-blue-600 border border-blue-200 rounded-full shrink-0 mt-0.5">
+                      <span className="flex items-center justify-center size-5 bg-blue-100 text-marketing-accent border border-blue-200 rounded-full shrink-0 mt-0.5">
                         <Check className="size-3 stroke-[3]" />
                       </span>
                       <span className="text-sm text-neutral-700 leading-relaxed font-sans font-medium">{bullet}</span>
@@ -60,15 +60,15 @@ export default function SolutionsJourney() {
               <div className="space-y-8 pt-6 border-t border-[#C5C4C2]/40">
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <div className="text-2xl sm:text-3xl font-black text-blue-600">4X</div>
+                    <div className="text-2xl sm:text-3xl font-black text-marketing-accent">4X</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">LESS CACS</div>
                   </div>
                   <div className="border-l border-[#C5C4C2]/40 pl-4">
-                    <div className="text-2xl sm:text-3xl font-black text-blue-600">3X</div>
+                    <div className="text-2xl sm:text-3xl font-black text-marketing-accent">3X</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">MORE ROI</div>
                   </div>
                   <div className="border-l border-[#C5C4C2]/40 pl-4">
-                    <div className="text-2xl sm:text-3xl font-black text-blue-600">85%</div>
+                    <div className="text-2xl sm:text-3xl font-black text-marketing-accent">85%</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">HIGHER RESPONSE</div>
                   </div>
                 </div>
@@ -80,10 +80,10 @@ export default function SolutionsJourney() {
               <div className="w-full max-w-[340px] space-y-6 relative z-10">
                 
                 {/* Meta Header Steps */}
-                <div className="flex items-center justify-between text-[9px] font-bold text-blue-600 bg-white border border-[#C5C4C2] p-2 font-mono">
+                <div className="flex items-center justify-between text-[9px] font-bold text-marketing-accent bg-white border border-[#C5C4C2] p-2 font-mono">
                   <span>AD</span>
                   <span>&rarr;</span>
-                  <span className="bg-blue-600 text-white px-1.5 py-0.5">CHAT</span>
+                  <span className="bg-marketing-accent text-white px-1.5 py-0.5">CHAT</span>
                   <span>&rarr;</span>
                   <span>ENGAGE</span>
                   <span>&rarr;</span>
@@ -147,17 +147,17 @@ export default function SolutionsJourney() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="bg-[#F8F2FF] border border-[#C5C4C2] rounded-none grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-sm"
+            className="bg-sales-bg border border-[#C5C4C2] rounded-none grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-sm"
           >
             {/* Left Graphic Column (Reversed on desktop) */}
             <div className="lg:col-span-5 bg-purple-50/50 p-8 sm:p-12 border-b lg:border-b-0 lg:border-r border-[#C5C4C2] flex flex-col justify-center items-center relative overflow-hidden select-none order-2 lg:order-1">
               <div className="w-full max-w-[340px] space-y-6 relative z-10">
                 
                 {/* Flow Diagram */}
-                <div className="flex items-center justify-between text-[9px] font-bold text-purple-600 bg-white border border-[#C5C4C2] p-2 font-mono">
+                <div className="flex items-center justify-between text-[9px] font-bold text-sales-accent bg-white border border-[#C5C4C2] p-2 font-mono">
                   <span>ENGAGE</span>
                   <span>&rarr;</span>
-                  <span className="bg-purple-600 text-white px-1.5 py-0.5">QUALIFY</span>
+                  <span className="bg-sales-accent text-white px-1.5 py-0.5">QUALIFY</span>
                   <span>&rarr;</span>
                   <span>ASSIGN</span>
                   <span>&rarr;</span>
@@ -187,7 +187,7 @@ export default function SolutionsJourney() {
                     </div>
                   </div>
                   {/* Status Indicator */}
-                  <div className="text-[8px] font-mono text-purple-600 bg-purple-100/50 border border-purple-200/60 p-1.5 text-center tracking-tight">
+                  <div className="text-[8px] font-mono text-sales-accent bg-purple-100/50 border border-purple-200/60 p-1.5 text-center tracking-tight">
                     * Collecting qualification info before confirming meeting...
                   </div>
                   {/* User Bubble */}
@@ -208,10 +208,10 @@ export default function SolutionsJourney() {
             {/* Right Info Column (Reversed on desktop) */}
             <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between gap-10 text-left order-1 lg:order-2">
               <div className="space-y-6">
-                <span className="text-[10px] font-bold tracking-wider text-purple-600 bg-purple-100 border border-purple-200 px-2.5 py-1 uppercase font-sans">
+                <span className="text-[10px] font-bold tracking-wider text-sales-accent bg-purple-100 border border-purple-200 px-2.5 py-1 uppercase font-sans">
                   AIGreenTick for Sales
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-black font-sans leading-snug">
+                <h3 className="text-2xl sm:text-3xl font-bold text-black font-display leading-snug">
                   Accelerate pipeline, increase conversions, and shorten sales cycles - all on chat
                 </h3>
                 <ul className="space-y-3.5">
@@ -222,7 +222,7 @@ export default function SolutionsJourney() {
                     "Monitor customer chats easily and ensure high-quality customer experience to avoid reputation risks"
                   ].map((bullet, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span className="flex items-center justify-center size-5 bg-purple-100 text-purple-600 border border-purple-200 rounded-full shrink-0 mt-0.5">
+                      <span className="flex items-center justify-center size-5 bg-purple-100 text-sales-accent border border-purple-200 rounded-full shrink-0 mt-0.5">
                         <Check className="size-3 stroke-[3]" />
                       </span>
                       <span className="text-sm text-neutral-700 leading-relaxed font-sans font-medium">{bullet}</span>
@@ -235,15 +235,15 @@ export default function SolutionsJourney() {
               <div className="space-y-8 pt-6 border-t border-[#C5C4C2]/40">
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <div className="text-2xl sm:text-3xl font-black text-purple-600">30%</div>
+                    <div className="text-2xl sm:text-3xl font-black text-sales-accent">30%</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">LESS CYCLE TIME</div>
                   </div>
                   <div className="border-l border-[#C5C4C2]/40 pl-4">
-                    <div className="text-2xl sm:text-3xl font-black text-purple-600">3X</div>
+                    <div className="text-2xl sm:text-3xl font-black text-sales-accent">3X</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">FASTER RESPONSES</div>
                   </div>
                   <div className="border-l border-[#C5C4C2]/40 pl-4">
-                    <div className="text-2xl sm:text-3xl font-black text-purple-600">20%</div>
+                    <div className="text-2xl sm:text-3xl font-black text-sales-accent">20%</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">REVENUE GROWTH</div>
                   </div>
                 </div>
@@ -257,15 +257,15 @@ export default function SolutionsJourney() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="bg-[#FFF9E6] border border-[#C5C4C2] rounded-none grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-sm"
+            className="bg-support-bg border border-[#C5C4C2] rounded-none grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-sm"
           >
             {/* Left Info Column */}
             <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between gap-10 text-left">
               <div className="space-y-6">
-                <span className="text-[10px] font-bold tracking-wider text-amber-600 bg-amber-100 border border-amber-200 px-2.5 py-1 uppercase font-sans">
+                <span className="text-[10px] font-bold tracking-wider text-support-accent bg-amber-100 border border-amber-200 px-2.5 py-1 uppercase font-sans">
                   AIGreenTick for Support
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-black font-sans leading-snug">
+                <h3 className="text-2xl sm:text-3xl font-bold text-black font-display leading-snug">
                   Delight customers and handle questions at scale - Work in perfect harmony with AI
                 </h3>
                 <ul className="space-y-3.5">
@@ -276,7 +276,7 @@ export default function SolutionsJourney() {
                     "Enhance your support operations with data-driven insights on response time, resolutions, and agent-wise performance"
                   ].map((bullet, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span className="flex items-center justify-center size-5 bg-amber-100 text-amber-600 border border-amber-200 rounded-full shrink-0 mt-0.5">
+                      <span className="flex items-center justify-center size-5 bg-amber-100 text-support-accent border border-amber-200 rounded-full shrink-0 mt-0.5">
                         <Check className="size-3 stroke-[3]" />
                       </span>
                       <span className="text-sm text-neutral-700 leading-relaxed font-sans font-medium">{bullet}</span>
@@ -289,15 +289,15 @@ export default function SolutionsJourney() {
               <div className="space-y-8 pt-6 border-t border-[#C5C4C2]/40">
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <div className="text-2xl sm:text-3xl font-black text-amber-600">40%</div>
+                    <div className="text-2xl sm:text-3xl font-black text-support-accent">40%</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">LESS WORKLOAD</div>
                   </div>
                   <div className="border-l border-[#C5C4C2]/40 pl-4">
-                    <div className="text-2xl sm:text-3xl font-black text-amber-600">80%</div>
+                    <div className="text-2xl sm:text-3xl font-black text-support-accent">80%</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">FAQS RESOLVED</div>
                   </div>
                   <div className="border-l border-[#C5C4C2]/40 pl-4">
-                    <div className="text-2xl sm:text-3xl font-black text-amber-600">40%</div>
+                    <div className="text-2xl sm:text-3xl font-black text-support-accent">40%</div>
                     <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider font-mono">FASTER RESPONSE</div>
                   </div>
                 </div>
@@ -309,12 +309,12 @@ export default function SolutionsJourney() {
               <div className="w-full max-w-[340px] space-y-6 relative z-10">
                 
                 {/* Meta Header Steps */}
-                <div className="flex items-center justify-between text-[9px] font-bold text-amber-600 bg-white border border-[#C5C4C2] p-2 font-mono">
+                <div className="flex items-center justify-between text-[9px] font-bold text-support-accent bg-white border border-[#C5C4C2] p-2 font-mono">
                   <span>INQUIRY</span>
                   <span>&rarr;</span>
                   <span>RESPOND</span>
                   <span>&rarr;</span>
-                  <span className="bg-amber-600 text-white px-1.5 py-0.5">RESOLVE</span>
+                  <span className="bg-support-accent text-white px-1.5 py-0.5">RESOLVE</span>
                 </div>
 
                 {/* Chat Bubbles */}

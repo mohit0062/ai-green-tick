@@ -4,7 +4,9 @@ import {
   MapPin,
   Phone,
   Clock,
-  BookOpen
+  BookOpen,
+  MessageCircle,
+  Globe
 } from 'lucide-react'
 
 import { Card, CardContent } from '@/components/ui/card'
@@ -12,9 +14,13 @@ import { MotionPreset } from '@/components/ui/motion-preset'
 import ContactUs from '@/components/shadcn-studio/blocks/contact-us-page-04/contact-us-page-04'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
+import { getSiteSection } from '@/utils/cms'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Contact Us — Get in Touch with AI Greentick',
@@ -104,61 +110,39 @@ const navigationData: Navigation[] = [
   }
 ]
 
-const contactCards = [
-  {
-    icon: Mail,
-    title: "Chat to Sales",
-    description: "Talk to our team about WhatsApp API setup and integration",
-    ctaText: "hello@aigreentick.com",
-    ctaLink: "mailto:hello@aigreentick.com"
-  },
-  {
-    icon: Mail,
-    title: "Email Support",
-    description: "Get help with your existing AI Greentick workspace",
-    ctaText: "support@aigreentick.com",
-    ctaLink: "mailto:support@aigreentick.com"
-  },
-  {
-    icon: MapPin,
-    title: "Visit Us",
-    description: "Jaipur, Rajasthan, India",
-    ctaText: "View on maps",
-    ctaLink: "https://maps.google.com/?q=Jaipur+Rajasthan+India"
-  },
-  {
-    icon: Phone,
-    title: "Phone / WhatsApp",
-    description: "10am - 7pm IST, Mon - Fri",
-    ctaText: "hello@aigreentick.com",
-    ctaLink: "mailto:hello@aigreentick.com"
+// Map icon string from CMS to actual Lucide component
+function resolveIcon(iconName: string) {
+  const map: Record<string, React.ElementType> = {
+    Mail,
+    MapPin,
+    Phone,
+    Clock,
+    MessageCircle,
+    Globe,
   }
-]
+  return map[iconName] || Mail
+}
 
-const steps = [
-  {
-    number: "1",
-    title: "Instant confirmation",
-    description: "You get an instant confirmation email."
-  },
-  {
-    number: "2",
-    title: "Expert reviews",
-    description: "Within one working day, a team member reviews your enquiry."
-  },
-  {
-    number: "3",
-    title: "Honest reply",
-    description: "We reply with either a 30-minute call slot, a written response, or clear next steps."
-  },
-  {
-    number: "4",
-    title: "Onboarding & setup",
-    description: "If we move forward – we handle verification, API onboarding, and workspace setup."
-  }
-]
+// Map icon string to JSX for contact cards
+function buildContactCards(cmsCards: any[]) {
+  return cmsCards.map((card: any) => ({
+    ...card,
+    icon: resolveIcon(card.icon),
+  }))
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  // Fetch CMS data
+  const cms = await getSiteSection<any>('contact_page')
+
+  const contactCards = buildContactCards(cms.contactCards || [])
+  const heading = cms.heading || "Tell Us What You're Building."
+  const subtitle = cms.subtitle || "Fill the form below or email us directly. You'll hear back within one working day from a team member."
+  const mapUrl = cms.mapUrl || "https://maps.google.com/maps?hl=en&q=Jaipur+Rajasthan+India&t=&z=12&ie=UTF8&iwloc=B&output=embed"
+  const officeSection = cms.officeSection || {}
+  const stepsSection = cms.stepsSection || {}
+  const steps = stepsSection.steps || []
+
   const contactSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
@@ -185,13 +169,15 @@ export default function ContactPage() {
     <div className='flex min-h-screen flex-col bg-white text-black'>
       <JsonLd data={contactSchema} />
       <Header navigationData={navigationData} />
+      <Breadcrumb />
 
       <main className='flex-1'>
         {/* Contact Section */}
         <ContactUs
           contactCards={contactCards}
-          heading="Tell Us What You're Building."
-          subtitle="Fill the form below or email us directly. You'll hear back within one working day from a team member."
+          heading={heading}
+          subtitle={subtitle}
+          mapUrl={mapUrl}
         />
 
         {/* Office & Hours */}
@@ -199,10 +185,10 @@ export default function ContactPage() {
           <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24'>
             <div className='mb-12 text-center flex flex-col items-center'>
               <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
-                :: CHANNELS & AVAILABILITY ::
+                {officeSection.badgeText || ':: CHANNELS & AVAILABILITY ::'}
               </span>
-              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-sans'>
-                Where to find us.
+              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-display'>
+                {officeSection.heading || 'Where to find us.'}
               </h2>
             </div>
 
@@ -214,10 +200,10 @@ export default function ContactPage() {
                     <div className='flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
                       <Phone className='size-5' />
                     </div>
-                    <h3 className='text-lg font-bold font-sans'>Phone / WhatsApp</h3>
+                    <h3 className='text-lg font-bold font-display'>{officeSection.phone?.title || 'Phone / WhatsApp'}</h3>
                     <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1 font-sans'>
-                      <p>10am – 7pm IST, Mon – Fri</p>
-                      <p>WhatsApp preferred for quick questions</p>
+                      <p>{officeSection.phone?.line1 || '10am \u2013 7pm IST, Mon \u2013 Fri'}</p>
+                      <p>{officeSection.phone?.line2 || 'WhatsApp preferred for quick questions'}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -230,10 +216,10 @@ export default function ContactPage() {
                     <div className='flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
                       <MapPin className='size-5' />
                     </div>
-                    <h3 className='text-lg font-bold font-sans'>Office</h3>
+                    <h3 className='text-lg font-bold font-display'>{officeSection.office?.title || 'Office'}</h3>
                     <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1 font-sans'>
-                      <p>Remote-first team</p>
-                      <p>Headquartered in Jaipur, Rajasthan, India</p>
+                      <p>{officeSection.office?.line1 || 'Remote-first team'}</p>
+                      <p>{officeSection.office?.line2 || 'Headquartered in Jaipur, Rajasthan, India'}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -246,11 +232,11 @@ export default function ContactPage() {
                     <div className='flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
                       <Clock className='size-5' />
                     </div>
-                    <h3 className='text-lg font-bold font-sans'>Office Hours</h3>
+                    <h3 className='text-lg font-bold font-display'>{officeSection.hours?.title || 'Office Hours'}</h3>
                     <div className='text-neutral-500 text-[15px] leading-relaxed space-y-1 font-sans'>
-                      <p><strong className='text-black'>Mon – Fri:</strong> 10:00am – 7:00pm IST</p>
-                      <p><strong className='text-black'>Saturday:</strong> On-call only for production issues</p>
-                      <p><strong className='text-black'>Sunday:</strong> Closed</p>
+                      <p>{officeSection.hours?.monFri || 'Mon \u2013 Fri: 10:00am \u2013 7:00pm IST'}</p>
+                      <p>{officeSection.hours?.saturday || 'Saturday: On-call only for production issues'}</p>
+                      <p>{officeSection.hours?.sunday || 'Sunday: Closed'}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -264,15 +250,15 @@ export default function ContactPage() {
           <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24'>
             <div className='mb-12 text-center flex flex-col items-center'>
               <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
-                :: RESPONSE PROCESS ::
+                {stepsSection.badgeText || ':: RESPONSE PROCESS ::'}
               </span>
-              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-sans'>
-                What happens after you submit
+              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-display'>
+                {stepsSection.heading || 'What happens after you submit'}
               </h2>
             </div>
 
             <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
-              {steps.map((step, idx) => (
+              {steps.map((step: any, idx: number) => (
                 <MotionPreset
                   key={idx}
                   fade
@@ -285,8 +271,11 @@ export default function ContactPage() {
                       <span className="font-mono text-sm text-[#00b259] font-bold">
                         [ {String(step.number).padStart(2, '0')} ]
                       </span>
-                      <h3 className='text-lg font-bold font-sans'>{step.title}</h3>
-                      <p className='text-neutral-500 text-[15px] leading-relaxed font-sans'>{step.description}</p>
+                      <h3 className='text-lg font-bold font-display'>{step.title}</h3>
+                      <div 
+                        className='text-neutral-500 text-[15px] leading-relaxed font-sans [&_strong]:font-bold [&_strong]:text-neutral-900 [&_a]:text-[#00b259] [&_a]:underline [&_img]:inline-block [&_img]:max-w-full'
+                        dangerouslySetInnerHTML={{ __html: step.description }}
+                      />
                     </CardContent>
                   </Card>
                 </MotionPreset>

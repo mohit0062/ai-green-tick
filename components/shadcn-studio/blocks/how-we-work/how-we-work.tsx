@@ -112,7 +112,7 @@ const HowWeWork = () => {
           <Badge variant='outline' className='mb-5 rounded-full bg-card px-3 py-1 text-sm font-medium text-primary'>
             How we work
           </Badge>
-          <h2 className='font-sans text-[36px] font-semibold tracking-tight text-foreground'>
+          <h2 className='font-display text-[36px] font-semibold tracking-tight text-foreground'>
             A calmer way to ship serious software
           </h2>
           <p className='mt-5 text-lg leading-8 text-muted-foreground'>

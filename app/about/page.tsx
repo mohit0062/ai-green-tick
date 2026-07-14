@@ -1,6 +1,25 @@
 import type { Metadata } from 'next'
-import { BookOpenIcon, CheckSquareIcon, CircleDollarSignIcon, Clock8Icon, CreditCardIcon, FoldersIcon, LockIcon, MedalIcon, ShieldBanIcon, SparklesIcon, StarIcon, TargetIcon, TicketIcon, UsersIcon, Globe } from 'lucide-react'
+import {
+  BookOpenIcon,
+  CheckSquareIcon,
+  CircleDollarSignIcon,
+  Clock8Icon,
+  CreditCardIcon,
+  FoldersIcon,
+  LockIcon,
+  MedalIcon,
+  ShieldBanIcon,
+  SparklesIcon,
+  StarIcon,
+  TargetIcon,
+  TicketIcon,
+  UsersIcon,
+  Globe,
+  BookOpen
+} from 'lucide-react'
+
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import AboutUs01 from '@/components/shadcn-studio/blocks/about-us-page-01/about-us-page-01'
 import AboutUs11 from '@/components/shadcn-studio/blocks/about-us-page-11/about-us-page-11'
@@ -14,21 +33,28 @@ import MetaAuthorization from '@/components/shadcn-studio/blocks/meta-authorizat
 import type { Testimonial } from '@/components/shadcn-studio/blocks/testimonials-component-23/testimonials-component-23'
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
-import { BookOpen } from 'lucide-react'
+import { getSiteSection } from '@/utils/cms'
 
-export const metadata: Metadata = {
-  title: 'About AI Greentick - WhatsApp Marketing & AI Automation',
-  description:
-    'Learn about AI Greentick, our story, mission, and the team building modern WhatsApp marketing and automation systems.',
-  alternates: {
-    canonical: '/about',
-  },
-  openGraph: {
-    title: 'About AI Greentick - WhatsApp Marketing & AI Automation',
-    description:
-      'Learn about AI Greentick, our story, mission, and the team building modern WhatsApp marketing and automation systems.',
-    url: '/about',
-    type: 'website',
+export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getSiteSection<any>('about_page')
+  const title = cms.seoTitle || 'About AI Greentick - WhatsApp Marketing & AI Automation'
+  const description = cms.seoDesc || 'Learn about AI Greentick, our story, mission, and the team building modern WhatsApp marketing and automation systems.'
+  const canonical = cms.seoUrl ? `/${cms.seoUrl.replace('aigreentick.com/', '')}` : '/about'
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: 'website',
+    }
   }
 }
 
@@ -106,32 +132,24 @@ const navigationData: Navigation[] = [
   }
 ]
 
-const stats = [
+const defaultStats = [
   {
-    icon: (
-      <UsersIcon className='text-[#00b259]' />
-    ),
+    icon: 'Users',
     value: '500+',
     description: 'Trusted Brands'
   },
   {
-    icon: (
-      <SparklesIcon className='text-[#00b259]' />
-    ),
+    icon: 'Sparkles',
     value: '10M+',
     description: 'Messages Delivered'
   },
   {
-    icon: (
-      <StarIcon className='text-[#00b259]' />
-    ),
+    icon: 'Star',
     value: '98%',
     description: 'Message Open Rate'
   },
   {
-    icon: (
-      <Clock8Icon className='text-[#00b259]' />
-    ),
+    icon: 'Clock',
     value: '24/7',
     description: 'Automated Support'
   }
@@ -210,64 +228,34 @@ const testimonials: Testimonial[] = [
   }
 ]
 
-const featureSections = [
-  {
-    title: 'No API access',
-    description:
-      'Most businesses use the WhatsApp Business App - limited, unscalable, and not built for teams. The official API unlocks everything.'
-  },
-  {
-    title: 'No trust signal',
-    description:
-      "A phone number isn't a brand. A verified Green Tick business profile is. We make the verification process effortless."
-  },
-  {
-    title: 'No automation',
-    description:
-      'Manually responding to hundreds of conversations a day burns your team. We automate 80% of it, so your team focuses on what matters.'
-  }
-]
-
 const metricsData = [
   {
-    icon: (
-      <Clock8Icon />
-    ),
+    icon: <Clock8Icon />,
     value: '2022',
     title: 'Founded'
   },
   {
-    icon: (
-      <UsersIcon />
-    ),
+    icon: <UsersIcon />,
     value: '2,000+',
     title: 'Businesses Powered'
   },
   {
-    icon: (
-      <SparklesIcon />
-    ),
+    icon: <SparklesIcon />,
     value: '600M+',
     title: 'Messages Delivered'
   },
   {
-    icon: (
-      <CircleDollarSignIcon />
-    ),
+    icon: <CircleDollarSignIcon />,
     value: '₹180Cr+',
     title: 'Commerce Processed'
   },
   {
-    icon: (
-      <FoldersIcon />
-    ),
+    icon: <FoldersIcon />,
     value: '6',
     title: 'Industries Served'
   },
   {
-    icon: (
-      <CheckSquareIcon />
-    ),
+    icon: <CheckSquareIcon />,
     value: 'India-based',
     title: 'Team · 24/7 Support'
   }
@@ -275,30 +263,22 @@ const metricsData = [
 
 const features = [
   {
-    icon: (
-      <CircleDollarSignIcon />
-    ),
+    icon: <CircleDollarSignIcon />,
     value: 'No UPI support',
     description: 'International platforms do not support native Indian payment flows like UPI.'
   },
   {
-    icon: (
-      <BookOpenIcon />
-    ),
+    icon: <BookOpenIcon />,
     value: 'No regional languages',
     description: 'Workflows and language features are strictly geared towards Western markets.'
   },
   {
-    icon: (
-      <Clock8Icon />
-    ),
+    icon: <Clock8Icon />,
     value: 'No India-timezone support',
     description: 'Support teams and system syncs operate on foreign timezone schedules.'
   },
   {
-    icon: (
-      <UsersIcon />
-    ),
+    icon: <UsersIcon />,
     value: 'No local business empathy',
     description: 'Lack of workflows tailored to Indian e-commerce, real estate, and retail dynamics.'
   }
@@ -306,119 +286,44 @@ const features = [
 
 const valuesItems = [
   {
-    icon: (
-      <CircleDollarSignIcon />
-    ),
+    icon: <CircleDollarSignIcon />,
     title: 'Transparency over upsells',
     description: "Flat pricing. No hidden fees. No markups on Meta's rates."
   },
   {
-    icon: (
-      <UsersIcon />
-    ),
+    icon: <UsersIcon />,
     title: 'Support that shows up',
     description: 'Every customer gets a human - not just a help desk ticket.'
   },
   {
-    icon: (
-      <SparklesIcon />
-    ),
+    icon: <SparklesIcon />,
     title: 'Built for scale, priced for growth',
     description: "Whether you're a 5-person startup or a 500-agent enterprise."
   },
   {
-    icon: (
-      <Globe />
-    ),
+    icon: <Globe />,
     title: 'India first, globally ready',
     description: 'Regional languages, local compliance, global infrastructure.'
   }
 ]
 
-const AboutUsPage01Block = () => {
-  return <AboutUs01 stats={stats} />
-}
+export default async function AboutPage() {
+  const cms = await getSiteSection<any>('about_page')
 
-const AboutUsPage11Block = () => {
-  return (
-    <AboutUs11
-      badgeText="MISSION"
-      heading="Our mission is simple."
-      description="Most WhatsApp Business platforms give you messaging tools. We build communication infrastructure. The difference matters - because your business needs more than a broadcast button. It needs a complete system: official API access, verified identity, intelligent automation, real-time analytics, and a team that stands behind you. That's AIGreenTick."
-      imageUrl="https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-45.png"
-      contentHeading="Conversations that convert, powered by official APIs and custom AI."
-      paragraphs={[
-        "AI Greentick started as an internal tool designed to solve scale and delivery bottlenecks for customer broadcasts.",
-        "We quickly recognized that D2C brands and modern teams needed more than just a broadcast list — they needed a unified hub where marketing, sales, and support could collaborate without losing context.",
-        "By integrating official WhatsApp Business API capabilities with custom large language models (LLMs), we built a platform that allows teams to broadcast campaigns, manage shared team inbox queues, and design smart AI chatbots.",
-        "Today, AI Greentick helps hundreds of high-growth brands across e-commerce, real estate, education, and finance to automate support and drive high-impact marketing campaigns at scale."
-      ]}
-    />
-  )
-}
+  const banner = {
+    badgeText: 'About Us',
+    heading: "We're building the infrastructure for WhatsApp-first businesses",
+    description: "AIGreenTick started with one belief: WhatsApp is the most powerful business communication channel in India. We built the platform that makes it enterprise-ready.",
+    buttonText: 'Read more',
+    buttonLink: '#',
+    imageUrl: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-44.png',
+    ...cms.bannerSection
+  }
+  const mission = cms.missionSection || {}
+  const problem = cms.problemSection || {}
+  const why = cms.whySection || {}
+  const metaSec = cms.metaSection || {}
 
-const TestimonialsComponent23Block = () => {
-  return <TestimonialsComponent testimonials={testimonials} />
-}
-
-const AboutUsPage21Block = () => {
-  return (
-    <AboutUs21
-      badge="THE PROBLEM WE SOLVE"
-      heading="WhatsApp is India's most-used platform. Most businesses are using it wrong."
-      subheading="We transition your operations from standard chat apps to enterprise-grade conversational infrastructure."
-      featureSections={featureSections}
-    />
-  )
-}
-
-const SocialProof07Block = () => {
-  return (
-    <SocialProof07
-      badge="OUR NUMBERS"
-      heading="AI Greentick by the numbers"
-      description="From message delivery to commerce processed, see how we power scale for high-growth brands across India."
-      metrics={metricsData}
-    />
-  )
-}
-
-const SocialProof08Block = () => {
-  return (
-    <SocialProof08
-      badge="WHY WE BUILT THIS"
-      heading="India deserved a WhatsApp platform built for India."
-      description="Global platforms like WATI and Respond.io are built for Western markets. They have generic workflows, no UPI payment support, no regional language features, no India-timezone support, and no understanding of how Indian businesses actually operate. AIGreenTick is different. Every feature, every integration, every support process is built with Indian businesses in mind - from Shopify D2C brands in Bengaluru to real estate firms in Mumbai to coaching institutes in Jaipur."
-      features={features}
-    />
-  )
-}
-
-const FeaturesSection05Block = () => {
-  return (
-    <Features
-      badge="VALUES"
-      heading="What we believe in."
-      featuresList={valuesItems}
-    />
-  )
-}
-
-const MetaAuthorizationBlock = () => {
-  return (
-    <MetaAuthorization
-      badge="SECTION 5 - META AUTHORIZATION"
-      heading="Officially authorized by Meta. Fully compliant."
-      body="AIGreenTick is an authorized Meta Business Solution Provider (BSP) for the WhatsApp Business API. This means your business gets direct, compliant access to Meta's official infrastructure - the same API used by the world's largest enterprises, made accessible to businesses of every size."
-    />
-  )
-}
-
-const CtaSection11Block = () => {
-  return <CTA />
-}
-
-export default function AboutPage() {
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
@@ -432,28 +337,88 @@ export default function AboutPage() {
     }
   }
 
+  // Combine paragraph strings into list for component rendering
+  const storyParagraphs = [
+    mission.paragraph1,
+    mission.paragraph2,
+    mission.paragraph3,
+    mission.paragraph4
+  ].filter(Boolean)
+
+  const stats = banner.stats && banner.stats.length > 0 ? banner.stats : defaultStats
+
   return (
-    <div className='flex flex-col'>
+    <div className='flex min-h-screen flex-col bg-white text-black font-sans'>
       <JsonLd data={aboutSchema} />
       <Header navigationData={navigationData} />
+      <Breadcrumb />
 
-      <AboutUsPage01Block />
+      {/* Stats row block */}
+      <AboutUs01
+        stats={stats}
+        badgeText={banner.badgeText}
+        heading={banner.heading}
+        description={banner.description}
+        buttonText={banner.buttonText}
+        buttonLink={banner.buttonLink}
+        imageUrl={banner.imageUrl}
+      />
 
-      <AboutUsPage11Block />
+      {/* Mission block */}
+      <AboutUs11
+        badgeText={mission.badgeText || 'MISSION'}
+        heading={mission.heading || 'Our mission is simple.'}
+        description={mission.description || 'Loading...'}
+        imageUrl={mission.imageUrl || 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-45.png'}
+        contentHeading={mission.contentHeading || 'Conversations that convert...'}
+        paragraphs={storyParagraphs.length > 0 ? storyParagraphs : [
+          "AI Greentick started as an internal tool designed to solve scale and delivery bottlenecks for customer broadcasts.",
+          "We quickly recognized that D2C brands and modern teams needed more than just a broadcast list — they needed a unified hub where marketing, sales, and support could collaborate without losing context."
+        ]}
+      />
 
-      <TestimonialsComponent23Block />
+      {/* Testimonials */}
+      <TestimonialsComponent testimonials={testimonials} />
 
-      <AboutUsPage21Block />
+      {/* Problem we solve */}
+      <AboutUs21
+        badge={problem.badge || 'THE PROBLEM WE SOLVE'}
+        heading={problem.heading || "WhatsApp is India's most-used platform."}
+        subheading={problem.subheading || 'We transition your operations...'}
+        featureSections={problem.features || []}
+      />
 
-      <SocialProof07Block />
+      {/* Our numbers */}
+      <SocialProof07
+        badge="OUR NUMBERS"
+        heading="AI Greentick by the numbers"
+        description="From message delivery to commerce processed, see how we power scale for high-growth brands across India."
+        metrics={metricsData}
+      />
 
-      <SocialProof08Block />
+      {/* Why we built this */}
+      <SocialProof08
+        badge={why.badge || 'WHY WE BUILT THIS'}
+        heading={why.heading || 'India deserved a WhatsApp platform built for India.'}
+        description={why.description || 'Loading description...'}
+        features={features}
+      />
 
-      <MetaAuthorizationBlock />
+      {/* Meta BSP Authorization Compliance Block */}
+      <MetaAuthorization
+        badge={metaSec.badge || 'SECTION 5 - META AUTHORIZATION'}
+        heading={metaSec.heading || 'Officially authorized by Meta. Fully compliant.'}
+        body={metaSec.body || 'AIGreenTick is an authorized Meta Business Solution Provider (BSP)...'}
+      />
 
-      <FeaturesSection05Block />
+      {/* Beliefs & Values */}
+      <Features
+        badge="VALUES"
+        heading="What we believe in."
+        featuresList={valuesItems}
+      />
 
-      <CtaSection11Block />
+      <CTA />
 
       <Footer />
     </div>

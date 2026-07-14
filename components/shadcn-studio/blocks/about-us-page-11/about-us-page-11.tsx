@@ -118,7 +118,7 @@ const AboutUs = ({
           <span className='inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold font-mono uppercase tracking-widest text-[#00b259] border border-[#00b259] bg-[#00b259]/10'>
             <span className='text-[#00b259]'>■</span> {badgeText}
           </span>
-          <h2 className='text-2xl font-black text-black md:text-3xl lg:text-4xl'>
+          <h2 className='text-2xl font-black text-black md:text-3xl lg:text-4xl font-display'>
             {firstWords}{' '}
             {lastWord && (
               <span className='relative'>
@@ -127,9 +127,10 @@ const AboutUs = ({
               </span>
             )}
           </h2>
-          <p className='text-neutral-600 mx-auto max-w-4xl text-base sm:text-lg font-normal leading-relaxed'>
-            {description}
-          </p>
+          <div 
+            className='text-neutral-600 mx-auto max-w-4xl text-base sm:text-lg font-sans leading-relaxed [&_strong]:font-bold [&_strong]:text-black [&_a]:text-[#00b259] [&_a]:underline [&_img]:inline-block [&_img]:max-w-full [&_img]:h-auto [&_img]:my-2'
+            dangerouslySetInnerHTML={{ __html: description }} 
+          />
         </div>
 
         <div className='grid grid-cols-1 items-center gap-16 lg:grid-cols-2'>
@@ -141,13 +142,13 @@ const AboutUs = ({
 
           <div className='space-y-6 max-lg:text-center text-left'>
             {contentHeading && (
-              <h3 className='text-base font-black text-black uppercase tracking-wide'>
+              <h3 className='text-base font-black text-black uppercase tracking-wide font-display'>
                 {contentHeading}
               </h3>
             )}
-            <div className='text-neutral-600 space-y-4 text-sm sm:text-base leading-relaxed'>
+            <div className='text-neutral-600 space-y-4 text-sm sm:text-base leading-relaxed font-sans'>
               {paragraphs.map((p, idx) => (
-                <p key={idx}>{p}</p>
+                <p key={idx} className="font-sans">{p}</p>
               ))}
             </div>
           </div>

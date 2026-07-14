@@ -15,6 +15,11 @@ import SocialProof from '@/components/shadcn-studio/blocks/social-proof-07/socia
 import IndustriesCarousel from '@/components/shadcn-studio/blocks/industries-carousel'
 import TestimonialsComponent from '@/components/shadcn-studio/blocks/testimonials-component-23/testimonials-component-23'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
+
+
+import { getSiteSection } from '@/utils/cms'
+import { DEFAULT_FALLBACKS } from '@/utils/cms-data'
+
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 import type { StackProps } from '@/components/shadcn-studio/blocks/bento-grid-18/card-stack'
 import type { Testimonial } from '@/components/shadcn-studio/blocks/testimonials-component-23/testimonials-component-23'
@@ -468,10 +473,10 @@ const BlogSection = () => {
           <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono">
             :: BLOG & RESOURCES ::
           </span>
-          <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl text-black font-sans">
+          <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl text-black font-display">
             Latest Insights from Our Experts
           </h2>
-          <p className="text-neutral-500 max-w-xl text-xs sm:text-sm font-sans">
+          <p className="text-neutral-500 max-w-xl text-base font-sans">
             Stay updated with the latest trends, strategies, and tips on conversational AI and automation.
           </p>
         </div>
@@ -501,16 +506,16 @@ const BlogSection = () => {
   )
 }
 
-const HeroSection40Block = () => {
+const HeroSection40Block = ({ data }: { data: any }) => {
   return (
     <main className='flex flex-col' id='about'>
-      <HeroSection />
+      <HeroSection data={data} />
     </main>
   )
 }
 
-const LogoCloud04Block = () => {
-  return <LogoCloud brandLogos={brandLogos} />
+const LogoCloud04Block = ({ heading, logos }: { heading?: string; logos?: any[] }) => {
+  return <LogoCloud heading={heading} brandLogos={logos} />
 }
 
 const BentoGrid18Block = () => {
@@ -521,54 +526,56 @@ const BentoGrid18Block = () => {
   )
 }
 
-const FeaturesSection26Block = () => {
-  return <Features26 data={tabsDataFeaturesSection26} />
+const FeaturesSection26Block = ({ data }: { data: any[] }) => {
+  return <Features26 data={data} />
 }
 
 const BentoGrid07Block = () => {
   return <BentoGrid07 />
 }
 
-const TimelineComponent03Block = () => {
+const TimelineComponent03Block = ({ steps }: { steps: any[] }) => {
   return (
     <div id="solutions">
-      <Process steps={processSteps} />
+      <Process steps={steps} />
     </div>
   )
 }
 
-const SocialProof07Block = () => {
-  return <SocialProof metrics={metricsData} />
+const SocialProof07Block = ({ metrics }: { metrics: any[] }) => {
+  return <SocialProof metrics={metrics} />
 }
 
 const IndustriesCarouselBlock = () => {
   return <IndustriesCarousel />
 }
 
-const TestimonialsComponent23Block = () => {
+const TestimonialsComponent23Block = ({ testimonials }: { testimonials: any[] }) => {
   return <TestimonialsComponent testimonials={testimonials} />
 }
+
+
 
 const FeaturesSection14Block = () => {
   return <Features14 />
 }
 
-const FeaturesSection05Block = () => {
-  return <Features05 featuresList={securityItems} />
+const FeaturesSection05Block = ({ items }: { items: any[] }) => {
+  return <Features05 featuresList={items} />
 }
 
-const PricingComponent11Block = () => {
+const PricingComponent11Block = ({ data }: { data: any }) => {
   return (
     <div id="pricing">
-      <Pricing showHeaders={true} />
+      <Pricing showHeaders={true} data={data} />
     </div>
   )
 }
 
-const FaqComponent04Block = () => {
+const FaqComponent04Block = ({ tabs }: { tabs: any[] }) => {
   return (
     <div id="faq">
-      <FAQ tabs={faqTabs} />
+      <FAQ tabs={tabs} />
     </div>
   )
 }
@@ -585,7 +592,31 @@ const FooterBlock = () => {
   return <Footer />
 }
 
-const LandingPage = () => {
+export const dynamic = 'force-dynamic'
+
+const LandingPage = async () => {
+  const mergeWithDefaults = (dbContent: any, fallbackKey: string) => {
+    const fallback = DEFAULT_FALLBACKS[fallbackKey] || {}
+    if (!dbContent) return fallback
+    const merged = { ...fallback, ...dbContent }
+    for (const key of Object.keys(fallback)) {
+      if (Array.isArray(dbContent[key]) && dbContent[key].length === 0 && Array.isArray(fallback[key]) && fallback[key].length > 0) {
+        merged[key] = fallback[key]
+      }
+    }
+    return merged
+  }
+
+  const homepage = mergeWithDefaults(await getSiteSection('homepage_data'), 'homepage_data')
+  const logoCloud = mergeWithDefaults(await getSiteSection('logo_cloud'), 'logo_cloud')
+  const pricing = mergeWithDefaults(await getSiteSection('pricing_data'), 'pricing_data')
+
+  const pricingBlockData = {
+    headerSubtitle: homepage.pricingSubtitle,
+    headerDescription: homepage.pricingDescription,
+    plans: pricing.plans
+  }
+
   return (
     <div className='flex flex-col'>
       <Preloader />
@@ -600,33 +631,33 @@ const LandingPage = () => {
       />
       <Header navigationData={navigationData} />
 
-      <HeroSection40Block />
+      <HeroSection40Block data={homepage.hero} />
 
-      <LogoCloud04Block />
+      <LogoCloud04Block heading={logoCloud.heading} logos={logoCloud.logos} />
 
       <BentoGrid18Block />
 
       <BentoGrid07Block />
 
-      <FeaturesSection26Block />
+      <FeaturesSection26Block data={homepage.tabsDataFeaturesSection26} />
 
-      <TimelineComponent03Block />
+      <TimelineComponent03Block steps={homepage.processSteps} />
 
-      <SocialProof07Block />
+      <SocialProof07Block metrics={homepage.metricsData} />
 
       <IndustriesCarouselBlock />
 
-      <TestimonialsComponent23Block />
+      <TestimonialsComponent23Block testimonials={homepage.testimonials} />
 
       <FeaturesSection14Block />
 
-      <FeaturesSection05Block />
+      <FeaturesSection05Block items={homepage.securityItems} />
 
-      <PricingComponent11Block />
+      <PricingComponent11Block data={pricingBlockData} />
 
       <BlogSection />
 
-      <FaqComponent04Block />
+      <FaqComponent04Block tabs={homepage.faqTabs} />
 
       <CtaSection11Block />
 

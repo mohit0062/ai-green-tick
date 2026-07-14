@@ -49,11 +49,11 @@ const Process = ({ steps }: ProcessProps) => {
       <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-24'>
         {/* Header */}
         <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <p className='text-[#00b259] text-xs font-bold font-mono uppercase tracking-widest'>:: How It Works ::</p>
+          <p className='text-[#00b259] text-xs font-bold font-display uppercase tracking-widest'>:: How It Works ::</p>
 
-          <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white'>Live in 24 hours. Scale in weeks.</h2>
+          <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-display text-black dark:text-white'>Live in 24 hours. Scale in weeks.</h2>
 
-          <p className='text-neutral-500 mx-auto max-w-2xl text-xs sm:text-sm font-sans'>
+          <p className='text-neutral-500 mx-auto max-w-2xl text-base font-sans'>
             We guide you through onboarding to the official API, importing contacts, launching campaigns, and scaling automation workflows.
           </p>
         </div>
@@ -92,10 +92,10 @@ const Process = ({ steps }: ProcessProps) => {
                   </div>
                   <TimelineContentHorizontal className='flex h-44 w-2xs flex-col gap-4 md:w-lg lg:w-xl xl:max-w-3xs xl:justify-between'>
                     <div>
-                      <TimelineHeadingHorizontal variant='primary' className='mb-1.5 text-lg'>
+                      <TimelineHeadingHorizontal variant='primary' className='mb-1.5 text-lg font-bold font-display'>
                         {step.title}
                       </TimelineHeadingHorizontal>
-                      <p className='text-muted-foreground'>{step.description}</p>
+                      <p className='text-muted-foreground text-xs sm:text-sm font-sans'>{step.description}</p>
                     </div>
 
                   </TimelineContentHorizontal>

@@ -1,58 +1,27 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { 
-  ShoppingBag, 
-  GraduationCap, 
-  Activity, 
-  Home, 
-  CreditCard, 
-  Plane, 
-  Layers, 
   ChevronLeft, 
   ChevronRight 
 } from 'lucide-react'
+import { getSiteSectionClient } from '@/utils/cms-client'
+import { DEFAULT_FALLBACKS } from '@/utils/cms-data'
+import { LucideIcon } from '@/components/ui/lucide-icon'
 
-const industries = [
-  {
-    category: 'RETAIL',
-    icon: <ShoppingBag />,
-    name: 'E-commerce & D2C',
-    impact: 'Reduce cart abandonment by 30%'
-  },
-  {
-    category: 'ACADEMIA',
-    icon: <GraduationCap />,
-    name: 'Education',
-    impact: '3× course inquiry response rate'
-  },
-  {
-    category: 'CLINICAL',
-    icon: <Activity />,
-    name: 'Healthcare',
-    impact: 'Auto-appointment reminders cut no-shows by 40%'
-  },
-  {
-    category: 'PROPERTY',
-    icon: <Home />,
-    name: 'Real Estate',
-    impact: 'Qualify 5× more leads with AI'
-  },
-  {
-    category: 'FINTECH',
-    icon: <CreditCard />,
-    name: 'Finance',
-    impact: 'Onboard customers in minutes, not days'
-  },
-  {
-    category: 'TOURISM',
-    icon: <Plane />,
-    name: 'Travel',
-    impact: 'Book and confirm itineraries on chat'
-  }
-]
+interface DynamicIndustry {
+  id: string
+  title: string
+  metric: string
+  icon: string
+}
 
 const IndustriesCarousel = () => {
+  const [industries, setIndustries] = useState<DynamicIndustry[]>(DEFAULT_FALLBACKS.industry_list)
+
+  useEffect(() => {
+    // Kept static fallback as per instructions
+  }, [])
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const scroll = (direction: 'left' | 'right') => {
@@ -77,10 +46,10 @@ const IndustriesCarousel = () => {
             <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit">
               :: INDUSTRIES ::
             </span>
-            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
+            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-display text-black dark:text-white leading-tight'>
               Built for businesses that live on WhatsApp
             </h2>
-            <p className='text-neutral-500 text-xs sm:text-sm font-sans max-w-lg'>
+            <p className='text-neutral-500 text-base font-sans max-w-lg'>
               Tailored workflows and conversational triggers designed to drive conversions across industries.
             </p>
           </div>
@@ -135,19 +104,19 @@ const IndustriesCarousel = () => {
                         clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)' 
                       }}
                     >
-                      <div className="text-neutral-800 dark:text-neutral-200 group-hover:text-[#00b259] transition-all duration-300 transform group-hover:scale-105 [&>svg]:size-14 sm:[&>svg]:size-16 [&>svg]:stroke-[1]">
-                        {ind.icon}
+                      <div className="text-neutral-800 dark:text-neutral-200 group-hover:text-[#00b259] transition-all duration-300 transform group-hover:scale-105">
+                        <LucideIcon name={ind.icon} className="size-14 sm:size-16" />
                       </div>
                     </div>
                   </div>
 
                   {/* Bottom row: Industry Name & Description */}
                   <div className="text-left w-full">
-                    <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-black dark:text-white group-hover:text-[#00b259] transition-colors">
-                      {ind.name}
+                    <h3 className="text-lg font-bold font-display text-foreground group-hover:text-[#00b259] transition-colors">
+                      {ind.title}
                     </h3>
                     <p className="text-[11px] font-mono text-neutral-500 mt-1.5 leading-relaxed group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
-                      {ind.impact}
+                      {ind.metric}
                     </p>
                   </div>
 

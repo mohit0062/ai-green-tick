@@ -227,13 +227,13 @@ const BentoGrid = () => {
             fade
             slide={{ direction: 'down', offset: 50 }}
             transition={{ duration: 0.5 }}
-            className='text-2xl font-bold sm:text-3xl lg:text-4xl font-sans text-black dark:text-white'
+            className='text-2xl font-bold sm:text-3xl lg:text-4xl font-display text-black dark:text-white'
           >
             Everything you need to win on WhatsApp
           </MotionPreset>
 
           <MotionPreset fade slide={{ direction: 'down', offset: 50 }} delay={0.3} transition={{ duration: 0.5 }}>
-            <p className='text-neutral-500 max-w-2xl text-xs sm:text-sm font-sans'>
+            <p className='text-neutral-500 max-w-2xl text-base font-sans'>
               Automate campaigns, collaborate via shared inbox, build AI agents, and run high-converting click-to-chat ads.
             </p>
           </MotionPreset>
@@ -256,8 +256,8 @@ const BentoGrid = () => {
                   <BroadcastVisual />
                 </CardContent>
                 <CardHeader className='mt-2 gap-3 pb-6'>
-                  <CardTitle className='text-xl sm:text-2xl font-semibold'>WhatsApp Broadcasts</CardTitle>
-                  <CardDescription className='text-sm sm:text-base font-normal leading-relaxed text-neutral-500'>
+                  <CardTitle className='text-lg font-bold font-display text-foreground'>WhatsApp Broadcasts</CardTitle>
+                  <CardDescription className='text-xs sm:text-sm font-normal leading-relaxed text-neutral-500 font-sans'>
                     Send approved promotional and transactional campaigns to 100,000+ contacts with industry-best delivery. Schedule, segment and track every send.
                   </CardDescription>
                   <div className='pt-2'>
@@ -283,8 +283,8 @@ const BentoGrid = () => {
                   <InboxVisual />
                 </CardContent>
                 <CardHeader className='mt-2 gap-3 pb-6'>
-                  <CardTitle className='text-xl sm:text-2xl font-semibold'>Shared Team Inbox</CardTitle>
-                  <CardDescription className='text-sm sm:text-base font-normal leading-relaxed text-neutral-500'>
+                  <CardTitle className='text-lg font-bold font-display text-foreground'>Shared Team Inbox</CardTitle>
+                  <CardDescription className='text-xs sm:text-sm font-normal leading-relaxed text-neutral-500 font-sans'>
                     Multiple agents on one WhatsApp number. Assign chats, add private notes, tag teammates and never miss a customer again.
                   </CardDescription>
                   <div className='pt-2'>
@@ -310,8 +310,8 @@ const BentoGrid = () => {
                   <ChatbotVisual />
                 </CardContent>
                 <CardHeader className='mt-2 gap-3 pb-6'>
-                  <CardTitle className='text-xl font-semibold'>AI Chatbot Builder</CardTitle>
-                  <CardDescription className='text-sm leading-relaxed text-neutral-500'>
+                  <CardTitle className='text-lg font-bold font-display text-foreground'>AI Chatbot Builder</CardTitle>
+                  <CardDescription className='text-xs sm:text-sm leading-relaxed text-neutral-500 font-sans'>
                     Drag-and-drop bot builder. No code. Connect to OpenAI, train on your data, and let bots qualify leads, answer FAQs and route conversations 24/7.
                   </CardDescription>
                   <div className='pt-2'>
@@ -337,8 +337,8 @@ const BentoGrid = () => {
                   <CampaignVisual />
                 </CardContent>
                 <CardHeader className='mt-2 gap-3 pb-6'>
-                  <CardTitle className='text-xl font-semibold'>Campaign Manager</CardTitle>
-                  <CardDescription className='text-sm leading-relaxed text-neutral-500'>
+                  <CardTitle className='text-lg font-bold font-display text-foreground'>Campaign Manager</CardTitle>
+                  <CardDescription className='text-xs sm:text-sm leading-relaxed text-neutral-500 font-sans'>
                     Plan, launch and analyze every WhatsApp campaign. See delivery, opens, clicks, replies and conversions in real-time.
                   </CardDescription>
                   <div className='pt-2'>
@@ -364,8 +364,8 @@ const BentoGrid = () => {
                   <AutomationVisual />
                 </CardContent>
                 <CardHeader className='mt-2 gap-3 pb-6'>
-                  <CardTitle className='text-xl font-semibold'>WhatsApp Automation</CardTitle>
-                  <CardDescription className='text-sm leading-relaxed text-neutral-500'>
+                  <CardTitle className='text-lg font-bold font-display text-foreground'>WhatsApp Automation</CardTitle>
+                  <CardDescription className='text-xs sm:text-sm leading-relaxed text-neutral-500 font-sans'>
                     Trigger messages on actions, time, tags and journeys. Abandoned cart recovery, post-purchase nurture, win-back — all on autopilot.
                   </CardDescription>
                   <div className='pt-2'>
@@ -389,8 +389,8 @@ const BentoGrid = () => {
               <Card className='shadow-none ring-0 border-none rounded-none h-full justify-between flex flex-col bg-white dark:bg-neutral-950'>
                 <div className='grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#C5C4C2]'>
                   <div className='p-6 flex flex-col justify-center gap-3'>
-                    <CardTitle className='text-xl sm:text-2xl font-semibold'>CTWA Ads</CardTitle>
-                    <CardDescription className='text-sm sm:text-base font-normal leading-relaxed text-neutral-500'>
+                    <CardTitle className='text-lg font-bold font-display text-foreground'>CTWA Ads</CardTitle>
+                    <CardDescription className='text-xs sm:text-sm font-normal leading-relaxed text-neutral-500 font-sans'>
                       Run Facebook and Instagram ads that click to WhatsApp. 5× your lead quality and 2-3× conversions with native lead capture.
                     </CardDescription>
                     <div className='pt-2'>

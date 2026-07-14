@@ -1,25 +1,22 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { 
   ArrowRight, 
-  ArrowUpRight, 
-  Inbox, 
-  Megaphone, 
-  Sparkles, 
-  CalendarClock, 
-  Bot, 
-  BarChart2
+  ArrowUpRight
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getSiteSectionClient } from '@/utils/cms-client'
+import { DEFAULT_FALLBACKS } from '@/utils/cms-data'
+import { LucideIcon } from '@/components/ui/lucide-icon'
 
 export type FeatureItem = {
   id: string
   title: string
   shortDesc: string
   description: string
-  icon: React.ReactNode
+  icon: string
   link: string
   previewType: string
 }
@@ -31,73 +28,30 @@ export type Category = {
   features: FeatureItem[]
 }
 
-const featuresMenuData: Category[] = [
-  {
-    id: 'platform-features',
-    title: 'Core Platform',
-    tagline: 'Inbox, bots, & campaigns',
-    features: [
-      {
-        id: 'unified-inbox',
-        title: 'Unified Inbox',
-        shortDesc: 'Single numbers for multi-agent support',
-        description: 'Empower hundreds of support reps to log in and reply from a single business number. Collaborate seamlessly on customer chats.',
-        icon: <Inbox className="size-5" />,
-        link: '/team-inbox',
-        previewType: 'shared-inbox-feat'
-      },
-      {
-        id: 'chatbot',
-        title: 'Chatbot Builder',
-        shortDesc: 'Build drag-and-drop conversational paths',
-        description: 'Design interactive, menu-driven chat flows using an intuitive visual flowchart builder. Set up and automate in minutes.',
-        icon: <Bot className="size-5" />,
-        link: '/#about',
-        previewType: 'codeless-bot'
-      },
-      {
-        id: 'ai-analytics',
-        title: 'AI Analytics',
-        shortDesc: 'Track response times and CSAT',
-        description: 'Access real-time analytics dashboards detailing individual agent response speeds, resolution counts, and customer feedback.',
-        icon: <BarChart2 className="size-5" />,
-        link: '/#about',
-        previewType: 'perf-reports'
-      },
-      {
-        id: 'broadcasting',
-        title: 'WhatsApp Broadcasting',
-        shortDesc: 'Send bulk updates to thousands of users',
-        description: 'Import contacts and broadcast offers, newsletters, and reminders in bulk with fully approved Meta templates.',
-        icon: <Megaphone className="size-5" />,
-        link: '/#about',
-        previewType: 'broadcast-feat'
-      },
-      {
-        id: 'campaigns',
-        title: 'Campaign Drips',
-        shortDesc: 'Drip nurture sequences & announcements',
-        description: 'Nurture leads automatically over time by triggering scheduled sequences, tutorials, and promotional follow-ups.',
-        icon: <CalendarClock className="size-5" />,
-        link: '/#about',
-        previewType: 'drip-sequences'
-      },
-      {
-        id: 'ads-manager',
-        title: 'Ads Manager',
-        shortDesc: 'Convert ads directly to conversations',
-        description: 'Send traffic from Facebook and Instagram straight into a personal chat, bypassing traditional high-friction landing pages.',
-        icon: <Sparkles className="size-5" />,
-        link: '/#about',
-        previewType: 'ads-feat'
-      }
-    ]
-  }
-]
-
 export const FeaturesMegaMenu = () => {
+  const [features, setFeatures] = useState<FeatureItem[]>(DEFAULT_FALLBACKS.industry_features)
   const [activeCategory, setActiveCategory] = useState<string>('platform-features')
   const [activeFeatureId, setActiveFeatureId] = useState<string>('unified-inbox')
+
+  useEffect(() => {
+    async function loadFeatures() {
+      const data = await getSiteSectionClient<FeatureItem[]>('industry_features')
+      if (data && data.length > 0) {
+        setFeatures(data)
+        setActiveFeatureId(data[0].id)
+      }
+    }
+    loadFeatures()
+  }, [])
+
+  const featuresMenuData: Category[] = [
+    {
+      id: 'platform-features',
+      title: 'Core Platform',
+      tagline: 'Inbox, bots, & campaigns',
+      features: features
+    }
+  ]
 
   const currentCategory = featuresMenuData.find(c => c.id === activeCategory) || featuresMenuData[0]
   const currentFeature = currentCategory.features.find(f => f.id === activeFeatureId) || currentCategory.features[0]
@@ -178,7 +132,7 @@ export const FeaturesMegaMenu = () => {
               <div className="bg-emerald-50 border border-[#C5C4C2]/30 p-2 text-center text-[#005c2b] font-bold text-[8px]">
                 GET META GREEN TICK FREE
               </div>
-              <div className="flex justify-between items-center bg-[#ECEBE9] px-1.5 py-1 border border-[#C5C4C2]/50 text-[7px]">
+              <div className="flex justify-between items-center bg-neutral-50 px-1.5 py-1 border border-[#C5C4C2]/50 text-[7px]">
                 <span className="font-bold">Connect on WhatsApp</span>
                 <span className="bg-[#00b259] text-white px-1.5 py-0.5 rounded-sm font-bold flex items-center gap-0.5 animate-pulse">
                   SEND MESSAGE <ArrowRight className="size-1.5" />
@@ -189,19 +143,19 @@ export const FeaturesMegaMenu = () => {
         )
       case 'drip-sequences':
         return (
-          <div className="w-full h-36 bg-[#ECEBE9] border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
+          <div className="w-full h-36 bg-neutral-50 border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
             <div className="font-bold border-b border-[#C5C4C2] pb-1">MARKETING DRIP QUEUE</div>
             <div className="flex justify-around items-center py-2 relative">
               <div className="absolute top-1/2 left-3 right-3 h-0.5 bg-[#C5C4C2] -translate-y-1/2 z-0"></div>
-              <div className="flex flex-col items-center z-10 bg-[#ECEBE9] px-1">
+              <div className="flex flex-col items-center z-10 bg-neutral-50 px-1">
                 <span className="size-5 rounded-full border border-[#00b259] bg-white flex items-center justify-center text-[#00b259]">1</span>
                 <span className="text-[6px] mt-0.5">Welcome</span>
               </div>
-              <div className="flex flex-col items-center z-10 bg-[#ECEBE9] px-1">
+              <div className="flex flex-col items-center z-10 bg-neutral-50 px-1">
                 <span className="size-5 rounded-full border border-neutral-400 bg-white flex items-center justify-center text-neutral-500 animate-pulse">2</span>
                 <span className="text-[6px] mt-0.5">Day 3: Offer</span>
               </div>
-              <div className="flex flex-col items-center z-10 bg-[#ECEBE9] px-1 opacity-50">
+              <div className="flex flex-col items-center z-10 bg-neutral-50 px-1 opacity-50">
                 <span className="size-5 rounded-full border border-neutral-200 bg-white flex items-center justify-center text-neutral-300">3</span>
                 <span className="text-[6px] mt-0.5">Day 7: Feedback</span>
               </div>
@@ -228,15 +182,15 @@ export const FeaturesMegaMenu = () => {
   }
 
   return (
-    <div className="w-full bg-[#ECEBE9] font-sans text-black relative">
+    <div className="w-full bg-white font-sans text-black relative">
       
       {/* Row 1: Header Row */}
-      <div className="grid grid-cols-12 border-b border-[#C5C4C2] bg-[#ECEBE9] relative select-none">
+      <div className="grid grid-cols-12 border-b border-[#C5C4C2] bg-white relative select-none">
         {/* Col 1 Header */}
         <div className="col-span-8 border-r border-[#C5C4C2] p-3 text-[10px] font-bold text-neutral-400 tracking-widest relative">
           :: TOOLS & CAPABILITIES ::
           {/* Intersection Diamond 1 */}
-          <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-[#ECEBE9] z-20" />
+          <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-white z-20" />
         </div>
         
         {/* Col 2 Header */}
@@ -249,14 +203,14 @@ export const FeaturesMegaMenu = () => {
       {/* Row 2: Content Row */}
       <div className="grid grid-cols-12 min-h-[260px]">
         {/* Column 1: Specific Tools (Col-span 8) - Rendered as a 2-column grid */}
-        <div className="col-span-8 border-r border-[#C5C4C2] flex flex-col p-4 gap-2 bg-[#ECEBE9]/30 justify-center">
+        <div className="col-span-8 border-r border-[#C5C4C2] flex flex-col p-4 gap-2 bg-neutral-50 justify-center">
           <div className="grid grid-cols-2 gap-2 overflow-hidden">
             {currentCategory.features.map((feature) => {
               const isFeatureActive = activeFeatureId === feature.id
               return (
                 <Link
                   key={feature.id}
-                  href={feature.link}
+                  href={feature.link || '#'}
                   onMouseEnter={() => setActiveFeatureId(feature.id)}
                   className={cn(
                     "p-2.5 flex gap-3 items-start border transition-all duration-200 cursor-pointer select-none group/feat",
@@ -271,7 +225,14 @@ export const FeaturesMegaMenu = () => {
                       ? "bg-[#00b259]/10 border-[#00b259]/30 text-[#00b259]" 
                       : "bg-white border-neutral-300 text-neutral-500 group-hover/feat:text-black group-hover/feat:border-neutral-400"
                   )}>
-                    {feature.icon}
+                    {feature.icon && feature.icon.trim().startsWith('<svg') ? (
+                      <div 
+                        className="size-5 flex items-center justify-center [&_svg]:size-5 [&_svg]:shrink-0"
+                        dangerouslySetInnerHTML={{ __html: feature.icon }}
+                      />
+                    ) : (
+                      <LucideIcon name={feature.icon} className="size-5" />
+                    )}
                   </div>
                   <div className="flex flex-col gap-0.5 min-w-0">
                     <span className="text-[10px] font-bold leading-normal truncate">

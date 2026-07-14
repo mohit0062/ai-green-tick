@@ -1,20 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { 
-  ArrowUpRight, 
-  ShoppingBag, 
-  Activity, 
-  GraduationCap, 
-  Home, 
-  Shield, 
-  Plane,
-  Megaphone,
-  Bot,
-  Inbox
+  ArrowUpRight
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getSiteSectionClient } from '@/utils/cms-client'
+import { DEFAULT_FALLBACKS } from '@/utils/cms-data'
+import { LucideIcon } from '@/components/ui/lucide-icon'
 
 export type TeamItem = {
   id: string
@@ -30,102 +24,34 @@ export type SolutionItem = {
   title: string
   shortDesc: string
   description: string
-  icon: React.ReactNode
+  icon: string
   link: string
   previewType: string
 }
 
-const teamsData: TeamItem[] = [
-  {
-    id: 'marketing',
-    title: 'Marketing',
-    tagline: 'Broadcast and grow your audience',
-    description: 'Launch personalized broadcasts, automate customer alerts, and convert Facebook & Instagram Click-to-WhatsApp ads with native, instant workflows.',
-    previewType: 'marketing-preview',
-    link: '/#features'
-  },
-  {
-    id: 'sales',
-    title: 'Sales',
-    tagline: 'Convert leads and book meetings',
-    description: 'Deploy 24/7 AI agents to qualify incoming leads, share interactive catalogs, collect payments in chat, and sync deals to HubSpot or Salesforce.',
-    previewType: 'sales-preview',
-    link: '/#features'
-  },
-  {
-    id: 'support',
-    title: 'Support',
-    tagline: 'Offer instant, 24/7 customer care',
-    description: 'Collaborate with a shared team inbox on a single WhatsApp number. Auto-route chats, assign agents, and measure CSAT automatically.',
-    previewType: 'support-preview',
-    link: '/team-inbox'
-  }
-]
-
-const solutionsData: SolutionItem[] = [
-  {
-    id: 'ecommerce',
-    title: 'eCommerce & Retail',
-    shortDesc: 'Recover lost carts and sell inside chats',
-    description: 'Sync your catalog and re-engage dropouts via WhatsApp checkout links. Integrates with Shopify and WooCommerce.',
-    icon: <ShoppingBag className="size-5" />,
-    link: '/industries/ecommerce',
-    previewType: 'ecommerce'
-  },
-  {
-    id: 'realestate',
-    title: 'Real Estate',
-    shortDesc: 'Capture leads and schedule site viewings',
-    description: 'Qualify home buyers, share property brochures, and schedule in-person tours dynamically through visual chatbot builders.',
-    icon: <Home className="size-5" />,
-    link: '/industries/realestate',
-    previewType: 'realestate'
-  },
-  {
-    id: 'travel',
-    title: 'Travel & Hospitality',
-    shortDesc: 'Send ticket alerts and boarding passes',
-    description: 'Send tickets, boarding passes, travel brochures, and reservation updates to international travelers with no SMS fees.',
-    icon: <Plane className="size-5" />,
-    link: '/industries/travel',
-    previewType: 'travel'
-  },
-  {
-    id: 'healthcare',
-    title: 'Healthcare & Wellness',
-    shortDesc: 'Book consultation slots & share reports',
-    description: 'Automate medical appointment booking, send diagnostic lab results as secure PDFs, and follow up on prescriptions.',
-    icon: <Activity className="size-5" />,
-    link: '/industries/healthcare',
-    previewType: 'healthcare'
-  },
-  {
-    id: 'education',
-    title: 'Education & EdTech',
-    shortDesc: 'Enroll students and automate alerts',
-    description: 'Qualify prospective student inquiries, share syllabus booklets, collect fees, and push exam results alerts.',
-    icon: <GraduationCap className="size-5" />,
-    link: '/industries/education',
-    previewType: 'education'
-  },
-  {
-    id: 'finance',
-    title: 'Banking & Finance',
-    shortDesc: 'Dispatch secure transaction OTP alerts',
-    description: 'Broadcast high-priority transaction alerts, loan tracking statuses, and let clients lookup account balances safely.',
-    icon: <Shield className="size-5" />,
-    link: '/industries/finance',
-    previewType: 'finance'
-  }
-]
-
 export const SolutionsMegaMenu = () => {
+  const [teams, setTeams] = useState<TeamItem[]>(DEFAULT_FALLBACKS.industry_teams)
+  const [solutions, setSolutions] = useState<SolutionItem[]>(DEFAULT_FALLBACKS.industry_list)
   const [activeType, setActiveType] = useState<'team' | 'solution'>('team')
   const [activeId, setActiveId] = useState<string>('marketing')
 
+  useEffect(() => {
+    async function loadSolutionsData() {
+      const dbTeams = await getSiteSectionClient<TeamItem[]>('industry_teams')
+      if (dbTeams && dbTeams.length > 0) {
+        setTeams(dbTeams)
+      }
+      const dbSolutions = await getSiteSectionClient<SolutionItem[]>('industry_list')
+      if (dbSolutions && dbSolutions.length > 0) {
+        setSolutions(dbSolutions)
+      }
+    }
+    loadSolutionsData()
+  }, [])
+
   const currentItem = activeType === 'team' 
-    ? (teamsData.find(t => t.id === activeId) || teamsData[0])
-    : (solutionsData.find(s => s.id === activeId) || solutionsData[0])
+    ? (teams.find(t => t.id === activeId) || teams[0])
+    : (solutions.find(s => s.id === activeId) || solutions[0])
 
   // Helper to render interactive visual graphics based on the hovered feature
   const renderPreviewVisual = (type: string) => {
@@ -150,7 +76,7 @@ export const SolutionsMegaMenu = () => {
         )
       case 'sales-preview':
         return (
-          <div className="w-full h-36 bg-[#ECEBE9] border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
+          <div className="w-full h-36 bg-neutral-50 border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
             <div className="font-bold border-b border-[#C5C4C2] pb-1">AI SALES AGENT</div>
             <div className="flex-grow py-2 flex flex-col justify-center gap-1">
               <div className="bg-white border p-1 px-2 flex justify-between items-center">
@@ -201,7 +127,7 @@ export const SolutionsMegaMenu = () => {
         )
       case 'realestate':
         return (
-          <div className="w-full h-36 bg-[#ECEBE9] border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
+          <div className="w-full h-36 bg-neutral-50 border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
             <div className="font-bold border-b border-[#C5C4C2] pb-1">REAL ESTATE SITE SCHEDULER</div>
             <div className="flex-grow py-1.5 flex flex-col justify-between">
               <div className="bg-white border p-1.5">
@@ -232,7 +158,7 @@ export const SolutionsMegaMenu = () => {
         )
       case 'healthcare':
         return (
-          <div className="w-full h-36 bg-[#ECEBE9] border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
+          <div className="w-full h-36 bg-neutral-50 border border-[#C5C4C2] p-3 flex flex-col justify-between font-mono text-[9px] select-none">
             <div className="font-bold border-b border-[#C5C4C2] pb-1">HEALTHCARE BOOKING CONFIRMED</div>
             <div className="flex-grow py-2 flex flex-col justify-center items-center gap-1">
               <div className="border border-[#00b259] bg-green-50 px-2 py-0.5 text-[#005c2b] font-bold">Appointment Booked</div>
@@ -275,22 +201,22 @@ export const SolutionsMegaMenu = () => {
   }
 
   return (
-    <div className="w-full bg-[#ECEBE9] font-sans text-black relative">
+    <div className="w-full bg-white font-sans text-black relative">
       
       {/* Row 1: Header Row */}
-      <div className="grid grid-cols-12 border-b border-[#C5C4C2] bg-[#ECEBE9] relative select-none">
+      <div className="grid grid-cols-12 border-b border-[#C5C4C2] bg-white relative select-none">
         {/* Col 1 Header */}
         <div className="col-span-3 border-r border-[#C5C4C2] p-3 text-[10px] font-bold text-neutral-400 tracking-widest relative">
           :: TEAMS ::
           {/* Intersection Diamond 1 */}
-          <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-[#ECEBE9] z-20" />
+          <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-white z-20" />
         </div>
         
         {/* Col 2 Header */}
         <div className="col-span-5 border-r border-[#C5C4C2] p-3 text-[10px] font-bold text-neutral-400 tracking-widest relative">
           :: SOLUTIONS AVAILABLE ::
           {/* Intersection Diamond 2 */}
-          <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-[#ECEBE9] z-20" />
+          <div className="absolute -translate-x-1/2 translate-y-1/2 left-full bottom-0 w-2 h-2 rotate-45 border border-[#C5C4C2] bg-white z-20" />
         </div>
         
         {/* Col 3 Header */}
@@ -303,13 +229,13 @@ export const SolutionsMegaMenu = () => {
       {/* Row 2: Content Row */}
       <div className="grid grid-cols-12 min-h-[300px]">
         {/* Column 1: Teams List (Col-span 3) */}
-        <div className="col-span-3 border-r border-[#C5C4C2] flex flex-col p-3 gap-3 bg-[#ECEBE9]">
-          {teamsData.map((team) => {
+        <div className="col-span-3 border-r border-[#C5C4C2] flex flex-col p-3 gap-3 bg-neutral-50">
+          {teams.map((team) => {
             const isActive = activeType === 'team' && activeId === team.id
             return (
               <Link
                 key={team.id}
-                href={team.link}
+                href={team.link || '#'}
                 onMouseEnter={() => {
                   setActiveType('team')
                   setActiveId(team.id)
@@ -341,14 +267,14 @@ export const SolutionsMegaMenu = () => {
         </div>
 
         {/* Column 2: Solutions List (Col-span 5) - Rendered as a 2-column grid */}
-        <div className="col-span-5 border-r border-[#C5C4C2] flex flex-col p-3 gap-2 bg-[#ECEBE9]/30">
+        <div className="col-span-5 border-r border-[#C5C4C2] flex flex-col p-3 gap-2 bg-neutral-50">
           <div className="grid grid-cols-2 gap-1.5 overflow-hidden">
-            {solutionsData.map((solution) => {
+            {solutions.map((solution) => {
               const isSolutionActive = activeType === 'solution' && activeId === solution.id
               return (
                 <Link
                   key={solution.id}
-                  href={solution.link}
+                  href={solution.link || '#'}
                   onMouseEnter={() => {
                     setActiveType('solution')
                     setActiveId(solution.id)
@@ -361,12 +287,19 @@ export const SolutionsMegaMenu = () => {
                   )}
                 >
                   <div className={cn(
-                    "p-1 rounded-sm border shrink-0 transition-colors [&>svg]:size-4",
+                    "p-1 rounded-sm border shrink-0 transition-colors [&>svg]:size-4 flex items-center justify-center",
                     isSolutionActive 
                       ? "bg-[#00b259]/10 border-[#00b259]/30 text-[#00b259]" 
                       : "bg-white border-neutral-300 text-neutral-500 group-hover/feat:text-black group-hover/feat:border-neutral-400"
                   )}>
-                    {solution.icon}
+                    {solution.icon && solution.icon.startsWith('<svg') ? (
+                      <div 
+                        className="size-4 flex items-center justify-center [&>svg]:size-4"
+                        dangerouslySetInnerHTML={{ __html: solution.icon }}
+                      />
+                    ) : (
+                      <LucideIcon name={solution.icon} className="size-4" />
+                    )}
                   </div>
                   <div className="flex flex-col gap-0.5 min-w-0">
                     <span className="text-[9px] font-bold leading-tight truncate">

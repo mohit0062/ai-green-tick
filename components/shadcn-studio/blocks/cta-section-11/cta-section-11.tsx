@@ -49,12 +49,12 @@ const CTA = () => {
         <div className='space-y-8 text-center'>
           <div className='space-y-4'>
             <MotionPreset fade slide={{ direction: 'down', offset: 50 }} transition={{ duration: 0.7 }}>
-              <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
+              <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-display text-black dark:text-white leading-tight'>
                 Ready to make WhatsApp your #1 channel?
               </h2>
             </MotionPreset>
             <MotionPreset fade slide={{ direction: 'down', offset: 50 }} delay={0.2} transition={{ duration: 0.7 }}>
-              <p className='text-muted-foreground text-lg md:text-xl max-w-xl mx-auto'>
+              <p className='text-muted-foreground text-base font-sans max-w-md mx-auto'>
                 Join the 500+ brands using AIGreentick to scale conversations and conversions.
               </p>
             </MotionPreset>

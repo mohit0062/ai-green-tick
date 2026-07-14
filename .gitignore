@@ -45,3 +45,10 @@ next-env.d.ts
 # project scratch folder
 scratch/
 
+# temp logs and zip exports
+*.log
+*.zip
+builder-export-*/
+CodeIgnite_Brochure_Original/
+ChatGPT Image*
+ChatGPT-Image-*

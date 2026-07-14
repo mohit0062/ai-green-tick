@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Check, HelpCircle, Info, ShieldCheck, Zap, Sparkles, Globe, Building2, ChevronDown, Plus, Minus, BookOpen } from 'lucide-react'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 import FAQ from '@/components/shadcn-studio/blocks/faq-component-04/faq-component-04'
@@ -150,6 +151,7 @@ export default function PricingPage() {
     <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black">
       {/* Header */}
       <Header navigationData={navigationData} />
+      <Breadcrumb />
 
       {/* Hero Header */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
@@ -157,7 +159,7 @@ export default function PricingPage() {
           <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
             :: FLAT RATE FEES ::
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-sans tracking-tight leading-none text-black">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display tracking-tight leading-none text-black">
             Simple pricing. No surprises. No markups.
           </h1>
           <p className="text-neutral-500 max-w-3xl mx-auto text-sm sm:text-base font-sans">
@@ -219,7 +221,7 @@ export default function PricingPage() {
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: META CONVERSATION FEES ::
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-black">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-black">
               How WhatsApp conversation charges work.
             </h2>
             <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed">
@@ -311,7 +313,7 @@ export default function PricingPage() {
             <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
               :: COMPARE CAPABILITIES ::
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-black">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-black">
               What you get vs what competitors charge.
             </h2>
             <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed">

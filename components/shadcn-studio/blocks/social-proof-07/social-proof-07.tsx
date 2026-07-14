@@ -35,11 +35,11 @@ const SocialProof = ({
                 :: {badge} ::
               </span>
             )}
-            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-foreground'>
+            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-display text-foreground'>
               {heading}
             </h2>
             {description && (
-              <p className='text-muted-foreground max-w-4xl text-xl mx-auto'>
+              <p className='text-muted-foreground max-w-2xl text-base font-sans mx-auto'>
                 {description}
               </p>
             )}
@@ -58,10 +58,10 @@ const SocialProof = ({
                 <CardContent className='[&>svg]:text-[#00b259] flex flex-col items-center [&>svg]:size-5 sm:[&>svg]:size-7 p-4 sm:p-5 text-center h-full justify-between flex-1'>
                   <div className="flex flex-col items-center w-full">
                     {metric.icon}
-                    <CardTitle className='mt-3 mb-1.5 text-lg sm:text-xl lg:text-2xl font-black text-foreground leading-tight font-sans'>
+                    <CardTitle className='mt-3 mb-1.5 text-lg sm:text-xl lg:text-2xl font-black text-foreground leading-tight font-display'>
                       {metric.value}
                     </CardTitle>
-                    <h4 className='text-xs font-semibold text-neutral-800 leading-snug'>{metric.title}</h4>
+                    <h4 className='text-xs font-bold text-neutral-800 leading-snug font-display'>{metric.title}</h4>
                   </div>
                   {metric.subtitle && (
                     <CardDescription className='text-[10px] sm:text-xs font-medium mt-1 leading-normal'>

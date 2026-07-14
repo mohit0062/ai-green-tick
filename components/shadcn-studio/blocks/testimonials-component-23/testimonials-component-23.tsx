@@ -60,7 +60,7 @@ const TestimonialsComponent = ({ testimonials }: { testimonials: Testimonial[] }
             blur
             slide={{ direction: 'down', offset: 30 }}
             transition={{ duration: 0.5 }}
-            className='text-center text-xl font-medium md:text-3xl'
+            className='text-center text-xl font-medium md:text-3xl font-display text-black'
           >
             {testimonials[activeIndex].message}
           </MotionPreset>
@@ -73,14 +73,14 @@ const TestimonialsComponent = ({ testimonials }: { testimonials: Testimonial[] }
             delay={0.3}
             slide={{ direction: 'down', offset: 30 }}
             transition={{ duration: 0.5 }}
-            className='flex items-center gap-2'
+            className='flex items-center gap-2 font-sans'
           >
             <Avatar size='lg'>
               <AvatarImage src={testimonials[activeIndex].avatar} alt={testimonials[activeIndex].name} />
               <AvatarFallback>{testimonials[activeIndex].fallback}</AvatarFallback>
             </Avatar>
 
-            <span className='text-muted-foreground'>
+            <span className='text-muted-foreground font-sans'>
               {testimonials[activeIndex].name}, {testimonials[activeIndex].designation}
             </span>
           </MotionPreset>
@@ -95,7 +95,7 @@ const TestimonialsComponent = ({ testimonials }: { testimonials: Testimonial[] }
               return (
                 <div
                   key={testimonial.id}
-                  className='relative flex-1 cursor-pointer border-t not-last:border-r'
+                  className='relative flex-1 cursor-pointer border-t border-b not-last:border-r'
                   onClick={() => {
                     setActiveIndex(index)
                     setProgress(0)

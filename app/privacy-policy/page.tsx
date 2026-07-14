@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
@@ -66,6 +67,7 @@ export default function PrivacyPolicy() {
     <div className='flex min-h-screen flex-col bg-white text-black font-sans'>
       <JsonLd data={policySchema} />
       <Header navigationData={navigationData} />
+      <Breadcrumb />
 
       <main className='flex-1 pt-12 border-b border-[#C5C4C2] bg-neutral-50'>
         <div className='mx-auto max-w-4xl border-x border-[#C5C4C2] bg-white px-6 sm:px-12 py-16 sm:py-24 text-left font-sans space-y-10'>
@@ -74,7 +76,7 @@ export default function PrivacyPolicy() {
             <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block">
               :: COMPLIANCE & LEGAL ::
             </span>
-            <h1 className='text-3xl sm:text-4xl font-extrabold text-neutral-900 font-sans tracking-tight'>
+            <h1 className='text-3xl sm:text-4xl font-extrabold text-neutral-900 font-display tracking-tight'>
               Privacy Policy
             </h1>
             <p className='text-xs text-neutral-500 font-mono'>
@@ -87,7 +89,7 @@ export default function PrivacyPolicy() {
               AI Greentick ("we," "our," or "us") provides enterprise WhatsApp Business API and customer messaging solutions. This Privacy Policy details how we collect, store, share, and protect your information when you access our platform, use our shared inbox dashboards, or run marketing campaigns.
             </p>
 
-            <h2 className='text-lg font-bold text-black font-sans border-l-2 border-[#00b259] pl-3 mt-8'>
+            <h2 className='text-lg font-bold text-black font-display border-l-2 border-[#00b259] pl-3 mt-8'>
               1. Information We Collect
             </h2>
             <p>
@@ -99,7 +101,7 @@ export default function PrivacyPolicy() {
               <li><strong>Conversation Metadata:</strong> Message delivery logs, categories (marketing, utility, authentication, service), timestamps, and status updates (sent, delivered, read) to track pass-through billing.</li>
             </ul>
 
-            <h2 className='text-lg font-bold text-black font-sans border-l-2 border-[#00b259] pl-3 mt-8'>
+            <h2 className='text-lg font-bold text-black font-display border-l-2 border-[#00b259] pl-3 mt-8'>
               2. How We Use Your Information
             </h2>
             <p>
@@ -111,21 +113,21 @@ export default function PrivacyPolicy() {
               <li>To submit, track, and secure your Green Tick badge verification requests directly with Meta.</li>
             </ul>
 
-            <h2 className='text-lg font-bold text-black font-sans border-l-2 border-[#00b259] pl-3 mt-8'>
+            <h2 className='text-lg font-bold text-black font-display border-l-2 border-[#00b259] pl-3 mt-8'>
               3. Data Security & Hosting
             </h2>
             <p>
               We implement industry-standard encryption protocols (TLS 1.3 in transit and AES-256 at rest) to protect message payloads. Since AI Greentick integrates directly with the official WhatsApp Cloud API, all end-to-end messaging encryption parameters remain subject to Meta’s security standards.
             </p>
 
-            <h2 className='text-lg font-bold text-black font-sans border-l-2 border-[#00b259] pl-3 mt-8'>
+            <h2 className='text-lg font-bold text-black font-display border-l-2 border-[#00b259] pl-3 mt-8'>
               4. Third-Party Sharing & Compliance
             </h2>
             <p>
               We do not sell, rent, or trade your corporate information or client database lists. We share data only with authorized subprocessors (such as cloud hosting servers, payment gateways, and Meta) strictly to perform operational tasks.
             </p>
 
-            <h2 className='text-lg font-bold text-black font-sans border-l-2 border-[#00b259] pl-3 mt-8'>
+            <h2 className='text-lg font-bold text-black font-display border-l-2 border-[#00b259] pl-3 mt-8'>
               5. Contact Us
             </h2>
             <p>

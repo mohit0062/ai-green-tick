@@ -17,6 +17,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card'
 import { MotionPreset } from '@/components/ui/motion-preset'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
@@ -221,6 +222,7 @@ export default function TeamInboxPage() {
     <div className='flex min-h-screen flex-col bg-white text-black font-sans'>
       <JsonLd data={jsonLdData} />
       <Header navigationData={navigationData} />
+      <Breadcrumb />
 
       <main className='flex-1'>
         {/* Hero Section */}
@@ -231,7 +233,7 @@ export default function TeamInboxPage() {
                 <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block">
                   :: SHARED INBOX PRODUCT ::
                 </span>
-                <h1 className='text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl md:text-6xl font-sans leading-none'>
+                <h1 className='text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl md:text-6xl font-display leading-none'>
                   Manage WhatsApp conversations <span className='text-[#00b259]'>more easily.</span>
                 </h1>
                 <p className='text-neutral-600 text-base sm:text-lg max-w-xl font-sans leading-relaxed'>
@@ -287,7 +289,7 @@ export default function TeamInboxPage() {
                         <div className='flex size-11 items-center justify-center rounded-none border border-[#C5C4C2] bg-[#00b259]/10 text-[#00b259]'>
                           <IconComp className='size-5' />
                         </div>
-                        <h3 className='text-lg font-bold font-sans'>{feat.title}</h3>
+                        <h3 className='text-lg font-bold font-display'>{feat.title}</h3>
                         <p className='text-neutral-500 text-[14px] leading-relaxed font-sans'>{feat.description}</p>
                       </CardContent>
                     </Card>
@@ -319,7 +321,7 @@ export default function TeamInboxPage() {
                   <span className='px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block'>
                     {detail.tag}
                   </span>
-                  <h2 className='text-3xl font-bold text-neutral-900 font-sans leading-tight'>
+                  <h2 className='text-3xl font-bold text-neutral-900 font-display leading-tight'>
                     {detail.title}
                   </h2>
                   <p className='text-[#005c2b] font-medium font-sans text-[15px]'>
@@ -357,7 +359,7 @@ export default function TeamInboxPage() {
               <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block">
                 :: CUSTOMER VOICES ::
               </span>
-              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-sans'>
+              <h2 className='text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-display'>
                 What our customers think of AI Greentick
               </h2>
               <p className='text-neutral-600 max-w-xl text-xs sm:text-sm font-sans'>

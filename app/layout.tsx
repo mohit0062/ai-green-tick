@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Orbitron } from 'next/font/google'
+import { Geist_Mono, Orbitron, Inter, Manrope } from 'next/font/google'
 import './globals.css'
 import DemoModalProvider from '@/components/shadcn-studio/blocks/demo-modal-provider'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+})
+
+const manrope = Manrope({
+  variable: '--font-manrope',
   subsets: ['latin'],
 })
 
@@ -30,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en' className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}>
+    <html lang='en' className={`${inter.variable} ${manrope.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}>
       <body>
         {children}
         <DemoModalProvider />

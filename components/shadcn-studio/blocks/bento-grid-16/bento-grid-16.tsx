@@ -10,7 +10,7 @@ const BentoGrid = () => {
   return (
     <section className='bg-background py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto mb-10 max-w-7xl px-4 sm:px-6 lg:px-8 text-center'>
-        <h2 className='font-sans text-[36px] font-semibold tracking-tight text-foreground'>What makes us different</h2>
+        <h2 className='font-display text-[36px] font-semibold tracking-tight text-foreground'>What makes us different</h2>
       </div>
       <div className='mx-auto grid max-w-7xl grid-cols-1 gap-3 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8'>
         <MotionPreset

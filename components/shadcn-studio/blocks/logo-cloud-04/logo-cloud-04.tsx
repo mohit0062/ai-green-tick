@@ -1,25 +1,38 @@
 import { Marquee } from '@/components/ui/marquee'
 import { MotionPreset } from '@/components/ui/motion-preset'
 
-type brandLogos = {
+type BrandLogo = {
   image: string
   name: string
 }
 
-const LogoCloud = ({ brandLogos }: { brandLogos: brandLogos[] }) => {
+interface LogoCloudProps {
+  heading?: string
+  brandLogos?: BrandLogo[]
+}
+
+const LogoCloud = ({ 
+  heading = "Loved by growing brands across 15+ industries", 
+  brandLogos = [] 
+}: LogoCloudProps) => {
+  // Split logos into 2 rows dynamically
+  const half = Math.ceil(brandLogos.length / 2)
+  const row1 = brandLogos.slice(0, half)
+  const row2 = brandLogos.slice(half)
+
   return (
-    <section className='border-b px-4 sm:px-6 lg:px-8 bg-muted'>
-      <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] bg-background'>
+    <section className='border-y px-4 sm:px-6 lg:px-8 bg-muted select-none'>
+      <div className='mx-auto max-w-7xl border border-[#C5C4C2] bg-background'>
         {/* Header */}
         <div className='py-4 sm:py-6 text-center border-b'>
           <MotionPreset
             component='p'
-            className='font-mono font-semibold text-xs sm:text-sm text-muted-foreground tracking-wide'
+            className='font-mono font-semibold text-xs sm:text-sm text-muted-foreground tracking-wide px-4'
             fade
             slide={{ direction: 'down', offset: 20 }}
             transition={{ duration: 0.5 }}
           >
-            Loved by growing brands across 15+ industries
+            {heading}
           </MotionPreset>
         </div>
 
@@ -30,40 +43,44 @@ const LogoCloud = ({ brandLogos }: { brandLogos: brandLogos[] }) => {
           <div className='from-background pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l to-transparent' />
 
           {/* Row 1 */}
-          <div className='w-full overflow-hidden border-b h-13 lg:h-18 flex items-center'>
-            <Marquee pauseOnHover duration={35} gap={0}>
-              {brandLogos.slice(0, 7).map((logo, index) => (
-                <div
-                  key={index}
-                  className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
-                >
-                  <img
-                    src={logo.image}
-                    alt={logo.name}
-                    className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
-                  />
-                </div>
-              ))}
-            </Marquee>
-          </div>
+          {row1.length > 0 && (
+            <div className='w-full overflow-hidden border-b h-13 lg:h-18 flex items-center'>
+              <Marquee pauseOnHover duration={35} gap={0}>
+                {row1.map((logo, index) => (
+                  <div
+                    key={index}
+                    className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
+                  >
+                    <img
+                      src={logo.image}
+                      alt={logo.name}
+                      className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
+                    />
+                  </div>
+                ))}
+              </Marquee>
+            </div>
+          )}
 
           {/* Row 2 */}
-          <div className='w-full overflow-hidden h-13 lg:h-18 flex items-center'>
-            <Marquee pauseOnHover duration={35} gap={0} reverse>
-              {brandLogos.slice(7).map((logo, index) => (
-                <div
-                  key={index}
-                  className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
-                >
-                  <img
-                    src={logo.image}
-                    alt={logo.name}
-                    className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
-                  />
-                </div>
-              ))}
-            </Marquee>
-          </div>
+          {row2.length > 0 && (
+            <div className='w-full overflow-hidden h-13 lg:h-18 flex items-center'>
+              <Marquee pauseOnHover duration={35} gap={0} reverse>
+                {row2.map((logo, index) => (
+                  <div
+                    key={index}
+                    className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
+                  >
+                    <img
+                      src={logo.image}
+                      alt={logo.name}
+                      className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
+                    />
+                  </div>
+                ))}
+              </Marquee>
+            </div>
+          )}
         </div>
       </div>
     </section>

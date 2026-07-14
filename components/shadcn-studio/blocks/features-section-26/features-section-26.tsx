@@ -34,10 +34,10 @@ const Features = ({ data }: { data: DataType[] }) => {
                 <span className='text-xs font-mono font-bold uppercase tracking-widest text-[#00b259]'>
                   :: THE SOLUTION ::
                 </span>
-                <h2 className='text-2xl sm:text-3xl lg:text-[34px] font-sans font-bold tracking-tight text-black dark:text-white leading-tight'>
+                <h2 className='text-2xl sm:text-3xl lg:text-[34px] font-display font-bold tracking-tight text-black dark:text-white leading-tight'>
                   One platform. Every WhatsApp workflow. Powered by AI.
                 </h2>
-                <p className='text-muted-foreground text-xs sm:text-sm leading-relaxed max-w-xl font-sans'>
+                <p className='text-muted-foreground text-base leading-relaxed max-w-xl font-sans'>
                   Automate marketing broadcasts, streamline sales conversations, and offer instant AI-powered support in a single, unified WhatsApp platform.
                 </p>
               </div>
@@ -68,31 +68,68 @@ const Features = ({ data }: { data: DataType[] }) => {
                     className={cn(
                       'focus-visible:ring-ring/50 relative flex flex-col flex-1 px-6 text-left transition-all duration-300 outline-none focus-visible:z-1 focus-visible:ring-3',
                       isActive 
-                        ? 'bg-[#ECEBE9]/20 dark:bg-neutral-800/10 py-6 lg:py-8 gap-4' 
+                        ? tab.id === 'marketing' 
+                          ? 'bg-marketing-bg/25 dark:bg-marketing-bg/5 py-6 lg:py-8 gap-4'
+                          : tab.id === 'sales'
+                            ? 'bg-sales-bg/25 dark:bg-sales-bg/5 py-6 lg:py-8 gap-4'
+                            : 'bg-support-bg/25 dark:bg-support-bg/5 py-6 lg:py-8 gap-4'
                         : 'hover:bg-neutral-50/40 dark:hover:bg-neutral-800/5 py-4 lg:py-8 gap-0 lg:gap-4'
                     )}
                   >
                     <div className='flex items-center gap-5'>
-                      <span className={cn('text-muted-foreground [&>svg]:size-4.5', { 'text-foreground': isActive })}>
+                      <span 
+                        className={cn('text-muted-foreground [&>svg]:size-4.5 transition-colors duration-300', 
+                          isActive && (
+                            tab.id === 'marketing' 
+                              ? 'text-marketing-accent' 
+                              : tab.id === 'sales' 
+                                ? 'text-sales-accent' 
+                                : 'text-support-accent'
+                          )
+                        )}
+                      >
                         {tab.icon}
                       </span>
-                      <h3 className={cn('text-muted-foreground text-xl font-medium', { 'text-foreground': isActive })}>
+                      <h3 
+                        className={cn('text-muted-foreground text-lg font-bold font-display transition-colors duration-300', 
+                          isActive && (
+                            tab.id === 'marketing' 
+                              ? 'text-marketing-accent' 
+                              : tab.id === 'sales' 
+                                ? 'text-sales-accent' 
+                                : 'text-support-accent'
+                          )
+                        )}
+                      >
                         {tab.title}
                       </h3>
                     </div>
                     
-                    <ul className={cn('text-muted-foreground space-y-1.5 pl-9 list-disc text-left', isActive ? 'block' : 'hidden lg:block', { 'text-foreground': isActive })}>
-                      {tab.points?.map((point, index) => (
-                        <li key={index}>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+                    {typeof tab.points === 'string' ? (
+                      <div 
+                        className={cn('text-muted-foreground space-y-1.5 pl-9 text-left text-xs sm:text-sm font-sans [&>ul]:list-disc [&>ul]:space-y-1.5 [&>ol]:list-decimal [&>ol]:space-y-1.5', isActive ? 'block' : 'hidden lg:block', { 'text-foreground': isActive })}
+                        dangerouslySetInnerHTML={{ __html: tab.points }}
+                      />
+                    ) : (
+                      <ul className={cn('text-muted-foreground space-y-1.5 pl-9 list-disc text-left text-xs sm:text-sm font-sans', isActive ? 'block' : 'hidden lg:block', { 'text-foreground': isActive })}>
+                        {(tab.points || []).map((point, index) => (
+                          <li key={index}>
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
                     {isActive && (
                       <div
                         data-state='workflow-progress'
-                        className='bg-primary absolute inset-x-0 bottom-0 left-0 h-0.5 transition-none'
+                        className={cn('absolute inset-x-0 bottom-0 left-0 h-0.5 transition-none', 
+                          tab.id === 'marketing' 
+                            ? 'bg-marketing-accent' 
+                            : tab.id === 'sales' 
+                              ? 'bg-sales-accent' 
+                              : 'bg-support-accent'
+                        )}
                         style={{ width: `${workflowProgress}%` }}
                       />
                     )}

@@ -63,16 +63,17 @@ const MetaAuthorization = ({
             <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit">
               :: {badge} ::
             </span>
-            <h2 className="text-3xl font-extrabold md:text-4xl font-sans text-neutral-900 dark:text-white leading-tight tracking-tight">
+            <h2 className="text-3xl font-extrabold md:text-4xl font-display text-neutral-900 dark:text-white leading-tight tracking-tight">
               {heading.split('. ').map((part, i) => (
                 <span key={i} className={cn(i === 1 ? "text-[#00b259] block mt-1" : "text-neutral-900 dark:text-white")}>
                   {part}{i === 0 ? '.' : ''}
                 </span>
               ))}
             </h2>
-            <p className="text-neutral-600 dark:text-neutral-400 text-base sm:text-lg leading-relaxed font-sans max-w-xl">
-              {body}
-            </p>
+            <div 
+              className="text-neutral-600 dark:text-neutral-400 text-base sm:text-lg leading-relaxed font-sans max-w-xl [&_strong]:font-bold [&_strong]:text-neutral-900 dark:[&_strong]:text-white [&_a]:text-[#00b259] [&_a]:underline [&_img]:inline-block [&_img]:max-w-full"
+              dangerouslySetInnerHTML={{ __html: body || '' }}
+            />
           </div>
 
           {/* Right Column - Glowing Badges Grid */}
@@ -94,7 +95,7 @@ const MetaAuthorization = ({
                       {item.icon}
                     </div>
                     <div>
-                      <h4 className={cn("font-bold text-neutral-900 dark:text-white font-sans", item.featured ? "text-lg sm:text-xl" : "text-sm sm:text-base")}>
+                      <h4 className={cn("font-bold text-neutral-900 dark:text-white font-display", item.featured ? "text-lg sm:text-xl" : "text-sm sm:text-base")}>
                         {item.title}
                       </h4>
                       <p className="text-xs text-neutral-500 dark:text-neutral-400 font-sans mt-0.5">

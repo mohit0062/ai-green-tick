@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import Lanyard from '@/components/Lanyard'
 import { Badge } from '@/components/ui/badge'
@@ -42,19 +43,28 @@ import { openApplicationHref, openRoles, type CareerRole } from '@/lib/careers'
 import { cn } from '@/lib/utils'
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
+import { getSiteSection } from '@/utils/cms'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
 
-export const metadata: Metadata = {
-  title: 'Careers at AI Greentick — Build WhatsApp-First Systems',
-  description: 'Open engineering, AI, design, and product roles at AI Greentick. Remote-friendly, senior-heavy team building India\'s leading WhatsApp marketing platform.',
-  alternates: {
-    canonical: '/careers',
-  },
-  openGraph: {
-    title: 'Careers at AI Greentick — Build WhatsApp-First Systems',
-    description: 'Open engineering, AI, design, and product roles at AI Greentick. Remote-friendly, senior-heavy team building India\'s leading WhatsApp marketing platform.',
-    url: '/careers',
-    type: 'website',
+export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getSiteSection<any>('careers_page')
+  const title = cms.seoTitle || 'Careers at AI Greentick — Build WhatsApp-First Systems'
+  const description = cms.seoDesc || 'Open engineering, AI, design, and product roles at AI Greentick. Remote-friendly, senior-heavy team building India\'s leading WhatsApp marketing platform.'
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: '/careers',
+    },
+    openGraph: {
+      title,
+      description,
+      url: '/careers',
+      type: 'website',
+    }
   }
 }
 
@@ -269,7 +279,7 @@ function SectionIntro({
       <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
         :: {eyebrow.toUpperCase()} ::
       </span>
-      <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-sans">
+      <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 md:text-4xl font-display">
         {title}
       </h2>
       <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-lg font-sans">
@@ -280,8 +290,6 @@ function SectionIntro({
 }
 
 function SignalCard({ item, idx }: { item: any; idx: number }) {
-  const Icon = getLucideIcon(item.iconName)
-
   return (
     <div className="relative border border-[#C5C4C2] bg-white dark:bg-neutral-950 h-[360px] flex flex-col justify-between p-6 overflow-hidden group">
       {/* Top row: marker + index number */}
@@ -301,78 +309,136 @@ function SignalCard({ item, idx }: { item: any; idx: number }) {
           }}
         >
           <div className="text-neutral-800 dark:text-neutral-200 group-hover:text-[#00b259] transition-all duration-300 transform group-hover:scale-105">
-            <Icon strokeWidth={1} className="size-14" />
+            {item.iconName && item.iconName.startsWith('<svg') ? (
+              <div 
+                className="size-14 text-neutral-800 dark:text-neutral-200 [&>svg]:size-14 [&>svg]:shrink-0"
+                dangerouslySetInnerHTML={{ __html: item.iconName }}
+              />
+            ) : (
+              (() => {
+                const Icon = getLucideIcon(item.iconName)
+                return <Icon strokeWidth={1} className="size-14" />
+              })()
+            )}
           </div>
         </div>
       </div>
 
       {/* Bottom row: Title & Description */}
       <div className="text-left w-full">
-        <h3 className="text-base sm:text-lg font-sans font-bold text-black dark:text-white group-hover:text-[#00b259] transition-colors">
+        <h3 className="text-base sm:text-lg font-display font-bold text-black dark:text-white group-hover:text-[#00b259] transition-colors">
           {item.title}
         </h3>
-        <p className="text-sm font-sans text-neutral-600 mt-2 leading-relaxed group-hover:text-neutral-800 dark:group-hover:text-neutral-200 transition-colors">
-          {item.description}
-        </p>
+        <div 
+          className="text-sm font-sans text-neutral-600 mt-2 leading-relaxed group-hover:text-neutral-800 dark:group-hover:text-neutral-200 transition-colors [&>p]:leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: item.description }}
+        />
       </div>
     </div>
   )
 }
 
-function RoleCard({ role }: { role: CareerRole }) {
+function RoleCard({ 
+  role, 
+  bgColor = "bg-white", 
+  accentColor = "text-[#00b259]", 
+  accentBg = "bg-[#00b259]",
+  badgeBg = "bg-[#00b259]/10", 
+  borderColor = "border-[#C5C4C2]",
+  hoverBorder = "hover:border-[#00b259]",
+  hoverShadow = "hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]",
+  footerBg = "bg-neutral-50/50"
+}: { 
+  role: CareerRole
+  bgColor?: string
+  accentColor?: string
+  accentBg?: string
+  badgeBg?: string
+  borderColor?: string
+  hoverBorder?: string
+  hoverShadow?: string
+  footerBg?: string
+}) {
   return (
-    <Card className="group h-full border border-[#C5C4C2] bg-white text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)] rounded-none">
-      <CardHeader className="gap-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="secondary" className="rounded-none bg-[#00b259]/10 text-[#00b259] hover:bg-[#00b259]/20">{role.team}</Badge>
-          <Badge variant="outline" className="rounded-none border-[#C5C4C2]">{role.employmentType}</Badge>
-          <Badge variant="outline" className="rounded-none border-[#C5C4C2]">{role.location}</Badge>
+    <Card className={cn("group h-full border text-black shadow-none transition-all duration-300 rounded-2xl flex flex-col overflow-hidden relative", bgColor, borderColor)}>
+      {/* Top Accent Color Bar */}
+      <div className={cn("h-1.5 w-full shrink-0", accentBg)} />
+      
+      <CardHeader className="gap-5 p-6 sm:p-8">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Badge variant="secondary" className={cn("rounded-full px-3.5 py-1 text-xs font-bold font-sans flex items-center gap-1.5 hover:bg-opacity-20 transition-colors border border-transparent", badgeBg, accentColor)}>
+            <span className="size-1.5 rounded-full bg-current animate-pulse" />
+            {role.team}
+          </Badge>
+          <Badge variant="outline" className={cn("rounded-full px-3.5 py-1 text-xs font-semibold font-sans text-neutral-600 bg-white/60", borderColor)}>
+            {role.employmentType}
+          </Badge>
+          <Badge variant="outline" className={cn("rounded-full px-3.5 py-1 text-xs font-semibold font-sans text-neutral-600 bg-white/60", borderColor)}>
+            {role.location}
+          </Badge>
         </div>
         <div className="space-y-3">
-          <CardTitle className="text-2xl font-bold tracking-tight text-left font-sans">{role.title}</CardTitle>
-          <CardDescription className="text-base leading-7 text-left text-neutral-500 font-sans">
+          <CardTitle className="text-2xl font-extrabold tracking-tight text-left font-display text-neutral-900 group-hover:text-opacity-80 transition-opacity">
+            {role.title}
+          </CardTitle>
+          <CardDescription className="text-base leading-relaxed text-left text-neutral-500 font-sans">
             {role.summary}
           </CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="mt-auto space-y-5">
-        <Separator className="bg-[#C5C4C2]/50" />
-        <div className="grid gap-3 text-sm text-neutral-500 sm:grid-cols-2 text-left font-sans">
-          <div>
-            <p className="font-semibold text-black">Compensation</p>
-            <p>{role.compensation.range}</p>
+
+      <CardContent className="mt-auto space-y-6 px-6 pb-6 sm:px-8 sm:pb-8 flex-1 flex flex-col justify-end">
+        <Separator className={cn("opacity-40", borderColor)} />
+        <div className="grid gap-4 text-sm sm:grid-cols-2 text-left font-sans">
+          <div className="bg-white/40 p-3.5 rounded-xl border border-neutral-200/50">
+            <p className="font-bold text-neutral-800 text-xs uppercase tracking-wider mb-1">Compensation</p>
+            <p className="font-semibold text-neutral-900 text-sm sm:text-base">{role.compensation.range}</p>
           </div>
-          <div>
-            <p className="font-semibold text-black">Equity</p>
-            <p>{role.compensation.equity}</p>
+          <div className="bg-white/40 p-3.5 rounded-xl border border-neutral-200/50">
+            <p className="font-bold text-neutral-800 text-xs uppercase tracking-wider mb-1">Equity</p>
+            <p className="font-semibold text-neutral-900 text-sm sm:text-base">{role.compensation.equity}</p>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="justify-between gap-3 bg-neutral-50 border-t border-[#C5C4C2]/50 p-6">
-        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#00b259] font-mono">
+
+      <CardFooter className={cn("justify-between gap-4 border-t p-6 sm:px-8", footerBg, borderColor)}>
+        <span className={cn("text-xs font-extrabold uppercase tracking-[0.2em] font-mono", accentColor)}>
           :: Active role ::
         </span>
         <Link
           href={`/careers/${role.slug}`}
           className={cn(
             buttonVariants({ variant: 'outline', size: 'lg' }),
-            'h-10 rounded-none bg-white px-4 border-[#C5C4C2] hover:border-[#00b259] hover:text-[#00b259] font-sans'
+            'h-11 rounded-full bg-white px-5 font-bold transition-all duration-300 shadow-xs hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer',
+            borderColor,
+            hoverBorder,
+            accentColor
           )}
         >
           View role
-          <ArrowRight className="size-4 ml-1.5" />
+          <ArrowRight className="size-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </CardFooter>
     </Card>
   )
 }
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const cms = await getSiteSection<any>('careers_page')
+  
+  const hero = cms.hero || content.hero
+  const fitSignals = cms.fitSignals || content.fitSignals
+  const benefits = cms.benefits || content.benefits
+  const hiringSteps = cms.hiringSteps || content.hiringSteps
+  const heroStats = cms.heroStats || content.heroStats
+  const pageTitle = cms.pageTitle || "Build the Future With Us"
+  const pageSubtitle = cms.pageSubtitle || "Join a senior team building AI-powered WhatsApp automation for thousands of businesses."
+
   const careersSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "AI Greentick - Open Engineering & Product Careers",
-    "description": content.hero.description,
+    "description": hero.description,
     "url": "https://aigreentick.com/careers",
     "itemListElement": openRoles.map((role, idx) => ({
       "@type": "ListItem",
@@ -390,6 +456,7 @@ export default function CareersPage() {
     <div className="flex min-h-screen flex-col bg-white text-black">
       <JsonLd data={careersSchema} />
       <Header navigationData={navigationData} />
+      <Breadcrumb />
 
       <main className="flex-1">
 
@@ -417,11 +484,11 @@ export default function CareersPage() {
           {/* Text content overlaid on top */}
           <div className="relative mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 flex flex-col items-center text-center z-20 pointer-events-none" style={{ minHeight: '100vh', paddingTop: '100px' }}>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 font-sans leading-tight max-w-4xl" style={{ textShadow: '0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.7)' }}>
-              Build the Future With Us
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 font-display leading-tight max-w-4xl" style={{ textShadow: '0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.7)' }}>
+              {pageTitle}
             </h1>
             <p className="mt-6 text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto font-sans leading-relaxed" style={{ textShadow: '0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,1), 0 0 50px rgba(255,255,255,0.9), 0 0 70px rgba(255,255,255,0.7)' }}>
-              Join a senior team building AI-powered WhatsApp automation for thousands of businesses.
+              {pageSubtitle}
             </p>
 
           </div>
@@ -433,13 +500,13 @@ export default function CareersPage() {
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_28rem] items-center">
               <div className="space-y-6 text-left">
                 <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit">
-                  :: THE MISSION ::
+                  :: {hero.badge} ::
                 </span>
-                <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 font-sans">
-                  Join the team building India's leading WhatsApp marketing platform.
+                <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 font-display">
+                  {hero.heading}
                 </h2>
                 <p className="text-neutral-600 font-sans leading-relaxed text-base">
-                  {content.hero.description}
+                  {hero.description}
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row pt-4">
                   <a
@@ -471,7 +538,7 @@ export default function CareersPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 text-left">
-                  {content.heroStats.map((stat) => (
+                  {heroStats.map((stat: { value: string; label: string }) => (
                     <div
                       key={stat.value}
                       className="rounded-none border border-[#C5C4C2] bg-neutral-50 p-4"
@@ -497,8 +564,8 @@ export default function CareersPage() {
               description="AI Greentick works best for senior builders who can make good calls, write down tradeoffs, and keep ownership after launch."
             />
 
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {content.fitSignals.map((item, idx) => (
+             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {fitSignals.map((item: any, idx: number) => (
                 <SignalCard key={item.title} item={item} idx={idx} />
               ))}
             </div>
@@ -522,7 +589,7 @@ export default function CareersPage() {
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
-              {content.benefits.map((item, idx) => (
+              {benefits.map((item: any, idx: number) => (
                 <SignalCard key={item.title} item={item} idx={idx} />
               ))}
             </div>
@@ -539,7 +606,7 @@ export default function CareersPage() {
             />
 
             <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3 text-left">
-              {content.hiringSteps.map((step, index) => (
+              {hiringSteps.map((step: any, index: number) => (
                 <Card key={step.title} className="border border-[#C5C4C2] bg-white text-black shadow-none rounded-none transition-all duration-300 hover:border-[#00b259] hover:shadow-[0_0_15px_rgba(0,178,89,0.1)]">
                   <CardHeader>
                     <div className="flex items-center justify-between gap-4">
@@ -551,9 +618,10 @@ export default function CareersPage() {
                     <CardTitle className="text-xl font-sans font-bold">{step.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base leading-7 text-neutral-500 font-sans">
-                      {step.description}
-                    </CardDescription>
+                    <div 
+                      className="text-base leading-7 text-neutral-500 font-sans [&>p]:leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: step.description }}
+                    />
                   </CardContent>
                 </Card>
               ))}
@@ -564,27 +632,82 @@ export default function CareersPage() {
         {/* Open Roles Section */}
         <section id="open-roles" className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end text-left">
-              <div className="max-w-2xl">
-                <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
-                  :: OPEN ROLES ::
-                </span>
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-black leading-tight">
-                  Active roles for senior builders.
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-neutral-500 md:text-lg font-sans">
-                  Each role has a dedicated page with scope, compensation, equity, and what the first 90 days look like.
-                </p>
-              </div>
-              <div className="rounded-none border border-[#C5C4C2] bg-white px-4 py-2 text-sm text-neutral-500 shrink-0 h-fit font-mono">
+            <div className="mx-auto max-w-3xl text-center flex flex-col items-center mb-10">
+              <span className="px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono inline-block w-fit mb-4">
+                :: OPEN ROLES ::
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-black leading-tight font-display">
+                Active roles for senior builders.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-neutral-500 md:text-lg font-sans">
+                Each role has a dedicated page with scope, compensation, equity, and what the first 90 days look like.
+              </p>
+              <div className="mt-4 rounded-none border border-[#C5C4C2] bg-white px-4 py-2 text-sm text-neutral-500 font-mono w-fit">
                 [ {openRoles.length} roles open now ]
               </div>
             </div>
 
-            <div className="mt-10 grid gap-6 lg:grid-cols-2">
-              {openRoles.map((role) => (
-                <RoleCard key={role.slug} role={role} />
-              ))}
+            <div className="mt-10 flex flex-col gap-16 max-w-4xl mx-auto">
+              {openRoles.map((role, idx) => {
+                const colorConfigs = [
+                  {
+                    bgColor: "bg-[#EAF3FF]",
+                    borderColor: "border-[#d0e4ff]",
+                    accentColor: "text-[#2563eb]",
+                    accentBg: "bg-[#2563eb]",
+                    badgeBg: "bg-[#2563eb]/10",
+                    hoverBorder: "hover:border-[#2563eb]",
+                    hoverShadow: "hover:shadow-[0_20px_40px_rgba(37,99,235,0.12)]",
+                    footerBg: "bg-[#EAF3FF]/40"
+                  },
+                  {
+                    bgColor: "bg-[#F8F2FF]",
+                    borderColor: "border-[#ebd9ff]",
+                    accentColor: "text-[#9333ea]",
+                    accentBg: "bg-[#9333ea]",
+                    badgeBg: "bg-[#9333ea]/10",
+                    hoverBorder: "hover:border-[#9333ea]",
+                    hoverShadow: "hover:shadow-[0_20px_40px_rgba(147,51,234,0.12)]",
+                    footerBg: "bg-[#F8F2FF]/40"
+                  },
+                  {
+                    bgColor: "bg-[#FFF9E6]",
+                    borderColor: "border-[#ffeeba]",
+                    accentColor: "text-[#d97706]",
+                    accentBg: "bg-[#d97706]",
+                    badgeBg: "bg-[#d97706]/10",
+                    hoverBorder: "hover:border-[#d97706]",
+                    hoverShadow: "hover:shadow-[0_20px_40px_rgba(217,119,6,0.12)]",
+                    footerBg: "bg-[#FFF9E6]/40"
+                  },
+                  {
+                    bgColor: "bg-[#f4fef8]",
+                    borderColor: "border-[#d0f5e1]",
+                    accentColor: "text-[#00b259]",
+                    accentBg: "bg-[#00b259]",
+                    badgeBg: "bg-[#00b259]/10",
+                    hoverBorder: "hover:border-[#00b259]",
+                    hoverShadow: "hover:shadow-[0_20px_40px_rgba(0,178,89,0.12)]",
+                    footerBg: "bg-[#f4fef8]/40"
+                  }
+                ]
+                const config = colorConfigs[idx % colorConfigs.length]
+
+                return (
+                  <div
+                    key={role.slug}
+                    className="sticky transition-all duration-500 hover:-translate-y-2.5 hover:scale-[1.015]"
+                    style={{
+                      top: `calc(110px + ${idx * 28}px)`,
+                      zIndex: idx + 1
+                    }}
+                  >
+                    <div className="shadow-2xl rounded-2xl bg-white overflow-hidden border border-neutral-100/50">
+                      <RoleCard role={role} {...config} />
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </section>

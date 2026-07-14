@@ -34,7 +34,7 @@ const Features = ({
             </span>
           )}
           {heading && (
-            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-sans text-black dark:text-white leading-tight'>
+            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-display text-black dark:text-white leading-tight'>
               {heading}
             </h2>
           )}
@@ -48,15 +48,15 @@ const Features = ({
                 key={index}
                 className={cn(
                   colSpan,
-                  'group hover:bg-primary hover:text-primary-foreground text-base transition-colors duration-300 border-[#C5C4C2] shadow-none rounded-none'
+                  'group hover:bg-neutral-50/50 hover:shadow-sm text-base transition-all duration-300 border-[#C5C4C2] shadow-none rounded-none bg-white'
                 )}
               >
                 <CardContent className='p-6'>
                   <Avatar className='mb-4 size-9 after:border-0 rounded-none'>
                     <AvatarFallback className='bg-muted text-card-foreground [&>svg]:size-5 rounded-none border border-[#C5C4C2] bg-white'>{item.icon}</AvatarFallback>
                   </Avatar>
-                  <h6 className='mb-2 text-lg font-semibold font-sans'>{item.title}</h6>
-                  <p className='text-muted-foreground group-hover:text-primary-foreground transition-colors duration-300 font-sans text-sm leading-relaxed'>
+                  <h6 className='mb-2 text-lg font-bold font-display text-[#1c1e21]'>{item.title}</h6>
+                  <p className='text-neutral-500 font-sans text-sm leading-relaxed'>
                     {item.description}
                   </p>
                 </CardContent>

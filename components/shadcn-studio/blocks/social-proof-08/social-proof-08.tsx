@@ -40,7 +40,7 @@ const SocialProof = ({
               )}
               <MotionPreset
                 component='h2'
-                className='text-2xl font-black text-black md:text-3xl lg:text-4xl'
+                className='text-2xl font-black text-black md:text-3xl lg:text-4xl font-display'
                 fade
                 blur
                 slide={{ direction: 'up', offset: 50 }}
@@ -50,15 +50,17 @@ const SocialProof = ({
               </MotionPreset>
 
               <MotionPreset
-                component='p'
-                className='text-neutral-600 text-base sm:text-lg leading-relaxed'
+                className='text-neutral-600 text-base sm:text-lg leading-relaxed font-sans'
                 fade
                 blur
                 slide={{ direction: 'up', offset: 50 }}
                 delay={0.3}
                 transition={{ duration: 0.5 }}
               >
-                {description}
+                <div 
+                  className='[&_strong]:font-bold [&_strong]:text-black [&_a]:text-[#00b259] [&_a]:underline [&_img]:inline-block [&_img]:max-w-full [&_img]:h-auto [&_img]:my-2'
+                  dangerouslySetInnerHTML={{ __html: description || '' }}
+                />
               </MotionPreset>
             </div>
 
@@ -79,8 +81,8 @@ const SocialProof = ({
                     </AvatarFallback>
                   </Avatar>
                   <div className='md:space-y-1.5'>
-                    <p className='text-lg font-bold text-black md:text-xl'>{feature.value}</p>
-                    <p className='text-neutral-600 text-sm sm:text-base leading-relaxed'>{feature.description}</p>
+                    <p className='text-lg font-bold text-black md:text-xl font-display'>{feature.value}</p>
+                    <p className='text-neutral-600 text-sm sm:text-base leading-relaxed font-sans'>{feature.description}</p>
                   </div>
                 </MotionPreset>
               ))}

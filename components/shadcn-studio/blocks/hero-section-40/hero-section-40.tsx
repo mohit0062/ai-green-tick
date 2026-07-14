@@ -32,6 +32,19 @@ const CircularLogo = () => (
   <GreenTickBadge className="size-8 shrink-0" />
 )
 
+const MetaBusinessPartnerLogo = () => (
+  <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 select-none text-center sm:text-left">
+    {/* Meta Logo */}
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-6 sm:size-7 text-[#0668E1] shrink-0">
+      <path fillRule="evenodd" d="M8.217 5.243C9.145 3.988 10.171 3 11.483 3 13.96 3 16 6.153 16.001 9.907c0 2.29-.986 3.725-2.757 3.725-1.543 0-2.395-.866-3.924-3.424l-.667-1.123-.118-.197a55 55 0 0 0-.53-.877l-1.178 2.08c-1.673 2.925-2.615 3.541-3.923 3.541C1.086 13.632 0 12.217 0 9.973 0 6.388 1.995 3 4.598 3q.477-.001.924.122c.31.086.611.22.913.407.577.359 1.154.915 1.782 1.714m1.516 2.224q-.378-.615-.727-1.133L9 6.326c.845-1.305 1.543-1.954 2.372-1.954 1.723 0 3.102 2.537 3.102 5.653 0 1.188-.39 1.877-1.195 1.877-.773 0-1.142-.51-2.61-2.87zM4.846 4.756c.725.1 1.385.634 2.34 2.001A212 212 0 0 0 5.551 9.3c-1.357 2.126-1.826 2.603-2.581 2.603-.777 0-1.24-.682-1.24-1.9 0-2.602 1.298-5.264 2.846-5.264q.137 0 .27.018"/>
+    </svg>
+    {/* Text */}
+    <span className="text-[11px] min-[375px]:text-xs sm:text-base lg:text-lg font-semibold tracking-tight text-[#1c1e21] font-sans leading-tight">
+      Meta Business Partners
+    </span>
+  </div>
+)
+
 const AutoScrollingImage = ({ src, alt }: { src: string; alt: string }) => {
   const animName = `scroll-${src.replace(/[^a-zA-Z0-9]/g, '')}`
   return (
@@ -152,8 +165,41 @@ const tabs = [
   }
 ]
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  data?: {
+    tagline?: string
+    title?: string
+    badgeText?: string
+    badgeTextSecondary?: string
+    heading?: string
+    subheading?: string
+    ctaText?: string
+    ctaLink?: string
+    secondaryCtaText?: string
+    secondaryCtaLink?: string
+    metrics?: { value: string; label: string }[]
+  }
+}
+
+const HeroSection = ({ data }: HeroSectionProps) => {
   const [activeTab, setActiveTab] = useState(tabs[0]?.value || 'unified-inbox')
+
+  const tagline = data?.tagline || "WhatsApp Marketing & Automation"
+  const title = data?.title || "WhatsApp Marketing & Automation"
+  const badgeText = data?.badgeText || "New"
+  const badgeTextSecondary = data?.badgeTextSecondary || "Official WhatsApp API"
+  const heading = data?.heading || "Turn every WhatsApp conversation into revenue"
+  const subheading = data?.subheading || "AI Greentick is the all-in-one WhatsApp Business Suite to broadcast offers, automate replies with AI, manage every chat from a shared inbox, and run ads that click to WhatsApp. Built for D2C brands, agencies and growth teams."
+  const ctaText = data?.ctaText || "Book a demo"
+  const ctaLink = data?.ctaLink || "#demo"
+  const secondaryCtaText = data?.secondaryCtaText || "Free Trial"
+  const secondaryCtaLink = data?.secondaryCtaLink || "#trial"
+  const metrics = data?.metrics || [
+    { value: "98.2%", label: "Open Rate" },
+    { value: "24%", label: "ROI Growth" },
+    { value: "4,850+", label: "Leads Qual" },
+    { value: "24/7", label: "AI Support" }
+  ]
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -173,9 +219,9 @@ const HeroSection = () => {
   }, [])
 
   return (
-    <section className="relative flex flex-col overflow-hidden bg-[#ECEBE9] text-black w-full py-4 px-4 sm:px-6 lg:px-8">
+    <section className="relative flex flex-col overflow-hidden bg-white text-black w-full py-4 px-4 sm:px-6 lg:px-8">
       {/* Main Grid Content Container */}
-      <div className="mx-auto max-w-7xl border border-[#C5C4C2] relative z-10 w-full bg-[#ECEBE9]">
+      <div className="mx-auto max-w-7xl border border-[#C5C4C2] relative z-10 w-full bg-white">
         {/* Right Floating Cyberpunk Social Bar (Hanging off the right edge) */}
         <div className="absolute right-[-49px] top-0 z-30 hidden xl:flex flex-col border border-l-0 border-[#C5C4C2] bg-white text-black divide-y divide-[#C5C4C2] w-12 select-none h-fit">
           {/* Dot icon cell */}
@@ -236,17 +282,17 @@ const HeroSection = () => {
           <div className="absolute bottom-3 left-6 z-20 flex items-center gap-1.5">
             <span className="text-[#00b259] text-[8px]">■</span>
             <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-neutral-500">
-              WhatsApp Marketing & Automation
+              {tagline}
             </span>
           </div>
           
           <div className="relative z-10 w-full overflow-hidden select-none py-4">
             <div className="run-marquee gap-12 items-center">
-              <span className="text-[8vw] lg:text-[110px] font-black tracking-widest text-black uppercase flex items-center gap-12 leading-none" style={{ fontFamily: '"Orbitron", sans-serif' }}>
-                WhatsApp Marketing & Automation <span className="text-[#00b259] text-4xl sm:text-6xl">■</span>
+              <span className="text-[8vw] lg:text-[110px] font-black tracking-widest text-black uppercase flex items-center gap-12 leading-none" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
+                {title} <span className="text-[#00b259] text-4xl sm:text-6xl">■</span>
               </span>
-              <span className="text-[8vw] lg:text-[110px] font-black tracking-widest text-black uppercase flex items-center gap-12 leading-none" style={{ fontFamily: '"Orbitron", sans-serif' }}>
-                WhatsApp Marketing & Automation <span className="text-[#00b259] text-4xl sm:text-6xl">■</span>
+              <span className="text-[8vw] lg:text-[110px] font-black tracking-widest text-black uppercase flex items-center gap-12 leading-none" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
+                {title} <span className="text-[#00b259] text-4xl sm:text-6xl">■</span>
               </span>
             </div>
           </div>
@@ -257,14 +303,8 @@ const HeroSection = () => {
           
           {/* Col 1-2: Left Column (divided horizontally on desktop, side-by-side on mobile) */}
           <div className="col-span-2 lg:col-span-2 order-2 lg:order-1 border-r border-[#C5C4C2] grid grid-cols-2 lg:flex lg:flex-col divide-x lg:divide-x-0 divide-[#C5C4C2] lg:divide-y lg:divide-[#C5C4C2] h-full">
-            {/* Top Half */}
-            <div className="p-3 sm:p-6 flex flex-col justify-center min-h-[120px] lg:min-h-[160px]">
-              <div className="flex items-start gap-2">
-                <span className="text-[#00b259] font-bold text-xs mt-1">■</span>
-                <span className="text-[9px] min-[375px]:text-[10px] lg:text-[11px] font-mono font-bold leading-normal uppercase tracking-wider text-neutral-800">
-                  Turn every WhatsApp conversation into revenue
-                </span>
-              </div>
+            <div className="p-3 sm:p-6 flex items-center justify-center min-h-[120px] lg:min-h-[160px]">
+              <MetaBusinessPartnerLogo />
             </div>
             {/* Bottom Half */}
             <div className="p-3 sm:p-6 flex flex-col justify-between min-h-[120px] lg:min-h-[160px] relative">
@@ -273,7 +313,7 @@ const HeroSection = () => {
               </span>
               <span 
                 className="text-2xl min-[375px]:text-3xl lg:text-4xl font-black text-black leading-none mt-4 select-none"
-                style={{ fontFamily: '"Orbitron", sans-serif' }}
+                style={{ fontFamily: 'var(--font-display), sans-serif' }}
               >
                 500+
               </span>
@@ -285,7 +325,7 @@ const HeroSection = () => {
             {/* Top Half - Empty with Cyberpunk Cross Box (Hidden on mobile) */}
             <div className="min-h-[160px] relative items-center justify-center hidden lg:flex">
               {/* Floating Cyberpunk border cross box */}
-              <div className="absolute left-[-16px] top-full -translate-y-1/2 w-8 h-8 bg-[#ECEBE9] border border-[#C5C4C2] flex items-center justify-center z-20">
+              <div className="absolute left-[-16px] top-full -translate-y-1/2 w-8 h-8 bg-white border border-[#C5C4C2] flex items-center justify-center z-20">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-neutral-500">
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
@@ -303,7 +343,7 @@ const HeroSection = () => {
           </div>
 
           {/* Col 5-9: Middle-Right to Right Column (Product Showcase Card) */}
-          <div className="col-span-3 lg:col-span-5 order-1 lg:order-3 flex flex-col justify-between h-full bg-[#ECEBE9] border-b lg:border-b-0 border-[#C5C4C2]">
+          <div className="col-span-3 lg:col-span-5 order-1 lg:order-3 flex flex-col justify-between h-full bg-white border-b lg:border-b-0 border-[#C5C4C2]">
             
             {/* Top Card Content */}
             <div className="p-8 flex-1 flex flex-col justify-start border-b border-[#C5C4C2]">
@@ -311,44 +351,44 @@ const HeroSection = () => {
               {/* Badges Row */}
               <div className="flex items-center gap-2 mb-6">
                 <span className="bg-gradient-to-r from-[#00b259] to-[#005c2b] text-white text-[9px] font-mono font-bold px-2 py-0.5 uppercase tracking-wider">
-                  New
+                  {badgeText}
                 </span>
                 <span className="border border-[#C5C4C2] bg-white/40 text-neutral-800 text-[9px] font-mono font-bold px-2 py-0.5 uppercase tracking-wider">
-                  Official WhatsApp API
+                  {badgeTextSecondary}
                 </span>
               </div>
 
               {/* Product Identity */}
               <div className="mb-6">
                 <span className="text-xl font-black text-black font-sans uppercase tracking-tight">
-                  Turn every WhatsApp conversation into revenue
+                  {heading}
                 </span>
               </div>
 
               {/* Copy Description */}
               <p className="text-xs font-sans leading-relaxed text-neutral-600 max-w-xl">
-                AI Greentick is the all-in-one WhatsApp Business Suite to broadcast offers, automate replies with AI, manage every chat from a shared inbox, and run ads that click to WhatsApp. Built for D2C brands, agencies and growth teams.
+                {subheading}
               </p>
 
               {/* CTA Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
-                  href="#demo"
+                  href={ctaLink}
                   className="cursor-target px-6 py-3 text-xs font-mono font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity border border-transparent shadow-xs"
                   style={{
                     clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
                   }}
                 >
-                  Book a demo
+                  {ctaText}
                 </a>
                 <a
-                  href="#trial"
+                  href={secondaryCtaLink}
                   className="cursor-target px-6 py-3 text-xs font-mono font-bold uppercase tracking-wider text-black border border-[#C5C4C2] hover:bg-neutral-200/50 transition-colors"
                   style={{
                     clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)'
                   }}
                 >
-                  Free Trial
+                  {secondaryCtaText}
                 </a>
               </div>
             </div>
@@ -356,29 +396,13 @@ const HeroSection = () => {
             {/* Bottom Metrics Row */}
             <div className="grid grid-cols-5 h-14 sm:h-16 lg:h-18 font-mono select-none">
               
-              {/* Metric 1 */}
-              <div className="col-span-1 border-r border-[#C5C4C2] p-1.5 sm:p-4 flex flex-col justify-center">
-                <span className="text-[11px] sm:text-sm font-black text-black leading-none">98.2%</span>
-                <span className="text-[7px] min-[375px]:text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase mt-1 leading-none">Open Rate</span>
-              </div>
-
-              {/* Metric 2 */}
-              <div className="col-span-1 border-r border-[#C5C4C2] p-1.5 sm:p-4 flex flex-col justify-center">
-                <span className="text-[11px] sm:text-sm font-black text-black leading-none">24%</span>
-                <span className="text-[7px] min-[375px]:text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase mt-1 leading-none">ROI Growth</span>
-              </div>
-
-              {/* Metric 3 */}
-              <div className="col-span-1 border-r border-[#C5C4C2] p-1.5 sm:p-4 flex flex-col justify-center">
-                <span className="text-[11px] sm:text-sm font-black text-black leading-none">4,850+</span>
-                <span className="text-[7px] min-[375px]:text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase mt-1 leading-none">Leads Qual</span>
-              </div>
-
-              {/* Metric 4 */}
-              <div className="col-span-1 border-r border-[#C5C4C2] p-1.5 sm:p-4 flex flex-col justify-center">
-                <span className="text-[11px] sm:text-sm font-black text-black leading-none">24/7</span>
-                <span className="text-[7px] min-[375px]:text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase mt-1 leading-none">AI Support</span>
-              </div>
+              {/* Dynamic metrics */}
+              {metrics.slice(0, 4).map((m, mIdx) => (
+                <div key={mIdx} className="col-span-1 border-r border-[#C5C4C2] p-1.5 sm:p-4 flex flex-col justify-center">
+                  <span className="text-[11px] sm:text-sm font-black text-black leading-none">{m.value}</span>
+                  <span className="text-[7px] min-[375px]:text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase mt-1 leading-none">{m.label}</span>
+                </div>
+              ))}
 
               {/* Action Button Cell */}
               <div className="col-span-1 h-full">
@@ -407,8 +431,8 @@ const HeroSection = () => {
       />
 
       {/* Tabs Visual section (styled to blend with light blueprint grid theme and green indicators) */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} data-horizontal className="w-full gap-0 bg-[#ECEBE9] relative z-10">
-        <div className="border border-[#C5C4C2] border-b-0 px-4 sm:px-6 lg:px-8 bg-[#ECEBE9]">
+      <Tabs value={activeTab} onValueChange={setActiveTab} data-horizontal className="w-full gap-0 bg-white relative z-10">
+        <div className="border border-[#C5C4C2] border-b-0 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="mx-auto max-w-7xl border-x border-[#C5C4C2]">
             <ScrollArea className="h-14 md:h-20 -m-px *:overflow-hidden!">
               <TabsList className="h-14 md:h-20 w-full -space-x-px rounded-none bg-transparent p-0 flex relative z-10">
@@ -417,7 +441,7 @@ const HeroSection = () => {
                     key={value}
                     value={value}
                     className={cn(
-                      "cursor-target border-r border-[#C5C4C2] text-neutral-400 focus-visible:outline-neutral-300 h-14 md:h-20 flex-1 flex flex-col items-center justify-center gap-1 md:gap-1.5 cursor-pointer rounded-none px-1 md:px-4 py-1.5 md:py-2.5 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest hover:text-neutral-700 hover:bg-white/60 transition-all focus-visible:ring-0 focus-visible:outline-none relative group z-20 pointer-events-auto",
+                      "cursor-target border-r border-[#C5C4C2] text-neutral-400 focus-visible:outline-neutral-300 h-14 md:h-20 flex-1 flex items-center justify-center gap-1.5 md:gap-2 cursor-pointer rounded-none px-2 md:px-4 text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest hover:text-neutral-700 hover:bg-white/60 transition-all focus-visible:ring-0 focus-visible:outline-none relative group z-20 pointer-events-auto",
                       "data-[state=active]:bg-white data-[state=active]:text-black! data-[state=active]:shadow-none",
                       value === 'broadcasting' && "hidden md:flex"
                     )}
@@ -426,10 +450,10 @@ const HeroSection = () => {
                     <span className="absolute top-0 inset-x-0 h-[2.5px] bg-[#00b259] opacity-0 group-data-[state=active]:opacity-100 transition-opacity" />
 
                     {/* Icon */}
-                    <div className="size-[18px] md:size-5 flex items-center justify-center shrink-0 [&>svg]:size-full">{icon}</div>
+                    <span className="size-[14px] md:size-4 flex items-center justify-center shrink-0 [&>svg]:size-full">{icon}</span>
 
-                    {/* Label — always visible */}
-                    <span className="text-center w-full truncate px-0.5 leading-tight">{name}</span>
+                    {/* Label — active tab par hi dikhe mobile me, desktop par hamesha */}
+                    <span className="hidden group-data-[state=active]:block md:block leading-none truncate">{name}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>
@@ -439,7 +463,7 @@ const HeroSection = () => {
         </div>
 
         {/* Tab Panel Content Box */}
-        <div className="px-4 sm:px-6 lg:px-8 bg-[#ECEBE9] relative overflow-hidden pb-8 md:pb-16">
+        <div className="px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden pb-8 md:pb-16">
           <div className="relative mx-auto h-40 sm:h-96 md:h-120 lg:h-151 max-w-7xl border border-[#C5C4C2] z-10 bg-white">
             {/* Dotted Backdrop */}
             <div className="pointer-events-none absolute inset-0 -z-2 bg-[radial-gradient(rgba(0,0,0,0.02)_1px,transparent_1px)] bg-size-[20px_20px]" />
