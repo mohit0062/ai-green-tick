@@ -7,6 +7,7 @@ import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
+import { subscribeNewsletterAction } from '@/app/actions/leads'
 
 export interface DetailPost {
   title: string
@@ -112,6 +113,8 @@ export default function BlogPostDetailClient({
   const [scrollProgress, setScrollProgress] = useState(0)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   // Track scroll progress for the progress bar
   useEffect(() => {
@@ -127,11 +130,25 @@ export default function BlogPostDetailClient({
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email) {
-      setSubscribed(true)
-      setEmail('')
+    if (!email || !email.trim()) return
+
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      const res = await subscribeNewsletterAction(email)
+      if (res.error) {
+        setError(res.error)
+      } else {
+        setSubscribed(true)
+        setEmail('')
+      }
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -245,28 +262,37 @@ export default function BlogPostDetailClient({
                 <span>YOU ARE SUBSCRIBED! CHECK YOUR EMAIL.</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <div className="relative flex-grow">
-                  <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-neutral-400">
-                    <Mail className="size-4" />
-                  </span>
-                  <input
-                    type="email"
-                    required
-                    placeholder="Enter business email address..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2.5 text-xs border border-[#C5C4C2] bg-[#ECEBE9] text-black rounded-none outline-none focus:border-[#00b259] transition-colors placeholder:text-neutral-400"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity shadow-xs shrink-0 cursor-pointer"
-                  style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
-                >
-                  SUBSCRIBE
-                </button>
-              </form>
+              <div className="space-y-3">
+                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <div className="relative flex-grow">
+                    <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-neutral-400">
+                      <Mail className="size-4" />
+                    </span>
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter business email address..."
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={submitting}
+                      className="w-full pl-9 pr-4 py-2.5 text-xs border border-[#C5C4C2] bg-[#ECEBE9] text-black rounded-none outline-none focus:border-[#00b259] transition-colors placeholder:text-neutral-400 disabled:opacity-50"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="px-6 py-2.5 text-xs font-black text-white bg-gradient-to-r from-[#00b259] to-[#005c2b] hover:opacity-90 transition-opacity shadow-xs shrink-0 cursor-pointer disabled:opacity-50"
+                    style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
+                  >
+                    {submitting ? 'SUBSCRIBING...' : 'SUBSCRIBE'}
+                  </button>
+                </form>
+                {error && (
+                  <div className="text-red-500 text-xs font-bold max-w-md mx-auto text-center">
+                    {error}
+                  </div>
+                )}
+              </div>
             )}
           </section>
 

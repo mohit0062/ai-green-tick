@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Loader2, CheckCircle2 } from 'lucide-react'
+import { submitContactFormAction } from '@/app/actions/leads'
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -50,20 +51,33 @@ const ContactForm = () => {
     setIsSubmitting(true)
     setError(null)
 
-    // Simulate submission to server
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSuccess(true)
-      // Reset form
-      setFormData({
-        name: '', email: '', company: '', country: '', 
-        help_type: '', budget: '', message: '', source: ''
+    try {
+      const activeCountryCode = isCustomCode ? customCode : countryCode
+      const res = await submitContactFormAction({
+        ...formData,
+        phoneNumber,
+        countryCode: activeCountryCode
       })
-      setCountryCode('+91')
-      setCustomCode('+')
-      setIsCustomCode(false)
-      setPhoneNumber('')
-    }, 1000)
+
+      if (res.error) {
+        setError(res.error)
+      } else {
+        setIsSuccess(true)
+        // Reset form
+        setFormData({
+          name: '', email: '', company: '', country: '', 
+          help_type: '', budget: '', message: '', source: ''
+        })
+        setCountryCode('+91')
+        setCustomCode('+')
+        setIsCustomCode(false)
+        setPhoneNumber('')
+      }
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSuccess) {
