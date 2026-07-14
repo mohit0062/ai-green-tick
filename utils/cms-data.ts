@@ -1388,3 +1388,8 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
     }
   }
 }
+
+DEFAULT_FALLBACKS.solutions_list = DEFAULT_FALLBACKS.industry_list.map((item: any) => ({
+  ...JSON.parse(JSON.stringify(item)),
+  link: `/solutions/${item.id}`
+}))

@@ -31,6 +31,22 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+interface ProblemSection {
+  description: string
+  bullets: string[]
+}
+
+interface FeatureModule {
+  title: string
+  description: string
+  bullets: string[]
+}
+
+interface FAQItem {
+  question: string
+  answer: string
+}
+
 interface Solution {
   id: string
   title: string
@@ -47,24 +63,13 @@ interface Solution {
   seoKeywords?: string
   ogImage?: string
   
-  hero?: {
-    badgeText: string
-    heading: string
-    subheading: string
-    mockChat: { sender: 'user' | 'bot'; text: string }[]
-    imageUrl?: string
-    imageLink?: string
-  }
-  capabilities?: { title: string; desc: string; icon: string }[]
-  useCases?: {
-    title: string
-    desc: string
-    bullets: string[]
-    bg: string
-    chat: string[]
-    imageUrl?: string
-  }[]
-  faqs?: { question: string; answer: string }[]
+  problemSection?: ProblemSection
+  features?: FeatureModule[]
+  integrations?: string[]
+  benchmarkResults?: string
+  caseStudy?: string
+  faqs?: FAQItem[]
+  useCases?: string[]
 
   // WordPress Mock Fields
   status?: string
