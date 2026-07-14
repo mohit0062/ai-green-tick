@@ -246,7 +246,7 @@ const BentoGrid = () => {
             <MotionPreset
               fade
               blur
-              slide={{ offset: 15 }}
+              slide={{ direction: 'left', offset: 15 }}
               transition={{ duration: 0.5 }}
               className='h-full sm:col-span-2 lg:col-span-3'
               delay={0.7}
@@ -273,7 +273,7 @@ const BentoGrid = () => {
             <MotionPreset
               fade
               blur
-              slide={{ offset: 15 }}
+              slide={{ direction: 'right', offset: 15 }}
               transition={{ duration: 0.5 }}
               className='h-full sm:col-span-2 lg:col-span-3'
               delay={0.8}
@@ -300,7 +300,7 @@ const BentoGrid = () => {
             <MotionPreset
               fade
               blur
-              slide={{ offset: 15 }}
+              slide={{ direction: 'left', offset: 15 }}
               transition={{ duration: 0.5 }}
               className='h-full lg:col-span-2'
               delay={0.9}
@@ -327,7 +327,7 @@ const BentoGrid = () => {
             <MotionPreset
               fade
               blur
-              slide={{ offset: 15 }}
+              slide={{ direction: 'right', offset: 15 }}
               transition={{ duration: 0.5 }}
               className='h-full lg:col-span-2'
               delay={1.0}
@@ -354,7 +354,7 @@ const BentoGrid = () => {
             <MotionPreset
               fade
               blur
-              slide={{ offset: 15 }}
+              slide={{ direction: 'left', offset: 15 }}
               transition={{ duration: 0.5 }}
               className='h-full lg:col-span-2'
               delay={1.1}
@@ -381,7 +381,7 @@ const BentoGrid = () => {
             <MotionPreset
               fade
               blur
-              slide={{ offset: 15 }}
+              slide={{ direction: 'right', offset: 15 }}
               transition={{ duration: 0.5 }}
               className='h-full lg:col-span-6'
               delay={1.2}
