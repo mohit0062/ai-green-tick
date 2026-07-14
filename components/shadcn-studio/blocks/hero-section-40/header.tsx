@@ -214,9 +214,9 @@ const Header = ({ className }: HeaderProps) => {
                 let items = link.dropdownItems
                 if ((!items || items.length === 0) && link.title.toLowerCase() === 'company') {
                   items = [
-                    { title: "About Us", description: "Learn about our mission and story.", href: "#about" },
-                    { title: "Contact Us", description: "Get in touch with our team.", href: "#contact" },
-                    { title: "Careers", description: "Join us and build the future of AI.", href: "#careers" }
+                    { title: "About Us", description: "Learn about our mission and story.", href: "/about" },
+                    { title: "Contact Us", description: "Get in touch with our team.", href: "/contact" },
+                    { title: "Careers", description: "Join us and build the future of AI.", href: "/careers" }
                   ]
                 }
 
@@ -433,9 +433,9 @@ const Header = ({ className }: HeaderProps) => {
                     let items = link.dropdownItems
                     if ((!items || items.length === 0) && link.title.toLowerCase() === 'company') {
                       items = [
-                        { title: "About Us", href: "#about" },
-                        { title: "Contact Us", href: "#contact" },
-                        { title: "Careers", href: "#careers" }
+                        { title: "About Us", href: "/about" },
+                        { title: "Contact Us", href: "/contact" },
+                        { title: "Careers", href: "/careers" }
                       ]
                     }
 

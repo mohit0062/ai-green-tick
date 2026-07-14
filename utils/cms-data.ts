@@ -12,7 +12,17 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       { title: "Solutions", href: "/industries" },
       { title: "Pricing", href: "/pricing" },
       { title: "Integrations", href: "/integrations" },
-      { title: "Blog", href: "/blog" }
+      { title: "Blog", href: "/blog" },
+      { 
+        title: "Company", 
+        href: "#", 
+        type: "dropdown", 
+        dropdownItems: [
+          { title: "About Us", description: "Learn about our mission and story.", href: "/about" },
+          { title: "Contact Us", description: "Get in touch with our team.", href: "/contact" },
+          { title: "Careers", description: "Join us and build the future of AI.", href: "/careers" }
+        ] 
+      }
     ]
   },
   footer: {

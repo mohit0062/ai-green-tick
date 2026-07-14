@@ -549,7 +549,11 @@ const IndustriesCarouselBlock = () => {
 }
 
 const TestimonialsComponent23Block = ({ testimonials }: { testimonials: any[] }) => {
-  return <TestimonialsComponent testimonials={testimonials} />
+  return (
+    <div id="testimonials">
+      <TestimonialsComponent testimonials={testimonials} />
+    </div>
+  )
 }
 
 
