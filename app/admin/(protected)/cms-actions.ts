@@ -2,6 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
 
 function getCategoryForKey(key: string): string {
   if (key.startsWith('homepage_') || key === 'testimonials') {
@@ -40,7 +41,15 @@ export async function updateSiteSectionAction(key: string, content: any) {
 
     // 1. Double check authentication status
     const { data: { user }, error: authError } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const cookieStore = await cookies()
+    const fallbackToken = process.env.ADMIN_FALLBACK_TOKEN?.trim()
+    const fallbackEmail = process.env.ADMIN_FALLBACK_EMAIL?.trim().toLowerCase()
+    const hasFallbackSession =
+      !!fallbackToken &&
+      !!fallbackEmail &&
+      cookieStore.get('aigt_admin_override')?.value === fallbackToken
+
+    if ((authError || !user) && !hasFallbackSession) {
       return { error: 'Unauthorized: Admin authentication required.' }
     }
 
@@ -101,7 +110,15 @@ export async function uploadCMSImageAction(fileName: string, base64Data: string,
 
     // 1. Authenticate
     const { data: { user }, error: authError } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const cookieStore = await cookies()
+    const fallbackToken = process.env.ADMIN_FALLBACK_TOKEN?.trim()
+    const fallbackEmail = process.env.ADMIN_FALLBACK_EMAIL?.trim().toLowerCase()
+    const hasFallbackSession =
+      !!fallbackToken &&
+      !!fallbackEmail &&
+      cookieStore.get('aigt_admin_override')?.value === fallbackToken
+
+    if ((authError || !user) && !hasFallbackSession) {
       return { error: 'Unauthorized: Admin authentication required.' }
     }
 

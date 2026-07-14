@@ -1,14 +1,23 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime"
 import { createClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
 export async function POST(request: Request) {
   try {
     const supabase = await createClient()
 
-    // 1. Authenticate
+    // 1. Authenticate (Supabase user auth or admin override cookie session)
     const { data: { user }, error: authError } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const cookieStore = await cookies()
+    const fallbackToken = process.env.ADMIN_FALLBACK_TOKEN?.trim()
+    const fallbackEmail = process.env.ADMIN_FALLBACK_EMAIL?.trim().toLowerCase()
+    const hasFallbackSession =
+      !!fallbackToken &&
+      !!fallbackEmail &&
+      cookieStore.get('aigt_admin_override')?.value === fallbackToken
+
+    if ((authError || !user) && !hasFallbackSession) {
       return NextResponse.json({ error: 'Unauthorized: Admin authentication required.' }, { status: 401 })
     }
 
