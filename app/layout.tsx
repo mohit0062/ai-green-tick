@@ -36,8 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={`${inter.variable} ${manrope.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}>
-      <body>
-        {children}
+      <body className="overflow-x-hidden w-full relative">
+        <div className="overflow-x-hidden w-full relative flex flex-col min-h-screen">
+          {children}
+        </div>
         <DemoModalProvider />
       </body>
     </html>
