@@ -1,6 +1,3 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
 import { Check, HelpCircle, Info, ShieldCheck, Zap, Sparkles, Globe, Building2, ChevronDown, Plus, Minus, BookOpen } from 'lucide-react'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
@@ -10,6 +7,10 @@ import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-
 import FAQ from '@/components/shadcn-studio/blocks/faq-component-04/faq-component-04'
 import Pricing from '@/components/shadcn-studio/blocks/pricing-component-11/pricing-component-11'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/json-ld'
+export const dynamic = 'force-dynamic'
+import { getSiteSection } from '@/utils/cms'
 
 const navigationData: Navigation[] = [
   {
@@ -145,10 +146,58 @@ const faqTabs = [
   }
 ]
 
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSiteSection<any>('seo')
+  const title = `Simple, Transparent Pricing Plans | ${seo.siteTitle || 'AI Greentick'}`
+  const description = `Choose the best WhatsApp Business API plan for your business. Flat monthly platform fees, unlimited agents, and zero markup on official Meta rates.`
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: 'https://ai-green-tick-theta.vercel.app/pricing',
+    },
+    openGraph: {
+      title,
+      description,
+      url: 'https://ai-green-tick-theta.vercel.app/pricing',
+      type: 'website',
+      images: [
+        {
+          url: seo.ogImage || '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: 'AI Greentick Pricing',
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [seo.ogImage || '/og-image.png'],
+    }
+  }
+}
+
 export default function PricingPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqTabs.flatMap((tab: any) => 
+      (tab.faqs || []).map((faq: any) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    )
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black">
+      <JsonLd data={faqSchema} />
       {/* Header */}
       <Header navigationData={navigationData} />
       <Breadcrumb />

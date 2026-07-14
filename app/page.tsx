@@ -15,6 +15,8 @@ import SocialProof from '@/components/shadcn-studio/blocks/social-proof-07/socia
 import IndustriesCarousel from '@/components/shadcn-studio/blocks/industries-carousel'
 import TestimonialsComponent from '@/components/shadcn-studio/blocks/testimonials-component-23/testimonials-component-23'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/json-ld'
 
 
 import { getSiteSection } from '@/utils/cms'
@@ -311,72 +313,68 @@ const testimonials: Testimonial[] = [
   {
     id: '1',
     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-40.png',
-    fallback: 'JL',
-    name: 'Jamie Lee',
-    designation: 'Operations Manager',
-    companyName: 'Bright Sync',
-    companyLogo: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-01.png',
+    fallback: 'AG',
+    name: 'Ankit Gupta',
+    designation: 'Founder',
+    companyName: 'SaffronStays',
+    companyLogo: '/images/logos/logo-1.webp',
     message:
-      "This is completely transformed how we manage our daily tasks. What used to take hours now happens automatically and we've never been more productive."
+      "AI Greentick has completely transformed our guest communication. Automated check-in instructions and booking confirmations now flow seamlessly, leading to a 35% improvement in guest satisfaction."
   },
   {
     id: '2',
     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-55.png',
-    fallback: 'DH',
-    name: 'David Haz',
-    designation: 'CEO',
-    companyName: 'Novas Solution',
-    companyLogo: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-02.png',
-    companyLogoDark: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-02-dark.png',
+    fallback: 'RS',
+    name: 'Rahul Sharma',
+    designation: 'Marketing Head',
+    companyName: 'upGrad',
+    companyLogo: '/images/logos/logo-9.webp',
     message:
-      "The intuitive interface and powerful features have streamlined our workflow. Our team collaboration improved dramatically and we've never been efficient."
+      "We used AI Greentick to launch our course advisory broadcasts. By qualifying leads automatically via WhatsApp chatbots, we saw a 3x increase in admissions conversions."
   },
   {
     id: '3',
     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-34.png',
-    fallback: 'CD',
-    name: 'Chánh Đại',
-    designation: 'Design Engineer',
-    companyName: 'Looma Labs',
-    companyLogo: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-03.png',
-    companyLogoDark: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-03-dark.png',
+    fallback: 'SM',
+    name: 'Sneha Mehta',
+    designation: 'E-commerce Manager',
+    companyName: 'Sabyasachi',
+    companyLogo: '/images/logos/logo-5.webp',
     message:
-      "Implementing this solution was seamless and results were immediate. We've seen a 40% increase in efficiency and our customers are noticing difference."
+      "Recovering abandoned carts was our biggest challenge. With AI Greentick's automated cart recovery flows and UPI payment links in chat, we recovered 24% of lost sales on autopilot."
   },
   {
     id: '4',
     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-43.png',
-    fallback: 'MS',
-    name: 'Moumen Soliman',
-    designation: 'Software Engineer',
-    companyName: 'Crestline',
-    companyLogo: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-04.png',
-    companyLogoDark: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-04-dark.png',
+    fallback: 'VM',
+    name: 'Vikram Malhotra',
+    designation: 'Sales Director',
+    companyName: 'Rustomjee',
+    companyLogo: '/images/logos/logo-2.webp',
     message:
-      'From day one, this platform exceeded expectations. The customer support is outstanding and continuous updates keep bringing valuable features.'
+      "Sharing high-res property brochures and scheduling site visits is now entirely automated. Our sales reps only step in when the buyer is ready, boosting site viewings by 60%."
   },
   {
     id: '5',
     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-57.png',
-    fallback: 'PJ',
-    name: 'Praveen Juge',
-    designation: 'Senior Developer',
-    companyName: 'Cognitech Labs',
-    companyLogo: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-05.png',
-    companyLogoDark: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-05-dark.png',
+    fallback: 'AV',
+    name: 'Dr. Amit Verma',
+    designation: 'Operations Head',
+    companyName: 'Dentzz',
+    companyLogo: '/images/logos/logo-14.webp',
     message:
-      'As a developer, I appreciate the clean architecture and comprehensive docs. Integration was straightforward and it scales perfectly with our needs.'
+      "Booking consultations and sending diagnostic reports as PDFs directly to WhatsApp has cut our appointment no-shows by 80%. Highly secure and compliant."
   },
   {
     id: '6',
     avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-58.png',
-    fallback: 'J',
-    name: 'Julian',
-    designation: 'Senior Developer',
-    companyName: 'Tech Wave',
-    companyLogo: 'https://cdn.shadcnstudio.com/ss-assets/template/landing-page/orion/image-06.png',
+    fallback: 'PN',
+    name: 'Priya Nair',
+    designation: 'Customer Support Manager',
+    companyName: 'MakeMyTrip',
+    companyLogo: '/images/logos/logo-10.webp',
     message:
-      'Our marketing campaigns have reached new heights with this tool. The analytics insights are detailed and help us make data-driven decisions every day.'
+      "Managing support for thousands of daily travelers on a single WhatsApp number seemed impossible. AI Greentick's shared team inbox and automated routing made it a breeze."
   }
 ]
 
@@ -594,6 +592,46 @@ const FooterBlock = () => {
 
 export const dynamic = 'force-dynamic'
 
+export async function generateMetadata(): Promise<Metadata> {
+  const homepage = await getSiteSection<any>('homepage_data')
+  const seo = await getSiteSection<any>('seo')
+  
+  const title = homepage.hero?.heading 
+    ? `${homepage.hero.heading.split('\n').join(' ')} | ${seo.siteTitle || 'AI Greentick'}`
+    : 'AI Greentick | WhatsApp Marketing & Automation Platform'
+  
+  const description = homepage.hero?.subheading?.replace(/<[^>]*>/g, '') || seo.defaultDescription
+  
+  return {
+    title: title.slice(0, 70),
+    description: description.slice(0, 160),
+    alternates: {
+      canonical: 'https://ai-green-tick-theta.vercel.app',
+    },
+    openGraph: {
+      title,
+      description,
+      url: 'https://ai-green-tick-theta.vercel.app',
+      siteName: 'AI Greentick',
+      images: [
+        {
+          url: seo.ogImage || '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: seo.siteTitle || 'AI Greentick',
+        }
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [seo.ogImage || '/og-image.png'],
+    }
+  }
+}
+
 const LandingPage = async () => {
   const mergeWithDefaults = (dbContent: any, fallbackKey: string) => {
     const fallback = DEFAULT_FALLBACKS[fallbackKey] || {}
@@ -675,8 +713,66 @@ const LandingPage = async () => {
     return { ...item, icon }
   })
 
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://ai-green-tick-theta.vercel.app/#organization",
+    "name": "AI Greentick",
+    "url": "https://ai-green-tick-theta.vercel.app",
+    "logo": "https://ai-green-tick-theta.vercel.app/logo-full.png",
+    "sameAs": [
+      "https://twitter.com/aigreentick",
+      "https://instagram.com/aigreentick",
+      "https://github.com/mohit0062/ai-green-tick"
+    ]
+  }
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://ai-green-tick-theta.vercel.app/#website",
+    "url": "https://ai-green-tick-theta.vercel.app",
+    "name": "AI Greentick",
+    "publisher": {
+      "@id": "https://ai-green-tick-theta.vercel.app/#organization"
+    }
+  }
+
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Onboard and Scale WhatsApp Business API Automation",
+    "description": "A 4-step workflow to verify your business with Meta, connect your number, import contacts, and scale AI-driven WhatsApp campaigns.",
+    "totalTime": "P1D",
+    "step": (homepage.processSteps || []).map((step: any, idx: number) => ({
+      "@type": "HowToStep",
+      "name": step.title,
+      "text": step.description?.replace(/<[^>]*>/g, ''),
+      "url": `https://ai-green-tick-theta.vercel.app/#step-${idx + 1}`
+    }))
+  }
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": (homepage.faqTabs || []).flatMap((tab: any) => 
+      (tab.faqs || []).map((faq: any) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer?.replace(/<[^>]*>/g, '')
+        }
+      }))
+    )
+  }
+
   return (
     <div className='flex flex-col'>
+      <JsonLd data={orgSchema} />
+      <JsonLd data={websiteSchema} />
+      <JsonLd data={howToSchema} />
+      <JsonLd data={faqSchema} />
       <Preloader />
       <TargetCursor 
         spinDuration={2}

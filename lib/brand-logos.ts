@@ -5,63 +5,63 @@ export interface BrandLogo {
 
 export const brandLogos: BrandLogo[] = [
   {
-    image: 'https://doubletick.io/images/logos/logo-1.webp',
+    image: '/images/logos/logo-1.webp',
     name: 'SaffronStays'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-2.webp',
+    image: '/images/logos/logo-2.webp',
     name: 'Rustomjee'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-3.webp',
+    image: '/images/logos/logo-3.webp',
     name: 'RenewBuy'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-4.webp',
+    image: '/images/logos/logo-4.webp',
     name: 'Malabar Gold & Diamonds'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-5.webp',
+    image: '/images/logos/logo-5.webp',
     name: 'Sabyasachi'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-6.webp',
+    image: '/images/logos/logo-6.webp',
     name: 'Tupperware'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-7.webp',
+    image: '/images/logos/logo-7.webp',
     name: 'Pantaloons'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-8.webp',
+    image: '/images/logos/logo-8.webp',
     name: 'CoinDCX'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-9.webp',
+    image: '/images/logos/logo-9.webp',
     name: 'upGrad'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-10.webp',
+    image: '/images/logos/logo-10.webp',
     name: 'MakeMyTrip'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-11.webp',
+    image: '/images/logos/logo-11.webp',
     name: 'Hiranandani Communities'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-12.webp',
+    image: '/images/logos/logo-12.webp',
     name: 'Bhanzu'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-13.webp',
+    image: '/images/logos/logo-13.webp',
     name: 'AdmitKard'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-14.webp',
+    image: '/images/logos/logo-14.webp',
     name: 'Dentzz'
   },
   {
-    image: 'https://doubletick.io/images/logos/logo-15.webp',
+    image: '/images/logos/logo-15.webp',
     name: 'Ethos Watches'
   }
 ]
