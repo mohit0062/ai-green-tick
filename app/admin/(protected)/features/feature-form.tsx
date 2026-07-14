@@ -544,7 +544,7 @@ export default function FeatureForm({ initialFeature, onSave, onCancel }: Featur
       ogImage: ogImage.trim(),
       status,
       seoScore,
-      focusKeyword: focusKeyword.trim() || seoKeywords.split(',')[0]?.trim() || title.split(' ')[0],
+      focusKeyword: focusKeyword.trim() || seoKeywords.split(',')[0]?.trim() || (title || '').split(' ')[0],
       schemaStatus,
       created_at: createdDate,
       hero: {

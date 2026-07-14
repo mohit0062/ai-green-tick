@@ -84,13 +84,15 @@ export default function FeatureDetailClient({ slug, feature }: FeatureDetailProp
 
   const faqTabs = [
     {
-      name: `${feature.title} FAQs`,
+      name: `${feature?.title || ''} FAQs`,
       value: 'general',
-      faqs: faqsList.map((faq: any, i: number) => ({
-        id: `faq-feat-${i}`,
-        question: faq.question,
-        answer: faq.answer
-      }))
+      faqs: (faqsList || [])
+        .filter((faq: any) => faq !== null && faq !== undefined)
+        .map((faq: any, i: number) => ({
+          id: `faq-feat-${i}`,
+          question: faq.question || '',
+          answer: faq.answer || ''
+        }))
     },
     {
       name: 'General API',

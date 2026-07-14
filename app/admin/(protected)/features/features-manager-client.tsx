@@ -87,7 +87,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
         status: feat.status || 'published',
         seoScore: feat.seoScore !== undefined ? feat.seoScore : 70 + (index * 4) % 30, // 70 to 98
         created_at: feat.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
-        focusKeyword: feat.focusKeyword || feat.seoKeywords?.split(',')[0]?.trim() || feat.title.split(' ')[0],
+        focusKeyword: feat.focusKeyword || feat.seoKeywords?.split(',')[0]?.trim() || (feat.title || '').split(' ')[0],
         schemaStatus: feat.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
         linksCount: feat.linksCount || '0 | 0 | 0'
       }
@@ -306,7 +306,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
         status: updatedFeature.status || 'published',
         seoScore: updatedFeature.seoScore || 70,
         created_at: updatedFeature.created_at || new Date().toISOString(),
-        focusKeyword: updatedFeature.focusKeyword || updatedFeature.seoKeywords?.split(',')[0]?.trim() || updatedFeature.title.split(' ')[0],
+        focusKeyword: updatedFeature.focusKeyword || updatedFeature.seoKeywords?.split(',')[0]?.trim() || (updatedFeature.title || '').split(' ')[0],
         schemaStatus: updatedFeature.schemaStatus || 'On',
         linksCount: updatedFeature.linksCount || '0 | 0 | 0'
       }]
@@ -842,7 +842,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                           {(() => {
                             const keywords = feat.seoKeywords 
                               ? feat.seoKeywords.split(',').map(k => k.trim()) 
-                              : feat.title.split(' ')
+                              : (feat.title || '').split(' ')
                             return keywords.slice(0, 3).map((keyword, idx) => (
                               <Badge
                                 key={idx}

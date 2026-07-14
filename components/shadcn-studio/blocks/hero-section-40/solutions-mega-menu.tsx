@@ -49,9 +49,17 @@ export const SolutionsMegaMenu = () => {
     loadSolutionsData()
   }, [])
 
-  const currentItem = activeType === 'team' 
+  const currentItem = (activeType === 'team' 
     ? (teams.find(t => t.id === activeId) || teams[0])
-    : (solutions.find(s => s.id === activeId) || solutions[0])
+    : (solutions.find(s => s.id === activeId) || solutions[0])) || {
+      id: '',
+      title: '',
+      tagline: '',
+      shortDesc: '',
+      description: '',
+      previewType: '',
+      link: ''
+    }
 
   // Helper to render interactive visual graphics based on the hovered feature
   const renderPreviewVisual = (type: string) => {

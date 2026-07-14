@@ -93,7 +93,7 @@ export default function SolutionsManagerClient({ initialSolutions }: SolutionsMa
         status: sol.status || 'published',
         seoScore: sol.seoScore !== undefined ? sol.seoScore : 70 + (index * 4) % 30, // 70 to 98
         created_at: sol.created_at || new Date(2026, 3, 17, 13, 15 + index * 45).toISOString(),
-        focusKeyword: sol.focusKeyword || sol.seoKeywords?.split(',')[0]?.trim() || sol.title.split(' ')[0],
+        focusKeyword: sol.focusKeyword || sol.seoKeywords?.split(',')[0]?.trim() || (sol.title || '').split(' ')[0],
         schemaStatus: sol.schemaStatus || (index % 2 === 0 ? 'On' : 'Off'),
         linksCount: sol.linksCount || '0 | 0 | 0'
       }
@@ -312,7 +312,7 @@ export default function SolutionsManagerClient({ initialSolutions }: SolutionsMa
         status: updatedSolution.status || 'published',
         seoScore: updatedSolution.seoScore || 70,
         created_at: updatedSolution.created_at || new Date().toISOString(),
-        focusKeyword: updatedSolution.focusKeyword || updatedSolution.seoKeywords?.split(',')[0]?.trim() || updatedSolution.title.split(' ')[0],
+        focusKeyword: updatedSolution.focusKeyword || updatedSolution.seoKeywords?.split(',')[0]?.trim() || (updatedSolution.title || '').split(' ')[0],
         schemaStatus: updatedSolution.schemaStatus || 'On',
         linksCount: updatedSolution.linksCount || '0 | 0 | 0'
       }]
@@ -848,7 +848,7 @@ export default function SolutionsManagerClient({ initialSolutions }: SolutionsMa
                           {(() => {
                             const keywords = sol.seoKeywords 
                               ? sol.seoKeywords.split(',').map(k => k.trim()) 
-                              : sol.title.split(' ')
+                              : (sol.title || '').split(' ')
                             return keywords.slice(0, 3).map((keyword, idx) => (
                               <Badge
                                 key={idx}

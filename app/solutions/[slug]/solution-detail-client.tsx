@@ -105,32 +105,34 @@ interface SolutionDetailProps {
 }
 
 export default function SolutionDetailClient({ slug, solution }: SolutionDetailProps) {
-  const defaultBp = DEFAULT_FALLBACKS.solutions_list.find((sol: any) => sol.id === slug) || DEFAULT_FALLBACKS.solutions_list[0]
+  const defaultBp = (DEFAULT_FALLBACKS.solutions_list || []).find((sol: any) => sol && sol.id === slug) || (DEFAULT_FALLBACKS.solutions_list || [])[0] || {}
 
   // Safe fallback properties
-  const title = solution.title || defaultBp.title
-  const desc = solution.desc || defaultBp.desc
-  const metric = solution.metric || defaultBp.metric
-  const iconName = solution.icon || defaultBp.icon
-  const seoTitle = solution.seoTitle || defaultBp.seoTitle
-  const seoDescription = solution.seoDescription || defaultBp.seoDescription
+  const title = solution?.title || defaultBp?.title || ''
+  const desc = solution?.desc || defaultBp?.desc || ''
+  const metric = solution?.metric || defaultBp?.metric || ''
+  const iconName = solution?.icon || defaultBp?.icon || ''
+  const seoTitle = solution?.seoTitle || defaultBp?.seoTitle || ''
+  const seoDescription = solution?.seoDescription || defaultBp?.seoDescription || ''
 
-  const problem = solution.problemSection || defaultBp.problemSection
-  const features = solution.features || defaultBp.features
-  const integrations = solution.integrations || defaultBp.integrations
-  const benchmarkResults = solution.benchmarkResults || defaultBp.benchmarkResults
-  const caseStudy = solution.caseStudy || defaultBp.caseStudy
-  const faqs = solution.faqs || defaultBp.faqs
+  const problem = solution?.problemSection || defaultBp?.problemSection
+  const features = solution?.features || defaultBp?.features
+  const integrations = solution?.integrations || defaultBp?.integrations
+  const benchmarkResults = solution?.benchmarkResults || defaultBp?.benchmarkResults
+  const caseStudy = solution?.caseStudy || defaultBp?.caseStudy
+  const faqs = solution?.faqs || defaultBp?.faqs
 
   const faqTabs = [
     {
       name: `${title} FAQs`,
       value: 'general',
-      faqs: (faqs || []).map((faq: any, i: number) => ({
-        id: `faq-sol-${i}`,
-        question: faq.question,
-        answer: faq.answer
-      }))
+      faqs: (faqs || [])
+        .filter((faq: any) => faq !== null && faq !== undefined)
+        .map((faq: any, i: number) => ({
+          id: `faq-sol-${i}`,
+          question: faq.question || '',
+          answer: faq.answer || ''
+        }))
     },
     {
       name: 'General API',
@@ -233,7 +235,7 @@ export default function SolutionDetailClient({ slug, solution }: SolutionDetailP
                   <div className="w-full h-full bg-[#ECEBE9] rounded-[32px] overflow-hidden flex flex-col relative">
                     <div className="bg-[#005c2b] text-white p-3 pt-6 flex items-center gap-2 shrink-0">
                       <div className="size-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold font-mono">
-                        {title.substring(0, 2).toUpperCase()}
+                        {(title || '').substring(0, 2).toUpperCase()}
                       </div>
                       <div className="text-left">
                         <div className="text-xs font-bold leading-tight flex items-center gap-1">
@@ -244,7 +246,7 @@ export default function SolutionDetailClient({ slug, solution }: SolutionDetailP
                     </div>
 
                     <div className="flex-grow p-3 space-y-3 overflow-y-auto text-left text-[11px] leading-relaxed">
-                      {(getFeatureGraphic(slug, 0).chat).map((msgText: string, i: number) => {
+                      {((getFeatureGraphic(slug, 0)?.chat) || []).map((msgText: string, i: number) => {
                         const isUser = i % 2 === 1
                         return (
                           <div key={i} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
@@ -293,7 +295,7 @@ export default function SolutionDetailClient({ slug, solution }: SolutionDetailP
                 >
                   <h3 className="text-xs font-black uppercase text-black tracking-wider">[ Key Challenges ]</h3>
                   <ul className="space-y-4">
-                    {(problem.bullets || []).map((bullet: string, idx: number) => (
+                    {(problem.bullets || []).filter(Boolean).map((bullet: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-3">
                         <span className="flex items-center justify-center size-5 bg-red-100 text-red-650 rounded-full shrink-0 text-xs font-bold font-mono">
                           !
@@ -326,33 +328,35 @@ export default function SolutionDetailClient({ slug, solution }: SolutionDetailP
               </div>
 
               <div className="space-y-20">
-                {features.map((feat: any, i: number) => {
-                  const isEven = i % 2 === 0
-                  const graphic = getFeatureGraphic(slug, i)
-                  
-                  return (
-                    <div key={i} className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                      
-                      {/* Text block */}
-                      <div className={`lg:col-span-6 space-y-6 text-left relative ${isEven ? 'order-1' : 'order-1 lg:order-2'}`}>
-                        <span className="text-xs font-bold text-[#00b259] font-mono">0{i + 1} / FEATURE MODULE</span>
-                        <h3 className="text-2xl font-bold text-black font-display leading-tight">
-                          {feat.title}
-                        </h3>
-                        <p className="text-sm text-neutral-600 leading-relaxed font-sans font-medium">
-                          {feat.description}
-                        </p>
-                        <ul className="space-y-3">
-                          {(feat.bullets || []).map((b: string, idx: number) => (
-                            <li key={idx} className="flex items-start gap-2.5">
-                              <span className="flex items-center justify-center size-5 bg-white border border-[#C5C4C2] rounded-full shrink-0 mt-0.5 text-[#00b259]">
-                                <Check className="size-3 stroke-[3]" />
-                              </span>
-                              <span className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-sans font-medium">{b}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                {(features || [])
+                  .filter((feat: any) => feat !== null && feat !== undefined)
+                  .map((feat: any, i: number) => {
+                    const isEven = i % 2 === 0
+                    const graphic = getFeatureGraphic(slug, i)
+                    
+                    return (
+                      <div key={i} className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        
+                        {/* Text block */}
+                        <div className={`lg:col-span-6 space-y-6 text-left relative ${isEven ? 'order-1' : 'order-1 lg:order-2'}`}>
+                          <span className="text-xs font-bold text-[#00b259] font-mono">0{i + 1} / FEATURE MODULE</span>
+                          <h3 className="text-2xl font-bold text-black font-display leading-tight">
+                            {feat.title}
+                          </h3>
+                          <p className="text-sm text-neutral-600 leading-relaxed font-sans font-medium">
+                            {feat.description}
+                          </p>
+                          <ul className="space-y-3">
+                            {(feat.bullets || []).filter(Boolean).map((b: string, idx: number) => (
+                              <li key={idx} className="flex items-start gap-2.5">
+                                <span className="flex items-center justify-center size-5 bg-white border border-[#C5C4C2] rounded-full shrink-0 mt-0.5 text-[#00b259]">
+                                  <Check className="size-3 stroke-[3]" />
+                                </span>
+                                <span className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-sans font-medium">{b}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
 
                       {/* Graphic block */}
                       <div className={`lg:col-span-6 ${graphic.bg} border border-[#C5C4C2] p-8 sm:p-12 flex flex-col justify-center items-center rounded-none shadow-sm aspect-video ${isEven ? 'order-2' : 'order-2 lg:order-1'}`}
@@ -393,7 +397,7 @@ export default function SolutionDetailClient({ slug, solution }: SolutionDetailP
                 Built-In Integrations
               </span>
               <div className="flex flex-wrap justify-center gap-3">
-                {integrations.map((integration: string, idx: number) => (
+                {(integrations || []).filter(Boolean).map((integration: string, idx: number) => (
                   <span key={idx} className="px-4 py-2 border border-[#C5C4C2] bg-[#ECEBE9]/40 text-xs font-bold text-black font-sans uppercase">
                     {integration}
                   </span>

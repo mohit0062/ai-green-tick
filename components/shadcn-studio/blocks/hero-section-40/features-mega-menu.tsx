@@ -53,8 +53,16 @@ export const FeaturesMegaMenu = () => {
     }
   ]
 
-  const currentCategory = featuresMenuData.find(c => c.id === activeCategory) || featuresMenuData[0]
-  const currentFeature = currentCategory.features.find(f => f.id === activeFeatureId) || currentCategory.features[0]
+  const currentCategory = (featuresMenuData || []).find(c => c.id === activeCategory) || featuresMenuData[0] || { features: [] }
+  const currentFeature = (currentCategory?.features || []).find(f => f && f.id === activeFeatureId) || (currentCategory?.features || [])[0] || {
+    id: '',
+    title: '',
+    shortDesc: '',
+    description: '',
+    icon: '',
+    link: '',
+    previewType: ''
+  }
 
   const handleCategoryHover = (catId: string) => {
     setActiveCategory(catId)
