@@ -617,6 +617,64 @@ const LandingPage = async () => {
     plans: pricing.plans
   }
 
+  const tabsDataWithIcons = (homepage.tabsDataFeaturesSection26 || []).map((tab: any) => {
+    let icon = <RocketIcon />
+    if (tab.id === 'sales') {
+      icon = <CircleDollarSignIcon />
+    } else if (tab.id === 'support') {
+      icon = <HeadphonesIcon />
+    }
+    return { ...tab, icon }
+  })
+
+  const processStepsWithIcons = (homepage.processSteps || []).map((step: any, idx: number) => {
+    const titleLower = (step.title || '').toLowerCase()
+    let icon = <WorkflowIcon />
+    if (titleLower.includes('contact') || titleLower.includes('import') || titleLower.includes('user')) {
+      icon = <UsersIcon />
+    } else if (titleLower.includes('automate') || titleLower.includes('optimize') || titleLower.includes('ai')) {
+      icon = <BrainCircuitIcon />
+    } else if (titleLower.includes('scale') || titleLower.includes('grow') || titleLower.includes('launch') || titleLower.includes('team')) {
+      icon = <RocketIcon />
+    } else {
+      if (idx === 1) icon = <UsersIcon />
+      else if (idx === 2) icon = <BrainCircuitIcon />
+      else if (idx === 3) icon = <RocketIcon />
+    }
+    return { ...step, icon }
+  })
+
+  const metricsDataWithIcons = (homepage.metricsData || []).map((metric: any, idx: number) => {
+    const titleLower = (metric.title || '').toLowerCase()
+    let icon = <BookOpenIcon />
+    if (titleLower.includes('click') || (titleLower.includes('rate') && idx === 1)) {
+      icon = <MousePointerClick />
+    } else if (titleLower.includes('user') || titleLower.includes('active') || titleLower.includes('customer')) {
+      icon = <UsersIcon />
+    } else if (titleLower.includes('engage') || titleLower.includes('trend') || titleLower.includes('grow') || titleLower.includes('roi')) {
+      icon = <TrendingUp />
+    } else {
+      if (idx === 1) icon = <MousePointerClick />
+      else if (idx === 2) icon = <UsersIcon />
+      else if (idx === 3) icon = <TrendingUp />
+    }
+    return { ...metric, icon }
+  })
+
+  const securityItemsWithIcons = (homepage.securityItems || []).map((item: any, idx: number) => {
+    const titleLower = (item.title || '').toLowerCase()
+    let icon = <ShieldCheckIcon />
+    if (titleLower.includes('gdpr') || titleLower.includes('compliant') || titleLower.includes('lock') || titleLower.includes('privacy')) {
+      icon = <LockIcon />
+    } else if (titleLower.includes('encrypt') || titleLower.includes('end-to-end') || titleLower.includes('ban') || titleLower.includes('secure')) {
+      icon = <ShieldBanIcon />
+    } else {
+      if (idx === 1) icon = <LockIcon />
+      else if (idx === 2) icon = <ShieldBanIcon />
+    }
+    return { ...item, icon }
+  })
+
   return (
     <div className='flex flex-col'>
       <Preloader />
@@ -639,11 +697,11 @@ const LandingPage = async () => {
 
       <BentoGrid07Block />
 
-      <FeaturesSection26Block data={homepage.tabsDataFeaturesSection26} />
+      <FeaturesSection26Block data={tabsDataWithIcons} />
 
-      <TimelineComponent03Block steps={homepage.processSteps} />
+      <TimelineComponent03Block steps={processStepsWithIcons} />
 
-      <SocialProof07Block metrics={homepage.metricsData} />
+      <SocialProof07Block metrics={metricsDataWithIcons} />
 
       <IndustriesCarouselBlock />
 
@@ -651,7 +709,7 @@ const LandingPage = async () => {
 
       <FeaturesSection14Block />
 
-      <FeaturesSection05Block items={homepage.securityItems} />
+      <FeaturesSection05Block items={securityItemsWithIcons} />
 
       <PricingComponent11Block data={pricingBlockData} />
 
