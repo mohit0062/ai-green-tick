@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSiteSection<any>('seo')
-  const title = `App Integrations | ${seo.siteTitle || 'AI Greentick'}`
+  const title = 'App Integrations'
   const description = `Connect AI Greentick with HubSpot, Shopify, WooCommerce, Salesforce, Razorpay, Stripe, Zapier, and over 2000+ web applications.`
   return {
     title,

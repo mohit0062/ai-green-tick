@@ -148,7 +148,7 @@ const faqTabs = [
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSiteSection<any>('seo')
-  const title = `Simple, Transparent Pricing Plans | ${seo.siteTitle || 'AI Greentick'}`
+  const title = 'Simple, Transparent Pricing Plans'
   const description = `Choose the best WhatsApp Business API plan for your business. Flat monthly platform fees, unlimited agents, and zero markup on official Meta rates.`
   return {
     title,
