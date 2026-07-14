@@ -88,9 +88,9 @@ const Process = ({ steps }: ProcessProps) => {
                     >
                       {step.icon}
                     </TimelineDotHorizontal>
-                    {!isLast && <TimelineLineHorizontal className='min-h-30 xl:w-57.5' />}
+                    {!isLast && <TimelineLineHorizontal className='min-h-12 xl:w-57.5' />}
                   </div>
-                  <TimelineContentHorizontal className='flex h-44 w-2xs flex-col gap-4 md:w-lg lg:w-xl xl:max-w-3xs xl:justify-between'>
+                  <TimelineContentHorizontal className='flex h-auto xl:h-44 w-2xs flex-col gap-4 md:w-lg lg:w-xl xl:max-w-3xs xl:justify-between pb-8 xl:pb-0'>
                     <div>
                       <TimelineHeadingHorizontal variant='primary' className='mb-1.5 text-lg font-bold font-display'>
                         {step.title}
