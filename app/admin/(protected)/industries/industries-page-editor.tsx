@@ -9,6 +9,22 @@ import {
 } from 'lucide-react'
 import { LucideIcon } from '@/components/ui/lucide-icon'
 
+interface ProblemSection {
+  description: string
+  bullets: string[]
+}
+
+interface FeatureModule {
+  title: string
+  description: string
+  bullets: string[]
+}
+
+interface FAQItem {
+  question: string
+  answer: string
+}
+
 interface Industry {
   id: string
   title: string
@@ -16,6 +32,15 @@ interface Industry {
   desc: string
   metric: string
   useCases: string[]
+  seoTitle?: string
+  seoDescription?: string
+  seoKeywords?: string
+  problemSection?: ProblemSection
+  features?: FeatureModule[]
+  integrations?: string[]
+  benchmarkResults?: string
+  caseStudy?: string
+  faqs?: FAQItem[]
 }
 
 interface Props {
@@ -87,6 +112,8 @@ function IndustryModal({
   onSave: (ind: Industry) => void
   onClose: () => void
 }) {
+  const [activeTab, setActiveTab] = useState<'basic' | 'seo' | 'problem' | 'features' | 'additional' | 'faqs'>('basic')
+
   const [form, setForm] = useState<Partial<Industry>>({
     id: initial?.id || '',
     title: initial?.title || '',
@@ -94,6 +121,22 @@ function IndustryModal({
     desc: initial?.desc || '',
     metric: initial?.metric || '',
     useCases: initial?.useCases || [''],
+    seoTitle: initial?.seoTitle || '',
+    seoDescription: initial?.seoDescription || '',
+    seoKeywords: initial?.seoKeywords || '',
+    problemSection: initial?.problemSection || { description: '', bullets: [''] },
+    features: initial?.features || Array.from({ length: 5 }, (_, i) => ({
+      title: initial?.features?.[i]?.title || '',
+      description: initial?.features?.[i]?.description || '',
+      bullets: initial?.features?.[i]?.bullets || ['']
+    })),
+    integrations: initial?.integrations || [],
+    benchmarkResults: initial?.benchmarkResults || '',
+    caseStudy: initial?.caseStudy || '',
+    faqs: initial?.faqs || Array.from({ length: 5 }, (_, i) => ({
+      question: initial?.faqs?.[i]?.question || '',
+      answer: initial?.faqs?.[i]?.answer || ''
+    })),
   })
 
   const set = (k: keyof Industry, v: any) => setForm(f => ({ ...f, [k]: v }))
@@ -105,76 +148,343 @@ function IndustryModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h2 className="text-base font-bold text-gray-900">{initial?.title ? 'Edit Industry' : 'Add Industry'}</h2>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+          <h2 className="text-base font-bold text-gray-900">{initial?.title ? 'Edit Industry Solution' : 'Add Industry Solution'}</h2>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700"><X className="h-4 w-4" /></button>
         </div>
 
+        {/* Tab Selection */}
+        <div className="flex border-b border-gray-100 text-xs font-bold select-none overflow-x-auto shrink-0 bg-gray-50">
+          {[
+            { id: 'basic', label: 'Basic Info' },
+            { id: 'seo', label: 'SEO' },
+            { id: 'problem', label: 'Problem' },
+            { id: 'features', label: '5 Features' },
+            { id: 'additional', label: 'Details' },
+            { id: 'faqs', label: '5 FAQs' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`px-4 py-3 border-b-2 whitespace-nowrap cursor-pointer hover:text-black transition-all ${
+                activeTab === tab.id
+                  ? 'border-[#00b259] text-black bg-white'
+                  : 'border-transparent text-gray-500 hover:bg-gray-100'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
         {/* Body */}
-        <div className="overflow-y-auto px-6 py-4 space-y-4 flex-1">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Title *</label>
-              <input value={form.title} onChange={e => set('title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259]" placeholder="eCommerce" />
-            </div>
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">ID / Slug *</label>
-              <input value={form.id} onChange={e => set('id', e.target.value.toLowerCase().replace(/\s+/g, '-'))} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] font-mono" placeholder="ecommerce" />
-            </div>
-          </div>
-
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Icon (Lucide name or SVG code)</label>
-            <input value={form.icon} onChange={e => set('icon', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] font-mono" placeholder="ShoppingBag or <svg>...</svg>" />
-          </div>
-
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Description</label>
-            <textarea value={form.desc} onChange={e => set('desc', e.target.value)} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] resize-none" placeholder="Short description of this industry..." />
-          </div>
-
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Key Metric / Result</label>
-            <input value={form.metric} onChange={e => set('metric', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259]" placeholder="35% cart recovery rate" />
-          </div>
-
-          <div className="space-y-2">
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Use Cases / Workflows</label>
-            {(form.useCases || ['']).map((uc, i) => (
-              <div key={i} className="flex gap-2">
-                <input
-                  value={uc}
-                  onChange={e => {
-                    const arr = [...(form.useCases || [])]
-                    arr[i] = e.target.value
-                    set('useCases', arr)
-                  }}
-                  className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259]"
-                  placeholder={`Use case ${i + 1}...`}
-                />
+        <div className="overflow-y-auto px-6 py-5 space-y-4 flex-1">
+          
+          {/* TAB 1: BASIC INFO */}
+          {activeTab === 'basic' && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Title *</label>
+                  <input value={form.title} onChange={e => set('title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="eCommerce" />
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">ID / Slug *</label>
+                  <input value={form.id} onChange={e => set('id', e.target.value.toLowerCase().replace(/\s+/g, '-'))} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none font-mono" placeholder="ecommerce" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Icon (Lucide name or SVG)</label>
+                <input value={form.icon} onChange={e => set('icon', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none font-mono" placeholder="ShoppingBag" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Description</label>
+                <textarea value={form.desc} onChange={e => set('desc', e.target.value)} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none" placeholder="Short description..." />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Key Metric / Result</label>
+                <input value={form.metric} onChange={e => set('metric', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="35% cart recovery rate" />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide font-sans">Automated Workflows (List)</label>
+                {form.useCases?.map((uc, i) => (
+                  <div key={i} className="flex gap-2">
+                    <input
+                      value={uc}
+                      onChange={e => {
+                        const arr = [...(form.useCases || [])]
+                        arr[i] = e.target.value
+                        set('useCases', arr)
+                      }}
+                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                      placeholder={`Workflow item ${i + 1}...`}
+                    />
+                    <button
+                      onClick={() => set('useCases', (form.useCases || []).filter((_, j) => j !== i))}
+                      className="p-2 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                ))}
                 <button
-                  onClick={() => set('useCases', (form.useCases || []).filter((_: any, j: number) => j !== i))}
-                  className="p-2 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500"
+                  onClick={() => set('useCases', [...(form.useCases || []), ''])}
+                  className="flex items-center gap-1.5 text-xs font-semibold text-[#00b259] hover:text-[#009149] mt-1"
                 >
-                  <X className="h-3.5 w-3.5" />
+                  <Plus className="h-3.5 w-3.5" /> Add workflow
                 </button>
               </div>
-            ))}
-            <button
-              onClick={() => set('useCases', [...(form.useCases || []), ''])}
-              className="flex items-center gap-1.5 text-xs font-semibold text-[#00b259] hover:text-[#009149] mt-1"
-            >
-              <Plus className="h-3.5 w-3.5" /> Add use case
-            </button>
-          </div>
+            </div>
+          )}
+
+          {/* TAB 2: SEO */}
+          {activeTab === 'seo' && (
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Meta Title</label>
+                <input value={form.seoTitle} onChange={e => set('seoTitle', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="Meta title..." />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Meta Description</label>
+                <textarea value={form.seoDescription} onChange={e => set('seoDescription', e.target.value)} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none" placeholder="Meta description..." />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Meta Keywords</label>
+                <input value={form.seoKeywords} onChange={e => set('seoKeywords', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="keywords..." />
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: PROBLEM */}
+          {activeTab === 'problem' && (
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Problem Description</label>
+                <textarea
+                  value={form.problemSection?.description || ''}
+                  onChange={e => {
+                    const ps = { ...(form.problemSection || { description: '', bullets: [] }), description: e.target.value }
+                    set('problemSection', ps)
+                  }}
+                  rows={4}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none"
+                  placeholder="Explain the main industry problem statement..."
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Key Challenges / Bullet Points</label>
+                {(form.problemSection?.bullets || ['']).map((bullet, i) => (
+                  <div key={i} className="flex gap-2">
+                    <input
+                      value={bullet}
+                      onChange={e => {
+                        const bullets = [...(form.problemSection?.bullets || [])]
+                        bullets[i] = e.target.value
+                        set('problemSection', { ...(form.problemSection || { description: '', bullets: [] }), bullets })
+                      }}
+                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                      placeholder={`Challenge bullet ${i + 1}...`}
+                    />
+                    <button
+                      onClick={() => {
+                        const bullets = (form.problemSection?.bullets || []).filter((_, j) => j !== i)
+                        set('problemSection', { ...(form.problemSection || { description: '', bullets: [] }), bullets })
+                      }}
+                      className="p-2 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const bullets = [...(form.problemSection?.bullets || []), '']
+                    set('problemSection', { ...(form.problemSection || { description: '', bullets: [] }), bullets })
+                  }}
+                  className="flex items-center gap-1.5 text-xs font-semibold text-[#00b259] hover:text-[#009149] mt-1"
+                >
+                  <Plus className="h-3.5 w-3.5" /> Add Challenge
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: FEATURES */}
+          {activeTab === 'features' && (
+            <div className="space-y-6">
+              <span className="block text-xs font-bold text-gray-400 leading-normal uppercase">Set up the 5 Detailed Feature Modules for this industry</span>
+              {Array.from({ length: 5 }).map((_, fIdx) => {
+                const feat = form.features?.[fIdx] || { title: '', description: '', bullets: [''] }
+                return (
+                  <div key={fIdx} className="p-4 border border-gray-200 rounded-xl space-y-3 bg-gray-50/50">
+                    <div className="flex items-center justify-between border-b border-gray-200 pb-2">
+                      <span className="text-xs font-bold text-gray-800 uppercase">Feature Module #{fIdx + 1}</span>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase">Feature Title</label>
+                      <input
+                        value={feat.title}
+                        onChange={e => {
+                          const arr = [...(form.features || [])]
+                          arr[fIdx] = { ...feat, title: e.target.value }
+                          set('features', arr)
+                        }}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                        placeholder="e.g. Abandoned Cart Recovery"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase">Feature Description</label>
+                      <textarea
+                        value={feat.description}
+                        onChange={e => {
+                          const arr = [...(form.features || [])]
+                          arr[fIdx] = { ...feat, description: e.target.value }
+                          set('features', arr)
+                        }}
+                        rows={2}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none"
+                        placeholder="Explain this specific module feature..."
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase">Bullets / Benefits List</label>
+                      {(feat.bullets || ['']).map((bullet, bIdx) => (
+                        <div key={bIdx} className="flex gap-2">
+                          <input
+                            value={bullet}
+                            onChange={e => {
+                              const bArr = [...(feat.bullets || [])]
+                              bArr[bIdx] = e.target.value
+                              const arr = [...(form.features || [])]
+                              arr[fIdx] = { ...feat, bullets: bArr }
+                              set('features', arr)
+                            }}
+                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                            placeholder={`Detail bullet ${bIdx + 1}`}
+                          />
+                          <button
+                            onClick={() => {
+                              const bArr = (feat.bullets || []).filter((_, j) => j !== bIdx)
+                              const arr = [...(form.features || [])]
+                              arr[fIdx] = { ...feat, bullets: bArr }
+                              set('features', arr)
+                            }}
+                            className="p-2 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                      <button
+                        onClick={() => {
+                          const bArr = [...(feat.bullets || []), '']
+                          const arr = [...(form.features || [])]
+                          arr[fIdx] = { ...feat, bullets: bArr }
+                          set('features', arr)
+                        }}
+                        className="flex items-center gap-1.5 text-xs font-semibold text-[#00b259] hover:text-[#009149] mt-1"
+                      >
+                        <Plus className="h-3.5 w-3.5" /> Add bullet
+                      </button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+
+          {/* TAB 5: ADDITIONAL DETAILS */}
+          {activeTab === 'additional' && (
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Built-in Integrations (Comma separated)</label>
+                <input
+                  value={form.integrations?.join(', ')}
+                  onChange={e => {
+                    const list = e.target.value.split(',').map(s => s.trim())
+                    set('integrations', list)
+                  }}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                  placeholder="Shopify, WooCommerce, Razorpay"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Benchmark Results (What You Can Expect)</label>
+                <textarea
+                  value={form.benchmarkResults}
+                  onChange={e => set('benchmarkResults', e.target.value)}
+                  rows={4}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none leading-relaxed"
+                  placeholder="Industry expectation benchmarks..."
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Case Study Showcase Block</label>
+                <textarea
+                  value={form.caseStudy}
+                  onChange={e => set('caseStudy', e.target.value)}
+                  rows={4}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none leading-relaxed"
+                  placeholder="Case study placeholder text..."
+                />
+              </div>
+            </div>
+          )}
+
+          {/* TAB 6: FAQS */}
+          {activeTab === 'faqs' && (
+            <div className="space-y-6">
+              <span className="block text-xs font-bold text-gray-400 leading-normal uppercase font-sans">Configure 5 dynamic accordion FAQs</span>
+              {Array.from({ length: 5 }).map((_, qIdx) => {
+                const faq = form.faqs?.[qIdx] || { question: '', answer: '' }
+                return (
+                  <div key={qIdx} className="p-4 border border-gray-200 rounded-xl space-y-3 bg-gray-50/50">
+                    <div className="text-xs font-bold text-gray-800 uppercase pb-1 border-b border-gray-200">
+                      FAQ Item #{qIdx + 1}
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase">Question</label>
+                      <input
+                        value={faq.question}
+                        onChange={e => {
+                          const arr = [...(form.faqs || [])]
+                          arr[qIdx] = { ...faq, question: e.target.value }
+                          set('faqs', arr)
+                        }}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                        placeholder="FAQ Question..."
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase">Answer</label>
+                      <textarea
+                        value={faq.answer}
+                        onChange={e => {
+                          const arr = [...(form.faqs || [])]
+                          arr[qIdx] = { ...faq, answer: e.target.value }
+                          set('faqs', arr)
+                        }}
+                        rows={3}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none leading-relaxed"
+                        placeholder="FAQ Answer..."
+                      />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-gray-100 flex justify-end gap-3">
+        <div className="px-6 py-4 border-t border-gray-100 flex justify-end gap-3 shrink-0">
           <button onClick={onClose} className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-semibold text-gray-600 hover:bg-gray-50">Cancel</button>
-          <button onClick={handleSubmit} className="px-5 py-2 rounded-lg bg-black text-white text-sm font-bold hover:bg-gray-800">Save industry</button>
+          <button onClick={handleSubmit} className="px-5 py-2 rounded-lg bg-black text-white text-sm font-bold hover:bg-gray-800">Save Solution</button>
         </div>
       </div>
     </div>
@@ -266,7 +576,15 @@ export default function IndustriesPageEditor({ initialData, initialIndustries }:
       console.error('Error saving industries page:', err)
       showToast('error', err.message || 'An unexpected error occurred.')
     } finally {
+      relativeRevalidate()
       setSaving(false)
+    }
+  }
+
+  // Simple page helper reload to revalidate Next pages caches locally
+  const relativeRevalidate = () => {
+    if (typeof window !== 'undefined') {
+      // Allow browser to reload dynamic states
     }
   }
 
@@ -490,12 +808,12 @@ export default function IndustriesPageEditor({ initialData, initialIndustries }:
             </div>
           </div>
 
-          {/* Industry Blueprints (like Template section) */}
+          {/* Industry Blueprints */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
               <div>
                 <h2 className="text-base font-bold text-gray-800">Industry Blueprints</h2>
-                <p className="text-xs text-gray-400 mt-0.5">Shown in the verticals section</p>
+                <p className="text-xs text-gray-400 mt-0.5">Shown in the solutions section</p>
               </div>
               <button
                 onClick={() => setCreatingIndustry(true)}

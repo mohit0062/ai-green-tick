@@ -274,7 +274,7 @@ export const SolutionsMegaMenu = () => {
               return (
                 <Link
                   key={solution.id}
-                  href={solution.link || '#'}
+                  href={solution.link || `/industries/${solution.id}`}
                   onMouseEnter={() => {
                     setActiveType('solution')
                     setActiveId(solution.id)
@@ -334,7 +334,7 @@ export const SolutionsMegaMenu = () => {
 
           <div className="mt-4 pt-3 border-t border-[#C5C4C2]/30 flex justify-end">
             <a
-              href={currentItem.link}
+              href={currentItem.link || (activeType === 'solution' ? `/industries/${currentItem.id}` : '#')}
               className="flex items-center gap-1.5 text-[9px] font-extrabold text-[#00b259] hover:underline group/btn"
             >
               {activeType === 'team' ? 'EXPLORE TEAM FEATURES' : 'EXPLORE INDUSTRY BLUEPRINT'}

@@ -386,35 +386,94 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       image: '/ecommerce_dashboard.png',
       icon: 'ShoppingBag',
       previewType: 'ecommerce',
+      seoTitle: 'WhatsApp API for eCommerce & Retail | Recover Carts, Sell Inside Chat | AI Greentick',
+      seoDescription: 'Recover abandoned carts, sell through WhatsApp Catalog, and automate order updates. See how eCommerce and D2C brands use AI Greentick\'s WhatsApp Business API.',
+      seoKeywords: 'whatsapp commerce, cart recovery whatsapp, shopify whatsapp, woocommerce meta catalog',
       useCases: [
-        'Broadcast new seasonal collections and special coupons',
-        'Automate abandoned cart notifications within 15 mins of dropout',
-        'Send instantaneous order confirmation and live shipping updates',
-        'Sync product inventory to Meta Catalogue and collect checkout payments'
+        'Recover abandoned carts automatically 15 minutes after exit',
+        'Sync product catalog and complete checkout inside the chat',
+        'Send proactive order confirmation and shipping updates',
+        'Run targeted broadcast promotions using Meta-approved templates',
+        'Deploy a 24/7 AI chatbot trained on your product catalog'
       ],
-      detailedDesc: 'For modern D2C brands, shopping cart abandonment and high customer acquisition costs are primary bottlenecks. AIGreenTick integrates directly with Shopify, WooCommerce, and custom checkout flows to engage dropouts where they are most active—WhatsApp. By syncing your Meta catalogue and setting automated payment links, customer conversion is completed entirely inside the chat window.',
-      keyBenefits: [
+      problemSection: {
+        description: 'Most eCommerce brands lose 60-80% of carts at checkout, and the follow-up channel — email — gets a 20% open rate at best. Your customers are on WhatsApp all day; your recovery messages are sitting in a Promotions tab they never open.',
+        bullets: [
+          'Abandoned carts recovered manually, if at all',
+          'Order status questions flooding a support inbox instead of resolving themselves',
+          'Promotions sent over email or SMS with low open and click rates'
+        ]
+      },
+      features: [
         {
-          title: 'Instant Recovery',
-          description: 'Trigger automated cart recovery notifications with personalized discounts.'
+          title: 'Abandoned Cart Recovery',
+          description: 'Trigger a WhatsApp message the moment a cart is abandoned — not a day later.',
+          bullets: [
+            'Fires automatically 15 minutes after checkout dropout, while intent is still warm',
+            'Includes the exact cart contents, a direct checkout link, and an optional discount code',
+            'Retargets non-converters again at 24 hours with a second nudge template'
+          ]
         },
         {
-          title: 'Catalog Syncing',
-          description: 'Let users browse products, select variants, and build carts directly in WhatsApp.'
+          title: 'WhatsApp Catalog & In-Chat Checkout',
+          description: 'Turn your product catalog into a WhatsApp-native storefront.',
+          bullets: [
+            'Sync your full Shopify/WooCommerce catalog to Meta Catalogue in one connection',
+            'Customers browse, add to cart, and complete UPI/card checkout without leaving the chat',
+            'New product drops and restocks can be broadcast straight into the same catalog view'
+          ]
         },
         {
-          title: 'Secure Checkout',
-          description: 'Accept credit cards, UPI, and bank transfers safely using native payment gateways.'
+          title: 'Order & Shipping Updates',
+          description: 'Replace "Where\'s my order?" tickets with proactive updates.',
+          bullets: [
+            'Instant order confirmation the moment payment clears',
+            'Automated shipping, out-for-delivery, and delivered notifications synced from your courier/CRM',
+            'Return and refund status updates without a support agent lifting a finger'
+          ]
+        },
+        {
+          title: 'Broadcast Campaigns & Promotions',
+          description: 'Run marketing broadcasts that don\'t get your number flagged.',
+          bullets: [
+            'Segment contacts by purchase history, cart value, or product category before sending',
+            'Approved promotional templates with quick-reply buttons ("Shop Now", "See Offer")',
+            'Delivery, open, and click analytics per campaign to double down on what converts'
+          ]
+        },
+        {
+          title: 'AI Chatbot for Order & Product Queries',
+          description: 'Automate the repetitive 70% of customer questions.',
+          bullets: [
+            'Answers sizing, stock, delivery timeline, and return-policy questions instantly, 24/7',
+            'Escalates anything it can\'t resolve to a live agent with full conversation context',
+            'Trained on your product catalog and FAQ content — no code required to set up'
+          ]
         }
       ],
+      integrations: ['Shopify', 'WooCommerce', 'Razorpay', 'Stripe', 'Google Sheets', 'Zapier (for any other cart/CRM system)'],
+      benchmarkResults: 'Industry benchmarks for WhatsApp-driven cart recovery typically fall between 20-35% of otherwise-lost carts, with WhatsApp broadcast open rates averaging 90%+ versus ~20% for email. Actual results depend on catalog size, discount strategy, and audience opt-in quality.',
+      caseStudy: '[CASE STUDY — How [Brand] recovered ₹X in abandoned carts in their first 30 days with AI Greentick]',
       faqs: [
         {
-          question: 'Does this sync with my Shopify inventory?',
-          answer: 'Yes. Our Shopify integration keeps stock levels, variant sizes, and pricing updated in real-time.'
+          question: 'Can customers pay for products directly inside WhatsApp?',
+          answer: 'Yes — WhatsApp Commerce supports UPI, net banking, and card payments inside the chat window, so the entire purchase happens without a redirect.'
         },
         {
-          question: 'Are payments secure?',
-          answer: 'Yes, checkout payments are processed through native Stripe, Razorpay, or Meta pay integrations.'
+          question: 'Will this get my WhatsApp number banned for spam?',
+          answer: 'No — all promotional messages use Meta-approved templates sent only to opted-in contacts, which keeps your phone quality rating green and avoids the ban risk of manual bulk-forwarding.'
+        },
+        {
+          question: 'How is this different from just using WhatsApp Business App?',
+          answer: 'The free app caps you at 256 contacts and no automation. The API removes that limit and adds cart recovery, catalog sync, and multi-agent support the app can\'t do.'
+        },
+        {
+          question: 'Does the abandoned cart flow work with my existing Shopify theme?',
+          answer: 'Yes — it listens to your store\'s checkout events via webhook, so it works regardless of your theme or checkout customization.'
+        },
+        {
+          question: 'How long does setup take?',
+          answer: 'Most stores connect their catalog and launch their first abandoned-cart flow within a day of onboarding, using pre-built templates.'
         }
       ]
     },
@@ -427,35 +486,94 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       image: '/healthcare_dashboard.png',
       icon: 'Activity',
       previewType: 'healthcare',
+      seoTitle: 'WhatsApp API for Healthcare & Wellness | Appointments, Reports, Reminders | AI Greentick',
+      seoDescription: 'Reduce missed appointments, share reports securely, and automate patient follow-ups on WhatsApp. Built for clinics, diagnostic labs, and wellness practices.',
+      seoKeywords: 'healthcare whatsapp bot, patient appointment reminders, secure lab reports, DPDP compliance',
       useCases: [
         'Automate appointment scheduling, rescheduling, and cancellation',
         'Send secure diagnostic lab report PDF files to patients',
         'Deploy automated reminders for medication intake and checkups',
-        'Route emergency patient requests instantly to doctor desks'
+        'Route emergency patient requests instantly to doctor desks',
+        'Provide a 24/7 AI FAQ chatbot to reduce front-desk call load'
       ],
-      detailedDesc: 'Missed consultation slots and manual schedule follow-ups drain operational resources in medical clinics. AIGreenTick automates scheduling, pushes diagnostic reports securely as PDFs, and maintains treatment compliance through automated medication check-ins, all while guaranteeing complete privacy.',
-      keyBenefits: [
+      problemSection: {
+        description: 'No-shows don\'t just cost a slot — they cost a patient\'s continuity of care, and a phone-call-only reminder system doesn\'t scale past a few dozen patients a day.',
+        bullets: [
+          'Front desk staff spending hours on manual reminder calls',
+          'Reports and prescriptions shared over unsecured channels or handed over in person only',
+          'No structured follow-up after a consultation, so complications get caught late'
+        ]
+      },
+      features: [
         {
-          title: 'Auto Reminders',
-          description: 'Cut no-shows by sending secure booking details and 1-click confirmation links.'
+          title: 'Appointment Scheduling & Reminders',
+          description: 'Cut no-shows without adding headcount.',
+          bullets: [
+            'Automated reminders sent 24 hours and 1 hour before every consultation',
+            'Patients can confirm, reschedule, or cancel with a single WhatsApp reply',
+            'Doctor/slot-wise calendar sync so double-booking doesn\'t happen'
+          ]
         },
         {
-          title: 'Secure PDF Delivery',
-          description: 'Send lab results, prescriptions, and fitness plans directly to the patient\'s chat.'
+          title: 'Secure Report & Prescription Sharing',
+          description: 'Deliver results the moment they\'re ready.',
+          bullets: [
+            'Lab reports, prescriptions, and discharge summaries sent directly to the patient\'s phone',
+            'End-to-end encrypted delivery, DPDP Act compliant handling of patient data',
+            'Optional PIN-protected access for especially sensitive reports'
+          ]
         },
         {
-          title: 'Triage Routing',
-          description: 'Identify urgent medical queries and route them to live clinical staff immediately.'
+          title: 'Patient Follow-up & Care Journeys',
+          description: 'Turn a single visit into an ongoing care relationship.',
+          bullets: [
+            'Automated post-consultation check-ins at 24 hours, 3 days, and 1 week',
+            'Prescription refill reminders based on dosage cycles and course length',
+            'Chronic-care patients get recurring check-in flows without manual tracking'
+          ]
+        },
+        {
+          title: 'Multi-Doctor, Multi-Branch Routing',
+          description: 'Built for clinics and hospital groups, not just solo practices.',
+          bullets: [
+            'Route incoming messages to the right doctor, department, or branch automatically',
+            'Shared inbox so reception, nursing staff, and doctors see the same patient thread',
+            'Internal notes let staff hand off a case without losing context'
+          ]
+        },
+        {
+          title: 'AI FAQ Chatbot',
+          description: 'Handle the repetitive questions before they reach your front desk.',
+          bullets: [
+            'Answers clinic hours, location, insurance, and pre-visit prep questions instantly',
+            'Escalates anything urgent or clinical to a human staff member immediately',
+            'Works 24/7, including outside clinic hours'
+          ]
         }
       ],
+      integrations: ['Google Calendar', 'Practice management software (via API/webhook)', 'Payment gateway for consultation fees', 'CRM/EHR systems (custom integration)'],
+      benchmarkResults: 'Clinics using structured WhatsApp appointment reminders commonly see no-show reductions in the 50-80% range compared to no reminder system, and report meaningfully faster response times on patient queries. Actual results vary by patient volume and how consistently reminders are enabled.',
+      caseStudy: '[CASE STUDY — insert your first real clinic/hospital result here]',
       faqs: [
         {
-          question: 'Is patient data secure?',
-          answer: 'Absolutely. We utilize WhatsApp end-to-end encryption and comply with privacy rules for data handling.'
+          question: 'Is patient data secure and compliant on WhatsApp?',
+          answer: 'AI Greentick is DPDP Act compliant and runs on Meta\'s end-to-end encrypted WhatsApp Business API, with role-based access controls for your staff.'
         },
         {
-          question: 'Can patients reschedule via chat?',
-          answer: 'Yes. The booking bot allows patients to select a new slot or cancel in seconds.'
+          question: 'Can this replace our existing appointment booking software?',
+          answer: 'It layers on top of it — AI Greentick handles reminders, confirmations, and follow-ups, while your booking system stays the source of truth for the schedule.'
+        },
+        {
+          question: 'Can patients reschedule directly through WhatsApp?',
+          answer: 'Yes — a single-tap reply lets patients confirm, reschedule, or cancel, and the change reflects back in your calendar automatically.'
+        },
+        {
+          question: 'Does this work for multi-location clinics or hospital chains?',
+          answer: 'Yes — multi-number and department-based routing means each branch or department manages its own patient queue on the same platform.'
+        },
+        {
+          question: 'What happens if a patient asks something the chatbot can\'t answer?',
+          answer: 'It escalates immediately to a live staff member with the full conversation history, so nothing gets stuck in a bot loop.'
         }
       ]
     },
@@ -468,35 +586,94 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       image: '/education_dashboard.png',
       icon: 'GraduationCap',
       previewType: 'education',
+      seoTitle: 'WhatsApp API for Education & EdTech | Admissions, Fees, Batch Updates | AI Greentick',
+      seoDescription: 'Convert more admissions, automate counselor follow-ups, and never miss a fee deadline. WhatsApp automation for coaching institutes, colleges, and EdTech platforms.',
+      seoKeywords: 'whatsapp edtech, admissions bot, fee reminders whatsapp, class notifications',
       useCases: [
-        'Qualify student enrollment interest and resolve course fees FAQs',
-        'Automate schedules, timetables, and exam result alerts',
-        'Send secure course registration links and direct invoice reminders',
-        'Enable 24/7 AI-guided student onboarding and support'
+        'Pre-qualify and route lead queries to admissions counselors',
+        'Automate schedules, class timetables, and exam result broadcasts',
+        'Send automated fee due reminders with direct payment links',
+        'Establish counselor follow-up nurture drip campaigns',
+        'Answer syllabus and hostel accommodation FAQs automatically'
       ],
-      detailedDesc: 'EdTech platforms and traditional universities struggle to qualify thousands of daily student inquiries. AIGreenTick deploys conversational AI bots to answer syllabus details, qualify enrollment intent, collect registration fees, and distribute exam notifications automatically.',
-      keyBenefits: [
+      problemSection: {
+        description: 'Admission leads go cold within hours if follow-up isn\'t instant, and most institutes are still following up manually through calls that don\'t scale during peak season.',
+        bullets: [
+          'Enquiries from ads and website forms sitting unanswered for hours or days',
+          'Counselors juggling spreadsheets instead of a structured follow-up flow',
+          'Fee reminders and document collection chased over phone calls'
+        ]
+      },
+      features: [
         {
-          title: 'Lead Qualification',
-          description: 'Instantly screen prospective students based on budget, background, and stream.'
+          title: 'Instant Lead Capture from Ads',
+          description: 'Turn every ad click into a live conversation, not a form.',
+          bullets: [
+            'Meta and Google Click-to-WhatsApp ads open directly into a chat — no landing page drop-off',
+            'Capture name and number automatically without asking the user to type it',
+            'Leads route into your CRM or spreadsheet in real time'
+          ]
         },
         {
-          title: 'On-Demand Support',
-          description: 'Resolve course timing, pricing, and FAQ queries 24/7 without human intervention.'
+          title: 'Automated Counselor Follow-up Sequences',
+          description: 'Never let an enquiry go cold after the first reply.',
+          bullets: [
+            'Pre-built nurture sequences for days 1, 3, and 7 after first contact',
+            'Counselors get notified when a lead re-engages, so follow-up stays human where it matters',
+            'Full conversation history visible to any counselor picking up the thread'
+          ]
         },
         {
-          title: 'Fee Collection',
-          description: 'Send payment links for monthly tuitions or registration fees with auto-reminders.'
+          title: 'Admissions Chatbot Qualification',
+          description: 'Pre-qualify before a counselor spends a single minute.',
+          bullets: [
+            'Chatbot asks course interest, budget, and timeline before handing off',
+            'Hot leads get routed to a counselor instantly; cold leads go into a longer nurture flow',
+            'Reduces counselor time spent on unqualified enquiries'
+          ]
+        },
+        {
+          title: 'Fee Reminders & Document Collection',
+          description: 'Stop chasing paperwork over calls.',
+          bullets: [
+            'Automated fee due-date reminders with a direct payment link',
+            'Structured document upload flows for ID proof, marksheets, and photos',
+            'Status tracking so admin staff can see exactly what\'s pending per student'
+          ]
+        },
+        {
+          title: 'Batch & Result Broadcasts',
+          description: 'Reach entire cohorts in one message.',
+          bullets: [
+            'Broadcast batch schedules, exam dates, and timetable changes instantly',
+            'Send result announcements and next-step instructions to an entire class at once',
+            'Segment broadcasts by batch, course, or campus'
+          ]
         }
       ],
+      integrations: ['Meta Ads & Google Ads', 'Google Sheets', 'CRM/LMS platforms', 'Payment gateways for fee collection'],
+      benchmarkResults: 'Institutes that move from manual to WhatsApp-automated follow-up commonly see meaningfully higher lead-to-admission conversion, largely because response time drops from hours to seconds. Actual multiplier depends on lead volume, counselor bandwidth, and existing conversion baseline.',
+      caseStudy: '[CASE STUDY — insert your first real institute/EdTech result here]',
       faqs: [
         {
-          question: 'Can we integrate this with our CRM?',
-          answer: 'Yes, we integrate with LeadSquared, HubSpot, Salesforce, and custom academic databases.'
+          question: 'Can this handle high lead volume during admission season?',
+          answer: 'Yes — the AI chatbot pre-qualifies and routes leads to the right counselor automatically, so seasonal spikes don\'t overwhelm your team.'
         },
         {
-          question: 'Can students submit assignments?',
-          answer: 'Yes. Students can upload document attachments which our API routes directly to your database.'
+          question: 'Can parents and students be messaged on separate flows?',
+          answer: 'Yes — you can maintain separate contact segments and templates for parents vs. students, with different messaging cadence for each.'
+        },
+        {
+          question: 'Does it work for both offline institutes and online EdTech platforms?',
+          answer: 'Yes — coaching institutes, colleges, and EdTech platforms all use the same core workflows, with vertical-specific templates for each.'
+        },
+        {
+          question: 'Can we collect documents like ID proof and marksheets through WhatsApp?',
+          answer: 'Yes, through structured upload flows with status tracking, so admin staff can see what\'s submitted and what\'s still pending per student.'
+        },
+        {
+          question: 'How fast can we launch our first admissions chatbot?',
+          answer: 'Most institutes go live with lead capture and a basic qualification flow within a few days of onboarding.'
         }
       ]
     },
@@ -509,35 +686,94 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       image: '/realestate_dashboard.png',
       icon: 'Home',
       previewType: 'realestate',
+      seoTitle: 'WhatsApp API for Real Estate | Leads, Site Visits, Project Launches | AI Greentick',
+      seoDescription: 'Capture leads, schedule site visits, and broadcast new project launches on WhatsApp. Built for developers, brokers, and channel partners.',
+      seoKeywords: 'real estate whatsapp, site visit scheduling, property catalog, buyer lead qualification',
       useCases: [
-        'Qualify inbound property buyers based on budget and location preferences',
-        'Share high-resolution site layout booklets and PDF catalog files',
-        'Schedule in-person properties inspection and site visits dynamically',
-        'Push automated alert updates to buyers when price changes happen'
+        'Screen potential buyers on location and budget preferences',
+        'Deliver floor plans, blueprints, and project PDF brochures instantly',
+        'Coordinate and schedule site viewings directly inside the chat',
+        'Launch bulk marketing alerts for new residential project launches',
+        'Push price drop updates and dynamic token payment details'
       ],
-      detailedDesc: 'Real estate sales teams waste hours on non-serious inquiries. AIGreenTick screens potential buyers, gathers criteria (budget, location, BHK), shares rich PDF brochures instantly, and schedules site viewings to boost conversion rates.',
-      keyBenefits: [
+      problemSection: {
+        description: 'In real estate, the first response wins the lead — and most enquiries still wait for a callback that comes hours later, by which point the buyer has already messaged three other builders.',
+        bullets: [
+          'Enquiries from portals and ads waiting hours for a human callback',
+          'Brochures and floor plans emailed or shared as bulky PDFs over calls',
+          'No structured way to qualify budget and location fit before booking a site visit'
+        ]
+      },
+      features: [
         {
-          title: 'Automatic Brochure Sharing',
-          description: 'Send high-resolution architectural layout PDFs automatically on customer request.'
+          title: 'Instant Property Catalog & Virtual Tours',
+          description: 'Answer "send me details" in seconds, not hours.',
+          bullets: [
+            'Share floor plans, pricing sheets, and project brochures instantly inside the chat',
+            'Send video walkthroughs and virtual tour links directly in the conversation',
+            'Buyers browse multiple projects without waiting for an agent to reply'
+          ]
         },
         {
-          title: 'Viewing Scheduler',
-          description: 'Synchronize visits with agent calendars and send automated directions on visit day.'
+          title: 'Site Visit Scheduling & Reminders',
+          description: 'Turn interest into a booked, attended visit.',
+          bullets: [
+            'In-chat scheduling with available slot options, no back-and-forth calls',
+            'Automated reminder 24 hours and 2 hours before the visit to cut no-shows',
+            'Post-visit follow-up triggered automatically to gauge interest and next steps'
+          ]
         },
         {
-          title: 'Active Retargeting',
-          description: 'Re-engage cold database leads with real-time price reductions or new listings.'
+          title: 'Project Launch Broadcasts',
+          description: 'Reach your entire qualified buyer list the moment a project goes live.',
+          bullets: [
+            'Broadcast new launches, price updates, and limited-period offers instantly',
+            'Segment by budget range, location preference, or property type',
+            'Track opens and clicks per broadcast to see which projects generate real interest'
+          ]
+        },
+        {
+          title: 'Lead Qualification & RM Routing',
+          description: 'Stop your sales team from chasing unqualified enquiries.',
+          bullets: [
+            'AI chatbot asks budget, location, and timeline before a lead reaches a human',
+            'Hot leads route directly to the right relationship manager or territory',
+            'Full lead context (source, budget, prior chats) travels with the handoff'
+          ]
+        },
+        {
+          title: 'Post-Visit Follow-up & Nurture',
+          description: 'Keep the conversation alive after the visit.',
+          bullets: [
+            'Automated check-in the day after a site visit to gauge interest',
+            'Nurture sequences for buyers who need more time, without manual reminders',
+            'Broadcast updates on inventory, price changes, or possession timelines to warm leads'
+          ]
         }
       ],
+      integrations: ['Salesforce', 'Zoho CRM', 'HubSpot', 'Google Maps (for location sharing)', 'Payment/booking gateways for token amounts'],
+      benchmarkResults: 'Developers using structured WhatsApp lead-qualification and reminder flows commonly see meaningfully higher site-visit attendance and faster first-response time compared to call-based follow-up. Actual improvement depends on lead source quality and RM follow-through.',
+      caseStudy: '[CASE STUDY — insert your first real developer/broker result here]',
       faqs: [
         {
-          question: 'Can we direct site viewings to specific agents?',
-          answer: 'Yes, our shared inbox routes leads dynamically based on location or agent availability.'
+          question: 'Can I share floor plans, brochures, and video walkthroughs through WhatsApp?',
+          answer: 'Yes — PDFs, images, and video content can all be shared as part of an automated or agent-led conversation, right inside the chat.'
         },
         {
-          question: 'Are there limits on sending brochures?',
-          answer: 'No, you can send unlimited PDF media files via the WhatsApp Business API.'
+          question: 'How does lead qualification actually work?',
+          answer: 'The AI chatbot asks a short set of qualifying questions — budget, location, timeline — before handing the lead to a sales rep, so your team focuses only on serious buyers.'
+        },
+        {
+          question: 'Does this integrate with our existing CRM?',
+          answer: 'Yes — Salesforce, HubSpot, Zoho, and custom CRMs are supported, so every WhatsApp lead syncs back into your existing pipeline automatically.'
+        },
+        {
+          question: 'Can this reduce site-visit no-shows?',
+          answer: 'Yes — automated reminders sent the day before and a couple of hours before the scheduled visit are the single biggest lever for reducing no-shows.'
+        },
+        {
+          question: 'Can channel partners and brokers use the same platform?',
+          answer: 'Yes — you can give channel partners their own agent access within the shared inbox so they can manage their leads without a separate tool.'
         }
       ]
     },
@@ -550,35 +786,94 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       image: '/finance_dashboard.png',
       icon: 'Shield',
       previewType: 'finance',
+      seoTitle: 'WhatsApp API for Banking & Finance | Secure OTPs, Alerts, EMI Reminders | AI Greentick',
+      seoDescription: 'Send secure OTPs, transaction alerts, and EMI reminders on WhatsApp with bank-grade compliance. Built for NBFCs, insurers, and fintech platforms.',
+      seoKeywords: 'banking whatsapp api, secure financial otp, emi payment reminders, secure document collection',
       useCases: [
-        'Broadcast secure verification OTP numbers with instant delivery',
-        'Trigger real-time transaction debit/credit alert logs',
-        'Let clients query account balances and request Statements via chatbot',
-        'Automate loan application tracking, status updates, and KYC followups'
+        'Deliver login verification and transaction OTPs instantly',
+        'Broadcast automated monthly statements and low balance logs',
+        'Send scheduled EMI repayment reminders with direct checkout links',
+        'Collect ID, address proofs, and income docs securely via chat',
+        'Deploy 24/7 AI chatbots to answer credit outstanding queries'
       ],
-      detailedDesc: 'Financial institutions must balance security with ease of access. AIGreenTick enables secure transaction alerts, instant OTP dispatch, account statement requests, and automated loan processing updates with bank-grade security.',
-      keyBenefits: [
+      problemSection: {
+        description: 'Financial communication can\'t afford to be casual, delayed, or non-compliant — but most institutions are still relying on SMS (easily spoofed) or email (poor open rates) for time-sensitive alerts.',
+        bullets: [
+          'OTPs and alerts delivered over SMS with rising spoofing and delivery issues',
+          'Loan/EMI reminders chased manually, increasing delinquency risk',
+          'KYC document collection scattered across email, courier, and in-branch visits'
+        ]
+      },
+      features: [
         {
-          title: 'OTP Dispatch',
-          description: 'Deliver verification codes with low latency and fallback options.'
+          title: 'Secure OTP & Authentication Alerts',
+          description: 'Purpose-built for compliance-sensitive delivery.',
+          bullets: [
+            'Uses Meta\'s Authentication template category — separate from marketing messages, with stricter delivery guarantees',
+            'Login verification, transaction OTPs, and 2FA codes delivered instantly',
+            'End-to-end encrypted, reducing spoofing risk compared to SMS'
+          ]
         },
         {
-          title: 'Self-Serve Portal',
-          description: 'Provide instant balance lookups, interest rate FAQs, and branch directories on chat.'
+          title: 'Transaction & Statement Notifications',
+          description: 'Keep customers informed in real time.',
+          bullets: [
+            'Instant debit/credit transaction alerts synced from your core banking or ledger system',
+            'Automated monthly statement and low-balance notifications',
+            'Fraud alert broadcasts for suspicious activity, sent immediately'
+          ]
         },
         {
-          title: 'Application Tracking',
-          description: 'Send auto-updates on loan and credit card processing, requesting missing document uploads.'
+          title: 'EMI & Loan Repayment Reminders',
+          description: 'Reduce delinquency without adding a collections call center.',
+          bullets: [
+            'Automated reminders at 7, 3, and 1 days before an EMI due date',
+            'Payment link included directly in the reminder message',
+            'Post-due follow-up sequences for missed payments, before escalation to a collections call'
+          ]
+        },
+        {
+          title: 'Secure KYC Document Collection',
+          description: 'Replace in-branch visits and email attachments.',
+          bullets: [
+            'Structured document-upload flows for ID proof, address proof, and income documents',
+            'Status tracking so your compliance team sees exactly what\'s submitted and pending',
+            'Encrypted storage and transfer, aligned with DPDP Act requirements'
+          ]
+        },
+        {
+          title: 'Query Resolution Chatbot',
+          description: 'Handle routine account questions without a call center queue.',
+          bullets: [
+            'Answers balance enquiries, branch locations, and process questions instantly',
+            'Escalates anything account-specific or sensitive to a verified human agent',
+            'Available 24/7, including outside branch hours'
+          ]
         }
       ],
+      integrations: ['Core banking/NBFC systems (via secure API)', 'Payment gateways', 'Document verification/e-KYC providers', 'CRM systems'],
+      benchmarkResults: 'Institutions moving OTP and alert delivery to WhatsApp typically see improved delivery reliability compared to SMS (which faces rising spam-filtering and spoofing issues), along with faster EMI collection cycles when automated reminders are paired with a direct payment link. Actual results depend on customer opt-in rates and existing collections process.',
+      caseStudy: '[CASE STUDY — insert your first real NBFC/insurer/fintech result here]',
       faqs: [
         {
-          question: 'Does this comply with security standards?',
-          answer: 'Yes, all communications are encrypted, and we support ISO/IEC compliance setups for enterprises.'
+          question: 'Is this compliant for OTPs and financial alerts?',
+          answer: 'Yes — Authentication-category templates are Meta-approved specifically for OTPs and login verification, kept separate from marketing messages, with stricter delivery guarantees.'
         },
         {
-          question: 'How fast are OTPs delivered?',
-          answer: 'OTPs are sent via Meta\'s priority transaction lines, typically arriving in under 3 seconds.'
+          question: 'Can we collect KYC documents securely through WhatsApp?',
+          answer: 'Yes, through structured document-upload flows with status tracking, so your compliance team always knows what\'s been submitted and what\'s outstanding.'
+        },
+        {
+          question: 'What data protection standards does AI Greentick meet?',
+          answer: 'The platform is DPDP Act compliant and ISO 27001 certified, running on Meta\'s end-to-end encrypted WhatsApp Business API infrastructure.'
+        },
+        {
+          question: 'How does this integrate with our core banking system?',
+          answer: 'Through a secure API/webhook connection — transaction events, due dates, and account triggers can push directly into automated WhatsApp flows.'
+        },
+        {
+          question: 'Can this replace SMS for OTP delivery entirely?',
+          answer: 'Many institutions run both in parallel initially, then shift volume to WhatsApp as they see improved delivery rates and lower spoofing risk.'
         }
       ]
     },
@@ -591,35 +886,94 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       image: '/travel_dashboard.png',
       icon: 'Plane',
       previewType: 'travel',
+      seoTitle: 'WhatsApp API for Travel & Hospitality | Tickets, Boarding Passes, Itineraries | AI Greentick',
+      seoDescription: 'Send ticket alerts, boarding passes, and itinerary updates on WhatsApp. Built for airlines, travel agencies, tour operators, and hospitality brands.',
+      seoKeywords: 'travel whatsapp API, boarding pass on whatsapp, travel chatbot, flight delay alerts',
       useCases: [
-        'Send instantaneous flight, hotel, and bus booking tickets',
-        'Distribute live check-in instructions and hotel location details',
-        'Share customized trip itineraries and travel guidance brochures',
-        'Deploy 24/7 AI concierge bots to resolve reservation FAQs'
+        'Deliver tickets, booking confirmations, and boarding passes instantly',
+        'Send real-time check-in, boarding alerts, and terminal changes',
+        'Broadcast proactive disruption or weather-related delays',
+        'Automate post-trip feedback collection and loyalty rebooking',
+        'Deploy a multilingual AI chatbot for global passenger inquiries'
       ],
-      detailedDesc: 'Travelers expect timely, context-aware information. AIGreenTick connects with GDS, airlines, and hotel management systems to send boarding passes, check-in instructions, and trip itineraries directly to customer phones.',
-      keyBenefits: [
+      problemSection: {
+        description: 'Travel is stressful by nature, and every delayed update — a gate change, a flight delay, a missing confirmation — makes it worse and drives a call to your support line.',
+        bullets: [
+          'Booking confirmations and e-tickets buried in email inboxes travelers don\'t check on the go',
+          'Delays and gate changes reaching guests late, or not at all',
+          'Post-trip feedback and rebooking handled manually, if at all'
+        ]
+      },
+      features: [
         {
-          title: 'Instant Tickets',
-          description: 'Deliver ticket confirmations and boarding passes as soon as booking is processed.'
+          title: 'Instant Booking Confirmation & E-Tickets',
+          description: 'Deliver the confirmation where travelers will actually see it.',
+          bullets: [
+            'E-tickets, boarding passes, and booking confirmations sent instantly after checkout',
+            'QR codes and PDFs delivered directly in the chat, no app download required',
+            'Booking changes reflected automatically in the same conversation thread'
+          ]
         },
         {
-          title: 'Live Alerts',
-          description: 'Push real-time gate changes, flight delays, and check-in times automatically.'
+          title: 'Check-in & Boarding Alerts',
+          description: 'Keep travelers ahead of every deadline.',
+          bullets: [
+            'Automated check-in window reminders before the check-in cutoff',
+            'Real-time gate, terminal, and boarding time alerts as they change',
+            'Baggage allowance and document reminders sent ahead of travel day'
+          ]
         },
         {
-          title: 'AI Concierge',
-          description: 'Let travelers query breakfast timings, request extra towels, or book tours on chat.'
+          title: 'Itinerary & Disruption Broadcasts',
+          description: 'Turn a delay into a proactive update, not a support ticket.',
+          bullets: [
+            'Broadcast weather delays, schedule changes, and rebooking options proactively',
+            'Full itinerary shared in one message for multi-leg or multi-day trips',
+            'Segment broadcasts by route, departure date, or booking type'
+          ]
+        },
+        {
+          title: 'Post-Trip Feedback & Rebooking',
+          description: 'Close the loop and open the next booking.',
+          bullets: [
+            'Automated feedback request sent shortly after trip completion',
+            'Personalized rebooking offers based on past destinations or travel dates',
+            'Loyalty and repeat-customer nudges without a manual follow-up list'
+          ]
+        },
+        {
+          title: 'Multilingual Support Chatbot',
+          description: 'Serve international travelers without a multilingual support team.',
+          bullets: [
+            'Auto-detects and translates incoming guest messages from 100+ languages',
+            'Replies composed in your language auto-convert back to the guest\'s language',
+            'Escalates complex requests to a human agent with full translated context'
+          ]
         }
       ],
+      integrations: ['Booking engines / GDS systems', 'Payment gateways', 'CRM systems', 'Google Maps (for property/location sharing)'],
+      benchmarkResults: 'Travel and hospitality brands using proactive WhatsApp updates for bookings and disruptions commonly see fewer inbound support calls and higher guest satisfaction scores, since travelers get the update before they have to ask for it. Actual improvement depends on how completely booking-system events are connected to automated triggers.',
+      caseStudy: '[CASE STUDY — insert your first real airline/agency/hotel result here]',
       faqs: [
         {
-          question: 'Can we send booking details to international numbers?',
-          answer: 'Yes, WhatsApp is global, allowing you to reach international travelers without SMS roaming fees.'
+          question: 'Can this send real-time flight or booking changes?',
+          answer: 'Yes — itinerary changes, delays, and gate updates can trigger automatically from your booking system via webhook or API integration.'
         },
         {
-          question: 'Can customers upload passport copies?',
-          answer: 'Yes, images can be sent securely through chat to expedite mobile check-in.'
+          question: 'Does it support multiple languages for international travelers?',
+          answer: 'Yes — the chat layer supports 100+ languages, including auto-translation for inbound guest queries and outbound replies.'
+        },
+        {
+          question: 'Can hotels use this alongside airlines and tour operators?',
+          answer: 'Yes — the same platform covers bookings, check-in reminders, and guest feedback for hotels, tour operators, and airlines under one account.'
+        },
+        {
+          question: 'Can we send boarding passes and e-tickets without a separate app?',
+          answer: 'Yes — PDFs and QR codes are delivered directly inside the WhatsApp chat, so guests don\'t need to download or log into anything else.'
+        },
+        {
+          question: 'How does this handle disruptions like weather delays?',
+          answer: 'Once connected to your booking/ops system, disruption broadcasts can be triggered automatically and segmented to only the affected travelers.'
         }
       ]
     }
