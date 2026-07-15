@@ -144,7 +144,7 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
 
   const [uploadingState, setUploadingState] = useState<{ [key: string]: boolean }>({})
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number, field: 'companyLogo' | 'avatar') => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number, field: 'companyLogo' | 'avatar' | 'integration') => {
     const file = e.target.files?.[0]
     if (file) {
       const key = `${index}-${field}`
@@ -167,7 +167,11 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
           })
           const res = await response.json()
           if (res?.publicUrl) {
-            updateTestimonial(index, field, res.publicUrl)
+            if (field === 'integration') {
+              updateIntegration(index, 'image', res.publicUrl)
+            } else {
+              updateTestimonial(index, field, res.publicUrl)
+            }
             showStatus('success', 'Image uploaded successfully!')
           } else if (res?.error) {
             alert(`Upload error: ${res.error}`)
@@ -336,6 +340,23 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
     const faqs = (tabs[tabIdx].faqs || []).filter((_: any, i: number) => i !== faqIdx)
     tabs[tabIdx] = { ...tabs[tabIdx], faqs }
     setData({ ...data, faqTabs: tabs })
+  }
+
+  // --- Integrations ---
+  const updateIntegration = (idx: number, field: string, value: string) => {
+    const list = [...(data.integrations || [])]
+    list[idx] = { ...list[idx], [field]: value }
+    setData({ ...data, integrations: list })
+  }
+
+  const deleteIntegration = (idx: number) => {
+    const list = (data.integrations || []).filter((_: any, i: number) => i !== idx)
+    setData({ ...data, integrations: list })
+  }
+
+  const addIntegration = () => {
+    const list = [...(data.integrations || []), { name: '', image: '' }]
+    setData({ ...data, integrations: list })
   }
 
   // SEO checklist simulation
@@ -803,6 +824,96 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                     </div>
                   </div>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Section 6.5: Integrations Section */}
+          <Card className="border border-[#C5C4C2]/50 shadow-xs bg-white rounded-lg">
+            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-5 flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-sm font-bold text-neutral-800 font-display">Integrations List (Homepage & Integrations Page)</CardTitle>
+                <CardDescription className="text-[10px]">Add, edit, or customize integrations shown in the homepage circle carousel.</CardDescription>
+              </div>
+              <Button onClick={addIntegration} size="sm" className="h-7 text-[10px] bg-[#00b259] text-white hover:bg-[#009b4d] font-bold cursor-pointer gap-1">
+                <Plus className="h-3.5 w-3.5" /> Add Integration
+              </Button>
+            </CardHeader>
+            <CardContent className="p-5 space-y-3">
+              <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 max-h-[350px] overflow-y-auto pr-1">
+                {(data.integrations || []).map((integration: any, idx: number) => (
+                  <div key={idx} className="p-3 border border-[#C5C4C2]/35 rounded-xl bg-neutral-50/30 space-y-2 relative flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-[9px] font-bold text-neutral-450 uppercase">Integration #{idx + 1}</span>
+                        <div className="flex gap-1">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            disabled={idx === 0}
+                            onClick={() => {
+                              const list = [...(data.integrations || [])]
+                              const temp = list[idx]
+                              list[idx] = list[idx - 1]
+                              list[idx - 1] = temp
+                              setData({ ...data, integrations: list })
+                            }}
+                            className="h-5 w-5 text-neutral-400 hover:text-black cursor-pointer text-[10px]"
+                          >
+                            ↑
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            disabled={idx === (data.integrations || []).length - 1}
+                            onClick={() => {
+                              const list = [...(data.integrations || [])]
+                              const temp = list[idx]
+                              list[idx] = list[idx + 1]
+                              list[idx + 1] = temp
+                              setData({ ...data, integrations: list })
+                            }}
+                            className="h-5 w-5 text-neutral-400 hover:text-black cursor-pointer text-[10px]"
+                          >
+                            ↓
+                          </Button>
+                          <Button onClick={() => deleteIntegration(idx)} variant="ghost" size="icon" className="h-5 w-5 text-red-500 hover:text-red-655 hover:bg-red-55 cursor-pointer">
+                            <X className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <Label className="text-[9px] text-neutral-400 font-bold uppercase">App Name</Label>
+                        <Input value={integration.name} onChange={e => updateIntegration(idx, 'name', e.target.value)} className="bg-white border-neutral-300 h-8 text-xs font-semibold" />
+                      </div>
+
+                      <div className="space-y-1 mt-1">
+                        <Label className="text-[9px] text-neutral-400 font-bold uppercase">Icon URL</Label>
+                        <div className="flex gap-2">
+                          <Input value={integration.image} onChange={e => updateIntegration(idx, 'image', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono flex-1" />
+                          <label className="h-8.5 px-2 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded-md">
+                            {uploadingState[`${idx}-integration`] ? '...' : 'Upload'}
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden" 
+                              disabled={uploadingState[`${idx}-integration`]}
+                              onChange={e => handleFileUpload(e, idx, 'integration')}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {(data.integrations || []).length === 0 && (
+                  <p className="text-xs text-neutral-400 italic text-center p-4 border border-dashed border-[#C5C4C2] rounded-xl col-span-full">
+                    No integrations configured yet. Click "Add Integration" to start.
+                  </p>
+                )}
               </div>
             </CardContent>
           </Card>

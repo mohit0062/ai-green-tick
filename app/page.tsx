@@ -558,8 +558,8 @@ const TestimonialsComponent23Block = ({ testimonials }: { testimonials: any[] })
 
 
 
-const FeaturesSection14Block = () => {
-  return <Features14 />
+const FeaturesSection14Block = ({ integrations }: { integrations: any[] }) => {
+  return <Features14 integrations={integrations} />
 }
 
 const FeaturesSection05Block = ({ items }: { items: any[] }) => {
@@ -807,7 +807,7 @@ const LandingPage = async () => {
 
       <TestimonialsComponent23Block testimonials={homepage.testimonials} />
 
-      <FeaturesSection14Block />
+      <FeaturesSection14Block integrations={homepage.integrations} />
 
       <FeaturesSection05Block items={securityItemsWithIcons} />
 
