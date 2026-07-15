@@ -70,7 +70,7 @@ const Features = ({ data }: { data: DataType[] }) => {
                 <div className="relative z-10 w-full max-w-[440px] bg-white dark:bg-neutral-850 rounded-xl shadow-xl border border-neutral-200/80 flex items-center justify-center overflow-hidden aspect-[16/10]">
                   {activeTab === 'marketing' && (
                     <img 
-                      src="/images/marketing-workflow.png" 
+                      src="/images/marketing-workflow.jpg" 
                       alt="Marketing Workflow" 
                       className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-300"
                     />
