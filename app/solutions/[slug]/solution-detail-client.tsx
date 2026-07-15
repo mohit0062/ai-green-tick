@@ -109,7 +109,14 @@ export default function SolutionDetailClient({ slug, solution }: SolutionDetailP
 
   // Safe fallback properties
   const title = solution?.title || defaultBp?.title || ''
-  const desc = solution?.desc || defaultBp?.desc || ''
+  const desc =
+    solution?.desc ||
+    solution?.shortDesc ||
+    solution?.description ||
+    defaultBp?.desc ||
+    defaultBp?.shortDesc ||
+    defaultBp?.description ||
+    ''
   const metric = solution?.metric || defaultBp?.metric || ''
   const iconName = solution?.icon || defaultBp?.icon || ''
   const seoTitle = solution?.seoTitle || defaultBp?.seoTitle || ''

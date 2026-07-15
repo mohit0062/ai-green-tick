@@ -230,7 +230,7 @@ export async function createBlog(formData: FormData) {
   revalidatePath('/admin/blogs')
   revalidatePath('/blog')
   revalidatePath('/')
-  redirect('/admin/blogs')
+  return { success: true }
 }
 
 export async function updateBlog(id: string, formData: FormData) {
@@ -294,5 +294,5 @@ export async function updateBlog(id: string, formData: FormData) {
   revalidatePath(`/blog/${slug}`)
   revalidatePath('/blog')
   revalidatePath('/')
-  redirect('/admin/blogs')
+  return { success: true }
 }

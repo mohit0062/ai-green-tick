@@ -68,7 +68,7 @@ export default async function AdminProtectedLayout({
       {/* Main Content */}
       <main className="flex flex-1 flex-col sm:pl-64">
         {/* Top header */}
-        <header className="flex h-14 items-center gap-4 border-b border-[#C5C4C2]/50 bg-background px-4 lg:h-[60px] lg:px-6 select-none">
+        <header className="flex h-14 items-center gap-4 border-b border-neutral-200 bg-background px-4 lg:h-[60px] lg:px-6 select-none">
           <h1 className="text-sm font-extrabold tracking-wide uppercase text-neutral-400">AI Greentick Admin CMS</h1>
           <div className="ml-auto flex items-center gap-4">
             <span className="text-xs font-bold text-neutral-600">{userEmail}</span>
@@ -95,18 +95,15 @@ export default async function AdminProtectedLayout({
                   <p className="text-neutral-500 text-xs leading-relaxed">
                     Your current role (<span className="font-bold text-neutral-700 capitalize">{userRole.replace('_', ' ')}</span>) does not have permission to access:
                   </p>
-                  <p className="font-mono bg-neutral-100/60 p-2 border border-[#C5C4C2]/40 rounded text-neutral-600 text-[10px] select-all truncate mt-1">
+                  <p className="font-mono bg-neutral-100/60 p-2 border border-neutral-200 rounded text-neutral-600 text-[10px] select-all truncate mt-1">
                     {pathname}
                   </p>
                 </div>
 
-                <div className="border-t border-[#C5C4C2]/30 pt-6 flex flex-col gap-3">
+                <div className="border-t border-neutral-150 pt-6 flex flex-col gap-3">
                   <Link 
                     href="/admin" 
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-black text-white hover:bg-neutral-850 text-xs font-bold tracking-wide uppercase transition-colors"
-                    style={{
-                      clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)'
-                    }}
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-white hover:bg-primary/95 text-xs font-bold tracking-wide uppercase transition-colors rounded-lg shadow-sm"
                   >
                     <ArrowLeft className="h-4 w-4" /> Return to Dashboard
                   </Link>

@@ -80,7 +80,7 @@ function IndustryRow({
   return (
     <div className="group flex items-center gap-3 py-2.5 border-b border-gray-100 last:border-b-0">
       {/* Icon */}
-      <div className="h-8 w-8 rounded-lg bg-[#f0faf5] flex items-center justify-center shrink-0 text-[#00b259]">
+      <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary">
         {ind.icon?.startsWith('<svg')
           ? <div dangerouslySetInnerHTML={{ __html: ind.icon }} className="h-4 w-4 [&>svg]:h-4 [&>svg]:w-4" />
           : <LucideIcon name={ind.icon || 'ShoppingBag'} className="h-4 w-4" />
@@ -97,7 +97,7 @@ function IndustryRow({
       <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
         <button onClick={() => onMove('up')} disabled={idx === 0} className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-700 disabled:opacity-25" title="Move up">↑</button>
         <button onClick={() => onMove('down')} disabled={idx === total - 1} className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-700 disabled:opacity-25" title="Move down">↓</button>
-        <button onClick={onEdit} className="p-1 rounded hover:bg-[#e8f5ee] text-gray-400 hover:text-[#00b259]" title="Edit"><Edit className="h-3.5 w-3.5" /></button>
+        <button onClick={onEdit} className="p-1 rounded hover:bg-primary/10 text-gray-400 hover:text-primary transition-colors" title="Edit"><Edit className="h-3.5 w-3.5" /></button>
         <button onClick={onDelete} className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-600" title="Delete"><Trash2 className="h-3.5 w-3.5" /></button>
       </div>
     </div>
@@ -188,24 +188,24 @@ function IndustryModal({
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Title *</label>
-                  <input value={form.title} onChange={e => set('title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="eCommerce" />
+                  <input value={form.title} onChange={e => set('title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none" placeholder="eCommerce" />
                 </div>
                 <div className="space-y-1">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">ID / Slug *</label>
-                  <input value={form.id} onChange={e => set('id', e.target.value.toLowerCase().replace(/\s+/g, '-'))} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none font-mono" placeholder="ecommerce" />
+                  <input value={form.id} onChange={e => set('id', e.target.value.toLowerCase().replace(/\s+/g, '-'))} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none font-mono" placeholder="ecommerce" />
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Icon (Lucide name or SVG)</label>
-                <input value={form.icon} onChange={e => set('icon', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none font-mono" placeholder="ShoppingBag" />
+                <input value={form.icon} onChange={e => set('icon', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none font-mono" placeholder="ShoppingBag" />
               </div>
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Description</label>
-                <textarea value={form.desc} onChange={e => set('desc', e.target.value)} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none" placeholder="Short description..." />
+                <textarea value={form.desc} onChange={e => set('desc', e.target.value)} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none resize-none" placeholder="Short description..." />
               </div>
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Key Metric / Result</label>
-                <input value={form.metric} onChange={e => set('metric', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="35% cart recovery rate" />
+                <input value={form.metric} onChange={e => set('metric', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none" placeholder="35% cart recovery rate" />
               </div>
               
               <div className="space-y-2">
@@ -219,7 +219,7 @@ function IndustryModal({
                         arr[i] = e.target.value
                         set('useCases', arr)
                       }}
-                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                       placeholder={`Workflow item ${i + 1}...`}
                     />
                     <button
@@ -232,7 +232,7 @@ function IndustryModal({
                 ))}
                 <button
                   onClick={() => set('useCases', [...(form.useCases || []), ''])}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-[#00b259] hover:text-[#009149] mt-1"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 mt-1"
                 >
                   <Plus className="h-3.5 w-3.5" /> Add workflow
                 </button>
@@ -245,15 +245,15 @@ function IndustryModal({
             <div className="space-y-4">
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Meta Title</label>
-                <input value={form.seoTitle} onChange={e => set('seoTitle', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="Meta title..." />
+                <input value={form.seoTitle} onChange={e => set('seoTitle', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none" placeholder="Meta title..." />
               </div>
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Meta Description</label>
-                <textarea value={form.seoDescription} onChange={e => set('seoDescription', e.target.value)} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none" placeholder="Meta description..." />
+                <textarea value={form.seoDescription} onChange={e => set('seoDescription', e.target.value)} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none resize-none" placeholder="Meta description..." />
               </div>
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Meta Keywords</label>
-                <input value={form.seoKeywords} onChange={e => set('seoKeywords', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none" placeholder="keywords..." />
+                <input value={form.seoKeywords} onChange={e => set('seoKeywords', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none" placeholder="keywords..." />
               </div>
             </div>
           )}
@@ -270,7 +270,7 @@ function IndustryModal({
                     set('problemSection', ps)
                   }}
                   rows={4}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none resize-none"
                   placeholder="Explain the main industry problem statement..."
                 />
               </div>
@@ -285,7 +285,7 @@ function IndustryModal({
                         bullets[i] = e.target.value
                         set('problemSection', { ...(form.problemSection || { description: '', bullets: [] }), bullets })
                       }}
-                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                       placeholder={`Challenge bullet ${i + 1}...`}
                     />
                     <button
@@ -304,7 +304,7 @@ function IndustryModal({
                     const bullets = [...(form.problemSection?.bullets || []), '']
                     set('problemSection', { ...(form.problemSection || { description: '', bullets: [] }), bullets })
                   }}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-[#00b259] hover:text-[#009149] mt-1"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 mt-1"
                 >
                   <Plus className="h-3.5 w-3.5" /> Add Challenge
                 </button>
@@ -332,7 +332,7 @@ function IndustryModal({
                           arr[fIdx] = { ...feat, title: e.target.value }
                           set('features', arr)
                         }}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                         placeholder="e.g. Abandoned Cart Recovery"
                       />
                     </div>
@@ -346,7 +346,7 @@ function IndustryModal({
                           set('features', arr)
                         }}
                         rows={2}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none resize-none"
                         placeholder="Explain this specific module feature..."
                       />
                     </div>
@@ -363,7 +363,7 @@ function IndustryModal({
                               arr[fIdx] = { ...feat, bullets: bArr }
                               set('features', arr)
                             }}
-                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                             placeholder={`Detail bullet ${bIdx + 1}`}
                           />
                           <button
@@ -386,7 +386,7 @@ function IndustryModal({
                           arr[fIdx] = { ...feat, bullets: bArr }
                           set('features', arr)
                         }}
-                        className="flex items-center gap-1.5 text-xs font-semibold text-[#00b259] hover:text-[#009149] mt-1"
+                        className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 mt-1"
                       >
                         <Plus className="h-3.5 w-3.5" /> Add bullet
                       </button>
@@ -408,7 +408,7 @@ function IndustryModal({
                     const list = e.target.value.split(',').map(s => s.trim())
                     set('integrations', list)
                   }}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                   placeholder="Shopify, WooCommerce, Razorpay"
                 />
               </div>
@@ -418,7 +418,7 @@ function IndustryModal({
                   value={form.benchmarkResults}
                   onChange={e => set('benchmarkResults', e.target.value)}
                   rows={4}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none leading-relaxed"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none resize-none leading-relaxed"
                   placeholder="Industry expectation benchmarks..."
                 />
               </div>
@@ -428,7 +428,7 @@ function IndustryModal({
                   value={form.caseStudy}
                   onChange={e => set('caseStudy', e.target.value)}
                   rows={4}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none leading-relaxed"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none resize-none leading-relaxed"
                   placeholder="Case study placeholder text..."
                 />
               </div>
@@ -455,7 +455,7 @@ function IndustryModal({
                           arr[qIdx] = { ...faq, question: e.target.value }
                           set('faqs', arr)
                         }}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                         placeholder="FAQ Question..."
                       />
                     </div>
@@ -469,7 +469,7 @@ function IndustryModal({
                           set('faqs', arr)
                         }}
                         rows={3}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/40 focus:border-[#00b259] focus:outline-none resize-none leading-relaxed"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none resize-none leading-relaxed"
                         placeholder="FAQ Answer..."
                       />
                     </div>

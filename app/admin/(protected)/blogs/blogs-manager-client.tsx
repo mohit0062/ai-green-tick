@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Plus,
   Search,
@@ -316,16 +317,16 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
   return (
     <div className="space-y-6 relative font-sans text-black">
       {/* Page Title */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#C5C4C2]/50 pb-5">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-neutral-200 pb-5">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-neutral-800 font-display">AIS Blogs & Content</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-neutral-800">AIS Blogs & Content</h2>
           <p className="text-neutral-500 text-xs">
             Write dynamic articles, configure meta tags, and audit SEO ranks.
           </p>
         </div>
         <Link
           href="/admin/blogs/new"
-          className={cn(buttonVariants({ size: 'default' }), 'flex items-center gap-1.5 self-start sm:self-auto shadow-xs bg-[#00b259] hover:bg-[#009b4d] text-white cursor-pointer')}
+          className={cn(buttonVariants({ size: 'default' }), 'flex items-center gap-1.5 self-start sm:self-auto shadow-sm cursor-pointer')}
         >
           <Plus className="h-4 w-4" />
           Create New Post
@@ -333,52 +334,27 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
       </div>
 
       {/* WordPress Navigation Counts Tabs */}
-      <div className="flex flex-wrap gap-1.5 text-xs pb-3 text-neutral-500 select-none">
-        <button
-          onClick={() => { setActiveTab('all'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'all' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          All <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'all' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countAll}</span>
-        </button>
+      <Tabs value={activeTab} onValueChange={(val: any) => { setActiveTab(val); setCurrentPage(1); }} className="w-fit mb-3">
+        <TabsList className="bg-neutral-100 p-1">
+          <TabsTrigger value="all" className="data-[state=active]:bg-white font-bold text-xs">
+            All <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countAll}</span>
+          </TabsTrigger>
+          <TabsTrigger value="published" className="data-[state=active]:bg-white font-bold text-xs">
+            Published <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countPublished}</span>
+          </TabsTrigger>
+          <TabsTrigger value="draft" className="data-[state=active]:bg-white font-bold text-xs">
+            Drafts <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countDrafts}</span>
+          </TabsTrigger>
+          <TabsTrigger value="trash" className="data-[state=active]:bg-white font-bold text-xs">
+            Trash <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countTrash}</span>
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
-        <button
-          onClick={() => { setActiveTab('published'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'published' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          Published <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'published' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countPublished}</span>
-        </button>
-
-        <button
-          onClick={() => { setActiveTab('draft'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'draft' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          Drafts <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'draft' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countDrafts}</span>
-        </button>
-
-        <button
-          onClick={() => { setActiveTab('trash'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'trash' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          Trash <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'trash' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countTrash}</span>
-        </button>
-      </div>
-
-      <Card className="shadow-xs border border-[#C5C4C2]/50">
+      <Card className="shadow-sm border border-neutral-200">
         <CardHeader className="pb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <CardTitle className="font-display">Article Directory</CardTitle>
+            <CardTitle>Article Directory</CardTitle>
             <CardDescription className="text-xs">
               Check focus keywords, audit schema types, and edit published articles.
             </CardDescription>
@@ -392,18 +368,18 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
               placeholder="Search title, keyword..."
               value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-              className="pl-9 h-10 w-full border-[#C5C4C2]"
+              className="pl-9 h-10 w-full border-neutral-200"
             />
           </div>
         </CardHeader>
 
         <CardContent className="space-y-4 pt-1">
           {/* Filters & Bulk Actions bar */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-y border-[#C5C4C2]/40 py-3.5 bg-neutral-50/50 px-3 rounded-lg">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-y border-neutral-200 py-3.5 bg-neutral-50/50 px-3 rounded-lg">
             {/* Bulk actions */}
             <div className="flex items-center gap-2 text-xs font-bold">
               <Select value={bulkAction} onValueChange={(val) => setBulkAction(val || '')} className="w-[180px]">
-                <SelectTrigger className="w-full h-9 border-[#C5C4C2]">
+                <SelectTrigger className="w-full h-9 border-neutral-200">
                   <SelectValue placeholder="Bulk actions" />
                 </SelectTrigger>
                 <SelectContent className="text-black">
@@ -423,12 +399,12 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                 size="sm"
                 onClick={handleApplyBulkAction}
                 disabled={!bulkAction || checkedIds.length === 0 || isPending}
-                className="h-9 px-3 font-semibold border-[#C5C4C2]"
+                className="h-9 px-3 font-semibold border-neutral-200"
               >
                 Apply
               </Button>
               {checkedIds.length > 0 && (
-                <span className="text-[10px] text-neutral-500 font-bold bg-background px-2.5 py-1 rounded-md border border-[#C5C4C2]">
+                <span className="text-[10px] text-neutral-500 font-bold bg-background px-2.5 py-1 rounded-md border border-neutral-200">
                   {checkedIds.length} items checked
                 </span>
               )}
@@ -441,7 +417,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
               </div>
 
               <Select value={selectedCategory} onValueChange={(val) => { setSelectedCategory(val || 'all'); setCurrentPage(1); }} className="w-[140px]">
-                <SelectTrigger className="w-full h-9 bg-background border-[#C5C4C2]">
+                <SelectTrigger className="w-full h-9 bg-background border-neutral-200">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent className="text-black">
@@ -453,7 +429,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
               </Select>
 
               <Select value={selectedDate} onValueChange={(val) => { setSelectedDate(val || 'all'); setCurrentPage(1); }} className="w-[140px]">
-                <SelectTrigger className="w-full h-9 bg-background border-[#C5C4C2]">
+                <SelectTrigger className="w-full h-9 bg-background border-neutral-200">
                   <SelectValue placeholder="All dates" />
                 </SelectTrigger>
                 <SelectContent className="text-black">
@@ -484,19 +460,19 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
           </div>
 
           {/* Table */}
-          <div className="rounded-lg border border-[#C5C4C2]/50 bg-background overflow-hidden relative shadow-xs">
+          <div className="rounded-lg border border-neutral-200 bg-background overflow-hidden relative shadow-sm">
             {isPending && (
               <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center z-10 transition-all">
-                <Loader2 className="h-8 w-8 text-[#00b259] animate-spin" />
+                <Loader2 className="h-8 w-8 text-primary animate-spin" />
               </div>
             )}
             <Table>
               <TableHeader className="bg-neutral-50/50">
-                <TableRow className="border-b border-[#C5C4C2]/50">
+                <TableRow className="border-b border-neutral-200">
                   <TableHead className="w-[45px] text-center">
                     <input
                       type="checkbox"
-                      className="rounded border-neutral-300 text-[#00b259] focus:ring-[#00b259] scale-110 cursor-pointer"
+                      className="rounded border-neutral-300 text-primary focus:ring-primary scale-110 cursor-pointer accent-primary"
                       checked={paginatedBlogs.length > 0 && checkedIds.length === paginatedBlogs.length}
                       onChange={(e) => handleSelectAll(e.target.checked)}
                     />
@@ -525,15 +501,15 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                       <TableRow
                         key={blog.id}
                         className={cn(
-                          "hover:bg-neutral-50/50 group transition-all border-b border-[#C5C4C2]/30",
-                          isChecked ? "bg-[#00b259]/5 hover:bg-[#00b259]/5" : ""
+                          "hover:bg-neutral-50/50 group transition-all border-b border-neutral-100",
+                          isChecked ? "bg-primary/5 hover:bg-primary/5" : ""
                         )}
                       >
                         {/* Checkbox */}
                         <TableCell className="text-center align-middle">
                           <input
                             type="checkbox"
-                            className="rounded border-neutral-300 text-[#00b259] focus:ring-[#00b259] scale-110 cursor-pointer"
+                            className="rounded border-neutral-300 text-primary focus:ring-primary scale-110 cursor-pointer accent-primary"
                             checked={isChecked}
                             onChange={(e) => handleSelectRow(blog.id, e.target.checked)}
                           />
@@ -557,7 +533,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                                 <>
                                   <Link
                                     href={`/admin/blogs/${blog.id}/edit`}
-                                    className="text-[#00b259] hover:underline"
+                                    className="text-primary hover:underline"
                                   >
                                     Edit
                                   </Link>
@@ -707,7 +683,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between border-t border-[#C5C4C2]/50 pt-4 text-xs font-bold text-neutral-500 select-none">
+            <div className="flex items-center justify-between border-t border-neutral-200 pt-4 text-xs font-bold text-neutral-500 select-none">
               <span>
                 Showing <strong>{Math.min(totalItems, (currentPage - 1) * itemsPerPage + 1)}</strong> to <strong>{Math.min(totalItems, currentPage * itemsPerPage)}</strong> of <strong>{totalItems}</strong> articles
               </span>
@@ -715,7 +691,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-8 w-8 border-[#C5C4C2]"
+                  className="h-8 w-8 border-neutral-200"
                   onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                   disabled={currentPage === 1}
                 >
@@ -726,7 +702,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                     key={idx}
                     variant={currentPage === idx + 1 ? 'default' : 'outline'}
                     size="icon"
-                    className={cn("h-8 w-8 text-xs font-bold border-[#C5C4C2]", currentPage === idx + 1 ? "bg-[#00b259] hover:bg-[#009b4d] text-white" : "")}
+                    className="h-8 w-8 text-xs font-bold border-neutral-200"
                     onClick={() => setCurrentPage(idx + 1)}
                   >
                     {idx + 1}
@@ -735,7 +711,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-8 w-8 border-[#C5C4C2]"
+                  className="h-8 w-8 border-neutral-200"
                   onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                   disabled={currentPage === totalPages}
                 >
@@ -750,11 +726,11 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
       {/* Quick Edit Overlay Dialog */}
       {quickEditBlog && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-background rounded-xl border border-[#C5C4C2]/50 shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="px-5 py-4 border-b border-[#C5C4C2]/50 bg-neutral-50/50 flex items-center justify-between">
+          <div className="w-full max-w-lg bg-background rounded-xl border border-neutral-200 shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="px-5 py-4 border-b border-neutral-200 bg-neutral-50/50 flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-lg text-neutral-800 flex items-center gap-1.5 font-display">
-                  <Edit2 className="h-4 w-4 text-[#00b259]" />
+                <h3 className="font-bold text-lg text-neutral-800 flex items-center gap-1.5">
+                  <Edit2 className="h-4 w-4 text-primary" />
                   Quick Edit Blog
                 </h3>
                 <p className="text-xs text-neutral-400">Modify essential blog attributes instantly.</p>
@@ -838,19 +814,19 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                   value={quickEditForm.tagsString}
                   onChange={handleQuickEditChange}
                   placeholder="e.g. Nextjs, Postgres, CMS"
-                  className="h-10 border-[#C5C4C2]"
+                  className="h-10 border-neutral-200"
                 />
                 <p className="text-[9px] text-neutral-400 font-normal">Separate each tag badge with a standard comma (<code>,</code>).</p>
               </div>
             </div>
 
-            <div className="px-5 py-4 border-t border-[#C5C4C2]/50 bg-neutral-50/50 flex items-center justify-end gap-3 text-xs font-bold select-none">
+            <div className="px-5 py-4 border-t border-neutral-200 bg-neutral-50/50 flex items-center justify-end gap-3 text-xs font-bold select-none">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setQuickEditBlog(null)}
                 disabled={isQuickEditing}
-                className="h-9 px-4 border-[#C5C4C2]"
+                className="h-9 px-4 border-neutral-200"
               >
                 Cancel
               </Button>
@@ -858,7 +834,7 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                 type="button"
                 onClick={handleSaveQuickEdit}
                 disabled={isQuickEditing}
-                className="h-9 px-4 font-semibold bg-[#00b259] hover:bg-[#009b4d] text-white cursor-pointer"
+                className="h-9 px-4 font-semibold cursor-pointer"
               >
                 {isQuickEditing ? (
                   <>

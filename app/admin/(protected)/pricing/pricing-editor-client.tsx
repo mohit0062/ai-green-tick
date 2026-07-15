@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { updateSiteSectionAction } from '../cms-actions'
 import { cn } from '@/lib/utils'
 import { 
@@ -129,6 +130,21 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
     checks.push({ label: 'Growth plan popular badge set', pass: !!data.plans?.Growth?.popular, tip: 'Check popular badge on Growth' })
     checks.push({ label: 'Enterprise plan features list', pass: (data.plans?.Enterprise?.features || []).length > 4, tip: 'Enterprise list size' })
 
+    // AEO/AGO checks
+    const hasConversationalKeyword = ['how', 'why', 'what', 'best', 'guide', 'strategy', 'tips', 'api'].some(word => kw.includes(word))
+    checks.push({
+      label: 'AEO: Conversational Keyword intent',
+      pass: hasConversationalKeyword,
+      tip: 'Use conversational search words in keyword (how, why, what, best, api, guide)'
+    })
+
+    const hasDirectAnswer = desc.length > 50 && desc.length <= 200
+    checks.push({
+      label: 'AEO: Direct Answer Snippet',
+      pass: hasDirectAnswer,
+      tip: 'Description should be 50-200 chars to serve as an AI Direct Answer Snippet'
+    })
+
     const passCount = checks.filter(c => c.pass).length
     const calculatedScore = Math.round((passCount / checks.length) * 100)
 
@@ -157,26 +173,26 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
           className={cn(
             "fixed bottom-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border transition-all duration-300",
             statusMsg.type === 'success'
-              ? 'bg-[#00b259]/10 text-[#00b259] border-[#00b259]/20'
-              : 'bg-red-500/10 text-red-500 border-red-500/20'
+              ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+              : 'bg-destructive/10 text-destructive border-destructive/20'
           )}
         >
           {statusMsg.type === 'success' ? (
-            <Check className="h-4 w-4 shrink-0 text-[#00b259]" />
+            <Check className="h-4 w-4 shrink-0 text-emerald-500" />
           ) : (
-            <X className="h-4 w-4 shrink-0 text-red-500" />
+            <X className="h-4 w-4 shrink-0 text-destructive" />
           )}
           <span className="text-sm font-medium">{statusMsg.text}</span>
         </div>
       )}
 
       {/* Page header */}
-      <div className="flex items-center gap-4 border-b border-[#C5C4C2]/50 pb-5">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#C5C4C2]/50 bg-white text-neutral-500 select-none">
-          <Globe className="h-4 w-4 text-[#00b259]" />
+      <div className="flex items-center gap-4 border-b border-neutral-200 pb-5">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-500 select-none">
+          <Globe className="h-4 w-4 text-primary" />
         </div>
         <div>
-          <h2 className="text-2xl font-normal tracking-tight text-neutral-900 font-display">
+          <h2 className="text-2xl font-normal tracking-tight text-neutral-900">
             Edit Page: {title}
           </h2>
           <p className="text-neutral-500 text-xs">WordPress layout view. Customize plan prices, currency conversions, and features checklists.</p>
@@ -232,12 +248,12 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
           {Object.keys(data.plans || {}).map((planKey) => {
             const plan = data.plans[planKey]
             return (
-              <Card key={planKey} className="border border-[#C5C4C2]/50 shadow-xs bg-white rounded-lg">
-                <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3 px-5 flex flex-row items-center justify-between">
+              <Card key={planKey} className="border border-neutral-200 shadow-sm bg-white rounded-lg">
+                <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3 px-5 flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle className="text-sm font-black text-neutral-850 font-display flex items-center gap-1.5">
+                    <CardTitle className="text-sm font-black text-neutral-850 flex items-center gap-1.5">
                       {plan.name || planKey.toUpperCase()}
-                      {plan.popular && <Badge className="bg-[#00b259] text-white text-[9px] hover:bg-[#00b259]">MOST POPULAR</Badge>}
+                      {plan.popular && <Badge className="bg-primary text-white text-[9px] hover:bg-primary">MOST POPULAR</Badge>}
                     </CardTitle>
                     <CardDescription className="text-[9px]">Configure descriptors, rates, and feature listings.</CardDescription>
                   </div>
@@ -316,10 +332,10 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
                   )}
 
                   {/* Features list */}
-                  <div className="border-t border-[#C5C4C2]/35 pt-4 space-y-2">
+                  <div className="border-t border-neutral-200 pt-4 space-y-2">
                     <div className="flex justify-between items-center">
                       <h4 className="text-[10px] font-black text-neutral-800 uppercase tracking-wide">Included Features</h4>
-                      <Button onClick={() => addFeature(planKey)} size="sm" className="h-6 text-[9px] bg-[#00b259] text-white hover:bg-[#009b4d] font-bold cursor-pointer gap-1">
+                      <Button onClick={() => addFeature(planKey)} size="sm" className="h-6 text-[9px] font-bold cursor-pointer gap-1">
                         <Plus className="h-3 w-3" /> Add feature
                       </Button>
                     </div>
@@ -330,7 +346,7 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
                           <Input 
                             value={feature} 
                             onChange={e => updateFeature(planKey, featIdx, e.target.value)} 
-                            className="h-8 text-xs bg-white border-[#C5C4C2]/70 flex-1"
+                            className="h-8 text-xs bg-white border-neutral-200 flex-1"
                             placeholder="e.g. 1 WhatsApp Number"
                           />
                           <Button 
@@ -356,26 +372,27 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
         <div className="space-y-6">
           
           {/* Publish Settings Card */}
-          <Card className="border border-[#C5C4C2]/50 bg-white rounded-lg shadow-xs overflow-visible">
-            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-4">
-              <CardTitle className="text-xs font-bold text-neutral-800 font-display">Publish settings</CardTitle>
+          <Card className="border border-neutral-200 bg-white rounded-lg shadow-sm overflow-visible">
+            <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-4">
+              <CardTitle className="text-xs font-bold text-neutral-800">Publish settings</CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-3.5 text-[11px] text-neutral-500 font-normal leading-relaxed select-none">
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-neutral-700">Status:</span>
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="bg-white border border-neutral-300 h-7 rounded px-2 outline-none text-neutral-800 text-[10px] cursor-pointer font-normal"
-                >
-                  <option value="published">Published</option>
-                  <option value="draft">Draft</option>
-                </select>
+                <Select value={status} onValueChange={(val) => setStatus(val)}>
+                  <SelectTrigger className="bg-white border border-neutral-200 h-7 w-24 outline-none text-neutral-800 text-[10px] cursor-pointer font-normal shadow-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="text-black">
+                    <SelectItem value="published">Published</SelectItem>
+                    <SelectItem value="draft">Draft</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-neutral-700">Visibility:</span>
-                <span className="text-[#00b259] font-semibold">Public (Edit)</span>
+                <span className="text-primary font-semibold">Public (Edit)</span>
               </div>
 
               <div className="space-y-1">
@@ -493,12 +510,12 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
           </Card>
 
           {/* Content AI metabox */}
-          <Card className="border border-[#C5C4C2]/50 bg-white rounded-lg shadow-xs overflow-visible">
-            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-4 flex flex-row items-center justify-between">
-              <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1 font-display">
+          <Card className="border border-neutral-200 bg-white rounded-lg shadow-sm overflow-visible">
+            <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-4 flex flex-row items-center justify-between">
+              <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1">
                 <Sparkles className="h-3.5 w-3.5 text-amber-500 animate-pulse" /> Content AI Assistant
               </CardTitle>
-              <Badge variant="outline" className="px-1 text-[8px] border-[#00b259]/30 text-[#00b259] bg-[#00b259]/5 font-bold tracking-wide uppercase select-none rounded">
+              <Badge variant="outline" className="px-1 text-[8px] border-primary/30 text-primary bg-primary/5 font-bold tracking-wide uppercase select-none rounded">
                 Beta
               </Badge>
             </CardHeader>
@@ -536,7 +553,7 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
                     type="button"
                     onClick={handleAIGenerate}
                     disabled={isGeneratingAI}
-                    className="w-full bg-[#00b259] text-white hover:bg-[#009b4d] font-bold h-8 text-[11px] cursor-pointer rounded-md shadow-xs gap-1.5"
+                    className="w-full font-bold h-8 text-[11px] cursor-pointer rounded-md shadow-sm gap-1.5"
                   >
                     {isGeneratingAI ? (
                       <>
@@ -557,7 +574,7 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
                     value={aiInstructions}
                     onChange={(e) => setAiInstructions(e.target.value)}
                     placeholder="e.g. Focus on e-commerce pricing details..."
-                    className="h-20 text-[10px] border-neutral-300 resize-none font-normal"
+                    className="h-20 text-[10px] border-neutral-200 resize-none font-normal"
                   />
                 </div>
               )}

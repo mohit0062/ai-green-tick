@@ -44,17 +44,17 @@ const LogoCloud = ({
 
           {/* Row 1 */}
           {row1.length > 0 && (
-            <div className='w-full overflow-hidden border-b h-13 lg:h-18 flex items-center'>
-              <Marquee pauseOnHover duration={35} gap={0}>
+            <div className='w-full overflow-hidden border-b h-16 lg:h-24 flex items-center'>
+              <Marquee pauseOnHover duration={35} gap={0} className="p-0 h-full">
                 {row1.map((logo, index) => (
                   <div
                     key={index}
-                    className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
+                    className='w-[115px] lg:w-[160px] h-16 lg:h-24 flex items-center justify-center border-r shrink-0 px-3'
                   >
                     <img
                       src={logo.image}
                       alt={logo.name}
-                      className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
+                      className='h-6 lg:h-9 w-auto max-w-[80%] object-contain mx-auto hover:scale-105 transition-transform duration-300'
                     />
                   </div>
                 ))}
@@ -64,17 +64,17 @@ const LogoCloud = ({
 
           {/* Row 2 */}
           {row2.length > 0 && (
-            <div className='w-full overflow-hidden h-13 lg:h-18 flex items-center'>
-              <Marquee pauseOnHover duration={35} gap={0} reverse>
+            <div className='w-full overflow-hidden h-16 lg:h-24 flex items-center'>
+              <Marquee pauseOnHover duration={35} gap={0} reverse className="p-0 h-full">
                 {row2.map((logo, index) => (
                   <div
                     key={index}
-                    className='w-[115px] lg:w-[160px] h-13 lg:h-18 flex items-center justify-center border-r shrink-0 px-3'
+                    className='w-[115px] lg:w-[160px] h-16 lg:h-24 flex items-center justify-center border-r shrink-0 px-3'
                   >
                     <img
                       src={logo.image}
                       alt={logo.name}
-                      className='max-w-[80%] max-h-[55%] object-contain hover:scale-105 transition-transform duration-300'
+                      className='h-6 lg:h-9 w-auto max-w-[80%] object-contain mx-auto hover:scale-105 transition-transform duration-300'
                     />
                   </div>
                 ))}

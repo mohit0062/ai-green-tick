@@ -65,11 +65,11 @@ export default function AdminSidebar({
   }
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r border-[#C5C4C2]/50 bg-background sm:flex font-sans">
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r border-neutral-200 bg-background sm:flex font-sans">
       {/* Logo */}
-      <div className="flex h-14 items-center border-b border-[#C5C4C2]/50 px-4 lg:h-[60px] lg:px-6">
-        <Link href="/" className="flex items-center gap-2 font-bold font-display text-lg text-black">
-          <span className="bg-[#00b259] text-white rounded-md px-2 py-0.5 text-xs font-mono">AIS</span>
+      <div className="flex h-14 items-center border-b border-neutral-200 px-4 lg:h-[60px] lg:px-6">
+        <Link href="/" className="flex items-center gap-2 font-bold text-lg text-black">
+          <span className="bg-primary text-white rounded-md px-2 py-0.5 text-xs font-mono">AIS</span>
           <span>Admin Panel</span>
         </Link>
       </div>
@@ -95,7 +95,7 @@ export default function AdminSidebar({
                       className={cn(
                         'flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all',
                         active 
-                          ? 'bg-[#00b259]/10 text-[#00b259]' 
+                          ? 'bg-primary/10 text-primary' 
                           : 'text-neutral-500 hover:text-black hover:bg-neutral-100'
                       )}
                     >
@@ -111,10 +111,10 @@ export default function AdminSidebar({
       </div>
 
       {/* User Profile Card + Logout */}
-      <div className="mt-auto border-t border-[#C5C4C2]/50">
+      <div className="mt-auto border-t border-neutral-200">
         <div className="p-4 space-y-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00b259]/10 text-[#00b259] font-bold text-sm select-none border border-[#00b259]/20">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-bold text-sm select-none border border-primary/20">
               {userEmail ? userEmail.charAt(0).toUpperCase() : '?'}
             </div>
 
@@ -135,7 +135,7 @@ export default function AdminSidebar({
           <form action="/api/auth/signout" method="post">
             <button
               type="submit"
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-neutral-500 hover:text-[#00b259] transition-all hover:bg-neutral-100 text-xs font-bold cursor-pointer"
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-neutral-500 hover:text-primary transition-all hover:bg-neutral-100 text-xs font-bold cursor-pointer"
             >
               <LogOut className="h-4 w-4" />
               <span>Logout</span>

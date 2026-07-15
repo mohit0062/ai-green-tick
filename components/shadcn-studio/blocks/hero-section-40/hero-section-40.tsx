@@ -394,7 +394,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
             </div>
 
             {/* Bottom Metrics Row */}
-            <div className="grid grid-cols-5 h-14 sm:h-16 lg:h-18 font-mono select-none">
+            <div className="grid grid-cols-5 h-14 sm:h-16 lg:h-20 font-mono select-none">
               
               {/* Dynamic metrics */}
               {metrics.slice(0, 4).map((m, mIdx) => (

@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Eye, Save, Trash2, Plus, Edit, Globe, X, Check,
   ArrowLeft, ArrowUp, ArrowDown, ExternalLink, Search, Filter,
@@ -473,16 +474,16 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
       )}
 
       {/* Page Title */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#C5C4C2]/50 pb-5">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-neutral-200 pb-5">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-neutral-800 font-display">AIS Features Page</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-neutral-800">AIS Features Page</h2>
           <p className="text-neutral-500 text-xs">
             Manage dynamic features landing pages and their navbar menu configurations.
           </p>
         </div>
         <Button
           onClick={() => setIsAdding(true)}
-          className={cn(buttonVariants({ size: 'default' }), 'flex items-center gap-1.5 self-start sm:self-auto shadow-xs bg-[#00b259] hover:bg-[#009b4d] text-white cursor-pointer h-10 px-5')}
+          className="flex items-center gap-1.5 self-start sm:self-auto shadow-sm cursor-pointer h-10 px-5"
         >
           <Plus className="h-4 w-4" />
           Create New Feature
@@ -490,53 +491,28 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
       </div>
 
       {/* WordPress Navigation Counts Tabs */}
-      <div className="flex flex-wrap gap-1.5 text-xs pb-3 text-neutral-500 select-none">
-        <button
-          onClick={() => { setActiveTab('all'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'all' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          All <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'all' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countAll}</span>
-        </button>
-
-        <button
-          onClick={() => { setActiveTab('published'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'published' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          Published <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'published' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countPublished}</span>
-        </button>
-
-        <button
-          onClick={() => { setActiveTab('draft'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'draft' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          Drafts <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'draft' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countDrafts}</span>
-        </button>
-
-        <button
-          onClick={() => { setActiveTab('trash'); setCurrentPage(1); }}
-          className={cn(
-            "px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1.5 cursor-pointer",
-            activeTab === 'trash' ? "bg-[#00b259] text-white font-extrabold" : "bg-transparent hover:text-black"
-          )}
-        >
-          Trash <span className={cn("text-[9px] px-1.5 py-0.5 rounded-md", activeTab === 'trash' ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500")}>{countTrash}</span>
-        </button>
-      </div>
+      <Tabs value={activeTab} onValueChange={(val: any) => { setActiveTab(val); setCurrentPage(1); }} className="w-fit mb-3">
+        <TabsList className="bg-neutral-100 p-1">
+          <TabsTrigger value="all" className="data-[state=active]:bg-white font-bold text-xs">
+            All <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countAll}</span>
+          </TabsTrigger>
+          <TabsTrigger value="published" className="data-[state=active]:bg-white font-bold text-xs">
+            Published <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countPublished}</span>
+          </TabsTrigger>
+          <TabsTrigger value="draft" className="data-[state=active]:bg-white font-bold text-xs">
+            Drafts <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countDrafts}</span>
+          </TabsTrigger>
+          <TabsTrigger value="trash" className="data-[state=active]:bg-white font-bold text-xs">
+            Trash <span className="ml-1 text-[9px] bg-neutral-200 text-neutral-500 px-1.5 py-0.5 rounded-md">{countTrash}</span>
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       {/* Main Card Directory */}
-      <Card className="shadow-xs border border-[#C5C4C2]/50">
+      <Card className="shadow-sm border border-neutral-200">
         <CardHeader className="pb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <CardTitle className="font-display">Features Directory</CardTitle>
+            <CardTitle>Features Directory</CardTitle>
             <CardDescription className="text-xs">
               Check focus keywords, audit schema types, and edit page layouts.
             </CardDescription>
@@ -550,19 +526,19 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
               placeholder="Search features..."
               value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-              className="pl-9 h-10 w-full border-[#C5C4C2]"
+              className="pl-9 h-10 w-full border-neutral-200"
             />
           </div>
         </CardHeader>
 
         <CardContent className="space-y-4 pt-1">
           {/* Filters & Bulk Actions bar */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-y border-[#C5C4C2]/40 py-3.5 bg-neutral-50/50 px-3 rounded-lg">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-y border-neutral-200 py-3.5 bg-neutral-50/50 px-3 rounded-lg">
             
             {/* Bulk actions */}
             <div className="flex items-center gap-2 text-xs font-bold">
               <Select value={bulkAction} onValueChange={(val) => setBulkAction(val || '')} className="w-[180px]">
-                <SelectTrigger className="w-full h-9 border-[#C5C4C2]">
+                <SelectTrigger className="w-full h-9 border-neutral-200">
                   <SelectValue placeholder="Bulk actions" />
                 </SelectTrigger>
                 <SelectContent className="text-black">
@@ -587,12 +563,12 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                 size="sm"
                 onClick={handleApplyBulkAction}
                 disabled={!bulkAction || checkedIds.length === 0}
-                className="h-9 px-3 font-semibold border-[#C5C4C2]"
+                className="h-9 px-3 font-semibold border-neutral-200"
               >
                 Apply
               </Button>
               {checkedIds.length > 0 && (
-                <span className="text-[10px] text-neutral-500 font-bold bg-background px-2.5 py-1 rounded-md border border-[#C5C4C2]">
+                <span className="text-[10px] text-neutral-500 font-bold bg-background px-2.5 py-1 rounded-md border border-neutral-200">
                   {checkedIds.length} items checked
                 </span>
               )}
@@ -606,7 +582,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
 
               {/* Types */}
               <Select value={selectedType} onValueChange={(val) => { setSelectedType(val || 'all'); setCurrentPage(1); }} className="w-[140px]">
-                <SelectTrigger className="w-full h-9 bg-background border-[#C5C4C2]">
+                <SelectTrigger className="w-full h-9 bg-background border-neutral-200">
                   <SelectValue placeholder="Show All Types" />
                 </SelectTrigger>
                 <SelectContent className="text-black">
@@ -619,7 +595,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
 
               {/* SEO Score Rank Math */}
               <Select value={selectedSeo} onValueChange={(val) => { setSelectedSeo(val || 'all'); setCurrentPage(1); }} className="w-[140px]">
-                <SelectTrigger className="w-full h-9 bg-background border-[#C5C4C2]">
+                <SelectTrigger className="w-full h-9 bg-background border-neutral-200">
                   <SelectValue placeholder="Rank Math" />
                 </SelectTrigger>
                 <SelectContent className="text-black">
@@ -650,14 +626,14 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
           </div>
 
           {/* Table Container */}
-          <div className="rounded-lg border border-[#C5C4C2]/50 bg-background overflow-hidden relative shadow-xs">
+          <div className="rounded-lg border border-neutral-200 bg-background overflow-hidden relative shadow-sm">
             <Table>
               <TableHeader className="bg-neutral-50/50">
-                <TableRow className="border-b border-[#C5C4C2]/50">
+                <TableRow className="border-b border-neutral-200">
                   <TableHead className="w-[45px] text-center">
                     <input
                       type="checkbox"
-                      className="rounded border-neutral-300 text-[#00b259] focus:ring-[#00b259] scale-110 cursor-pointer"
+                      className="rounded border-neutral-300 text-primary focus:ring-primary scale-110 cursor-pointer accent-primary"
                       checked={paginatedFeatures.length > 0 && checkedIds.length === paginatedFeatures.length}
                       onChange={(e) => handleSelectAll(e.target.checked)}
                     />
@@ -689,7 +665,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                                 <Input
                                   value={quickEditForm.title}
                                   onChange={(e) => setQuickEditForm({ ...quickEditForm, title: e.target.value })}
-                                  className="h-9 border-neutral-300 bg-white text-xs text-neutral-800"
+                                  className="h-9 border-neutral-200 bg-white text-xs text-neutral-800"
                                 />
                               </div>
                               
@@ -698,7 +674,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                                 <Input
                                   value={quickEditForm.slug}
                                   onChange={(e) => setQuickEditForm({ ...quickEditForm, slug: e.target.value })}
-                                  className="h-9 font-mono text-[11px] border-neutral-300 bg-white"
+                                  className="h-9 font-mono text-[11px] border-neutral-200 bg-white"
                                 />
                               </div>
 
@@ -708,7 +684,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                                   value={quickEditForm.status} 
                                   onValueChange={(val) => setQuickEditForm({ ...quickEditForm, status: val || 'published' })}
                                 >
-                                  <SelectTrigger className="w-full h-9 bg-white border-neutral-300 text-xs">
+                                  <SelectTrigger className="w-full h-9 bg-white border-neutral-200 text-xs">
                                     <SelectValue placeholder="Select status" />
                                   </SelectTrigger>
                                   <SelectContent className="text-black">
@@ -723,27 +699,27 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                                 <Input
                                   value={quickEditForm.focusKeyword}
                                   onChange={(e) => setQuickEditForm({ ...quickEditForm, focusKeyword: e.target.value })}
-                                  className="h-9 border-neutral-300 bg-white text-xs"
+                                  className="h-9 border-neutral-200 bg-white text-xs"
                                   placeholder="Focus keyword to analyze SEO score"
                                 />
                               </div>
                             </div>
 
-                            <div className="flex items-center justify-between border-t border-amber-250/30 pt-3">
+                            <div className="flex items-center justify-between border-t border-neutral-100 pt-3">
                               <span className="text-[10px] text-neutral-400 italic font-normal">Quick Edit does not affect bento sections or detailed layouts.</span>
                               <div className="flex items-center gap-2">
                                 <Button
                                   type="button"
                                   variant="outline"
                                   onClick={() => setQuickEditFeature(null)}
-                                  className="h-8 text-xs border-neutral-300 bg-white hover:bg-neutral-100 cursor-pointer px-4.5 rounded-md"
+                                  className="h-8 text-xs border-neutral-200 bg-white hover:bg-neutral-100 cursor-pointer px-4.5 rounded-md"
                                 >
                                   Cancel
                                 </Button>
                                 <Button
                                   type="button"
                                   onClick={handleSaveQuickEdit}
-                                  className="h-8 text-xs bg-[#00b259] text-white hover:bg-[#009b4d] font-bold cursor-pointer px-5 rounded-md"
+                                  className="h-8 text-xs font-bold cursor-pointer px-5 rounded-md"
                                 >
                                   Update Feature
                                 </Button>
@@ -759,15 +735,15 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                     <TableRow
                       key={feat.id}
                       className={cn(
-                        "hover:bg-neutral-50/50 group transition-all border-b border-[#C5C4C2]/30",
-                        isChecked ? "bg-[#00b259]/5 hover:bg-[#00b259]/5" : ""
+                        "hover:bg-neutral-50/50 group transition-all border-b border-neutral-100",
+                        isChecked ? "bg-primary/5 hover:bg-primary/5" : ""
                       )}
                     >
                       {/* Checkbox */}
                       <TableCell className="text-center align-middle">
                         <input
                           type="checkbox"
-                          className="rounded border-neutral-300 text-[#00b259] focus:ring-[#00b259] scale-110 cursor-pointer"
+                          className="rounded border-neutral-300 text-primary focus:ring-primary scale-110 cursor-pointer accent-primary"
                           checked={isChecked}
                           onChange={(e) => handleSelectRow(feat.id, e.target.checked)}
                         />
@@ -777,7 +753,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                       <TableCell className="align-middle py-3">
                         <div className="flex flex-col gap-0.5 max-w-[420px]">
                           <div className="flex items-center gap-2.5">
-                            <div className="h-7 w-7 rounded-md bg-[#00b259]/10 flex items-center justify-center text-[#00b259] font-bold text-[10px] uppercase shrink-0">
+                            <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center text-primary font-bold text-[10px] uppercase shrink-0">
                               {feat.icon?.substring(0, 2) || 'Fe'}
                             </div>
                             <div>
@@ -796,7 +772,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                               <>
                                 <button
                                   onClick={() => setEditingIndex(globalIndex)}
-                                  className="text-[#00b259] hover:underline cursor-pointer"
+                                  className="text-primary hover:underline cursor-pointer"
                                 >
                                   Edit
                                 </button>
@@ -817,7 +793,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                                 <span>•</span>
                                 <button
                                   onClick={() => handleDuplicate(globalIndex)}
-                                  className="text-[#00b259] hover:underline cursor-pointer"
+                                  className="text-primary hover:underline cursor-pointer"
                                 >
                                   Duplicate
                                 </button>
@@ -947,7 +923,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-8 w-8 border-[#C5C4C2]"
+                  className="h-8 w-8 border-neutral-200"
                   onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                   disabled={currentPage === 1}
                 >
@@ -957,7 +933,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                   <Button
                     key={idx}
                     variant={currentPage === idx + 1 ? 'default' : 'outline'}
-                    className={cn("h-8 w-8 text-xs font-bold border-[#C5C4C2] rounded-md cursor-pointer", currentPage === idx + 1 ? "bg-[#00b259] hover:bg-[#009b4d] text-white border-[#00b259]" : "")}
+                    className="h-8 w-8 text-xs font-bold border-neutral-200 rounded-md cursor-pointer"
                     onClick={() => setCurrentPage(idx + 1)}
                   >
                     {idx + 1}
@@ -966,7 +942,7 @@ export default function FeaturesManagerClient({ initialFeatures }: FeaturesManag
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-8 w-8 border-[#C5C4C2]"
+                  className="h-8 w-8 border-neutral-200"
                   onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                   disabled={currentPage === totalPages}
                 >

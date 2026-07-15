@@ -95,7 +95,7 @@ const TestimonialsComponent = ({ testimonials }: { testimonials: Testimonial[] }
               return (
                 <div
                   key={testimonial.id}
-                  className='relative flex-1 cursor-pointer border-t border-b not-last:border-r'
+                  className='relative flex-1 cursor-pointer border-t border-b not-last:border-r h-16 lg:h-20 flex items-center justify-center px-4 py-2'
                   onClick={() => {
                     setActiveIndex(index)
                     setProgress(0)
@@ -105,7 +105,7 @@ const TestimonialsComponent = ({ testimonials }: { testimonials: Testimonial[] }
                     src={testimonial.companyLogo}
                     alt={testimonial.companyName}
                     className={cn(
-                      'object-contain opacity-100 transition-all duration-300',
+                      'h-6 lg:h-8 w-auto max-w-[85%] object-contain opacity-100 transition-all duration-300 mx-auto',
                       !isActive && 'opacity-50 grayscale',
                       testimonial.companyLogoDark && 'dark:hidden'
                     )}
@@ -114,7 +114,7 @@ const TestimonialsComponent = ({ testimonials }: { testimonials: Testimonial[] }
                     src={testimonial.companyLogoDark || testimonial.companyLogo}
                     alt={testimonial.companyName}
                     className={cn(
-                      'hidden object-contain opacity-100 transition-all duration-300',
+                      'hidden h-6 lg:h-8 w-auto max-w-[85%] object-contain opacity-100 transition-all duration-300 mx-auto',
                       !isActive && 'opacity-50 grayscale',
                       testimonial.companyLogoDark && 'dark:block'
                     )}

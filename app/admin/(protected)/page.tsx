@@ -25,10 +25,10 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="border border-[#C5C4C2]/50 shadow-xs">
+        <Card className="border border-neutral-200 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-semibold text-neutral-600">Total Blogs</CardTitle>
-            <FileText className="h-4 w-4 text-[#00b259]" />
+            <FileText className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-neutral-800">{blogCount}</div>
@@ -36,10 +36,10 @@ export default async function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="border border-[#C5C4C2]/50 shadow-xs">
+        <Card className="border border-neutral-200 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-semibold text-neutral-600">Active Users</CardTitle>
-            <Users className="h-4 w-4 text-[#00b259]" />
+            <Users className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-neutral-800">1</div>

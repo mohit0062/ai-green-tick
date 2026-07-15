@@ -24,9 +24,9 @@ export default async function AdminUsersPage() {
   const permissionsMap = customPermissions || NAV_PERMISSIONS
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-12 font-sans text-black">
-      <div className="border-b border-[#C5C4C2]/50 pb-5">
-        <h2 className="text-2xl font-bold tracking-tight text-neutral-800 font-display">User Role Management (RBAC)</h2>
+    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans text-neutral-800">
+      <div className="border-b border-neutral-200 pb-5">
+        <h2 className="text-2xl font-bold tracking-tight text-neutral-800">User Role Management (RBAC)</h2>
         <p className="text-neutral-500 text-xs">
           Manage system administrators, verify access keys, and assign permissions for Super Admin, Admin, and Editor roles.
         </p>

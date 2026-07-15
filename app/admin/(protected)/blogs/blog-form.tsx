@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Badge } from '@/components/ui/badge'
 import { 
   ArrowLeft, 
   Loader2, 
@@ -114,6 +115,12 @@ export default function BlogForm({
 
   // Real-time SEO checklist states
   const [seoScore, setSeoScore] = useState(0)
+  
+  // Content AI Generation State
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false)
+  const [aiInstructions, setAiInstructions] = useState('')
+  const [aiTab, setAiTab] = useState<'write' | 'instructions'>('write')
+  const [inlineAILoading, setInlineAILoading] = useState<string | null>(null)
   const [seoChecks, setSeoChecks] = useState({
     keywordInTitle: false,
     keywordInSlug: false,
@@ -124,6 +131,9 @@ export default function BlogForm({
     idealMetaDescription: false,
     contentLength: 0,
     hasLinks: false,
+    aeoConversationalKeyword: false,
+    aeoDirectAnswerSnippet: false,
+    aeoFaqStructure: false,
   })
 
   // Auto-generate slug from title (only for new blogs)
@@ -165,6 +175,9 @@ export default function BlogForm({
         idealMetaDescription: false,
         contentLength: words,
         hasLinks: false,
+        aeoConversationalKeyword: false,
+        aeoDirectAnswerSnippet: false,
+        aeoFaqStructure: false,
       })
       return
     }
@@ -187,22 +200,31 @@ export default function BlogForm({
 
     const hasLinks = content.includes('<a ') || content.includes('href=')
 
+    // AEO & AGO Optimization Checks
+    const aeoConversationalKeyword = ['how', 'why', 'what', 'best', 'guide', 'strategy', 'tips', 'api'].some(word => keyword.includes(word))
+    const aeoDirectAnswerSnippet = desc.length > 50 && desc.length <= 200
+    const aeoFaqStructure = content.toLowerCase().includes('?') || content.toLowerCase().includes('faq')
+
     // Scoring computation
     let score = 0
-    if (keywordInTitle) score += 20
-    if (keywordInSlug) score += 15
-    if (keywordInDescription) score += 15
-    if (keywordInContent) score += 15
+    if (keywordInTitle) score += 15
+    if (keywordInSlug) score += 10
+    if (keywordInDescription) score += 10
+    if (keywordInContent) score += 10
     if (keywordAtStartOfContent) score += 10
     if (idealMetaTitle && idealMetaDescription) score += 10
     else if (idealMetaTitle || idealMetaDescription) score += 5
     
     // Length points
-    if (words >= 600) score += 15
-    else if (words >= 300) score += 10
-    else if (words >= 100) score += 5
+    if (words >= 600) score += 10
+    else if (words >= 300) score += 5
 
     if (hasLinks) score += 5
+
+    // AEO/AGO Optimization score allocation
+    if (aeoConversationalKeyword) score += 10
+    if (aeoDirectAnswerSnippet) score += 10
+    if (aeoFaqStructure) score += 10
 
     setSeoScore(score)
     setSeoChecks({
@@ -215,6 +237,9 @@ export default function BlogForm({
       idealMetaDescription,
       contentLength: words,
       hasLinks,
+      aeoConversationalKeyword,
+      aeoDirectAnswerSnippet,
+      aeoFaqStructure,
     })
   }, [
     formData.title,
@@ -317,6 +342,131 @@ export default function BlogForm({
     setCategories(updated)
     if (updated.length > 0) {
       setFormData(prev => ({ ...prev, category: updated[0] }))
+    }
+  }
+
+  const handleAIGenerate = async () => {
+    if (!formData.title.trim()) {
+      return alert('Please enter an Article Title first so AI can read the context!')
+    }
+
+    setIsGeneratingAI(true)
+    try {
+      const systemPrompt = `You are a professional blog copywriter and SEO expert. You write high-quality, conversion-focused, and informative blog posts. Always respond ONLY with a valid JSON object, and no markdown formatting wrappers (like \`\`\`json).\n\nThe JSON must match the following schema:\n{\n  "title": "A refined, catchy SEO title based on the input",\n  "description": "Short excerpt / summary of the blog post (max 300 characters)",\n  "content": "Full detailed article content in clean HTML. Use structural HTML tags like <h2>, <h3>, <p>, <strong>, <ul>, <li>, and <blockquote>. Write in depth (at least 600-800 words) with high quality research and copy.",\n  "focus_keyword": "Focus keyword phrase for ranking",\n  "meta_title": "SEO Meta Title (50-60 chars)",\n  "meta_description": "SEO Meta Description (120-160 chars)",\n  "category": "One relevant category (e.g. AI Automation, Customer Support, E-commerce, Marketing)",\n  "read_time": "Estimated read time (e.g. '6 min read')",\n  "tags": ["tag1", "tag2", "tag3"]\n}`
+
+      const prompt = `Generate a complete blog article titled: "${formData.title}".\n${aiInstructions ? `Additional guidance instructions: ${aiInstructions}\n` : ''}`
+
+      const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, systemPrompt })
+      })
+
+      const data = await response.json()
+
+      if (data.error) {
+        alert(`AI Error: ${data.error}`)
+        return
+      }
+
+      const text = data.text || ''
+      const jsonMatch = text.match(/\{[\s\S]*\}/)
+      if (!jsonMatch) {
+        alert('AI returned invalid format. Please try again.')
+        return
+      }
+
+      const generated = JSON.parse(jsonMatch[0])
+
+      // Apply the generated fields
+      setFormData(prev => ({
+        ...prev,
+        title: generated.title || prev.title,
+        slug: (generated.title || prev.title)
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .trim(),
+        description: generated.description || prev.description,
+        content: generated.content || prev.content,
+        category: generated.category || prev.category,
+        read_time: generated.read_time || prev.read_time,
+        meta_title: generated.meta_title || prev.meta_title,
+        meta_description: generated.meta_description || prev.meta_description,
+        focus_keyword: generated.focus_keyword || prev.focus_keyword,
+      }))
+
+      if (generated.tags && Array.isArray(generated.tags)) {
+        setTags(generated.tags)
+      }
+      if (generated.category) {
+        setCategories(prev => {
+          if (prev.includes(generated.category)) return prev
+          return [generated.category, ...prev]
+        })
+      }
+
+      alert('✅ AI has successfully written the blog post and optimized the SEO settings!')
+    } catch (err: any) {
+      console.error('AI Blog Generation Error:', err)
+      alert(`AI failed: ${err.message || 'Unknown error'}. Check your OpenAI API Key configuration.`)
+    } finally {
+      setIsGeneratingAI(false)
+    }
+  }
+
+  const handleInlineAIField = async (fieldName: string, currentFieldKey: keyof typeof formData) => {
+    setInlineAILoading(currentFieldKey)
+    try {
+      const systemPrompt = `You are a senior marketing copywriter for AI Greentick, a WhatsApp Business API SaaS platform. Respond with ONLY the generated text, no quotes, no JSON, no markdown.`
+      const prompt = `The article is titled "${formData.title}". Generate/improve a professional, conversion-focused ${fieldName} for this blog post.${formData[currentFieldKey] ? ` Current text: "${formData[currentFieldKey]}". Improve it.` : ''} ${aiInstructions ? `Additional context: ${aiInstructions}` : ''}`
+
+      const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, systemPrompt })
+      })
+      const data = await response.json()
+      if (data.error) {
+        alert(`AI Error: ${data.error}`)
+        return
+      }
+      const newVal = data.text?.trim() || formData[currentFieldKey]
+      setFormData(prev => ({ ...prev, [currentFieldKey]: newVal }))
+    } catch (err: any) {
+      alert(`AI failed: ${err.message}`)
+    } finally {
+      setInlineAILoading(null)
+    }
+  }
+
+  const handleInlineAIContent = async () => {
+    setInlineAILoading('content')
+    try {
+      const systemPrompt = `You are a professional blog writer. Respond with ONLY clean, professional HTML containing headings, paragraphs, bullet lists, bold text, and blockquotes. Do not return JSON or markdown backticks.`
+      const prompt = `The article title is "${formData.title}". Generate/improve the full content body for this blog post.${formData.content ? ` Current HTML content: "${formData.content}". Enhance and expand it.` : 'Write a comprehensive blog post.'} ${aiInstructions ? `Additional context: ${aiInstructions}` : ''}`
+
+      const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, systemPrompt })
+      })
+      const data = await response.json()
+      if (data.error) {
+        alert(`AI Error: ${data.error}`)
+        return
+      }
+      const newVal = data.text?.trim() || formData.content
+      setFormData(prev => ({ ...prev, content: newVal }))
+      // Update visual editor if in visual mode
+      if (editorMode === 'visual' && editorRef.current) {
+        editorRef.current.innerHTML = newVal
+      }
+    } catch (err: any) {
+      alert(`AI failed: ${err.message}`)
+    } finally {
+      setInlineAILoading(null)
     }
   }
 
@@ -452,7 +602,24 @@ export default function BlogForm({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Short Summary / Excerpt</Label>
+                <div className="flex justify-between items-center">
+                  <Label htmlFor="description">Short Summary / Excerpt</Label>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    disabled={inlineAILoading !== null || !formData.title.trim()}
+                    onClick={() => handleInlineAIField('excerpt / short summary (max 300 characters)', 'description')}
+                    className="h-6 px-2 text-[10px] text-amber-650 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 hover:border-amber-300 rounded cursor-pointer transition-all flex items-center gap-1 font-semibold"
+                  >
+                    {inlineAILoading === 'description' ? (
+                      <Loader2 className="h-3 w-3 animate-spin text-amber-500" />
+                    ) : (
+                      <Sparkles className="h-3 w-3 text-amber-500" />
+                    )}
+                    AI Suggest
+                  </Button>
+                </div>
                 <Textarea
                   id="description"
                   name="description"
@@ -482,17 +649,34 @@ export default function BlogForm({
                 <div className="border border-[#C5C4C2]/50 rounded-xl bg-background shadow-xs overflow-hidden flex flex-col min-h-[450px]">
                   {/* Top Bar */}
                   <div className="flex justify-between items-center px-4 py-2.5 bg-neutral-50 border-b border-[#C5C4C2]/50 select-none">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleAddMedia}
-                      disabled={editorMode !== 'visual'}
-                      className="h-8 text-xs font-semibold flex items-center gap-1.5 hover:bg-[#00b259]/10 hover:text-[#00b259] hover:border-[#00b259]/30"
-                    >
-                      <ImageIcon className="h-3.5 w-3.5" />
-                      Add Media
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={handleAddMedia}
+                        disabled={editorMode !== 'visual'}
+                        className="h-8 text-xs font-semibold flex items-center gap-1.5 hover:bg-[#00b259]/10 hover:text-[#00b259] hover:border-[#00b259]/30"
+                      >
+                        <ImageIcon className="h-3.5 w-3.5" />
+                        Add Media
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        disabled={inlineAILoading !== null || !formData.title.trim()}
+                        onClick={handleInlineAIContent}
+                        className="h-8 text-xs font-semibold flex items-center gap-1.5 text-amber-655 bg-amber-50 hover:bg-amber-100 hover:text-amber-700 hover:border-amber-300 border border-amber-200"
+                      >
+                        {inlineAILoading === 'content' ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-500" />
+                        ) : (
+                          <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                        )}
+                        AI Write/Improve
+                      </Button>
+                    </div>
 
                     <div className="flex bg-neutral-200/60 p-0.5 rounded-lg border border-neutral-300 select-none">
                       <button
@@ -796,14 +980,31 @@ export default function BlogForm({
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="meta_title" className="flex justify-between items-center">
-                    <span>Meta SEO Title</span>
-                    <span className={cn(
-                      "text-[9px] font-mono",
-                      formData.meta_title.length >= 45 && formData.meta_title.length <= 65 ? "text-emerald-500" : "text-amber-500"
-                    )}>
-                      {formData.meta_title.length} chars
+                  <Label htmlFor="meta_title" className="flex justify-between items-center w-full">
+                    <span className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-neutral-700">Meta SEO Title</span>
+                      <span className={cn(
+                        "text-[9px] font-mono",
+                        formData.meta_title.length >= 45 && formData.meta_title.length <= 65 ? "text-emerald-500" : "text-amber-500"
+                      )}>
+                        ({formData.meta_title.length} chars)
+                      </span>
                     </span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      disabled={inlineAILoading !== null || !formData.title.trim()}
+                      onClick={() => handleInlineAIField('SEO meta title (50-60 characters, catchy, includes target keyword)', 'meta_title')}
+                      className="h-6 px-2 text-[10px] text-amber-650 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 hover:border-amber-300 rounded cursor-pointer transition-all flex items-center gap-1 font-semibold"
+                    >
+                      {inlineAILoading === 'meta_title' ? (
+                        <Loader2 className="h-3 w-3 animate-spin text-amber-500" />
+                      ) : (
+                        <Sparkles className="h-3 w-3 text-amber-500" />
+                      )}
+                      AI Suggest
+                    </Button>
                   </Label>
                   <Input
                     id="meta_title"
@@ -822,14 +1023,31 @@ export default function BlogForm({
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="meta_description" className="flex justify-between items-center">
-                    <span>Meta SEO Description</span>
-                    <span className={cn(
-                      "text-[9px] font-mono",
-                      formData.meta_description.length >= 110 && formData.meta_description.length <= 165 ? "text-emerald-500" : "text-amber-500"
-                    )}>
-                      {formData.meta_description.length} chars
+                  <Label htmlFor="meta_description" className="flex justify-between items-center w-full">
+                    <span className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-neutral-700">Meta SEO Description</span>
+                      <span className={cn(
+                        "text-[9px] font-mono",
+                        formData.meta_description.length >= 110 && formData.meta_description.length <= 165 ? "text-emerald-500" : "text-amber-500"
+                      )}>
+                        ({formData.meta_description.length} chars)
+                      </span>
                     </span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      disabled={inlineAILoading !== null || !formData.title.trim()}
+                      onClick={() => handleInlineAIField('SEO meta description (120-160 characters, includes target keyword, click-enticing)', 'meta_description')}
+                      className="h-6 px-2 text-[10px] text-amber-650 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 hover:border-amber-300 rounded cursor-pointer transition-all flex items-center gap-1 font-semibold"
+                    >
+                      {inlineAILoading === 'meta_description' ? (
+                        <Loader2 className="h-3 w-3 animate-spin text-amber-500" />
+                      ) : (
+                        <Sparkles className="h-3 w-3 text-amber-500" />
+                      )}
+                      AI Suggest
+                    </Button>
                   </Label>
                   <Input
                     id="meta_description"
@@ -940,6 +1158,39 @@ export default function BlogForm({
                         Has internal/external hyper-links
                       </span>
                     </div>
+
+                    <div className="flex items-start gap-2">
+                      {seoChecks.aeoConversationalKeyword ? (
+                        <CheckCircle2 className="h-4.5 w-4.5 text-emerald-500 shrink-0" />
+                      ) : (
+                        <XCircle className="h-4.5 w-4.5 text-destructive shrink-0" />
+                      )}
+                      <span className={seoChecks.aeoConversationalKeyword ? "text-foreground font-semibold" : "text-neutral-500"}>
+                        AEO: Conversational Keyword intent
+                      </span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      {seoChecks.aeoDirectAnswerSnippet ? (
+                        <CheckCircle2 className="h-4.5 w-4.5 text-emerald-500 shrink-0" />
+                      ) : (
+                        <XCircle className="h-4.5 w-4.5 text-destructive shrink-0" />
+                      )}
+                      <span className={seoChecks.aeoDirectAnswerSnippet ? "text-foreground font-semibold" : "text-neutral-500"}>
+                        AEO: Direct Answer Snippet (50-200 chars summary)
+                      </span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      {seoChecks.aeoFaqStructure ? (
+                        <CheckCircle2 className="h-4.5 w-4.5 text-emerald-500 shrink-0" />
+                      ) : (
+                        <XCircle className="h-4.5 w-4.5 text-destructive shrink-0" />
+                      )}
+                      <span className={seoChecks.aeoFaqStructure ? "text-foreground font-semibold" : "text-neutral-500"}>
+                        AEO: Direct Q&A structure / FAQ
+                      </span>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -1010,6 +1261,80 @@ export default function BlogForm({
                   )}
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Content AI Assistant Card */}
+          <Card className="shadow-xs border border-[#C5C4C2]/50 bg-white">
+            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/45 py-3.5 px-4 flex flex-row items-center justify-between">
+              <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1 font-display">
+                <Sparkles className="h-3.5 w-3.5 text-amber-500 animate-pulse" /> Content AI Assistant
+              </CardTitle>
+              <Badge variant="outline" className="px-1 text-[8px] border-[#00b259]/30 text-[#00b259] bg-[#00b259]/5 font-bold tracking-wide uppercase select-none rounded">
+                Beta
+              </Badge>
+            </CardHeader>
+            <CardContent className="p-4 text-[11px] text-neutral-500 font-normal space-y-3 select-none leading-relaxed">
+              
+              {/* Tabs Write / Instructions */}
+              <div className="flex bg-neutral-100 p-0.5 rounded-md text-[9px] font-semibold select-none border">
+                <button
+                  type="button"
+                  onClick={() => setAiTab('write')}
+                  className={cn(
+                    "flex-1 text-center py-1 rounded-sm cursor-pointer transition-all",
+                    aiTab === 'write' ? "bg-white text-black shadow-xs" : "text-neutral-500 hover:text-black"
+                  )}
+                >
+                  Write Content
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAiTab('instructions')}
+                  className={cn(
+                    "flex-1 text-center py-1 rounded-sm cursor-pointer transition-all",
+                    aiTab === 'instructions' ? "bg-white text-black shadow-xs" : "text-neutral-500 hover:text-black"
+                  )}
+                >
+                  AI Instructions
+                </button>
+              </div>
+
+              {aiTab === 'write' ? (
+                <div className="space-y-3">
+                  <p className="text-[10px] text-neutral-455 font-normal leading-normal">
+                    AI analyzes your Post Title and auto-generates the complete blog post content, excerpt summary, tags, and optimized SEO fields instantly.
+                  </p>
+                  
+                  <Button
+                    type="button"
+                    onClick={handleAIGenerate}
+                    disabled={isGeneratingAI}
+                    className="w-full bg-[#00b259] text-white hover:bg-[#009b4d] font-bold h-8.5 text-[11px] cursor-pointer rounded-md shadow-xs gap-1.5 flex items-center justify-center"
+                  >
+                    {isGeneratingAI ? (
+                      <>
+                        <Loader2 className="h-3 w-3 animate-spin text-white" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-3.5 w-3.5" /> Write with AI
+                      </>
+                    )}
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Label className="text-[9px] text-neutral-450 uppercase font-bold pl-0.5">Instructions for Generator</Label>
+                  <Textarea
+                    value={aiInstructions}
+                    onChange={(e) => setAiInstructions(e.target.value)}
+                    placeholder="e.g. Focus on e-commerce cart recovery and write a punchy sales copy..."
+                    className="h-20 text-[10px] border-neutral-300 resize-none font-normal"
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
 

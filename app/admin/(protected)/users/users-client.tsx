@@ -6,6 +6,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
   updateAdminRoleAction, 
   deleteAdminAction, 
@@ -210,7 +213,7 @@ export default function UsersClient({
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans text-neutral-800 select-none">
       
       {/* Toast banner */}
       {statusMsg && (
@@ -218,46 +221,36 @@ export default function UsersClient({
           className={cn(
             "fixed bottom-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border transition-all duration-300",
             statusMsg.type === 'success'
-              ? 'bg-[#00b259]/10 text-[#00b259] border-[#00b259]/20'
-              : 'bg-red-500/10 text-red-500 border-red-500/20'
+              ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+              : 'bg-destructive/10 text-destructive border-destructive/20'
           )}
         >
-          {statusMsg.type === 'success' ? <Check className="h-4 w-4 text-[#00b259]" /> : <X className="h-4 w-4 text-red-500" />}
+          {statusMsg.type === 'success' ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-destructive" />}
           <span className="text-sm font-medium">{statusMsg.text}</span>
         </div>
       )}
 
       {/* Tabs bar */}
-      <div className="flex border-b border-[#C5C4C2]/50 pb-px gap-6 select-none">
-        <button
-          onClick={() => setActiveTab('admins')}
-          className={cn(
-            "pb-3 text-xs font-bold border-b-2 uppercase tracking-wider transition-all cursor-pointer outline-none",
-            activeTab === 'admins' ? "border-[#00b259] text-black font-extrabold" : "border-transparent text-neutral-400 hover:text-black"
-          )}
-        >
-          Administrators
-        </button>
-        <button
-          onClick={() => setActiveTab('permissions')}
-          className={cn(
-            "pb-3 text-xs font-bold border-b-2 uppercase tracking-wider transition-all cursor-pointer outline-none",
-            activeTab === 'permissions' ? "border-[#00b259] text-black font-extrabold" : "border-transparent text-neutral-400 hover:text-black"
-          )}
-        >
-          Permissions Matrix
-        </button>
-      </div>
+      <Tabs value={activeTab} onValueChange={(val: any) => setActiveTab(val)} className="w-fit select-none">
+        <TabsList className="bg-neutral-100 p-1">
+          <TabsTrigger value="admins" className="data-[state=active]:bg-white font-bold text-xs">
+            Administrators
+          </TabsTrigger>
+          <TabsTrigger value="permissions" className="data-[state=active]:bg-white font-bold text-xs">
+            Permissions Matrix
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       {activeTab === 'admins' ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           {/* Left panel: Admins List */}
           <div className="lg:col-span-2 space-y-6">
-            <Card className="border border-[#C5C4C2]/50 shadow-xs bg-white rounded-lg">
-              <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-5 flex flex-row items-center justify-between">
+            <Card className="border border-neutral-200 shadow-sm bg-white rounded-lg">
+              <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-5 flex flex-row items-center justify-between">
                 <div>
-                  <CardTitle className="text-sm font-bold text-neutral-800 font-display flex items-center gap-1.5">
-                    <Shield className="h-4 w-4 text-[#00b259]" /> Active Administrators
+                  <CardTitle className="text-sm font-bold text-neutral-800 flex items-center gap-1.5">
+                    <Shield className="h-4 w-4 text-primary" /> Active Administrators
                   </CardTitle>
                   <CardDescription className="text-[10px]">Verify roles, update system elevation parameters, and delete profiles.</CardDescription>
                 </div>
@@ -274,21 +267,21 @@ export default function UsersClient({
                     placeholder="Search admins by name or email..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
-                    className="pl-9 text-xs h-9 border-neutral-300 rounded"
+                    className="pl-9 text-xs h-9 border-neutral-200 rounded-md"
                   />
                 </div>
 
                 {/* List */}
-                <div className="border border-[#C5C4C2]/40 rounded-lg overflow-hidden">
-                  <div className="divide-y divide-[#C5C4C2]/30 max-h-[500px] overflow-y-auto bg-white">
+                <div className="border border-neutral-200 rounded-lg overflow-hidden">
+                  <div className="divide-y divide-neutral-100 max-h-[500px] overflow-y-auto bg-white">
                     {filteredAdmins.map((admin) => {
                       const isLoading = !!loadingMap[admin.email]
                       const isCurrent = admin.email === currentUserEmail
 
                       return (
-                        <div key={admin.email} className={cn("p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors hover:bg-neutral-50/30", isCurrent && "bg-neutral-50/20")}>
+                        <div key={admin.email} className={cn("p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors hover:bg-neutral-50/50", isCurrent && "bg-neutral-50/20")}>
                           <div className="flex gap-3 items-center min-w-0">
-                            <div className="h-10 w-10 border border-[#C5C4C2]/50 bg-neutral-100 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
+                            <div className="h-10 w-10 border border-neutral-200 bg-neutral-100 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
                               {admin.avatar ? (
                                 <img src={admin.avatar} alt={admin.name} className="h-full w-full object-cover" />
                               ) : (
@@ -308,19 +301,25 @@ export default function UsersClient({
 
                           <div className="flex items-center gap-3 self-end sm:self-center">
                             <div className="flex items-center gap-1.5">
-                              <select
+                              <Select
                                 value={admin.role}
                                 disabled={isLoading || isCurrent}
-                                onChange={e => handleRoleChange(admin.email, e.target.value)}
-                                className={cn(
-                                  "text-[10px] font-extrabold px-2.5 py-1 rounded-md border cursor-pointer bg-white outline-none disabled:cursor-not-allowed",
-                                  getRoleBadgeClasses(admin.role)
-                                )}
+                                onValueChange={(val) => handleRoleChange(admin.email, val)}
                               >
-                                <option value="super_admin">Super Admin</option>
-                                <option value="admin">Admin</option>
-                                <option value="editor">Editor</option>
-                              </select>
+                                <SelectTrigger 
+                                  className={cn(
+                                    "text-[10px] font-extrabold h-7 px-2.5 rounded-md border cursor-pointer bg-white w-28 disabled:cursor-not-allowed disabled:opacity-50 shadow-xs",
+                                    getRoleBadgeClasses(admin.role)
+                                  )}
+                                >
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="text-black">
+                                  <SelectItem value="super_admin">Super Admin</SelectItem>
+                                  <SelectItem value="admin">Admin</SelectItem>
+                                  <SelectItem value="editor">Editor</SelectItem>
+                                </SelectContent>
+                              </Select>
                             </div>
 
                             <Button
@@ -368,10 +367,10 @@ export default function UsersClient({
 
           {/* Right panel: Add Admin */}
           <div className="space-y-6">
-            <Card className="border border-[#C5C4C2]/50 shadow-xs bg-white rounded-lg">
-              <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-4">
-                <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1.5 font-display">
-                  <UserPlus className="h-4 w-4 text-[#00b259]" /> Add Administrator
+            <Card className="border border-neutral-200 shadow-sm bg-white rounded-lg">
+              <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-4">
+                <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1.5">
+                  <UserPlus className="h-4 w-4 text-primary" /> Add Administrator
                 </CardTitle>
                 <CardDescription className="text-[10px]">Add profile details. The user must log in using Supabase Auth with this email.</CardDescription>
               </CardHeader>
@@ -384,7 +383,7 @@ export default function UsersClient({
                       placeholder="e.g. John Doe"
                       value={newName}
                       onChange={e => setNewName(e.target.value)}
-                      className="h-8.5 text-xs border-neutral-300 font-normal"
+                      className="h-8.5 text-xs border-neutral-200 font-normal"
                     />
                   </div>
 
@@ -396,7 +395,7 @@ export default function UsersClient({
                       placeholder="e.g. name@aigreentick.com"
                       value={newEmail}
                       onChange={e => setNewEmail(e.target.value)}
-                      className="h-8.5 text-xs border-neutral-300 font-mono text-[11px]"
+                      className="h-8.5 text-xs border-neutral-200 font-mono text-[11px]"
                     />
                   </div>
 
@@ -408,27 +407,31 @@ export default function UsersClient({
                       placeholder="At least 6 characters"
                       value={newPassword}
                       onChange={e => setNewPassword(e.target.value)}
-                      className="h-8.5 text-xs border-neutral-300 font-normal"
+                      className="h-8.5 text-xs border-neutral-200 font-normal"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <Label className="text-[10px] font-bold text-neutral-600 uppercase">System Elevation Role</Label>
-                    <select
+                    <Select
                       value={newRole}
-                      onChange={e => setNewRole(e.target.value as any)}
-                      className="w-full bg-white border border-neutral-300 h-9 rounded px-2 outline-none text-neutral-800 text-xs cursor-pointer font-normal"
+                      onValueChange={(val) => setNewRole(val as any)}
                     >
-                      <option value="editor">Editor (Limited Page Editing)</option>
-                      <option value="admin">Admin (All CMS Page Editing)</option>
-                      <option value="super_admin">Super Admin (All Layouts & User Controls)</option>
-                    </select>
+                      <SelectTrigger className="w-full bg-white border border-neutral-200 h-9 rounded-md text-neutral-800 text-xs cursor-pointer font-normal shadow-xs">
+                        <SelectValue placeholder="Select elevation role..." />
+                      </SelectTrigger>
+                      <SelectContent className="text-black">
+                        <SelectItem value="editor">Editor (Limited Page Editing)</SelectItem>
+                        <SelectItem value="admin">Admin (All CMS Page Editing)</SelectItem>
+                        <SelectItem value="super_admin">Super Admin (All Layouts & User Controls)</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <Button
                     type="submit"
                     disabled={creating}
-                    className="w-full bg-[#00b259] text-white hover:bg-[#009b4d] font-bold h-9 text-xs cursor-pointer rounded shadow-xs gap-1.5 mt-2"
+                    className="w-full font-bold h-9 text-xs cursor-pointer rounded-md shadow-xs gap-1.5 mt-2"
                   >
                     {creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
                     Register Administrator
@@ -437,9 +440,9 @@ export default function UsersClient({
               </CardContent>
             </Card>
 
-            <Card className="border border-[#C5C4C2]/50 bg-white rounded-lg shadow-xs overflow-visible">
-              <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-4 flex flex-row items-center justify-between">
-                <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1 font-display">
+            <Card className="border border-neutral-200 bg-white rounded-lg shadow-sm overflow-visible">
+              <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-4 flex flex-row items-center justify-between">
+                <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1">
                   <Key className="h-3.5 w-3.5 text-amber-500" /> Dynamic Guideline Note
                 </CardTitle>
               </CardHeader>
@@ -457,11 +460,11 @@ export default function UsersClient({
       ) : (
         /* Permissions matrix panel */
         <div className="space-y-6">
-          <Card className="border border-[#C5C4C2]/50 shadow-xs bg-white rounded-lg">
-            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <Card className="border border-neutral-200 shadow-sm bg-white rounded-lg">
+            <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <CardTitle className="text-sm font-bold text-neutral-800 font-display flex items-center gap-1.5">
-                  <ShieldAlert className="h-4 w-4 text-[#00b259]" /> Role Permissions Matrix
+                <CardTitle className="text-sm font-bold text-neutral-800 flex items-center gap-1.5">
+                  <ShieldAlert className="h-4 w-4 text-primary" /> Role Permissions Matrix
                 </CardTitle>
                 <CardDescription className="text-[10px]">
                   Decide which sections and pages are accessible to Admin and Editor roles. Super Admins always retain full control.
@@ -470,67 +473,65 @@ export default function UsersClient({
               <Button
                 onClick={handleSavePermissions}
                 disabled={savingPermissions}
-                className="bg-black text-white hover:bg-neutral-850 font-bold h-9 px-4 cursor-pointer text-xs rounded-md shadow-xs gap-1.5 shrink-0 self-end sm:self-center"
+                className="font-bold h-9 px-4 cursor-pointer text-xs rounded-md shadow-sm gap-1.5 shrink-0 self-end sm:self-center"
               >
                 {savingPermissions ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
                 Save Permissions Map
               </Button>
             </CardHeader>
             <CardContent className="p-5">
-              <div className="border border-[#C5C4C2]/40 rounded-lg overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse text-xs min-w-[550px]">
-                    <thead>
-                      <tr className="bg-neutral-50 border-b border-[#C5C4C2]/40 text-neutral-500 font-bold select-none text-[10px] uppercase">
-                        <th className="p-4 font-semibold">CMS Panel Section</th>
-                        <th className="p-4 font-semibold">Target Route</th>
-                        <th className="p-4 font-semibold text-center w-24">Super Admin</th>
-                        <th className="p-4 font-semibold text-center w-24">Admin</th>
-                        <th className="p-4 font-semibold text-center w-24">Editor</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#C5C4C2]/30 bg-white">
-                      {PAGE_KEYS.map((page) => {
-                        const allowedRoles = permissions[page.path] || []
-                        const hasAdmin = allowedRoles.includes('admin')
-                        const hasEditor = allowedRoles.includes('editor')
+              <div className="border border-neutral-200 rounded-lg overflow-hidden shadow-xs">
+                <Table>
+                  <TableHeader className="bg-neutral-50/50">
+                    <TableRow className="border-b border-neutral-200">
+                      <TableHead className="font-bold text-neutral-700">CMS Panel Section</TableHead>
+                      <TableHead className="font-bold text-neutral-700">Target Route</TableHead>
+                      <TableHead className="font-bold text-neutral-700 text-center w-24">Super Admin</TableHead>
+                      <TableHead className="font-bold text-neutral-700 text-center w-24">Admin</TableHead>
+                      <TableHead className="font-bold text-neutral-700 text-center w-24">Editor</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {PAGE_KEYS.map((page) => {
+                      const allowedRoles = permissions[page.path] || []
+                      const hasAdmin = allowedRoles.includes('admin')
+                      const hasEditor = allowedRoles.includes('editor')
 
-                        return (
-                          <tr key={page.path} className="hover:bg-neutral-50/10 transition-colors">
-                            <td className="p-4 font-bold text-neutral-800">{page.label}</td>
-                            <td className="p-4 font-mono text-[10px] text-neutral-400">{page.path}</td>
-                            <td className="p-4 text-center">
-                              <input
-                                type="checkbox"
-                                checked={true}
-                                disabled={true}
-                                className="h-4.5 w-4.5 accent-[#00b259] rounded border-neutral-350 opacity-60 cursor-not-allowed inline-block align-middle"
-                              />
-                            </td>
-                            <td className="p-4 text-center">
-                              <input
-                                type="checkbox"
-                                checked={hasAdmin}
-                                disabled={page.path === '/admin'} // Dashboard is mandatory
-                                onChange={() => handleTogglePermission(page.path, 'admin')}
-                                className="h-4.5 w-4.5 accent-[#00b259] rounded border-neutral-350 cursor-pointer inline-block align-middle"
-                              />
-                            </td>
-                            <td className="p-4 text-center">
-                              <input
-                                type="checkbox"
-                                checked={hasEditor}
-                                disabled={page.path === '/admin'} // Dashboard is mandatory
-                                onChange={() => handleTogglePermission(page.path, 'editor')}
-                                className="h-4.5 w-4.5 accent-[#00b259] rounded border-neutral-350 cursor-pointer inline-block align-middle"
-                              />
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                      return (
+                        <TableRow key={page.path} className="hover:bg-neutral-50/50 border-b border-neutral-100">
+                          <TableCell className="font-bold text-neutral-800 py-3.5">{page.label}</TableCell>
+                          <TableCell className="font-mono text-xs text-neutral-450">{page.path}</TableCell>
+                          <TableCell className="text-center">
+                            <input
+                              type="checkbox"
+                              checked={true}
+                              disabled={true}
+                              className="h-4 w-4 accent-primary rounded border-neutral-300 opacity-60 cursor-not-allowed inline-block align-middle"
+                            />
+                          </TableCell>
+                          <TableCell className="text-center">
+                            <input
+                              type="checkbox"
+                              checked={hasAdmin}
+                              disabled={page.path === '/admin'}
+                              onChange={() => handleTogglePermission(page.path, 'admin')}
+                              className="h-4 w-4 accent-primary rounded border-neutral-300 cursor-pointer inline-block align-middle"
+                            />
+                          </TableCell>
+                          <TableCell className="text-center">
+                            <input
+                              type="checkbox"
+                              checked={hasEditor}
+                              disabled={page.path === '/admin'}
+                              onChange={() => handleTogglePermission(page.path, 'editor')}
+                              className="h-4 w-4 accent-primary rounded border-neutral-300 cursor-pointer inline-block align-middle"
+                            />
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
               </div>
             </CardContent>
           </Card>

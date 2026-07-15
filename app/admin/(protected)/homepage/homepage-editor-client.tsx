@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { updateSiteSectionAction } from '../cms-actions'
 import { cn } from '@/lib/utils'
 import { 
@@ -140,6 +141,46 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
   const [aiInstructions, setAiInstructions] = useState('')
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   const [aiTab, setAiTab] = useState<'write' | 'instructions'>('write')
+
+  const [uploadingState, setUploadingState] = useState<{ [key: string]: boolean }>({})
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number, field: 'companyLogo' | 'avatar') => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const key = `${index}-${field}`
+      setUploadingState(prev => ({ ...prev, [key]: true }))
+      const reader = new FileReader()
+      reader.onloadend = async () => {
+        try {
+          const base64Data = (reader.result as string).split(',')[1]
+          const cleanName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              fileName: cleanName,
+              base64Data,
+              mimeType: file.type
+            })
+          })
+          const res = await response.json()
+          if (res?.publicUrl) {
+            updateTestimonial(index, field, res.publicUrl)
+            showStatus('success', 'Image uploaded successfully!')
+          } else if (res?.error) {
+            alert(`Upload error: ${res.error}`)
+          }
+        } catch (err: any) {
+          alert(`Upload failed: ${err.message || err}`)
+        } finally {
+          setUploadingState(prev => ({ ...prev, [key]: false }))
+        }
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const showStatus = (type: 'success' | 'error', text: string) => {
     setStatusMsg({ type, text })
@@ -313,6 +354,28 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
     checks.push({ label: 'Security items defined', pass: (data.securityItems || []).length >= 2, tip: 'Configure security cards' })
     checks.push({ label: 'FAQ sections complete', pass: (data.faqTabs || []).length >= 2, tip: 'Configure FAQs' })
 
+    // AEO/AGO Checks
+    const hasConversationalKeyword = ['how', 'why', 'what', 'best', 'guide', 'strategy', 'tips', 'api'].some(word => kw.includes(word))
+    checks.push({
+      label: 'AEO: Conversational Keyword intent',
+      pass: hasConversationalKeyword,
+      tip: 'Use conversational search words in keyword (how, why, what, best, api, guide)'
+    })
+
+    const hasDirectAnswer = heroSub.length > 50 && heroSub.length <= 200
+    checks.push({
+      label: 'AEO: Direct Answer Snippet',
+      pass: hasDirectAnswer,
+      tip: 'Description should be 50-200 chars to serve as an AI Direct Answer Snippet'
+    })
+
+    const hasFAQ = (data.faqTabs || []).length >= 2
+    checks.push({
+      label: 'AEO: Direct Q&A structure / FAQ',
+      pass: hasFAQ,
+      tip: 'Include FAQ accordions or questions for LLM optimization'
+    })
+
     const passCount = checks.filter(c => c.pass).length
     const calculatedScore = Math.round((passCount / checks.length) * 100)
 
@@ -336,31 +399,31 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans text-neutral-800 antialiased select-none">
       {/* Toast Notification Banner */}
-      {statusMsg && (
+       {statusMsg && (
         <div
           className={cn(
             "fixed bottom-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border transition-all duration-300",
             statusMsg.type === 'success'
-              ? 'bg-[#00b259]/10 text-[#00b259] border-[#00b259]/20'
-              : 'bg-red-500/10 text-red-500 border-red-500/20'
+              ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+              : 'bg-destructive/10 text-destructive border-destructive/20'
           )}
         >
           {statusMsg.type === 'success' ? (
-            <Check className="h-4 w-4 shrink-0 text-[#00b259]" />
+            <Check className="h-4 w-4 shrink-0 text-emerald-500" />
           ) : (
-            <X className="h-4 w-4 shrink-0 text-red-500" />
+            <X className="h-4 w-4 shrink-0 text-destructive" />
           )}
           <span className="text-sm font-medium">{statusMsg.text}</span>
         </div>
       )}
 
       {/* Page header */}
-      <div className="flex items-center gap-4 border-b border-[#C5C4C2]/50 pb-5">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#C5C4C2]/50 bg-white text-neutral-500 select-none">
-          <Globe className="h-4 w-4 text-[#00b259]" />
+      <div className="flex items-center gap-4 border-b border-neutral-200 pb-5">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-500 select-none">
+          <Globe className="h-4 w-4 text-primary" />
         </div>
         <div>
-          <h2 className="text-2xl font-normal tracking-tight text-neutral-900 font-display">
+          <h2 className="text-2xl font-normal tracking-tight text-neutral-900">
             Edit Page: {title}
           </h2>
           <p className="text-neutral-500 text-xs">WordPress layout view. Customize landing pages, timeline stages, and SEO tags.</p>
@@ -654,7 +717,19 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[9px] text-neutral-400 font-bold uppercase">Avatar URL</Label>
-                        <Input value={test.avatar} onChange={e => updateTestimonial(idx, 'avatar', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono" />
+                        <div className="flex gap-2">
+                          <Input value={test.avatar} onChange={e => updateTestimonial(idx, 'avatar', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono flex-1" />
+                          <label className="h-8.5 px-2.5 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded-md">
+                            {uploadingState[`${idx}-avatar`] ? '...' : 'Upload'}
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden" 
+                              disabled={uploadingState[`${idx}-avatar`]}
+                              onChange={e => handleFileUpload(e, idx, 'avatar')}
+                            />
+                          </label>
+                        </div>
                       </div>
                     </div>
 
@@ -665,7 +740,19 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[9px] text-neutral-400 font-bold uppercase">Company Logo Link</Label>
-                        <Input value={test.companyLogo} onChange={e => updateTestimonial(idx, 'companyLogo', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono" />
+                        <div className="flex gap-2">
+                          <Input value={test.companyLogo} onChange={e => updateTestimonial(idx, 'companyLogo', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono flex-1" />
+                          <label className="h-8.5 px-2.5 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded-md">
+                            {uploadingState[`${idx}-companyLogo`] ? '...' : 'Upload'}
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden" 
+                              disabled={uploadingState[`${idx}-companyLogo`]}
+                              onChange={e => handleFileUpload(e, idx, 'companyLogo')}
+                            />
+                          </label>
+                        </div>
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[9px] text-neutral-400 font-bold uppercase">Fallback initials</Label>
@@ -772,26 +859,27 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
         <div className="space-y-6">
           
           {/* Publish Settings Card */}
-          <Card className="border border-[#C5C4C2]/50 bg-white rounded-lg shadow-xs overflow-visible">
-            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-4">
-              <CardTitle className="text-xs font-bold text-neutral-800 font-display">Publish settings</CardTitle>
+          <Card className="border border-neutral-200 bg-white rounded-lg shadow-sm overflow-visible">
+            <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-4">
+              <CardTitle className="text-xs font-bold text-neutral-800">Publish settings</CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-3.5 text-[11px] text-neutral-500 font-normal leading-relaxed select-none">
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-neutral-700">Status:</span>
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="bg-white border border-neutral-300 h-7 rounded px-2 outline-none text-neutral-800 text-[10px] cursor-pointer font-normal"
-                >
-                  <option value="published">Published</option>
-                  <option value="draft">Draft</option>
-                </select>
+                <Select value={status} onValueChange={(val) => setStatus(val)}>
+                  <SelectTrigger className="bg-white border border-neutral-200 h-7 w-24 outline-none text-neutral-800 text-[10px] cursor-pointer font-normal shadow-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="text-black">
+                    <SelectItem value="published">Published</SelectItem>
+                    <SelectItem value="draft">Draft</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-neutral-700">Visibility:</span>
-                <span className="text-[#00b259] font-semibold">Public (Edit)</span>
+                <span className="text-primary font-semibold">Public (Edit)</span>
               </div>
 
               <div className="space-y-1">
@@ -909,12 +997,12 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
           </Card>
 
           {/* Content AI metabox */}
-          <Card className="border border-[#C5C4C2]/50 bg-white rounded-lg shadow-xs overflow-visible">
-            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-4 flex flex-row items-center justify-between">
-              <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1 font-display">
+          <Card className="border border-neutral-200 bg-white rounded-lg shadow-sm overflow-visible">
+            <CardHeader className="bg-neutral-50/50 border-b border-neutral-100 py-3.5 px-4 flex flex-row items-center justify-between">
+              <CardTitle className="text-xs font-bold text-neutral-800 flex items-center gap-1">
                 <Sparkles className="h-3.5 w-3.5 text-amber-500 animate-pulse" /> Content AI Assistant
               </CardTitle>
-              <Badge variant="outline" className="px-1 text-[8px] border-[#00b259]/30 text-[#00b259] bg-[#00b259]/5 font-bold tracking-wide uppercase select-none rounded">
+              <Badge variant="outline" className="px-1 text-[8px] border-primary/30 text-primary bg-primary/5 font-bold tracking-wide uppercase select-none rounded">
                 Beta
               </Badge>
             </CardHeader>
@@ -952,7 +1040,7 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                     type="button"
                     onClick={handleAIGenerate}
                     disabled={isGeneratingAI}
-                    className="w-full bg-[#00b259] text-white hover:bg-[#009b4d] font-bold h-8 text-[11px] cursor-pointer rounded-md shadow-xs gap-1.5"
+                    className="w-full font-bold h-8 text-[11px] cursor-pointer rounded-md shadow-sm gap-1.5"
                   >
                     {isGeneratingAI ? (
                       <>

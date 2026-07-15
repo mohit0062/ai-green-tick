@@ -492,6 +492,28 @@ export default function FeatureForm({ initialFeature, onSave, onCancel }: Featur
       tip: 'Set an OG image for social sharing'
     })
 
+    // AEO/AGO Checks
+    const hasConversationalKeyword = ['how', 'why', 'what', 'best', 'guide', 'strategy', 'tips', 'api'].some(word => kw.includes(word))
+    checks.push({
+      label: 'AEO: Conversational Keyword intent',
+      pass: hasConversationalKeyword,
+      tip: 'Use conversational search words in keyword (how, why, what, best, api, guide)'
+    })
+
+    const hasDirectAnswer = description.length > 50 && description.length <= 200
+    checks.push({
+      label: 'AEO: Direct Answer Snippet',
+      pass: hasDirectAnswer,
+      tip: 'Description should be 50-200 chars to serve as an AI Direct Answer Snippet'
+    })
+
+    const hasFAQ = faqs.length >= 2 || description.toLowerCase().includes('?')
+    checks.push({
+      label: 'AEO: Direct Q&A structure / FAQ',
+      pass: hasFAQ,
+      tip: 'Include FAQs or question marks for LLM citation optimization'
+    })
+
     const passCount = checks.filter(c => c.pass).length
     const calculatedScore = Math.round((passCount / checks.length) * 100)
 

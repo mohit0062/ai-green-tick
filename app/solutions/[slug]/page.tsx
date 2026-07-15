@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!solution) return {}
 
   const title = solution.seoTitle || `${solution.title} | AI Greentick`
-  const description = solution.seoDescription || solution.shortDesc || solution.description || ''
+  const description = solution.seoDescription || solution.shortDesc || solution.desc || solution.description || ''
   const keywords = solution.seoKeywords || ''
 
   return {
