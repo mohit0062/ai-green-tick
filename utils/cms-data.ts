@@ -71,12 +71,13 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
     ]
   },
   cta: {
-    heading: "Supercharge your sales with WhatsApp Automation",
-    description: "Connect with customers, run automated marketing campaigns, and provide instant support with AI agents.",
-    buttonText: "Get Started - Free",
-    buttonHref: "/contact",
-    secondaryButtonText: "Book a Demo",
-    secondaryButtonHref: "/contact?intent=demo"
+    heading: "Ready to make WhatsApp your #1 channel?",
+    description: "Join the 500+ brands using AIGreentick to scale conversations and conversions.",
+    buttonText: "Start Free Trial",
+    buttonHref: "/#demo",
+    secondaryButtonText: "Talk to Sales",
+    secondaryButtonHref: "/#demo",
+    services: ["Broadcasts", "Shared Inbox", "AI Chatbots"]
   },
   seo: {
     siteTitle: "AI Greentick",

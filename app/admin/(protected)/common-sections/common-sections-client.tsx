@@ -121,13 +121,17 @@ export default function CommonSectionsClient({
   // State for CTA
   const [cta, setCta] = useState(ctaDataWithFallback(initialCta))
   const [savingCta, setSavingCta] = useState(false)
+  const [newCtaService, setNewCtaService] = useState('')
 
   function ctaDataWithFallback(data: any) {
     const fallback = DEFAULT_FALLBACKS.cta
     if (!data) return fallback
     return {
       ...fallback,
-      ...data
+      ...data,
+      services: (data.services && data.services.length > 0)
+        ? data.services
+        : fallback.services
     }
   }
 
@@ -1872,6 +1876,59 @@ export default function CommonSectionsClient({
                     placeholder="/contact?intent=demo"
                     className="border-[#C5C4C2]"
                   />
+                </div>
+              </div>
+
+              <div className="border-t border-[#C5C4C2]/30 pt-6 space-y-4">
+                <Label className="text-sm font-bold text-neutral-800 font-display block">Services Tags (Badges)</Label>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {(cta.services || []).map((service: string, idx: number) => (
+                    <div key={idx} className="flex items-center gap-1 bg-[#00b259]/10 text-[#00b259] px-2.5 py-1 border border-[#00b259]/20 text-xs font-mono font-bold rounded">
+                      <span>{service}</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = (cta.services || []).filter((_: any, i: number) => i !== idx)
+                          setCta({ ...cta, services: updated })
+                        }}
+                        className="text-red-500 hover:text-red-750 transition-colors ml-1 font-sans cursor-pointer size-4 flex items-center justify-center rounded-full hover:bg-red-500/10"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                  {(cta.services || []).length === 0 && (
+                    <span className="text-xs text-neutral-400 italic">No service badges configured.</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 max-w-sm">
+                  <Input
+                    placeholder="Add new tag (e.g. Shared Inbox)"
+                    value={newCtaService}
+                    onChange={(e) => setNewCtaService(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        if (!newCtaService.trim()) return
+                        const updated = [...(cta.services || []), newCtaService.trim()]
+                        setCta({ ...cta, services: updated })
+                        setNewCtaService('')
+                      }
+                    }}
+                    className="border-[#C5C4C2] h-9 text-xs"
+                  />
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      if (!newCtaService.trim()) return
+                      const updated = [...(cta.services || []), newCtaService.trim()]
+                      setCta({ ...cta, services: updated })
+                      setNewCtaService('')
+                    }}
+                    className="h-9 gap-1.5 px-4 bg-[#00b259] text-white hover:bg-[#009b4d] font-bold text-xs cursor-pointer rounded-lg"
+                  >
+                    <Plus className="h-4 w-4" /> Add Tag
+                  </Button>
                 </div>
               </div>
             </CardContent>

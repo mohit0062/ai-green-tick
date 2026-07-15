@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 // Third-party Imports
 import { motion } from 'motion/react'
 
@@ -9,9 +10,50 @@ import { Button } from '@/components/ui/button'
 import { MotionPreset } from '@/components/ui/motion-preset'
 import GrowLogo from '@/assets/svg/grow-logo'
 import LogoVector from '@/assets/svg/logo-vector'
+import { getSiteSectionAction } from '@/app/admin/(protected)/cms-actions'
 
-const CTA = () => {
-  const services = ['Broadcasts', 'Shared Inbox', 'AI Chatbots']
+interface CTAData {
+  heading?: string
+  description?: string
+  buttonText?: string
+  buttonHref?: string
+  secondaryButtonText?: string
+  secondaryButtonHref?: string
+  services?: string[]
+}
+
+const DEFAULT_CTA: CTAData = {
+  heading: "Ready to make WhatsApp your #1 channel?",
+  description: "Join the 500+ brands using AIGreentick to scale conversations and conversions.",
+  buttonText: "Start Free Trial",
+  buttonHref: "/#demo",
+  secondaryButtonText: "Talk to Sales",
+  secondaryButtonHref: "/#demo",
+  services: ['Broadcasts', 'Shared Inbox', 'AI Chatbots']
+}
+
+const CTA = ({ initialData }: { initialData?: CTAData }) => {
+  const [ctaData, setCtaData] = useState<CTAData>(initialData || DEFAULT_CTA)
+
+  useEffect(() => {
+    if (!initialData) {
+      getSiteSectionAction('cta').then(res => {
+        if (res?.data) {
+          setCtaData(res.data)
+        }
+      }).catch(err => {
+        console.error('Error loading CTA data from CMS:', err)
+      })
+    }
+  }, [initialData])
+
+  const heading = ctaData.heading || DEFAULT_CTA.heading
+  const description = ctaData.description || DEFAULT_CTA.description
+  const buttonText = ctaData.buttonText || DEFAULT_CTA.buttonText
+  const buttonHref = ctaData.buttonHref || DEFAULT_CTA.buttonHref
+  const secondaryButtonText = ctaData.secondaryButtonText || DEFAULT_CTA.secondaryButtonText
+  const secondaryButtonHref = ctaData.secondaryButtonHref || DEFAULT_CTA.secondaryButtonHref
+  const services = ctaData.services || DEFAULT_CTA.services || []
 
   return (
     <section className='border-b px-4 sm:px-6 lg:px-8 bg-muted relative z-1 overflow-hidden'>
@@ -50,41 +92,43 @@ const CTA = () => {
           <div className='space-y-4'>
             <MotionPreset fade slide={{ direction: 'down', offset: 50 }} transition={{ duration: 0.7 }}>
               <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl font-display text-black dark:text-white leading-tight'>
-                Ready to make WhatsApp your #1 channel?
+                {heading}
               </h2>
             </MotionPreset>
             <MotionPreset fade slide={{ direction: 'down', offset: 50 }} delay={0.2} transition={{ duration: 0.7 }}>
               <p className='text-muted-foreground text-base font-sans max-w-md mx-auto'>
-                Join the 500+ brands using AIGreentick to scale conversations and conversions.
+                {description}
               </p>
             </MotionPreset>
           </div>
 
           {/* Service Tags */}
-          <MotionPreset fade slide={{ direction: 'down', offset: 30 }} delay={0.3} transition={{ duration: 0.7 }}>
-            <div className='flex flex-wrap items-center justify-center gap-6'>
-              {services.map(service => (
-                <div
-                  key={service}
-                  className='border-border bg-primary/10 text-primary rounded-sm border px-2 py-0.5 text-xs font-medium font-mono'
-                >
-                  {service}
-                </div>
-              ))}
-            </div>
-          </MotionPreset>
+          {services && services.length > 0 && (
+            <MotionPreset fade slide={{ direction: 'down', offset: 30 }} delay={0.3} transition={{ duration: 0.7 }}>
+              <div className='flex flex-wrap items-center justify-center gap-6'>
+                {services.map(service => (
+                  <div
+                    key={service}
+                    className='border-border bg-primary/10 text-primary rounded-sm border px-2 py-0.5 text-xs font-medium font-mono'
+                  >
+                    {service}
+                  </div>
+                ))}
+              </div>
+            </MotionPreset>
+          )}
 
           {/* CTA Buttons */}
           <MotionPreset fade slide={{ direction: 'down', offset: 30 }} delay={0.6} transition={{ duration: 0.7 }}>
             <div className='flex flex-wrap items-center justify-center gap-4'>
               <PrimaryGrowButton asChild className='gap-2 h-11 px-6 rounded-md font-sans text-sm font-semibold'>
-                <a href='#'>
-                  Start Free Trial <LogoVector className='size-6' />
+                <a href={buttonHref}>
+                  {buttonText} <LogoVector className='size-6' />
                 </a>
               </PrimaryGrowButton>
               <Button variant='outline' size='lg' asChild className='h-11 px-6 rounded-md font-sans text-sm font-semibold border-neutral-300 dark:border-neutral-700 bg-white hover:bg-neutral-50 transition-colors shadow-sm'>
-                <a href='#'>
-                  Talk to Sales
+                <a href={secondaryButtonHref}>
+                  {secondaryButtonText}
                 </a>
               </Button>
             </div>

@@ -186,3 +186,14 @@ export async function uploadCMSImageAction(fileName: string, base64Data: string,
   }
 }
 
+export async function getSiteSectionAction(key: string) {
+  try {
+    const { getSiteSection } = await import('@/utils/cms')
+    const data = await getSiteSection(key)
+    return { data }
+  } catch (err: any) {
+    console.error(`Error in getSiteSectionAction [${key}]:`, err)
+    return { error: err.message || 'Server fetch failed.' }
+  }
+}
+
