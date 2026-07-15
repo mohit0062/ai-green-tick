@@ -2,10 +2,9 @@
 
 // React Imports
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import DottedSheet from '@/components/shadcn-studio/blocks/features-section-26/dotted-sheet'
-import Workflow from '@/components/shadcn-studio/blocks/features-section-26/workflow'
 
 // Util Imports
 import { cn } from '@/lib/utils'
@@ -21,12 +20,34 @@ const Features = ({ data }: { data: DataType[] }) => {
   const [activeTab, setActiveTab] = useState<string>(data[0].id)
   const [workflowProgress, setWorkflowProgress] = useState<number>(0)
 
+  useEffect(() => {
+    setWorkflowProgress(0)
+    const startTime = Date.now()
+    const STEP_DURATION = 5000 // 5 seconds per tab
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min((elapsed / STEP_DURATION) * 100, 100)
+      setWorkflowProgress(progress)
+
+      if (progress >= 100) {
+        clearInterval(interval)
+        // Auto-switch to next tab
+        const currentIndex = data.findIndex(tab => tab.id === activeTab)
+        const nextIndex = (currentIndex + 1) % data.length
+        setActiveTab(data[nextIndex].id)
+      }
+    }, 50)
+
+    return () => clearInterval(interval)
+  }, [activeTab, data])
+
   return (
-    <section className='border-b px-4 sm:px-6 lg:px-8'>
+    <section className='border-b px-4 sm:px-6 lg:px-8 bg-muted/20'>
       <div className='mx-auto max-w-7xl border-x border-[#C5C4C2] py-8 sm:py-16 lg:py-24'>
         <div className='grid max-lg:divide-y max-lg:divide-y-reverse lg:grid-cols-2 lg:divide-x border border-[#C5C4C2] bg-white dark:bg-neutral-900'>
             
-            {/* Left Column: Title Box + Code Editor Mockup Preview */}
+            {/* Left Column: Title Box + Preview */}
             <div className='flex flex-col h-full divide-y divide-[#C5C4C2] max-lg:order-1'>
               
               {/* Title Box */}
@@ -42,16 +63,33 @@ const Features = ({ data }: { data: DataType[] }) => {
                 </p>
               </div>
 
-              {/* Mockup Preview */}
-              <div className='relative flex-grow flex items-center justify-center overflow-hidden px-4 py-8 lg:py-12 max-lg:h-120'>
-                <DottedSheet className='absolute inset-0 h-full w-full' />
+              {/* Image Preview Container */}
+              <div className='relative flex-grow flex items-center justify-center overflow-hidden px-4 py-8 lg:py-12 max-lg:h-120 min-h-[360px] bg-neutral-50/20'>
+                <DottedSheet className='absolute inset-0 h-full w-full opacity-60' />
                 <div className='absolute inset-0 bg-[radial-gradient(circle,transparent_0%,var(--background)_80%)]' />
-                <Workflow
-                  activeTab={activeTab}
-                  setActiveTab={setActiveTab}
-                  setWorkflowProgress={setWorkflowProgress}
-                  initialTabId={data[0].id}
-                />
+                <div className="relative z-10 w-full max-w-[420px] bg-white dark:bg-neutral-850 rounded-xl shadow-xl border border-neutral-200/80 p-2 flex items-center justify-center overflow-hidden aspect-[4/3]">
+                  {activeTab === 'marketing' && (
+                    <img 
+                      src="/images/marketing-workflow.png" 
+                      alt="Marketing Workflow" 
+                      className="w-full h-full object-contain rounded-lg animate-in fade-in zoom-in-95 duration-300"
+                    />
+                  )}
+                  {activeTab === 'sales' && (
+                    <img 
+                      src="/images/sales-workflow.jpg" 
+                      alt="Sales Workflow" 
+                      className="w-full h-full object-contain rounded-lg animate-in fade-in zoom-in-95 duration-300"
+                    />
+                  )}
+                  {activeTab === 'support' && (
+                    <img 
+                      src="/images/support-workflow.jpg" 
+                      alt="Support Workflow" 
+                      className="w-full h-full object-contain rounded-lg animate-in fade-in zoom-in-95 duration-300"
+                    />
+                  )}
+                </div>
               </div>
 
             </div>
