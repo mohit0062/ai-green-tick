@@ -435,14 +435,42 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
     setSeoScore(seoChecklist.score)
   }, [seoChecklist.score])
 
-  const handleAIGenerate = () => {
+  const handleAIGenerate = async () => {
     setIsGeneratingAI(true)
-    setTimeout(() => {
+    try {
+      const systemPrompt =
+        'You are a senior SaaS marketing copywriter for AI Greentick, a WhatsApp Business API platform. Respond ONLY with a valid JSON object and no markdown code fences.'
+      const prompt =
+        `Write a landing-page hero for AI Greentick.${aiInstructions ? ` Guidance: ${aiInstructions}.` : ''} ` +
+        'Return exactly this JSON shape: {"heading": "benefit-driven H1, max 70 chars", "subheading": "clear value proposition, 50-160 chars"}'
+
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, systemPrompt }),
+      })
+      const result = await res.json()
+
+      if (!res.ok) {
+        showStatus('error', result?.error || 'AI generation failed.')
+        return
+      }
+
+      let parsed: { heading?: string; subheading?: string } = {}
+      try {
+        parsed = JSON.parse(String(result.text || '').replace(/```json|```/g, '').trim())
+      } catch {
+        parsed = { subheading: result.text }
+      }
+
+      if (parsed.heading) updateHero('heading', parsed.heading)
+      if (parsed.subheading) updateHero('subheading', parsed.subheading)
+      showStatus('success', 'AI updated the hero content. Review and Save to publish.')
+    } catch (err: any) {
+      showStatus('error', err.message || 'AI generation failed.')
+    } finally {
       setIsGeneratingAI(false)
-      updateHero('heading', 'Supercharge Your Sales Team with Official WhatsApp Business API Automation')
-      updateHero('subheading', 'AI Greentick delivers enterprise-grade WhatsApp API campaigns, shared team inboxes, smart routers, and LLM-powered bots to qualification leads and scale support channels instantly.')
-      showStatus('success', 'AI Generator updated Hero descriptions!')
-    }, 2000)
+    }
   }
 
   return (

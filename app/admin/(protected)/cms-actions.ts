@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
+import { createServiceClient } from '@/utils/supabase/service'
 import { revalidatePath } from 'next/cache'
 import { requireAdmin, requireSectionAccess } from '@/utils/admin-auth'
 
@@ -124,7 +125,8 @@ export async function uploadCMSImageAction(fileName: string, base64Data: string,
     // 1. Authenticate (any admin role may upload media)
     await requireAdmin()
 
-    const supabase = await createClient()
+    // Storage writes go through the service-role client (RLS blocks anon writes).
+    const supabase = createServiceClient()
 
     // 2. Check/create bucket
     const bucketName = 'media'

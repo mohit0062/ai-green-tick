@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
+import { createServiceClient } from '@/utils/supabase/service'
 import { cookies } from 'next/headers'
 import { canAccess, NAV_PERMISSIONS } from '@/utils/roles'
 
@@ -35,16 +36,25 @@ export async function getAdminContext(): Promise<AdminContext | null> {
   }
 
   const email = (user?.email || '').toLowerCase()
-  const { data: adminRow } = await supabase
-    .from('admin')
-    .select('role')
-    .eq('email', email)
-    .maybeSingle()
 
-  const role =
-    adminRow?.role || (user?.user_metadata as { role?: string } | undefined)?.role || 'editor'
+  // Look up the admin row. Prefer the service client (bypasses RLS) so a valid
+  // Supabase session that is NOT in the admin table is correctly rejected, and
+  // so real admins are never locked out by an RLS edge case.
+  let adminRow: { role?: string } | null = null
+  try {
+    const svc = createServiceClient()
+    const { data } = await svc.from('admin').select('role').eq('email', email).maybeSingle()
+    adminRow = data
+  } catch {
+    const { data } = await supabase.from('admin').select('role').eq('email', email).maybeSingle()
+    adminRow = data
+  }
 
-  return { email, role, isFallback: false }
+  // A valid session alone does NOT grant admin access — the user must exist in
+  // the admin table. Blocks non-admin accounts from gaining editor/admin access.
+  if (!adminRow) return null
+
+  return { email, role: adminRow.role || 'editor', isFallback: false }
 }
 
 async function getPermissionsMap(): Promise<Record<string, string[]>> {

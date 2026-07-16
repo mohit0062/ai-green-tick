@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
+import { createServiceClient } from '@/utils/supabase/service'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
@@ -28,9 +29,10 @@ export async function POST(request: Request) {
 
     const bucketName = 'media'
 
-    // 3. Upload file
+    // 3. Upload file via service-role client (RLS blocks anon writes to storage)
+    const svc = createServiceClient()
     const buffer = Buffer.from(base64Data, 'base64')
-    const { data, error: uploadError } = await supabase.storage
+    const { data, error: uploadError } = await svc.storage
       .from(bucketName)
       .upload(fileName, buffer, {
         contentType: mimeType,
@@ -43,7 +45,7 @@ export async function POST(request: Request) {
     }
 
     // 4. Get public URL
-    const { data: { publicUrl } } = supabase.storage
+    const { data: { publicUrl } } = svc.storage
       .from(bucketName)
       .getPublicUrl(fileName)
 

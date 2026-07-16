@@ -2,6 +2,7 @@ import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedroc
 import { createClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { checkRateLimit } from '@/utils/rate-limit'
 
 export async function POST(request: Request) {
   try {
@@ -19,6 +20,16 @@ export async function POST(request: Request) {
 
     if ((authError || !user) && !hasFallbackSession) {
       return NextResponse.json({ error: 'Unauthorized: Admin authentication required.' }, { status: 401 })
+    }
+
+    // 1b. Rate limit to curb runaway/abusive AI generation cost (per user/session)
+    const rlKey = `ai:${user?.id || user?.email || 'fallback-admin'}`
+    const rl = checkRateLimit(rlKey, 30, 60_000)
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Too many AI requests. Please wait a moment and try again.' },
+        { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } }
+      )
     }
 
     // 2. Parse payload

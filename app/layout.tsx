@@ -4,6 +4,8 @@ import './globals.css'
 import DemoModalProvider from '@/components/shadcn-studio/blocks/demo-modal-provider'
 import { getSiteSection } from '@/utils/cms'
 import { getSiteUrl } from '@/utils/site'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -108,6 +110,8 @@ export default function RootLayout({
           {children}
         </div>
         <DemoModalProvider />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

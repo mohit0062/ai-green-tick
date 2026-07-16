@@ -24,6 +24,12 @@ export async function submitContactFormAction(input: ContactInput) {
       return { error: 'Name and email are required.' }
     }
 
+    // Basic validation / anti-abuse caps
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email.trim())
+    if (!emailOk) return { error: 'Please enter a valid email address.' }
+    if (input.name.trim().length > 120) return { error: 'Name is too long.' }
+    if (input.message && input.message.length > 5000) return { error: 'Message is too long.' }
+
     const supabase = await createClient()
 
     // Format phone number
@@ -73,6 +79,10 @@ export async function subscribeNewsletterAction(email: string) {
   try {
     if (!email || !email.trim()) {
       return { error: 'Email is required.' }
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      return { error: 'Please enter a valid email address.' }
     }
 
     const supabase = await createClient()
