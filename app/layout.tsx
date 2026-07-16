@@ -105,7 +105,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={`${inter.variable} ${manrope.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}>
-      <body className="overflow-x-hidden w-full relative">
+      <body className="overflow-x-clip w-full relative">
         <div className="w-full relative flex flex-col min-h-screen">
           {children}
         </div>
