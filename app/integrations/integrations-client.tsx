@@ -91,6 +91,9 @@ type Integration = {
   logoColor: string
   logoSvg: string
   docLink?: string
+  setupTime?: string
+  difficulty?: string
+  requirements?: string
 }
 
 interface IntegrationsClientProps {
@@ -100,6 +103,11 @@ interface IntegrationsClientProps {
 export default function IntegrationsClient({ initialData }: IntegrationsClientProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState<string>('all')
+  const [openFaqs, setOpenFaqs] = useState<Record<number, boolean>>({})
+
+  const toggleFaq = (idx: number) => {
+    setOpenFaqs(prev => ({ ...prev, [idx]: !prev[idx] }))
+  }
 
   const categories = [
     { value: 'all', name: 'All Integrations' },
@@ -142,6 +150,25 @@ export default function IntegrationsClient({ initialData }: IntegrationsClientPr
           </p>
         </div>
       </section>
+
+      {/* AI Snapshot Section */}
+      {initialData.aiSnapshot && (
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white py-6">
+          <div 
+            className="mx-auto max-w-4xl border border-[#C5C4C2] bg-[#ECEBE9]/20 p-5 relative"
+            style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px))' }}
+          >
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <span className="inline-block px-2 py-0.5 text-[9px] font-mono font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase tracking-wide shrink-0">
+                ⚡ AI Quick Summary
+              </span>
+              <p className="text-neutral-750 font-sans text-xs leading-relaxed font-medium text-left">
+                {initialData.aiSnapshot}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Controls & Search Bar Section */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30">
@@ -193,7 +220,7 @@ export default function IntegrationsClient({ initialData }: IntegrationsClientPr
               {filteredIntegrations.map(item => (
                 <div
                   key={item.id}
-                  className="border border-[#C5C4C2] bg-white p-6 flex flex-col justify-between group relative shadow-xs hover:shadow-md transition-all duration-300"
+                  className="border border-[#C5C4C2] bg-white p-6 flex flex-col justify-between group relative shadow-xs hover:shadow-md transition-all duration-300 animate-in fade-in zoom-in-95"
                   style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))' }}
                 >
                   <div className="space-y-4">
@@ -220,6 +247,32 @@ export default function IntegrationsClient({ initialData }: IntegrationsClientPr
                         {item.description}
                       </p>
                     </div>
+
+                    {/* Structured Metadata Badges (AGO optimized) */}
+                    {(item.setupTime || item.difficulty) && (
+                      <div className="flex flex-wrap items-center gap-1.5 pt-2 text-left">
+                        {item.setupTime && (
+                          <span className="inline-block px-2 py-0.5 text-[9px] font-mono font-bold text-neutral-500 bg-neutral-100 border border-neutral-200">
+                            ⏱️ {item.setupTime}
+                          </span>
+                        )}
+                        {item.difficulty && (
+                          <span className={cn(
+                            "inline-block px-2 py-0.5 text-[9px] font-mono font-bold border",
+                            item.difficulty === 'No-Code' 
+                              ? "bg-[#00b259]/5 text-[#00b259] border-[#00b259]/20"
+                              : "bg-blue-50 text-blue-600 border-blue-100"
+                          )}>
+                            ⚡ {item.difficulty}
+                          </span>
+                        )}
+                        {item.requirements && (
+                          <span className="inline-block px-2 py-0.5 text-[9px] font-mono font-medium text-neutral-400 truncate max-w-full">
+                            Req: {item.requirements}
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Connect / Docs Action Link */}
@@ -274,7 +327,7 @@ export default function IntegrationsClient({ initialData }: IntegrationsClientPr
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-black">
                 {initialData.customCta?.heading || "Don't see your favorite tool?"}
               </h2>
-              <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed">
+              <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed text-left">
                 {initialData.customCta?.description || 'Connect AIGreenTick to your proprietary CRM, custom databases, or other tools using our standard REST API and webhooks, or connect via Zapier in minutes.'}
               </p>
             </div>
@@ -298,6 +351,51 @@ export default function IntegrationsClient({ initialData }: IntegrationsClientPr
           </div>
         </div>
       </section>
+
+      {/* FAQ Accordion Section (AEO optimized) */}
+      {initialData.faqs && initialData.faqs.length > 0 && (
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white py-12 sm:py-20">
+          <div className="mx-auto max-w-3xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 space-y-8">
+            <div className="text-center space-y-2">
+              <span className="inline-block px-2.5 py-0.5 text-[10px] font-mono font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
+                :: FREQUENTLY ASKED QUESTIONS ::
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold text-black">
+                Everything you need to know about Integrations
+              </h2>
+            </div>
+
+            <div className="space-y-4">
+              {initialData.faqs.map((faq: any, idx: number) => {
+                const isOpen = !!openFaqs[idx]
+                return (
+                  <div
+                    key={idx}
+                    className="border border-[#C5C4C2] bg-[#ECEBE9]/10 transition-all duration-300 overflow-hidden"
+                    style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px))' }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(idx)}
+                      className="w-full px-5 py-4 text-left font-display font-bold text-sm sm:text-base text-black flex items-center justify-between gap-4 hover:bg-[#ECEBE9]/20 transition-colors cursor-pointer"
+                    >
+                      <span>{faq.question}</span>
+                      <span className="text-lg text-neutral-400 shrink-0 select-none">
+                        {isOpen ? '−' : '+'}
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <div className="px-5 pb-4 pt-1 font-sans text-xs sm:text-sm text-neutral-600 border-t border-[#C5C4C2]/30 leading-relaxed text-left">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <Footer />

@@ -67,7 +67,54 @@ export default async function IntegrationsPage() {
     integrationsList: (row?.integrationsList && row.integrationsList.length > 0)
       ? row.integrationsList
       : fallback.integrationsList,
+    faqs: (row?.faqs && row.faqs.length > 0)
+      ? row.faqs
+      : fallback.faqs,
+    aiSnapshot: row?.aiSnapshot || fallback.aiSnapshot,
   }
 
-  return <IntegrationsClient initialData={integrationsData} />
+  // AEO FAQ JSON-LD Schema
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": (integrationsData.faqs || []).map((f: any) => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer,
+      },
+    })),
+  }
+
+  // AGO Software Application Schemas
+  const applicationSchemas = (integrationsData.integrationsList || []).map((item: any) => ({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": `${item.name} WhatsApp Integration`,
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "description": item.description,
+    "author": {
+      "@type": "Organization",
+      "name": "AI Greentick",
+    },
+  }))
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      {applicationSchemas.map((schema: any, idx: number) => (
+        <script
+          key={idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+      <IntegrationsClient initialData={integrationsData} />
+    </>
+  )
 }

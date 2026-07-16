@@ -110,6 +110,39 @@ export default function IntegrationsCmsClient({ initialData }: IntegrationsCmsCl
     setData({ ...data, integrationsList: list })
   }
 
+  // ── FAQ List helpers ──
+  const updateFaq = (idx: number, field: string, value: string) => {
+    const list = [...(data.faqs || [])]
+    list[idx] = { ...list[idx], [field]: value }
+    setData({ ...data, faqs: list })
+  }
+
+  const removeFaq = (idx: number) => {
+    const list = (data.faqs || []).filter((_: any, i: number) => i !== idx)
+    setData({ ...data, faqs: list })
+  }
+
+  const addFaq = () => {
+    setData({
+      ...data,
+      faqs: [
+        ...(data.faqs || []),
+        {
+          question: 'New FAQ Question?',
+          answer: 'The answer description goes here.'
+        }
+      ]
+    })
+  }
+
+  const moveFaq = (idx: number, dir: -1 | 1) => {
+    const list = [...(data.faqs || [])]
+    const target = idx + dir
+    if (target < 0 || target >= list.length) return
+    ;[list[idx], list[target]] = [list[target], list[idx]]
+    setData({ ...data, faqs: list })
+  }
+
   const handleImageUpload = async (idx: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
@@ -244,6 +277,18 @@ export default function IntegrationsCmsClient({ initialData }: IntegrationsCmsCl
                   value={data.hero?.description || ''}
                   onChange={(e) => setData({ ...data, hero: { ...data.hero, description: e.target.value } })}
                   className="h-24 border-[#C5C4C2] resize-none"
+                />
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-neutral-100">
+                <Label htmlFor="aiSnapshot" className="text-sm font-semibold text-[#00b259]">AI Snapshot Direct Summary (AEO/AGO optimized)</Label>
+                <Textarea
+                  id="aiSnapshot"
+                  required
+                  value={data.aiSnapshot || ''}
+                  onChange={(e) => setData({ ...data, aiSnapshot: e.target.value })}
+                  placeholder="Summarize the page in 1-2 direct sentences for voice and search engines to cite..."
+                  className="h-16 border-[#C5C4C2] resize-none"
                 />
               </div>
             </CardContent>
@@ -397,6 +442,43 @@ export default function IntegrationsCmsClient({ initialData }: IntegrationsCmsCl
                     />
                   </div>
 
+                  <div className="grid gap-4 md:grid-cols-3 pt-2 border-t border-neutral-50">
+                    <div className="space-y-1.5">
+                      <Label className="text-[10px] text-neutral-400 uppercase font-black">Setup Time</Label>
+                      <Input
+                        value={item.setupTime || ''}
+                        onChange={(e) => updateIntegration(idx, 'setupTime', e.target.value)}
+                        placeholder="e.g. 5 Mins"
+                        className="h-9 border-[#C5C4C2]"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label className="text-[10px] text-neutral-400 uppercase font-black">Difficulty Level</Label>
+                      <Select
+                        value={item.difficulty || 'No-Code'}
+                        onValueChange={(val) => updateIntegration(idx, 'difficulty', val)}
+                      >
+                        <SelectTrigger className="h-9 border-[#C5C4C2]">
+                          <SelectValue placeholder="Difficulty" />
+                        </SelectTrigger>
+                        <SelectContent className="text-black bg-white">
+                          <SelectItem value="No-Code">No-Code</SelectItem>
+                          <SelectItem value="Low-Code">Low-Code</SelectItem>
+                          <SelectItem value="Developer">Developer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label className="text-[10px] text-neutral-400 uppercase font-black">Requirements</Label>
+                      <Input
+                        value={item.requirements || ''}
+                        onChange={(e) => updateIntegration(idx, 'requirements', e.target.value)}
+                        placeholder="e.g. Shopify Account"
+                        className="h-9 border-[#C5C4C2]"
+                      />
+                    </div>
+                  </div>
+
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-1.5">
                       <Label className="text-[10px] text-neutral-400 uppercase font-black">Tailwind Colors & Borders Classes</Label>
@@ -453,6 +535,58 @@ export default function IntegrationsCmsClient({ initialData }: IntegrationsCmsCl
                 className="h-9 gap-1.5 border border-[#00b259]/30 bg-[#00b259]/5 text-[#00b259] hover:bg-[#00b259]/10 cursor-pointer font-bold text-xs rounded-lg"
               >
                 <Plus className="h-3.5 w-3.5" /> Add New App Integration
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Card 3.5: FAQ Section Builder */}
+          <Card className="shadow-xs border border-[#C5C4C2]/50">
+            <CardHeader className="pb-3 border-b border-[#C5C4C2]/20">
+              <CardTitle className="font-display text-neutral-850">Frequently Asked Questions (FAQ) Manager</CardTitle>
+              <CardDescription className="text-xs">
+                Manage collapsible Q&A accordions. Google and AI Answer Engines read this metadata directly.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-5 pt-5">
+              {(data.faqs || []).map((faq: any, idx: number) => (
+                <div key={idx} className="p-4 bg-white border border-[#C5C4C2]/60 rounded-xl space-y-4 shadow-sm hover:border-[#00b259]/50 transition-colors">
+                  <div className="flex items-center justify-between border-b border-[#C5C4C2]/20 pb-2">
+                    <span className="text-xs font-bold text-neutral-800">FAQ #{idx + 1}</span>
+                    <div className="flex items-center gap-1">
+                      <Button type="button" variant="ghost" size="icon" disabled={idx === 0} onClick={() => moveFaq(idx, -1)} className="h-7 w-7 text-neutral-400 hover:text-black cursor-pointer"><ChevronUp className="h-4 w-4" /></Button>
+                      <Button type="button" variant="ghost" size="icon" disabled={idx === (data.faqs || []).length - 1} onClick={() => moveFaq(idx, 1)} className="h-7 w-7 text-neutral-400 hover:text-black cursor-pointer"><ChevronDown className="h-4 w-4" /></Button>
+                      <Button type="button" variant="ghost" size="icon" onClick={() => removeFaq(idx)} className="h-7 w-7 text-red-500 hover:bg-red-50 cursor-pointer"><Trash2 className="h-3.5 w-3.5" /></Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-[10px] text-neutral-400 uppercase font-black">Question</Label>
+                    <Input
+                      value={faq.question || ''}
+                      onChange={(e) => updateFaq(idx, 'question', e.target.value)}
+                      placeholder="e.g. Do I need a WhatsApp Business API account?"
+                      className="h-9 border-[#C5C4C2]"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-[10px] text-neutral-400 uppercase font-black">Answer</Label>
+                    <Textarea
+                      value={faq.answer || ''}
+                      onChange={(e) => updateFaq(idx, 'answer', e.target.value)}
+                      placeholder="e.g. Yes, you need a Meta verified WABA account..."
+                      className="h-20 border-[#C5C4C2] resize-none"
+                    />
+                  </div>
+                </div>
+              ))}
+
+              <Button
+                type="button"
+                onClick={addFaq}
+                className="h-9 gap-1.5 border border-[#00b259]/30 bg-[#00b259]/5 text-[#00b259] hover:bg-[#00b259]/10 cursor-pointer font-bold text-xs rounded-lg animate-in"
+              >
+                <Plus className="h-3.5 w-3.5" /> Add New FAQ Item
               </Button>
             </CardContent>
           </Card>
