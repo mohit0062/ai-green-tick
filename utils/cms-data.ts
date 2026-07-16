@@ -1405,3 +1405,123 @@ DEFAULT_FALLBACKS.solutions_list = DEFAULT_FALLBACKS.industry_list.map((item: an
   ...JSON.parse(JSON.stringify(item)),
   link: `/solutions/${item.id}`
 }))
+
+DEFAULT_FALLBACKS.integrations_page = {
+  pageTitle: "App Integrations",
+  visibility: "visible",
+  seoTitle: "App Integrations — Connect AI Greentick",
+  seoDesc: "Connect AI Greentick with HubSpot, Shopify, WooCommerce, Salesforce, Razorpay, Stripe, Zapier, and over 2000+ web applications.",
+  seoUrl: "aigreentick.com/integrations",
+  hero: {
+    badgeText: ":: APP INTEGRATIONS ::",
+    heading: "Integrate WhatsApp with your Favorite Tools",
+    description: "Connect AIGreenTick with over 2000+ CRMs, e-commerce stores, payment gateways, and productivity apps to automate your marketing, sales, and support workflows."
+  },
+  customCta: {
+    badgeText: ":: CUSTOM CONNECTIONS ::",
+    heading: "Don't see your favorite tool?",
+    description: "Connect AIGreenTick to your proprietary CRM, custom databases, or other tools using our standard **REST API** and webhooks, or connect via **Zapier** in minutes.",
+    button1Text: "Connect Zapier",
+    button1Link: "/#demo",
+    button2Text: "Developer Docs",
+    button2Link: "/#demo"
+  },
+  integrationsList: [
+    {
+      id: 'shopify',
+      name: 'Shopify',
+      category: 'ecommerce',
+      description: 'Send automated order updates, delivery tracking alerts, and abandoned cart reminders via WhatsApp.',
+      logoColor: 'bg-[#95bf47]/10 text-[#95bf47] border-[#95bf47]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 7.5L12 3 4.5 7.5v9L12 21l7.5-4.5v-9zM12 4.8l6 3.6-6 3.6-6-3.6 6-3.6zM6 8.7l5 3v7.3l-5-3V8.7zm7 10.3v-7.3l5-3v7.3l-5 3z"/></svg>'
+    },
+    {
+      id: 'woocommerce',
+      name: 'WooCommerce',
+      category: 'ecommerce',
+      description: 'Sync your WordPress store to automatically verify orders, confirm payments, and recover abandoned carts.',
+      logoColor: 'bg-[#96588a]/10 text-[#96588a] border-[#96588a]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm-1.8 14.2h3.6l1.2-4.8h-6l1.2 4.8zm4.8-6.4l.6-2.4H8.4l.6 2.4h7.8z"/></svg>'
+    },
+    {
+      id: 'hubspot',
+      name: 'HubSpot',
+      category: 'crm',
+      description: 'Sync contacts, track chat history, and trigger WhatsApp automated messages from HubSpot workflow pipelines.',
+      logoColor: 'bg-[#ff7a59]/10 text-[#ff7a59] border-[#ff7a59]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm3.8 13.8a4 4 0 11-4-4 4 4 0 014 4zm1.2-5.4a1.6 1.6 0 11-1.6-1.6 1.6 1.6 0 011.6 1.6z"/></svg>'
+    },
+    {
+      id: 'salesforce',
+      name: 'Salesforce',
+      category: 'crm',
+      description: 'Connect your sales pipeline and automate personalized client outreach directly from Salesforce CRM records.',
+      logoColor: 'bg-[#00a1e0]/10 text-[#00a1e0] border-[#00a1e0]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M19.1 11.6a3.8 3.8 0 00-5.7-4.6 6 6 0 00-10.4 2.8 4.2 4.2 0 00.3 8.3 4.2 4.2 0 007.8.2 4 4 0 006.8-2.6c.7 0 1.2-.5 1.2-1.2v-2.9z"/></svg>'
+    },
+    {
+      id: 'zoho',
+      name: 'Zoho CRM',
+      category: 'crm',
+      description: 'Sync client lead data in real-time and send instant automated alerts for status changes or updates.',
+      logoColor: 'bg-[#e21c23]/10 text-[#e21c23] border-[#e21c23]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h7v7H4zm9 0h7v7h-7zm-9 9h7v7H4zm9 0h7v7h-7z"/></svg>'
+    },
+    {
+      id: 'razorpay',
+      name: 'Razorpay',
+      category: 'payments',
+      description: 'Send secure payment links, instant payment receipts, and automated recurring invoices via WhatsApp.',
+      logoColor: 'bg-[#0b72e7]/10 text-[#0b72e7] border-[#0b72e7]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h20L12 2zm0 4.8l6.8 13.6H5.2L12 6.8z"/></svg>'
+    },
+    {
+      id: 'stripe',
+      name: 'Stripe',
+      category: 'payments',
+      description: 'Trigger transactional messages, payment confirmations, and billing updates to customers globally.',
+      logoColor: 'bg-[#635bff]/10 text-[#635bff] border-[#635bff]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M13.9 9.3c0-.8-.7-1.1-1.8-1.1-1.3 0-2.8.4-3.9 1L7 6.1C8.6 5 10.9 4.3 13.3 4.3c3.4 0 5.7 1.7 5.7 4.8v7.2c0 2.2.4 2.9.9 3.3H14.8c-.3-.5-.4-1.1-.4-1.6h-.1c-.9 1.1-2.4 1.9-4.3 1.9-2.9 0-4.8-1.8-4.8-4.3 0-3.3 3.1-4.7 7.7-4.7v-.2zM14 12.8v-.6c-2.3 0-4.1.5-4.1 2.2 0 .9.7 1.4 1.6 1.4 1.4-.1 2.5-1.3 2.5-3z"/></svg>'
+    },
+    {
+      id: 'zapier',
+      name: 'Zapier',
+      category: 'automation',
+      description: 'Connect AIGreenTick with 5,000+ web applications to automate custom tasks without writing a single line of code.',
+      logoColor: 'bg-[#ff4f00]/10 text-[#ff4f00] border-[#ff4f00]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h20zM12 6.2l5.8 11.6H6.2z"/></svg>'
+    },
+    {
+      id: 'google-sheets',
+      name: 'Google Sheets',
+      category: 'automation',
+      description: 'Instantly export new chat inquiries or sync contacts from spreadsheets to your broadcast lists.',
+      logoColor: 'bg-[#0f9d58]/10 text-[#0f9d58] border-[#0f9d58]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H7v-2h3v2zm0-4H7v-2h3v2zm0-4H7V7h3v2zm5 8h-3v-2h3v2zm0-4h-3v-2h3v2zm0-4h-3V7h3v2z"/></svg>'
+    },
+    {
+      id: 'slack',
+      name: 'Slack',
+      category: 'support',
+      description: 'Get real-time notifications for incoming WhatsApp support tickets directly in your team Slack channels.',
+      logoColor: 'bg-[#4a154b]/10 text-[#4a154b] border-[#4a154b]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M6 14.5a2.5 2.5 0 11-2.5-2.5H6v2.5zm1.5 0a2.5 2.5 0 012.5-2.5h5a2.5 2.5 0 012.5 2.5v5a2.5 2.5 0 01-2.5 2.5h-5a2.5 2.5 0 01-2.5-2.5v-5zm2.5-5a2.5 2.5 0 112.5-2.5V9.5h-2.5zm0 1.5a2.5 2.5 0 012.5 2.5v5a2.5 2.5 0 01-2.5 2.5h-5a2.5 2.5 0 01-2.5-2.5v-5a2.5 2.5 0 012.5-2.5h5z"/></svg>'
+    },
+    {
+      id: 'freshdesk',
+      name: 'Freshdesk',
+      category: 'support',
+      description: 'Convert WhatsApp support threads into Freshdesk tickets automatically and maintain thread histories.',
+      logoColor: 'bg-[#009b72]/10 text-[#009b72] border-[#009b72]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm1 14.5h-2v-2h2v2zm0-4h-2v-5h2v5z"/></svg>'
+    },
+    {
+      id: 'activecampaign',
+      name: 'ActiveCampaign',
+      category: 'marketing',
+      description: 'Integrate WhatsApp messaging into your existing email marketing automation funnels for omnichannel outreach.',
+      logoColor: 'bg-[#356ae6]/10 text-[#356ae6] border-[#356ae6]/20',
+      logoSvg: '<svg class="size-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>'
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
+import { cn } from '@/lib/utils'
 
 const navigationData: Navigation[] = [
   {
@@ -88,11 +89,15 @@ type Integration = {
   category: 'crm' | 'ecommerce' | 'payments' | 'automation' | 'support' | 'marketing'
   description: string
   logoColor: string
-  logoSvg: React.ReactNode
+  logoSvg: string
   docLink?: string
 }
 
-export default function IntegrationsClient() {
+interface IntegrationsClientProps {
+  initialData: any
+}
+
+export default function IntegrationsClient({ initialData }: IntegrationsClientProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState<string>('all')
 
@@ -106,152 +111,7 @@ export default function IntegrationsClient() {
     { value: 'marketing', name: 'Marketing' }
   ]
 
-  const integrations: Integration[] = [
-    {
-      id: 'shopify',
-      name: 'Shopify',
-      category: 'ecommerce',
-      description: 'Send automated order updates, delivery tracking alerts, and abandoned cart reminders via WhatsApp.',
-      logoColor: 'bg-[#95bf47]/10 text-[#95bf47] border-[#95bf47]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19.5 7.5L12 3 4.5 7.5v9L12 21l7.5-4.5v-9zM12 4.8l6 3.6-6 3.6-6-3.6 6-3.6zM6 8.7l5 3v7.3l-5-3V8.7zm7 10.3v-7.3l5-3v7.3l-5 3z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'woocommerce',
-      name: 'WooCommerce',
-      category: 'ecommerce',
-      description: 'Sync your WordPress store to automatically verify orders, confirm payments, and recover abandoned carts.',
-      logoColor: 'bg-[#96588a]/10 text-[#96588a] border-[#96588a]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm-1.8 14.2h3.6l1.2-4.8h-6l1.2 4.8zm4.8-6.4l.6-2.4H8.4l.6 2.4h7.8z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'hubspot',
-      name: 'HubSpot',
-      category: 'crm',
-      description: 'Sync contacts, track chat history, and trigger WhatsApp automated messages from HubSpot workflow pipelines.',
-      logoColor: 'bg-[#ff7a59]/10 text-[#ff7a59] border-[#ff7a59]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm3.8 13.8a4 4 0 11-4-4 4 4 0 014 4zm1.2-5.4a1.6 1.6 0 11-1.6-1.6 1.6 1.6 0 011.6 1.6z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'salesforce',
-      name: 'Salesforce',
-      category: 'crm',
-      description: 'Connect your sales pipeline and automate personalized client outreach directly from Salesforce CRM records.',
-      logoColor: 'bg-[#00a1e0]/10 text-[#00a1e0] border-[#00a1e0]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19.1 11.6a3.8 3.8 0 00-5.7-4.6 6 6 0 00-10.4 2.8 4.2 4.2 0 00.3 8.3 4.2 4.2 0 007.8.2 4 4 0 006.8-2.6c.7 0 1.2-.5 1.2-1.2v-2.9z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'zoho',
-      name: 'Zoho CRM',
-      category: 'crm',
-      description: 'Sync client lead data in real-time and send instant automated alerts for status changes or updates.',
-      logoColor: 'bg-[#e21c23]/10 text-[#e21c23] border-[#e21c23]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M4 4h7v7H4zm9 0h7v7h-7zm-9 9h7v7H4zm9 0h7v7h-7z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'razorpay',
-      name: 'Razorpay',
-      category: 'payments',
-      description: 'Send secure payment links, instant payment receipts, and automated recurring invoices via WhatsApp.',
-      logoColor: 'bg-[#0b72e7]/10 text-[#0b72e7] border-[#0b72e7]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L2 22h20L12 2zm0 4.8l6.8 13.6H5.2L12 6.8z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'stripe',
-      name: 'Stripe',
-      category: 'payments',
-      description: 'Trigger transactional messages, payment confirmations, and billing updates to customers globally.',
-      logoColor: 'bg-[#635bff]/10 text-[#635bff] border-[#635bff]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M13.9 9.3c0-.8-.7-1.1-1.8-1.1-1.3 0-2.8.4-3.9 1L7 6.1C8.6 5 10.9 4.3 13.3 4.3c3.4 0 5.7 1.7 5.7 4.8v7.2c0 2.2.4 2.9.9 3.3H14.8c-.3-.5-.4-1.1-.4-1.6h-.1c-.9 1.1-2.4 1.9-4.3 1.9-2.9 0-4.8-1.8-4.8-4.3 0-3.3 3.1-4.7 7.7-4.7v-.2zM14 12.8v-.6c-2.3 0-4.1.5-4.1 2.2 0 .9.7 1.4 1.6 1.4 1.4-.1 2.5-1.3 2.5-3z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'zapier',
-      name: 'Zapier',
-      category: 'automation',
-      description: 'Connect AIGreenTick with 5,000+ web applications to automate custom tasks without writing a single line of code.',
-      logoColor: 'bg-[#ff4f00]/10 text-[#ff4f00] border-[#ff4f00]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L2 22h20zM12 6.2l5.8 11.6H6.2z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'google-sheets',
-      name: 'Google Sheets',
-      category: 'automation',
-      description: 'Instantly export new chat inquiries or sync contacts from spreadsheets to your broadcast lists.',
-      logoColor: 'bg-[#0f9d58]/10 text-[#0f9d58] border-[#0f9d58]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H7v-2h3v2zm0-4H7v-2h3v2zm0-4H7V7h3v2zm5 8h-3v-2h3v2zm0-4h-3v-2h3v2zm0-4h-3V7h3v2z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'slack',
-      name: 'Slack',
-      category: 'support',
-      description: 'Get real-time notifications for incoming WhatsApp support tickets directly in your team Slack channels.',
-      logoColor: 'bg-[#4a154b]/10 text-[#4a154b] border-[#4a154b]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M6 14.5a2.5 2.5 0 11-2.5-2.5H6v2.5zm1.5 0a2.5 2.5 0 012.5-2.5h5a2.5 2.5 0 012.5 2.5v5a2.5 2.5 0 01-2.5 2.5h-5a2.5 2.5 0 01-2.5-2.5v-5zm2.5-5a2.5 2.5 0 112.5-2.5V9.5h-2.5zm0 1.5a2.5 2.5 0 012.5 2.5v5a2.5 2.5 0 01-2.5 2.5h-5a2.5 2.5 0 01-2.5-2.5v-5a2.5 2.5 0 012.5-2.5h5z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'freshdesk',
-      name: 'Freshdesk',
-      category: 'support',
-      description: 'Convert WhatsApp support threads into Freshdesk tickets automatically and maintain thread histories.',
-      logoColor: 'bg-[#009b72]/10 text-[#009b72] border-[#009b72]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm1 14.5h-2v-2h2v2zm0-4h-2v-5h2v5z"/>
-        </svg>
-      )
-    },
-    {
-      id: 'activecampaign',
-      name: 'ActiveCampaign',
-      category: 'marketing',
-      description: 'Integrate WhatsApp messaging into your existing email marketing automation funnels for omnichannel outreach.',
-      logoColor: 'bg-[#356ae6]/10 text-[#356ae6] border-[#356ae6]/20',
-      logoSvg: (
-        <svg className="size-8" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-        </svg>
-      )
-    }
-  ]
+  const integrations: Integration[] = initialData.integrationsList || []
 
   const filteredIntegrations = useMemo(() => {
     return integrations.filter(item => {
@@ -260,7 +120,7 @@ export default function IntegrationsClient() {
       const matchesCategory = activeCategory === 'all' || item.category === activeCategory
       return matchesSearch && matchesCategory
     })
-  }, [searchQuery, activeCategory])
+  }, [searchQuery, activeCategory, integrations])
 
   return (
     <div className="flex flex-col min-h-screen bg-[#ECEBE9] text-black">
@@ -272,13 +132,13 @@ export default function IntegrationsClient() {
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2]">
         <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center space-y-6">
           <span className="inline-block px-3 py-1 text-xs font-bold text-[#00b259] border border-[#00b259] bg-[#00b259]/10 font-mono tracking-wider">
-            :: APP INTEGRATIONS ::
+            {initialData.hero?.badgeText || ':: APP INTEGRATIONS ::'}
           </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display tracking-tight leading-none text-black">
-            Integrate WhatsApp with your Favorite Tools
+            {initialData.hero?.heading || 'Integrate WhatsApp with your Favorite Tools'}
           </h1>
           <p className="text-neutral-500 max-w-2xl mx-auto text-base font-sans leading-relaxed">
-            Connect AIGreenTick with over 2000+ CRMs, e-commerce stores, payment gateways, and productivity apps to automate your marketing, sales, and support workflows.
+            {initialData.hero?.description || 'Connect AIGreenTick with over 2000+ CRMs, e-commerce stores, payment gateways, and productivity apps to automate your marketing, sales, and support workflows.'}
           </p>
         </div>
       </section>
@@ -339,8 +199,12 @@ export default function IntegrationsClient() {
                   <div className="space-y-4">
                     {/* Top Row: App Icon Badge + Category Label */}
                     <div className="flex items-center justify-between">
-                      <div className={`p-2.5 border rounded-lg ${item.logoColor} shrink-0`}>
-                        {item.logoSvg}
+                      <div className={cn("p-2.5 border rounded-lg shrink-0 flex items-center justify-center size-13", item.logoColor)}>
+                        {typeof item.logoSvg === 'string' && item.logoSvg.startsWith('<svg') ? (
+                          <div className="size-8 [&>svg]:size-full flex items-center justify-center" dangerouslySetInnerHTML={{ __html: item.logoSvg }} />
+                        ) : (
+                          <img src={item.logoSvg || '/logo-icon.png'} className="size-8 object-contain" alt={item.name} />
+                        )}
                       </div>
                       <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400 bg-neutral-100 px-2 py-0.5 border border-[#C5C4C2]/30">
                         {item.category}
@@ -405,30 +269,30 @@ export default function IntegrationsClient() {
 
             <div className="space-y-4 text-left max-w-xl">
               <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 font-mono">
-                :: CUSTOM CONNECTIONS ::
+                {initialData.customCta?.badgeText || ':: CUSTOM CONNECTIONS ::'}
               </span>
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-black">
-                Don't see your favorite tool?
+                {initialData.customCta?.heading || "Don't see your favorite tool?"}
               </h2>
               <p className="text-neutral-500 font-sans text-xs sm:text-sm leading-relaxed">
-                Connect AIGreenTick to your proprietary CRM, custom databases, or other tools using our standard **REST API** and webhooks, or connect via **Zapier** in minutes.
+                {initialData.customCta?.description || 'Connect AIGreenTick to your proprietary CRM, custom databases, or other tools using our standard REST API and webhooks, or connect via Zapier in minutes.'}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 shrink-0 w-full sm:w-auto">
               <Link
-                href="/#demo"
+                href={initialData.customCta?.button1Link || "/#demo"}
                 className="px-5 py-2.5 text-xs font-black text-white bg-black hover:bg-neutral-800 transition-colors flex items-center gap-1.5 w-full sm:w-auto justify-center"
                 style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
               >
-                Connect Zapier <Zap className="size-3.5 fill-current" />
+                {initialData.customCta?.button1Text || 'Connect Zapier'} <Zap className="size-3.5 fill-current" />
               </Link>
               <Link
-                href="/#demo"
+                href={initialData.customCta?.button2Link || "/#demo"}
                 className="px-5 py-2.5 text-xs font-black text-black border border-black hover:bg-neutral-50 transition-colors flex items-center gap-1.5 w-full sm:w-auto justify-center"
                 style={{ clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)' }}
               >
-                Developer Docs <Zap className="size-3.5" />
+                {initialData.customCta?.button2Text || 'Developer Docs'} <Zap className="size-3.5" />
               </Link>
             </div>
           </div>

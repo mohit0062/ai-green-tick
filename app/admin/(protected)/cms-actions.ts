@@ -32,6 +32,9 @@ function getCategoryForKey(key: string): string {
   if (key === 'careers_page') {
     return 'careers'
   }
+  if (key === 'integrations_page') {
+    return 'integrations'
+  }
   return 'common'
 }
 
@@ -110,6 +113,8 @@ export async function updateSiteSectionAction(key: string, content: any) {
       revalidatePath('/about')
     } else if (category === 'careers') {
       revalidatePath('/careers')
+    } else if (category === 'integrations') {
+      revalidatePath('/integrations')
     } else if (category === 'pricing') {
       revalidatePath('/')
       revalidatePath('/pricing')

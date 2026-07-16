@@ -31,6 +31,7 @@ const navItems: NavItem[] = [
   { href: '/admin/about', label: 'About Page',     icon: Info,                    group: 'cms' },
   { href: '/admin/careers', label: 'Careers Page',   icon: Briefcase,               group: 'cms' },
   { href: '/admin/contact', label: 'Contact Page',     icon: PhoneCall,               group: 'cms' },
+  { href: '/admin/integrations', label: 'Integrations Page', icon: Globe,             group: 'cms' },
   { href: '/admin/common-sections', label: 'Common Sections', icon: Globe,         group: 'cms' },
   { href: '/admin/users',    label: 'Admin Users',     icon: Lock,                  group: 'cms' },
 ]
