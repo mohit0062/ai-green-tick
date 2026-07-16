@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     alternates: {
       canonical: `/industries/${slug}`,
     },
+    ...(industry.noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
       title,
       description,

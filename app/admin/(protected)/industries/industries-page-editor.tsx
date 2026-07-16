@@ -8,6 +8,7 @@ import {
   Save, Trash2, Plus, Edit, Globe, X, Check, ArrowLeft
 } from 'lucide-react'
 import { LucideIcon } from '@/components/ui/lucide-icon'
+import { AeoChecklist } from '@/components/admin/aeo-checklist'
 
 interface ProblemSection {
   description: string
@@ -41,6 +42,8 @@ interface Industry {
   benchmarkResults?: string
   caseStudy?: string
   faqs?: FAQItem[]
+  aiSnapshot?: string
+  noindex?: boolean
 }
 
 interface Props {
@@ -137,6 +140,7 @@ function IndustryModal({
       question: initial?.faqs?.[i]?.question || '',
       answer: initial?.faqs?.[i]?.answer || ''
     })),
+    aiSnapshot: initial?.aiSnapshot || '',
   })
 
   const set = (k: keyof Industry, v: any) => setForm(f => ({ ...f, [k]: v }))
@@ -255,6 +259,32 @@ function IndustryModal({
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Meta Keywords</label>
                 <input value={form.seoKeywords} onChange={e => set('seoKeywords', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none" placeholder="keywords..." />
               </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-semibold text-[#00b259] uppercase tracking-wide">AI Snapshot (AEO / Voice Search direct summary)</label>
+                <textarea value={form.aiSnapshot} onChange={e => set('aiSnapshot', e.target.value)} rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#00b259]/20 focus:border-[#00b259] focus:outline-none resize-none" placeholder="Write 1-2 direct sentences to answer search engines..." />
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="noindex"
+                  checked={!!form.noindex}
+                  onChange={e => set('noindex', e.target.checked)}
+                  className="h-4 w-4 accent-[#00b259]"
+                />
+                <label htmlFor="noindex" className="text-xs font-medium text-gray-600">
+                  Hide this page from search engines (noindex)
+                </label>
+              </div>
+
+              <AeoChecklist
+                focusKeyword={form.seoKeywords || ''}
+                title={form.seoTitle || form.title || ''}
+                description={form.seoDescription || ''}
+                aiSnapshot={form.aiSnapshot || ''}
+                faqCount={(form.faqs || []).length}
+                className="mt-2"
+              />
             </div>
           )}
 

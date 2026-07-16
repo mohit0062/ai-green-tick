@@ -43,6 +43,39 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
     setTimeout(() => setStatusMsg(null), 5000)
   }
 
+  // ── FAQ List helpers ──
+  const updateFaq = (idx: number, field: string, value: string) => {
+    const list = [...(data.faqs || [])]
+    list[idx] = { ...list[idx], [field]: value }
+    setData({ ...data, faqs: list })
+  }
+
+  const removeFaq = (idx: number) => {
+    const list = (data.faqs || []).filter((_: any, i: number) => i !== idx)
+    setData({ ...data, faqs: list })
+  }
+
+  const addFaq = () => {
+    setData({
+      ...data,
+      faqs: [
+        ...(data.faqs || []),
+        {
+          question: 'New FAQ Question?',
+          answer: 'The answer description goes here.'
+        }
+      ]
+    })
+  }
+
+  const moveFaq = (idx: number, dir: -1 | 1) => {
+    const list = [...(data.faqs || [])]
+    const target = idx + dir
+    if (target < 0 || target >= list.length) return
+    ;[list[idx], list[target]] = [list[target], list[idx]]
+    setData({ ...data, faqs: list })
+  }
+
   const handleSave = async () => {
     setSaving(true)
     try {
@@ -237,9 +270,9 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
                 <Label className="font-semibold text-neutral-750">Header Tagline Subtitle</Label>
                 <Input value={data.headerSubtitle || ''} onChange={e => updateHeader('headerSubtitle', e.target.value)} className="border-neutral-300 h-9 bg-white" />
               </div>
-              <div className="space-y-1.5">
-                <Label className="font-semibold text-neutral-750">Header Description Paragraph</Label>
-                <Textarea value={data.headerDescription || ''} onChange={e => updateHeader('headerDescription', e.target.value)} className="border-neutral-300 min-h-[70px] bg-white" />
+              <div className="space-y-1.5 pt-2 border-t border-neutral-100">
+                <Label className="font-semibold text-[#00b259]">AI Snapshot Direct Summary (AEO/AGO optimized)</Label>
+                <Textarea value={data.aiSnapshot || ''} onChange={e => updateHeader('aiSnapshot', e.target.value)} className="border-neutral-300 min-h-[50px] bg-white resize-none" placeholder="Summarize pricing plans for voice search and AI search engines..." />
               </div>
             </CardContent>
           </Card>
@@ -365,6 +398,58 @@ export default function PricingEditorClient({ initialData }: PricingEditorClient
               </Card>
             )
           })}
+
+          {/* Section 3: FAQ Section Builder */}
+          <Card className="border border-[#C5C4C2]/50 shadow-xs bg-white rounded-lg">
+            <CardHeader className="bg-neutral-50/50 border-b border-[#C5C4C2]/40 py-3.5 px-5">
+              <CardTitle className="text-sm font-bold text-neutral-800 font-display">Frequently Asked Questions (FAQ) Manager</CardTitle>
+              <CardDescription className="text-[10px]">
+                Manage collapsible Q&A accordions. Google and AI Answer Engines read this metadata directly.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-5 space-y-5">
+              {(data.faqs || []).map((faq: any, idx: number) => (
+                <div key={idx} className="p-4 bg-white border border-[#C5C4C2]/60 rounded-xl space-y-4 shadow-sm hover:border-[#00b259]/50 transition-colors">
+                  <div className="flex items-center justify-between border-b border-[#C5C4C2]/20 pb-2">
+                    <span className="text-xs font-bold text-neutral-800">FAQ #{idx + 1}</span>
+                    <div className="flex items-center gap-1">
+                      <Button type="button" variant="ghost" size="icon" disabled={idx === 0} onClick={() => moveFaq(idx, -1)} className="h-7 w-7 text-neutral-400 hover:text-black cursor-pointer"><ArrowUp className="h-4 w-4" /></Button>
+                      <Button type="button" variant="ghost" size="icon" disabled={idx === (data.faqs || []).length - 1} onClick={() => moveFaq(idx, 1)} className="h-7 w-7 text-neutral-400 hover:text-black cursor-pointer"><ArrowDown className="h-4 w-4" /></Button>
+                      <Button type="button" variant="ghost" size="icon" onClick={() => removeFaq(idx)} className="h-7 w-7 text-red-500 hover:bg-red-50 cursor-pointer"><Trash2 className="h-3.5 w-3.5" /></Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-[10px] text-neutral-400 uppercase font-black">Question</Label>
+                    <Input
+                      value={faq.question || ''}
+                      onChange={(e) => updateFaq(idx, 'question', e.target.value)}
+                      placeholder="e.g. Question description"
+                      className="h-9 border-[#C5C4C2]"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-[10px] text-neutral-400 uppercase font-black">Answer</Label>
+                    <Textarea
+                      value={faq.answer || ''}
+                      onChange={(e) => updateFaq(idx, 'answer', e.target.value)}
+                      placeholder="e.g. Answer details"
+                      className="h-20 border-[#C5C4C2] resize-none"
+                    />
+                  </div>
+                </div>
+              ))}
+
+              <Button
+                type="button"
+                onClick={addFaq}
+                className="h-9 gap-1.5 border border-[#00b259]/30 bg-[#00b259]/5 text-[#00b259] hover:bg-[#00b259]/10 cursor-pointer font-bold text-xs rounded-lg animate-in"
+              >
+                <Plus className="h-3.5 w-3.5" /> Add New FAQ Item
+              </Button>
+            </CardContent>
+          </Card>
 
         </div>
 

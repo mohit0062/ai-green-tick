@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
+import { AeoChecklist } from '@/components/admin/aeo-checklist'
 import { uploadCMSImageAction } from '../cms-actions'
 import { 
   Sparkles, Check, X, Plus, Trash2, ArrowUp, ArrowDown, ArrowLeft,
@@ -31,6 +32,7 @@ interface Feature {
   seoDescription?: string
   seoKeywords?: string
   ogImage?: string
+  aiSnapshot?: string
   
   hero?: {
     badgeText: string
@@ -50,6 +52,7 @@ interface Feature {
     imageUrl?: string
   }[]
   faqs?: { question: string; answer: string }[]
+  noindex?: boolean
 
   // WordPress Mock Fields
   status?: string
@@ -250,6 +253,7 @@ export default function FeatureForm({ initialFeature, onSave, onCancel }: Featur
   const [status, setStatus] = useState(initialFeature?.status || 'published')
   const [seoScore, setSeoScore] = useState(initialFeature?.seoScore || 70)
   const [focusKeyword, setFocusKeyword] = useState(initialFeature?.focusKeyword || '')
+  const [noindex, setNoindex] = useState<boolean>(initialFeature?.noindex || false)
   const [schemaStatus, setSchemaStatus] = useState(initialFeature?.schemaStatus || 'On')
   const [createdDate, setCreatedDate] = useState(initialFeature?.created_at || new Date().toISOString())
 
@@ -264,6 +268,7 @@ export default function FeatureForm({ initialFeature, onSave, onCancel }: Featur
   const [seoDescription, setSeoDescription] = useState(initialFeature?.seoDescription || '')
   const [seoKeywords, setSeoKeywords] = useState(initialFeature?.seoKeywords || '')
   const [ogImage, setOgImage] = useState(initialFeature?.ogImage || '')
+  const [aiSnapshot, setAiSnapshot] = useState(initialFeature?.aiSnapshot || '')
 
   // Hero Section
   const [heroBadgeText, setHeroBadgeText] = useState(initialFeature?.hero?.badgeText || (initialFeature ? 'FEATURE BLUEPRINT' : ''))
@@ -564,8 +569,10 @@ export default function FeatureForm({ initialFeature, onSave, onCancel }: Featur
       seoDescription: seoDescription.trim(),
       seoKeywords: seoKeywords.trim(),
       ogImage: ogImage.trim(),
+      aiSnapshot: aiSnapshot.trim(),
       status,
       seoScore,
+      noindex,
       focusKeyword: focusKeyword.trim() || seoKeywords.split(',')[0]?.trim() || (title || '').split(' ')[0],
       schemaStatus,
       created_at: createdDate,
@@ -1564,6 +1571,39 @@ Return a JSON object with EXACTLY these keys:
                   className="border-neutral-300 h-9 font-mono text-[11px] bg-white font-normal"
                 />
               </div>
+
+              <div className="space-y-1.5 pt-2 border-t border-neutral-100">
+                <Label htmlFor="aiSnapshot" className="text-xs font-semibold text-[#00b259]">AI Snapshot Direct Summary (AEO/AGO optimized)</Label>
+                <Textarea 
+                  id="aiSnapshot" 
+                  value={aiSnapshot} 
+                  onChange={e => setAiSnapshot(e.target.value)} 
+                  placeholder="Direct 1-2 sentence summary of this feature blueprint..." 
+                  className="border-neutral-300 min-h-[50px] bg-white resize-none font-normal text-xs leading-relaxed"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-2 border-t border-neutral-100">
+                <input
+                  type="checkbox"
+                  id="noindex"
+                  checked={noindex}
+                  onChange={e => setNoindex(e.target.checked)}
+                  className="h-4 w-4 accent-[#00b259]"
+                />
+                <Label htmlFor="noindex" className="text-xs font-medium text-neutral-600">
+                  Hide this page from search engines (noindex)
+                </Label>
+              </div>
+
+              <AeoChecklist
+                focusKeyword={focusKeyword}
+                title={seoTitle || heroHeading || title}
+                description={seoDescription}
+                aiSnapshot={aiSnapshot}
+                faqCount={faqs.length}
+                className="mt-3"
+              />
             </CardContent>
           </Card>
         </div>

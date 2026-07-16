@@ -19,20 +19,30 @@ import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 import { getSiteSection } from '@/utils/cms'
+import AeoContainer from '@/components/seo/aeo-container'
 
 export const dynamic = 'force-dynamic'
 
-export const metadata: Metadata = {
-  title: 'Contact Us — Get in Touch with AI Greentick',
-  description: 'Reach out to AI Greentick for WhatsApp Business API setup, marketing campaigns, automation support, or partnership inquiries.',
-  alternates: {
-    canonical: '/contact',
-  },
-  openGraph: {
-    title: 'Contact Us — Get in Touch with AI Greentick',
-    description: 'Reach out to AI Greentick for WhatsApp Business API setup, marketing campaigns, automation support, or partnership inquiries.',
-    url: '/contact',
-    type: 'website',
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getSiteSection<any>('contact_page')
+  const title = cms.seoTitle || 'Contact Us — Get in Touch with AI Greentick'
+  const description =
+    cms.seoDesc ||
+    'Reach out to AI Greentick for WhatsApp Business API setup, marketing campaigns, automation support, or partnership inquiries.'
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: '/contact',
+    },
+    ...(cms.noindex ? { robots: { index: false, follow: false } } : {}),
+    openGraph: {
+      title,
+      description,
+      url: '/contact',
+      type: 'website',
+    }
   }
 }
 
@@ -165,9 +175,23 @@ export default async function ContactPage() {
     }
   }
 
+  const faqSchema = cms.faqs && cms.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": cms.faqs.map((f: any) => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer,
+      },
+    })),
+  } : null
+
   return (
     <div className='flex min-h-screen flex-col bg-white text-black'>
       <JsonLd data={contactSchema} />
+      {faqSchema && <JsonLd data={faqSchema} />}
       <Header navigationData={navigationData} />
       <Breadcrumb />
 
@@ -283,6 +307,12 @@ export default async function ContactPage() {
             </div>
           </div>
         </section>
+
+        <AeoContainer
+          aiSnapshot={cms.aiSnapshot}
+          faqs={cms.faqs}
+          title="Frequently Asked Questions about Contacting Us"
+        />
 
         {/* CTA */}
         <CTA />

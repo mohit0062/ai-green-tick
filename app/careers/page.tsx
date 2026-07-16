@@ -45,6 +45,7 @@ import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 import { getSiteSection } from '@/utils/cms'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
+import AeoContainer from '@/components/seo/aeo-container'
 
 export const dynamic = 'force-dynamic'
 
@@ -59,6 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: '/careers',
     },
+    ...(cms.noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
       title,
       description,
@@ -434,6 +436,19 @@ export default async function CareersPage() {
   const pageTitle = cms.pageTitle || "Build the Future With Us"
   const pageSubtitle = cms.pageSubtitle || "Join a senior team building AI-powered WhatsApp automation for thousands of businesses."
 
+  const faqSchema = cms.faqs && cms.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": cms.faqs.map((f: any) => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer,
+      },
+    })),
+  } : null
+
   const careersSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -455,6 +470,7 @@ export default async function CareersPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white text-black">
       <JsonLd data={careersSchema} />
+      {faqSchema && <JsonLd data={faqSchema} />}
       <Header navigationData={navigationData} />
       <Breadcrumb />
 
@@ -711,6 +727,12 @@ export default async function CareersPage() {
             </div>
           </div>
         </section>
+
+        <AeoContainer
+          aiSnapshot={cms.aiSnapshot}
+          faqs={cms.faqs}
+          title="Frequently Asked Questions about Careers"
+        />
 
         {/* CTA Section */}
         <CTA />

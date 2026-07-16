@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
-import { cookies } from 'next/headers'
+import { requireAdmin, requireSectionAccess } from '@/utils/admin-auth'
 
 function getCategoryForKey(key: string): string {
   if (key.startsWith('homepage_') || key === 'testimonials') {
@@ -40,26 +40,15 @@ function getCategoryForKey(key: string): string {
 
 export async function updateSiteSectionAction(key: string, content: any) {
   try {
-    const supabase = await createClient()
-
-    // 1. Double check authentication status
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
-    const cookieStore = await cookies()
-    const fallbackToken = process.env.ADMIN_FALLBACK_TOKEN?.trim()
-    const fallbackEmail = process.env.ADMIN_FALLBACK_EMAIL?.trim().toLowerCase()
-    const hasFallbackSession =
-      !!fallbackToken &&
-      !!fallbackEmail &&
-      cookieStore.get('aigt_admin_override')?.value === fallbackToken
-
-    if ((authError || !user) && !hasFallbackSession) {
-      return { error: 'Unauthorized: Admin authentication required.' }
-    }
-
     // Determine category based on key to satisfy the NOT NULL constraint in database
     const category = getCategoryForKey(key)
 
-    // 2. Perform upsert into site_sections
+    // Enforce authentication AND role-based authorization for this section.
+    await requireSectionAccess(category)
+
+    const supabase = await createClient()
+
+    // Perform upsert into site_sections
     const { error } = await supabase
       .from('site_sections')
       .upsert(
@@ -132,21 +121,10 @@ export async function updateSiteSectionAction(key: string, content: any) {
 
 export async function uploadCMSImageAction(fileName: string, base64Data: string, mimeType: string) {
   try {
+    // 1. Authenticate (any admin role may upload media)
+    await requireAdmin()
+
     const supabase = await createClient()
-
-    // 1. Authenticate
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
-    const cookieStore = await cookies()
-    const fallbackToken = process.env.ADMIN_FALLBACK_TOKEN?.trim()
-    const fallbackEmail = process.env.ADMIN_FALLBACK_EMAIL?.trim().toLowerCase()
-    const hasFallbackSession =
-      !!fallbackToken &&
-      !!fallbackEmail &&
-      cookieStore.get('aigt_admin_override')?.value === fallbackToken
-
-    if ((authError || !user) && !hasFallbackSession) {
-      return { error: 'Unauthorized: Admin authentication required.' }
-    }
 
     // 2. Check/create bucket
     const bucketName = 'media'
@@ -193,6 +171,7 @@ export async function uploadCMSImageAction(fileName: string, base64Data: string,
 
 export async function getSiteSectionAction(key: string) {
   try {
+    await requireAdmin()
     const { getSiteSection } = await import('@/utils/cms')
     const data = await getSiteSection(key)
     return { data }

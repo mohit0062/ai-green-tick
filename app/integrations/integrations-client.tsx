@@ -8,6 +8,7 @@ import Breadcrumb from '@/components/ui/breadcrumb'
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 import { cn } from '@/lib/utils'
+import AeoContainer from '@/components/seo/aeo-container'
 
 const navigationData: Navigation[] = [
   {
@@ -352,50 +353,10 @@ export default function IntegrationsClient({ initialData }: IntegrationsClientPr
         </div>
       </section>
 
-      {/* FAQ Accordion Section (AEO optimized) */}
-      {initialData.faqs && initialData.faqs.length > 0 && (
-        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white py-12 sm:py-20">
-          <div className="mx-auto max-w-3xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 space-y-8">
-            <div className="text-center space-y-2">
-              <span className="inline-block px-2.5 py-0.5 text-[10px] font-mono font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5">
-                :: FREQUENTLY ASKED QUESTIONS ::
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-black">
-                Everything you need to know about Integrations
-              </h2>
-            </div>
-
-            <div className="space-y-4">
-              {initialData.faqs.map((faq: any, idx: number) => {
-                const isOpen = !!openFaqs[idx]
-                return (
-                  <div
-                    key={idx}
-                    className="border border-[#C5C4C2] bg-[#ECEBE9]/10 transition-all duration-300 overflow-hidden"
-                    style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px))' }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => toggleFaq(idx)}
-                      className="w-full px-5 py-4 text-left font-display font-bold text-sm sm:text-base text-black flex items-center justify-between gap-4 hover:bg-[#ECEBE9]/20 transition-colors cursor-pointer"
-                    >
-                      <span>{faq.question}</span>
-                      <span className="text-lg text-neutral-400 shrink-0 select-none">
-                        {isOpen ? '−' : '+'}
-                      </span>
-                    </button>
-                    {isOpen && (
-                      <div className="px-5 pb-4 pt-1 font-sans text-xs sm:text-sm text-neutral-600 border-t border-[#C5C4C2]/30 leading-relaxed text-left">
-                        {faq.answer}
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      )}
+      <AeoContainer
+        faqs={initialData.faqs}
+        title="Everything you need to know about Integrations"
+      />
 
       {/* Footer */}
       <Footer />

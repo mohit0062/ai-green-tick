@@ -179,6 +179,7 @@ interface HeroSectionProps {
     ctaLink?: string
     secondaryCtaText?: string
     secondaryCtaLink?: string
+    arrowLink?: string
     metrics?: { value: string; label: string }[]
   }
 }
@@ -196,6 +197,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
   const ctaLink = data?.ctaLink || "#demo"
   const secondaryCtaText = data?.secondaryCtaText || "Free Trial"
   const secondaryCtaLink = data?.secondaryCtaLink || "#trial"
+  const arrowLink = data?.arrowLink || "/about"
   const metrics = data?.metrics || [
     { value: "98.2%", label: "Open Rate" },
     { value: "24%", label: "ROI Growth" },
@@ -409,7 +411,8 @@ const HeroSection = ({ data }: HeroSectionProps) => {
               {/* Action Button Cell */}
               <div className="col-span-1 h-full">
                 <a
-                  href="#get-started"
+                  href={arrowLink}
+                  aria-label="Learn more about us"
                   className="cursor-target h-full w-full flex items-center justify-center bg-[#00b259]/15 hover:bg-[#00b259]/25 text-black hover:text-[#005c2b] transition-all font-bold group"
                 >
                   <ArrowRight className="size-4 sm:size-5 group-hover:translate-x-1 transition-transform" />

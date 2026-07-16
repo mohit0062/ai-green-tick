@@ -3,7 +3,7 @@ import { brandLogos } from '@/lib/brand-logos'
 export const DEFAULT_FALLBACKS: Record<string, any> = {
   navbar: {
     logoText: "AI Greentick",
-    logoImageUrl: "",
+    logoImageUrl: "/logo-full.png",
     demoBtnText: "BOOK A DEMO",
     demoBtnLink: "/#demo",
     calendlyUrl: "https://calendly.com/demo-apargoinnovations/30min",
@@ -28,7 +28,7 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
   footer: {
     description: "AI Greentick is an enterprise-grade WhatsApp Business API platform offering automated marketing campaigns, shared team inboxes, smart routing, and custom AI agents.",
     copyright: "2026 AI Greentick, Made with ❤️ for a better web.",
-    logoImageUrl: "",
+    logoImageUrl: "/logo-full.png",
     socialLinks: {
       github: "https://github.com",
       instagram: "https://instagram.com",
@@ -1097,6 +1097,7 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
       ctaLink: "#demo",
       secondaryCtaText: "Free Trial",
       secondaryCtaLink: "#trial",
+      arrowLink: "/about",
       metrics: [
         { value: "98.2%", label: "Open Rate" },
         { value: "24%", label: "ROI Growth" },

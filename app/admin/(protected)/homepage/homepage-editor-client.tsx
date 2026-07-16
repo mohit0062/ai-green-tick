@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { updateSiteSectionAction } from '../cms-actions'
+import { useUnsavedChanges } from '@/hooks/use-unsaved-changes'
 import { cn } from '@/lib/utils'
 import { 
   Sparkles, Check, X, Plus, Trash2, ArrowUp, ArrowDown, ArrowLeft,
@@ -37,9 +38,26 @@ function RichEditor({
   minHeight = "100px"
 }: RichEditorProps) {
   const [mode, setMode] = useState<'visual' | 'text'>('visual')
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleFormat = (openTag: string, closeTag: string) => {
-    onChange(openTag + value + closeTag)
+    const el = textareaRef.current
+    // Fallback: no element yet, wrap the whole value.
+    if (!el) {
+      onChange(openTag + value + closeTag)
+      return
+    }
+    const start = el.selectionStart ?? value.length
+    const end = el.selectionEnd ?? value.length
+    const selected = value.slice(start, end)
+    const next = value.slice(0, start) + openTag + selected + closeTag + value.slice(end)
+    onChange(next)
+    // Restore focus and place the caret just after the inserted content.
+    requestAnimationFrame(() => {
+      el.focus()
+      const caret = start + openTag.length + selected.length + closeTag.length
+      el.setSelectionRange(caret, caret)
+    })
   }
 
   return (
@@ -51,6 +69,7 @@ function RichEditor({
             onClick={() => handleFormat('<strong>', '</strong>')}
             className="p-1 hover:bg-neutral-150 hover:text-black rounded text-neutral-500 transition-colors cursor-pointer"
             title="Bold"
+            aria-label="Bold"
           >
             <Bold className="h-4 w-4" />
           </button>
@@ -59,6 +78,7 @@ function RichEditor({
             onClick={() => handleFormat('<em>', '</em>')}
             className="p-1 hover:bg-neutral-150 hover:text-black rounded text-neutral-500 transition-colors cursor-pointer"
             title="Italic"
+            aria-label="Italic"
           >
             <Italic className="h-4 w-4" />
           </button>
@@ -67,6 +87,7 @@ function RichEditor({
             onClick={() => handleFormat('<ul>\n  <li>', '</li>\n</ul>')}
             className="p-1 hover:bg-neutral-150 hover:text-black rounded text-neutral-500 transition-colors cursor-pointer"
             title="Bullet List"
+            aria-label="Bullet List"
           >
             <List className="h-4 w-4" />
           </button>
@@ -80,6 +101,7 @@ function RichEditor({
             }}
             className="p-1 hover:bg-neutral-150 hover:text-black rounded text-neutral-500 transition-colors cursor-pointer"
             title="Insert Link"
+            aria-label="Insert Link"
           >
             <Link className="h-4 w-4" />
           </button>
@@ -111,6 +133,7 @@ function RichEditor({
 
       <div className="p-1">
         <Textarea
+          ref={textareaRef}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
@@ -128,6 +151,10 @@ function RichEditor({
 export default function HomepageEditorClient({ initialData }: HomepageEditorClientProps) {
   const [data, setData] = useState(initialData)
   const [title, setTitle] = useState('AIS Home Page')
+  // Snapshot of the last-saved state; used to warn before leaving with unsaved edits.
+  const [savedSnapshot, setSavedSnapshot] = useState(() => JSON.stringify(initialData))
+  const isDirty = JSON.stringify(data) !== savedSnapshot
+  useUnsavedChanges(isDirty)
   const [saving, setSaving] = useState(false)
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   
@@ -174,10 +201,10 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
             }
             showStatus('success', 'Image uploaded successfully!')
           } else if (res?.error) {
-            alert(`Upload error: ${res.error}`)
+            showStatus('error', `Upload error: ${res.error}`)
           }
         } catch (err: any) {
-          alert(`Upload failed: ${err.message || err}`)
+          showStatus('error', `Upload failed: ${err.message || err}`)
         } finally {
           setUploadingState(prev => ({ ...prev, [key]: false }))
         }
@@ -198,6 +225,7 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
       if (result.error) {
         showStatus('error', result.error)
       } else {
+        setSavedSnapshot(JSON.stringify(data))
         showStatus('success', 'Homepage configuration updated successfully!')
       }
     } catch (err: any) {
@@ -535,6 +563,14 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                 </div>
               </div>
 
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-1.5">
+                  <Label className="font-semibold text-neutral-750">Metrics Arrow Button Link</Label>
+                  <Input value={data.hero.arrowLink || ''} onChange={e => updateHero('arrowLink', e.target.value)} placeholder="/about" className="border-neutral-300 h-9 bg-white" />
+                  <p className="text-[10px] text-neutral-400">Where the green → arrow next to the hero metrics goes. Defaults to the About Us page.</p>
+                </div>
+              </div>
+
               {/* Hero metrics */}
               <div className="border-t border-[#C5C4C2]/30 pt-4 space-y-3">
                 <h4 className="text-[11px] font-bold text-neutral-800 uppercase tracking-wide">Hero Showcase Bottom Metrics (4 cells)</h4>
@@ -552,6 +588,16 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                     </div>
                   ))}
                 </div>
+              </div>
+              
+              <div className="space-y-1.5 pt-4 border-t border-[#C5C4C2]/30">
+                <Label className="font-semibold text-[#00b259]">AI Snapshot Direct Summary (AEO/AGO optimized)</Label>
+                <Textarea 
+                  value={data.aiSnapshot || ''} 
+                  onChange={e => setData({ ...data, aiSnapshot: e.target.value })} 
+                  className="border-neutral-300 min-h-[50px] bg-white resize-none text-xs leading-relaxed" 
+                  placeholder="Summarize the homepage value proposition for voice search and AI search engines..." 
+                />
               </div>
             </CardContent>
           </Card>

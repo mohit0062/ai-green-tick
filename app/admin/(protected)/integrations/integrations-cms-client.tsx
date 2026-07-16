@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { updateSiteSectionAction } from '../cms-actions'
+import { AeoChecklist } from '@/components/admin/aeo-checklist'
 import {
   ArrowLeft,
   Loader2,
@@ -291,6 +292,27 @@ export default function IntegrationsCmsClient({ initialData }: IntegrationsCmsCl
                   className="h-16 border-[#C5C4C2] resize-none"
                 />
               </div>
+
+              <div className="flex items-center gap-2 pt-2 border-t border-neutral-100">
+                <input
+                  type="checkbox"
+                  id="noindex"
+                  checked={!!data.noindex}
+                  onChange={(e) => setData({ ...data, noindex: e.target.checked })}
+                  className="h-4 w-4 accent-[#00b259]"
+                />
+                <Label htmlFor="noindex" className="text-xs font-medium text-neutral-600">
+                  Hide this page from search engines (noindex)
+                </Label>
+              </div>
+
+              <AeoChecklist
+                title={data.seoTitle || ''}
+                description={data.seoDesc || ''}
+                aiSnapshot={data.aiSnapshot || ''}
+                faqCount={(data.faqs || []).length}
+                className="mt-3"
+              />
             </CardContent>
           </Card>
 

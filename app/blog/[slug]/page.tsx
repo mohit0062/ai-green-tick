@@ -2,6 +2,10 @@ import { createClient } from '@/utils/supabase/server'
 import BlogPostDetailClient, { type DetailPost, type RelatedPost } from './blog-detail-client'
 import { blogPosts as fallbackPosts } from '@/lib/blog-data'
 import { notFound } from 'next/navigation'
+import { JsonLd, BreadcrumbSchema } from '@/components/json-ld'
+import { getSiteUrl } from '@/utils/site'
+import { getSiteSection } from '@/utils/cms'
+import AeoContainer from '@/components/seo/aeo-container'
 
 export const dynamic = 'force-dynamic'
 
@@ -76,6 +80,8 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
 
   let post: DetailPost | null = null
   let relatedPosts: RelatedPost[] = []
+  let aiSnapshot = ''
+  let faqs: { question: string; answer: string }[] = []
 
   try {
     const supabase = await createClient()
@@ -148,6 +154,12 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
         slug: dbPost.slug,
       }
 
+      // AEO extras stored in the shared site_sections table, keyed by blog id.
+      const aeoMap: any = await getSiteSection<any>('blogs_aeo')
+      const aeo = (aeoMap && !Array.isArray(aeoMap) ? aeoMap[dbPost.id] : null) || {}
+      aiSnapshot = aeo.aiSnapshot || ''
+      faqs = Array.isArray(aeo.faqs) ? aeo.faqs : []
+
       // Fetch related posts (excluding current one, published only)
       const { data: dbRelated } = await supabase
         .from('blogs')
@@ -210,5 +222,69 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
       }))
   }
 
-  return <BlogPostDetailClient post={post} relatedPosts={relatedPosts} />
+  const base = getSiteUrl()
+  const articleIso = (() => {
+    try {
+      return post ? new Date(post.date).toISOString() : undefined
+    } catch {
+      return undefined
+    }
+  })()
+
+  const articleSchema = post
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.description,
+        image: post.image,
+        ...(articleIso ? { datePublished: articleIso, dateModified: articleIso } : {}),
+        author: { '@type': 'Person', name: post.author?.name || 'AI Greentick' },
+        publisher: {
+          '@type': 'Organization',
+          name: 'AI Greentick',
+          logo: { '@type': 'ImageObject', url: `${base}/logo-full.png` },
+        },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${base}/blog/${post.slug}` },
+      }
+    : null
+
+  const faqSchema =
+    faqs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((f) => ({
+            '@type': 'Question',
+            name: f.question,
+            acceptedAnswer: { '@type': 'Answer', text: f.answer },
+          })),
+        }
+      : null
+
+  return (
+    <>
+      {articleSchema && <JsonLd data={articleSchema} />}
+      {faqSchema && <JsonLd data={faqSchema} />}
+      {post && (
+        <BreadcrumbSchema
+          items={[
+            { name: 'Home', url: `${base}/` },
+            { name: 'Blog', url: `${base}/blog` },
+            { name: post.title, url: `${base}/blog/${post.slug}` },
+          ]}
+        />
+      )}
+      <BlogPostDetailClient post={post} relatedPosts={relatedPosts} />
+      {(aiSnapshot || faqs.length > 0) && (
+        <section className="w-full bg-white pb-12">
+          <AeoContainer
+            aiSnapshot={aiSnapshot}
+            faqs={faqs}
+            title="Frequently Asked Questions"
+          />
+        </section>
+      )}
+    </>
+  )
 }

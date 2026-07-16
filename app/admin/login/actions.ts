@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
+import { verifyPassword } from '@/utils/password'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -28,8 +29,8 @@ export async function login(formData: FormData) {
       : { data: null }
 
     const matchesFallbackPassword =
-      data.password === fallbackPassword ||
-      data.password === fallbackAdmin?.password
+      (!!fallbackPassword && data.password === fallbackPassword) ||
+      verifyPassword(data.password, fallbackAdmin?.password)
 
     if (
       fallbackEmail &&

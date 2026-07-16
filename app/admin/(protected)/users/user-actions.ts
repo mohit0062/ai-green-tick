@@ -4,6 +4,8 @@ import { createClient } from '@/utils/supabase/server'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
+import { getAdminContext, requireSuperAdmin } from '@/utils/admin-auth'
+import { hashPassword } from '@/utils/password'
 
 const normalizeEmail = (email: string) => email.trim().toLowerCase()
 
@@ -73,7 +75,10 @@ const syncAuthPassword = async (email: string, password: string, metadata?: Reco
   return { success: true }
 }
 
-export async function getAdminsAction() {
+export async function getAdminsAction(): Promise<{ data?: any; error?: string }> {
+  const guard = await requireSuperAdmin().catch((e: Error) => ({ error: e.message }))
+  if ('error' in guard) return guard
+
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('admin')
@@ -87,7 +92,10 @@ export async function getAdminsAction() {
   return { data }
 }
 
-export async function updateAdminRoleAction(email: string, role: string) {
+export async function updateAdminRoleAction(email: string, role: string): Promise<{ success?: boolean; error?: string }> {
+  const guard = await requireSuperAdmin().catch((e: Error) => ({ error: e.message }))
+  if ('error' in guard) return guard
+
   const supabase = await createClient()
   const { error } = await supabase
     .from('admin')
@@ -102,7 +110,10 @@ export async function updateAdminRoleAction(email: string, role: string) {
   return { success: true }
 }
 
-export async function deleteAdminAction(email: string) {
+export async function deleteAdminAction(email: string): Promise<{ success?: boolean; error?: string }> {
+  const guard = await requireSuperAdmin().catch((e: Error) => ({ error: e.message }))
+  if ('error' in guard) return guard
+
   const supabase = await createClient()
   const { error } = await supabase
     .from('admin')
@@ -117,7 +128,10 @@ export async function deleteAdminAction(email: string) {
   return { success: true }
 }
 
-export async function createAdminAction(email: string, name: string, role: string, password?: string) {
+export async function createAdminAction(email: string, name: string, role: string, password?: string): Promise<{ success?: boolean; error?: string }> {
+  const guard = await requireSuperAdmin().catch((e: Error) => ({ error: e.message }))
+  if ('error' in guard) return guard
+
   const supabase = await createClient()
   const normalizedEmail = normalizeEmail(email)
   const normalizedPassword = password?.trim()
@@ -148,7 +162,8 @@ export async function createAdminAction(email: string, name: string, role: strin
       name,
       role,
       avatar: `https://api.dicebear.com/7.x/lorelei/svg?seed=Admin_${name.replace(/\s+/g, '')}`,
-      password: normalizedPassword,
+      // Store a salted hash only. Real auth is handled by Supabase Auth above.
+      password: hashPassword(normalizedPassword),
     })
 
   if (error) {
@@ -160,22 +175,27 @@ export async function createAdminAction(email: string, name: string, role: strin
   return { success: true }
 }
 
-export async function changePasswordAction(email: string, password?: string) {
+export async function changePasswordAction(email: string, password?: string): Promise<{ success?: boolean; error?: string }> {
   const normalizedEmail = normalizeEmail(email)
   const normalizedPassword = password?.trim()
   if (!normalizedPassword) return { error: 'Password cannot be empty.' }
 
+  // Authorization: only a super admin may change another user's password;
+  // any authenticated admin may change their own.
+  const ctx = await getAdminContext()
+  if (!ctx) return { error: 'Unauthorized: Admin authentication required.' }
+  const isSelf = ctx.email.toLowerCase() === normalizedEmail
+  if (ctx.role !== 'super_admin' && !isSelf) {
+    return { error: 'Forbidden: Only a Super Admin can change another user\u2019s password.' }
+  }
+
   const supabase = await createClient()
   const fallbackEmail = process.env.ADMIN_FALLBACK_EMAIL?.trim().toLowerCase()
-
-  // Get current logged in user
-  const { data: { user } } = await supabase.auth.getUser()
-  const isSelf = user?.email?.toLowerCase() === normalizedEmail
 
   if (!getAdminAuthClient() && fallbackEmail === normalizedEmail) {
     const { error: dbErr } = await supabase
       .from('admin')
-      .update({ password: normalizedPassword })
+      .update({ password: hashPassword(normalizedPassword) })
       .eq('email', normalizedEmail)
 
     if (dbErr) {
@@ -203,10 +223,10 @@ export async function changePasswordAction(email: string, password?: string) {
     return { error: 'SUPABASE_SERVICE_ROLE_KEY is missing in .env. Password was not changed in Supabase Auth.' }
   }
 
-  // Update password in public.admin table for legacy display/audit compatibility.
+  // Mirror a salted hash into public.admin for legacy/audit compatibility (never plaintext).
   const { error: dbErr } = await supabase
     .from('admin')
-    .update({ password: normalizedPassword })
+    .update({ password: hashPassword(normalizedPassword) })
     .eq('email', normalizedEmail)
 
   if (dbErr) {
@@ -218,7 +238,10 @@ export async function changePasswordAction(email: string, password?: string) {
   return { success: true }
 }
 
-export async function getRolePermissionsAction() {
+export async function getRolePermissionsAction(): Promise<{ data?: any; error?: string }> {
+  const guard = await requireSuperAdmin().catch((e: Error) => ({ error: e.message }))
+  if ('error' in guard) return guard
+
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('site_sections')
@@ -233,7 +256,10 @@ export async function getRolePermissionsAction() {
   return { data: data?.content || null }
 }
 
-export async function saveRolePermissionsAction(permissions: Record<string, string[]>) {
+export async function saveRolePermissionsAction(permissions: Record<string, string[]>): Promise<{ success?: boolean; error?: string }> {
+  const guard = await requireSuperAdmin().catch((e: Error) => ({ error: e.message }))
+  if ('error' in guard) return guard
+
   const supabase = await createClient()
 
   const { data: existing } = await supabase

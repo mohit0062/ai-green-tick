@@ -15,6 +15,8 @@ export default function Error({
     console.error('CMS layout error:', error)
   }, [error])
 
+  const isDev = process.env.NODE_ENV !== 'production'
+
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-6 font-sans">
       <div className="max-w-md w-full border border-red-500/30 bg-red-500/5 backdrop-blur-md rounded-2xl p-8 text-center space-y-6 shadow-xl">
@@ -25,16 +27,25 @@ export default function Error({
         <div className="space-y-2">
           <h3 className="text-xl font-bold tracking-tight text-neutral-900">CMS Loading Exception</h3>
           <p className="text-neutral-500 text-xs leading-relaxed">
-            A client-side error occurred while loading this page:
+            {isDev
+              ? 'A client-side error occurred while loading this page:'
+              : 'Something went wrong while loading this section. Please try again. If the problem persists, contact your administrator.'}
           </p>
-          <div className="font-mono bg-neutral-100/80 p-3 border border-[#C5C4C2]/40 rounded text-left text-red-700 text-xs overflow-x-auto max-h-40 select-all">
-            {error.message || error.toString()}
-            {error.stack && (
-              <pre className="mt-2 text-[10px] text-neutral-500 overflow-x-auto">
-                {error.stack}
-              </pre>
-            )}
-          </div>
+          {isDev && (
+            <div className="font-mono bg-neutral-100/80 p-3 border border-[#C5C4C2]/40 rounded text-left text-red-700 text-xs overflow-x-auto max-h-40 select-all">
+              {error.message || error.toString()}
+              {error.stack && (
+                <pre className="mt-2 text-[10px] text-neutral-500 overflow-x-auto">
+                  {error.stack}
+                </pre>
+              )}
+            </div>
+          )}
+          {!isDev && error.digest && (
+            <p className="font-mono text-[10px] text-neutral-400 select-all">
+              Reference ID: {error.digest}
+            </p>
+          )}
         </div>
 
         <div className="border-t border-[#C5C4C2]/30 pt-6 flex flex-col gap-3">

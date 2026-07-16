@@ -32,7 +32,9 @@ import {
   AlignRight,
   Link2,
   Maximize2,
-  Minimize2
+  Minimize2,
+  Plus,
+  Trash2
 } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -57,6 +59,8 @@ interface BlogFormProps {
     seo_score?: number
     tags?: string[]
     categories?: string[]
+    ai_snapshot?: string
+    faqs?: { question: string; answer: string }[]
   }
   onSubmitAction: (formData: FormData) => Promise<{ error?: string } | void>
   title: string
@@ -101,7 +105,13 @@ export default function BlogForm({
     meta_description: initialData?.meta_description || '',
     focus_keyword: initialData?.focus_keyword || '',
     seo_score: initialData?.seo_score || 0,
+    ai_snapshot: initialData?.ai_snapshot || '',
   })
+
+  // FAQ State (AEO — Answer Engine Optimization)
+  const [faqs, setFaqs] = useState<{ question: string; answer: string }[]>(
+    Array.isArray(initialData?.faqs) ? initialData!.faqs : []
+  )
 
   // Tags State
   const [tagInput, setTagInput] = useState('')
@@ -484,6 +494,7 @@ export default function BlogForm({
 
       rawFormData.append('tags', tags.join(','))
       rawFormData.append('categories', categories.join(','))
+      rawFormData.append('faqs', JSON.stringify(faqs.filter(f => f.question.trim() && f.answer.trim())))
 
       const res = await onSubmitAction(rawFormData)
       if (res && res.error) {
@@ -1335,6 +1346,82 @@ export default function BlogForm({
                   />
                 </div>
               )}
+            </CardContent>
+          </Card>
+
+          {/* AI Snapshot & FAQ Card (AEO / Answer Engine Optimization) */}
+          <Card className="shadow-xs border border-[#C5C4C2]/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 font-display text-[#00b259]">
+                <Sparkles className="h-4.5 w-4.5 text-[#00b259]" />
+                <span>AI Snapshot & FAQ (AEO)</span>
+              </CardTitle>
+              <CardDescription className="text-[11px]">
+                Optimize this post for AI answer engines (ChatGPT, Perplexity, Google AI). Rendered as a summary block + FAQ schema.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="ai_snapshot" className="text-xs font-semibold text-[#00b259]">AI Snapshot Direct Summary</Label>
+                <Textarea
+                  id="ai_snapshot"
+                  value={formData.ai_snapshot}
+                  onChange={(e) => setFormData(prev => ({ ...prev, ai_snapshot: e.target.value }))}
+                  placeholder="Summarize this article in 1-2 direct sentences for voice search and AI engines to cite..."
+                  className="h-20 resize-none border-[#C5C4C2] text-xs"
+                />
+              </div>
+
+              <div className="space-y-2 border-t border-[#C5C4C2]/30 pt-3">
+                <div className="flex items-center justify-between">
+                  <Label className="text-xs font-semibold text-neutral-700">FAQ Entries</Label>
+                  <span className="text-[10px] text-neutral-400">{faqs.length} added</span>
+                </div>
+
+                {faqs.map((faq, idx) => (
+                  <div key={idx} className="space-y-1.5 rounded-md border border-[#C5C4C2]/50 bg-neutral-50/40 p-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] font-bold uppercase text-neutral-400">FAQ {idx + 1}</span>
+                      <button
+                        type="button"
+                        aria-label={`Remove FAQ ${idx + 1}`}
+                        onClick={() => setFaqs(faqs.filter((_, i) => i !== idx))}
+                        className="text-neutral-400 hover:text-destructive transition-colors"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                    <Input
+                      value={faq.question}
+                      onChange={(e) => {
+                        const next = [...faqs]
+                        next[idx] = { ...next[idx], question: e.target.value }
+                        setFaqs(next)
+                      }}
+                      placeholder="Question"
+                      className="h-8 text-xs border-[#C5C4C2]"
+                    />
+                    <Textarea
+                      value={faq.answer}
+                      onChange={(e) => {
+                        const next = [...faqs]
+                        next[idx] = { ...next[idx], answer: e.target.value }
+                        setFaqs(next)
+                      }}
+                      placeholder="Answer"
+                      className="h-14 resize-none text-xs border-[#C5C4C2]"
+                    />
+                  </div>
+                ))}
+
+                <Button
+                  type="button"
+                  onClick={() => setFaqs([...faqs, { question: '', answer: '' }])}
+                  className="h-8 w-full gap-1.5 border border-[#00b259]/30 bg-[#00b259]/5 text-[#00b259] hover:bg-[#00b259]/10 cursor-pointer font-bold text-xs rounded-lg"
+                >
+                  <Plus className="h-3.5 w-3.5" /> Add FAQ
+                </Button>
+              </div>
             </CardContent>
           </Card>
 

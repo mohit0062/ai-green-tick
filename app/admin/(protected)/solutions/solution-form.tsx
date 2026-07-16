@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
+import { AeoChecklist } from '@/components/admin/aeo-checklist'
 import { 
   Sparkles, Check, X, Plus, Trash2, ArrowLeft,
   Bold, Italic, List, ListOrdered, Quote,
@@ -47,6 +48,8 @@ interface Solution {
   seoDescription?: string
   seoKeywords?: string
   ogImage?: string
+  aiSnapshot?: string
+  noindex?: boolean
   
   problemSection?: ProblemSection
   features?: FeatureModule[]
@@ -239,7 +242,9 @@ export default function SolutionForm({ initialSolution, onSave, onCancel }: Solu
   const [seoTitle, setSeoTitle] = useState(initialSolution?.seoTitle || '')
   const [seoDescription, setSeoDescription] = useState(initialSolution?.seoDescription || '')
   const [seoKeywords, setSeoKeywords] = useState(initialSolution?.seoKeywords || '')
+  const [noindex, setNoindex] = useState<boolean>(initialSolution?.noindex || false)
   const [ogImage, setOgImage] = useState(initialSolution?.ogImage || '')
+  const [aiSnapshot, setAiSnapshot] = useState(initialSolution?.aiSnapshot || '')
 
   // Problem Section
   const [problemDesc, setProblemDesc] = useState(initialSolution?.problemSection?.description || '')
@@ -412,8 +417,10 @@ export default function SolutionForm({ initialSolution, onSave, onCancel }: Solu
       seoDescription: seoDescription.trim(),
       seoKeywords: seoKeywords.trim(),
       ogImage: ogImage.trim(),
+      aiSnapshot: aiSnapshot.trim(),
       status,
       seoScore,
+      noindex,
       focusKeyword: focusKeyword.trim() || seoKeywords.split(',')[0]?.trim() || (title || '').split(' ')[0],
       schemaStatus,
       created_at: createdDate,
@@ -1100,10 +1107,43 @@ Return a JSON object with EXACTLY these keys:
                   id="ogImage" 
                   value={ogImage} 
                   onChange={e => setOgImage(e.target.value)} 
-                  placeholder="e.g. /og-images/ecommerce-solution.png"
+                  placeholder="/og-images/solution.png"
                   className="border-neutral-200 h-9 font-mono text-[11px] bg-white font-normal focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                 />
               </div>
+
+              <div className="space-y-1.5 pt-2 border-t border-neutral-100">
+                <Label htmlFor="aiSnapshot" className="text-xs font-semibold text-[#00b259]">AI Snapshot Direct Summary (AEO/AGO optimized)</Label>
+                <Textarea 
+                  id="aiSnapshot" 
+                  value={aiSnapshot} 
+                  onChange={e => setAiSnapshot(e.target.value)} 
+                  placeholder="Direct 1-2 sentence summary of this solution blueprint..." 
+                  className="border-neutral-200 min-h-[50px] bg-white resize-none font-normal text-xs leading-relaxed"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-2 border-t border-neutral-100">
+                <input
+                  type="checkbox"
+                  id="noindex"
+                  checked={noindex}
+                  onChange={e => setNoindex(e.target.checked)}
+                  className="h-4 w-4 accent-[#00b259]"
+                />
+                <Label htmlFor="noindex" className="text-xs font-medium text-neutral-600">
+                  Hide this page from search engines (noindex)
+                </Label>
+              </div>
+
+              <AeoChecklist
+                focusKeyword={focusKeyword}
+                title={seoTitle || title}
+                description={seoDescription}
+                aiSnapshot={aiSnapshot}
+                faqCount={faqs.length}
+                className="mt-3"
+              />
             </CardContent>
           </Card>
         </div>

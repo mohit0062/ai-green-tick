@@ -5,6 +5,56 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 
+// Persists per-blog AEO data (AI snapshot + FAQs) in the shared `site_sections`
+// table keyed by blog id. This avoids requiring extra columns on the `blogs`
+// table (no DB migration needed). Keyed by id so slug renames don't orphan data.
+async function saveBlogAeo(
+  supabase: any,
+  blogId: string,
+  aiSnapshot: string,
+  faqs: { question: string; answer: string }[]
+) {
+  try {
+    const { data: existing } = await supabase
+      .from('site_sections')
+      .select('content')
+      .eq('key', 'blogs_aeo')
+      .maybeSingle()
+
+    const map =
+      existing?.content && !Array.isArray(existing.content) ? { ...existing.content } : {}
+    map[blogId] = { aiSnapshot: aiSnapshot || '', faqs: Array.isArray(faqs) ? faqs : [] }
+
+    await supabase.from('site_sections').upsert(
+      {
+        key: 'blogs_aeo',
+        category: 'blogs',
+        content: map,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'key' }
+    )
+  } catch (e) {
+    // Best-effort: never block the primary blog save on AEO metadata.
+    console.error('Failed to save blog AEO metadata:', e)
+  }
+}
+
+function parseFaqs(raw: unknown): { question: string; answer: string }[] {
+  if (typeof raw !== 'string' || !raw.trim()) return []
+  try {
+    const parsed = JSON.parse(raw)
+    if (Array.isArray(parsed)) {
+      return parsed
+        .filter((f) => f && typeof f.question === 'string' && typeof f.answer === 'string')
+        .map((f) => ({ question: f.question, answer: f.answer }))
+    }
+  } catch {
+    // ignore malformed input
+  }
+  return []
+}
+
 async function checkAuth(supabase: any) {
   const { data: { user } } = await supabase.auth.getUser()
   if (user) return true
@@ -201,30 +251,41 @@ export async function createBlog(formData: FormData) {
   const categoriesString = formData.get('categories') as string
   const categories = categoriesString ? categoriesString.split(',').map(c => c.trim()).filter(Boolean) : [category].filter(Boolean)
 
-  const { error } = await supabase
+  // AEO fields
+  const ai_snapshot = formData.get('ai_snapshot') as string
+  const faqs = parseFaqs(formData.get('faqs'))
+
+  const baseRow = {
+    title,
+    slug,
+    description,
+    content,
+    author,
+    author_role,
+    author_avatar,
+    category,
+    read_time,
+    image_url,
+    status,
+    meta_title: meta_title || null,
+    meta_description: meta_description || null,
+    focus_keyword: focus_keyword || null,
+    seo_score,
+    tags,
+    categories,
+  }
+  const { data: inserted, error } = await supabase
     .from('blogs')
-    .insert([{
-      title,
-      slug,
-      description,
-      content,
-      author,
-      author_role,
-      author_avatar,
-      category,
-      read_time,
-      image_url,
-      status,
-      meta_title: meta_title || null,
-      meta_description: meta_description || null,
-      focus_keyword: focus_keyword || null,
-      seo_score,
-      tags,
-      categories
-    }])
+    .insert([baseRow])
+    .select('id')
+    .single()
 
   if (error) {
     return { error: error.message }
+  }
+
+  if (inserted?.id) {
+    await saveBlogAeo(supabase, inserted.id, ai_snapshot, faqs)
   }
 
   revalidatePath('/admin/blogs')
@@ -263,32 +324,36 @@ export async function updateBlog(id: string, formData: FormData) {
   const categoriesString = formData.get('categories') as string
   const categories = categoriesString ? categoriesString.split(',').map(c => c.trim()).filter(Boolean) : [category].filter(Boolean)
 
-  const { error } = await supabase
-    .from('blogs')
-    .update({
-      title,
-      slug,
-      description,
-      content,
-      author,
-      author_role,
-      author_avatar,
-      category,
-      read_time,
-      image_url,
-      status,
-      meta_title: meta_title || null,
-      meta_description: meta_description || null,
-      focus_keyword: focus_keyword || null,
-      seo_score,
-      tags,
-      categories
-    })
-    .eq('id', id)
+  // AEO fields
+  const ai_snapshot = formData.get('ai_snapshot') as string
+  const faqs = parseFaqs(formData.get('faqs'))
+
+  const baseRow = {
+    title,
+    slug,
+    description,
+    content,
+    author,
+    author_role,
+    author_avatar,
+    category,
+    read_time,
+    image_url,
+    status,
+    meta_title: meta_title || null,
+    meta_description: meta_description || null,
+    focus_keyword: focus_keyword || null,
+    seo_score,
+    tags,
+    categories,
+  }
+  const { error } = await supabase.from('blogs').update(baseRow).eq('id', id)
 
   if (error) {
     return { error: error.message }
   }
+
+  await saveBlogAeo(supabase, id, ai_snapshot, faqs)
 
   revalidatePath('/admin/blogs')
   revalidatePath(`/blog/${slug}`)

@@ -34,6 +34,7 @@ import type { Testimonial } from '@/components/shadcn-studio/blocks/testimonials
 import { JsonLd } from '@/components/json-ld'
 import type { Navigation } from '@/components/shadcn-studio/blocks/hero-section-40/hero-navigation'
 import { getSiteSection } from '@/utils/cms'
+import AeoContainer from '@/components/seo/aeo-container'
 
 export const dynamic = 'force-dynamic'
 
@@ -49,6 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical,
     },
+    ...(cms.noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
       title,
       description,
@@ -343,9 +345,23 @@ export default async function AboutPage() {
 
   const stats = banner.stats && banner.stats.length > 0 ? banner.stats : defaultStats
 
+  const faqSchema = cms.faqs && cms.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": cms.faqs.map((f: any) => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer,
+      },
+    })),
+  } : null
+
   return (
     <div className='flex min-h-screen flex-col bg-white text-black font-sans'>
       <JsonLd data={aboutSchema} />
+      {faqSchema && <JsonLd data={faqSchema} />}
       <Header navigationData={navigationData} />
       <Breadcrumb />
 
@@ -412,6 +428,12 @@ export default async function AboutPage() {
         badge="VALUES"
         heading="What we believe in."
         featuresList={valuesItems}
+      />
+
+      <AeoContainer
+        aiSnapshot={cms.aiSnapshot}
+        faqs={cms.faqs}
+        title="Frequently Asked Questions about AI Greentick"
       />
 
       <CTA />

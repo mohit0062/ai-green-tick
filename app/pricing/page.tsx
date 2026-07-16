@@ -179,11 +179,26 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const cms = await getSiteSection<any>('pricing_data') || {}
+
+  // Convert flat faqs from CMS into standard tab format, fallback to hardcoded faqTabs
+  const cmsFaqTabs = cms.faqs && cms.faqs.length > 0 ? [
+    {
+      name: 'General',
+      value: 'general',
+      faqs: cms.faqs.map((f: any, idx: number) => ({
+        id: `faq-${idx}`,
+        question: f.question,
+        answer: f.answer
+      }))
+    }
+  ] : faqTabs
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": faqTabs.flatMap((tab: any) => 
+    "mainEntity": cmsFaqTabs.flatMap((tab: any) => 
       (tab.faqs || []).map((faq: any) => ({
         "@type": "Question",
         "name": faq.question,
@@ -216,6 +231,24 @@ export default function PricingPage() {
           </p>
         </div>
       </section>
+
+      {cms.aiSnapshot && (
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white py-6">
+          <div 
+            className="mx-auto max-w-4xl border border-[#C5C4C2] bg-[#ECEBE9]/20 p-5 relative"
+            style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px))' }}
+          >
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <span className="inline-block px-2 py-0.5 text-[9px] font-mono font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase tracking-wide shrink-0">
+                ⚡ AI Quick Summary
+              </span>
+              <p className="text-neutral-750 font-sans text-xs leading-relaxed font-medium text-left">
+                {cms.aiSnapshot}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Principles Section */}
       <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-[#ECEBE9]/30">
@@ -450,7 +483,7 @@ export default function PricingPage() {
 
       {/* FAQ Section */}
       <div id="faq">
-        <FAQ tabs={faqTabs} />
+        <FAQ tabs={cmsFaqTabs} />
       </div>
 
       {/* Homepage CTA Section */}

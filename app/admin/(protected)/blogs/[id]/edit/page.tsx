@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
 import BlogForm from '../../blog-form'
 import { updateBlog } from '../../actions'
+import { getSiteSection } from '@/utils/cms'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,6 +26,10 @@ export default async function EditBlogPage({
   if (error || !blog) {
     notFound()
   }
+
+  // Load AEO metadata (AI snapshot + FAQs) stored in site_sections, keyed by blog id.
+  const aeoMap: any = await getSiteSection<any>('blogs_aeo')
+  const aeo = (aeoMap && !Array.isArray(aeoMap) ? aeoMap[blog.id] : null) || {}
 
   // Pre-bind the id so the update action knows which record to update
   const updateBlogWithId = updateBlog.bind(null, id)
@@ -52,6 +57,8 @@ export default async function EditBlogPage({
         seo_score: blog.seo_score || 0,
         tags: blog.tags || [],
         categories: blog.categories || [],
+        ai_snapshot: aeo.aiSnapshot || '',
+        faqs: Array.isArray(aeo.faqs) ? aeo.faqs : [],
       }}
       onSubmitAction={updateBlogWithId}
     />

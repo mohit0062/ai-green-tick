@@ -3,8 +3,21 @@
 import { Separator } from '@/components/ui/separator'
 import { Github, Instagram, Youtube } from 'lucide-react'
 import { AiGreenTickLogo } from '@/components/shadcn-studio/blocks/hero-section-40/logo'
+import { useState, useEffect } from 'react'
+import { getSiteSectionClient } from '@/utils/cms-client'
+import { DEFAULT_FALLBACKS } from '@/utils/cms-data'
 
 const Footer = () => {
+  const [footerData, setFooterData] = useState(DEFAULT_FALLBACKS.footer)
+
+  useEffect(() => {
+    async function loadCmsFooterData() {
+      const dbFooter = await getSiteSectionClient('footer')
+      if (dbFooter) setFooterData(dbFooter)
+    }
+    loadCmsFooterData()
+  }, [])
+
   return (
     <footer className="w-full bg-white border-t border-[#C5C4C2] px-4 sm:px-6 lg:px-8 text-black font-sans">
       <div className="mx-auto max-w-7xl border-x border-[#C5C4C2] px-4 sm:px-6 lg:px-8 py-12 lg:py-16 space-y-12">
@@ -14,27 +27,31 @@ const Footer = () => {
           {/* Column 1: Brand details (4 cols) */}
           <div className="col-span-12 lg:col-span-4 space-y-6">
             <div className="flex items-center">
-              <AiGreenTickLogo />
+              {footerData.logoImageUrl ? (
+                <img src={footerData.logoImageUrl} alt="aiGreenTick" className="h-9 w-auto select-none" />
+              ) : (
+                <AiGreenTickLogo />
+              )}
             </div>
 
             <p className="text-xs text-neutral-500 max-w-sm leading-relaxed">
-              AI Greentick is an enterprise-grade WhatsApp Business API platform offering automated marketing campaigns, shared team inboxes, smart routing, and custom AI agents.
+              {footerData.description}
             </p>
 
             {/* Social Icons */}
             <div className="flex items-center gap-4 text-neutral-600">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#00b259] transition-colors">
+              <a href={footerData.socialLinks?.github || "https://github.com"} target="_blank" rel="noopener noreferrer" className="hover:text-[#00b259] transition-colors">
                 <Github className="size-4.5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1306C] transition-colors">
+              <a href={footerData.socialLinks?.instagram || "https://instagram.com"} target="_blank" rel="noopener noreferrer" className="hover:text-[#E1306C] transition-colors">
                 <Instagram className="size-4.5" />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#00b259] transition-colors">
+              <a href={footerData.socialLinks?.twitter || "https://twitter.com"} target="_blank" rel="noopener noreferrer" className="hover:text-[#00b259] transition-colors">
                 <svg className="size-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF0000] transition-colors">
+              <a href={footerData.socialLinks?.youtube || "https://youtube.com"} target="_blank" rel="noopener noreferrer" className="hover:text-[#FF0000] transition-colors">
                 <Youtube className="size-4.5" />
               </a>
             </div>
@@ -121,7 +138,7 @@ const Footer = () => {
         {/* Bottom Credits & Payment Badges */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 text-xs text-neutral-500">
           <div className="flex flex-col md:flex-row md:items-center gap-4">
-            <span>© 2026 AI Greentick, Made with <span className="text-red-500">❤️</span> for a better web.</span>
+            <span>{footerData.copyright || "© 2026 AI Greentick, Made with ❤️ for a better web."}</span>
             <span className="hidden md:inline text-neutral-300">|</span>
             <div className="flex gap-4">
               <a href="/privacy-policy" className="hover:text-[#00b259] transition-colors">Privacy Policy</a>

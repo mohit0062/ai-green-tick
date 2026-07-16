@@ -17,6 +17,7 @@ import TestimonialsComponent from '@/components/shadcn-studio/blocks/testimonial
 import Footer from '@/components/shadcn-studio/blocks/footer/footer'
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/json-ld'
+import { getSiteUrl } from '@/utils/site'
 
 
 import { getSiteSection } from '@/utils/cms'
@@ -605,17 +606,18 @@ export async function generateMetadata(): Promise<Metadata> {
     : 'AI Greentick | WhatsApp Marketing & Automation Platform'
   
   const description = homepage.hero?.subheading?.replace(/<[^>]*>/g, '') || seo.defaultDescription
-  
+  const base = String(seo?.canonicalBase || getSiteUrl()).replace(/\/+$/, '')
+
   return {
     title: title.slice(0, 70),
     description: description.slice(0, 160),
     alternates: {
-      canonical: 'https://ai-green-tick-theta.vercel.app',
+      canonical: base,
     },
     openGraph: {
       title,
       description,
-      url: 'https://ai-green-tick-theta.vercel.app',
+      url: base,
       siteName: 'AI Greentick',
       images: [
         {
@@ -717,13 +719,16 @@ const LandingPage = async () => {
     return { ...item, icon }
   })
 
+  const base = getSiteUrl()
+
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://ai-green-tick-theta.vercel.app/#organization",
+    "@id": `${base}/#organization`,
     "name": "AI Greentick",
-    "url": "https://ai-green-tick-theta.vercel.app",
-    "logo": "https://ai-green-tick-theta.vercel.app/logo-full.png",
+    "url": base,
+    "logo": `${base}/logo-full.png`,
+    ...(homepage.aiSnapshot ? { "description": homepage.aiSnapshot } : {}),
     "sameAs": [
       "https://twitter.com/aigreentick",
       "https://instagram.com/aigreentick",
@@ -734,11 +739,12 @@ const LandingPage = async () => {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://ai-green-tick-theta.vercel.app/#website",
-    "url": "https://ai-green-tick-theta.vercel.app",
+    "@id": `${base}/#website`,
+    "url": base,
     "name": "AI Greentick",
+    ...(homepage.aiSnapshot ? { "description": homepage.aiSnapshot } : {}),
     "publisher": {
-      "@id": "https://ai-green-tick-theta.vercel.app/#organization"
+      "@id": `${base}/#organization`
     }
   }
 
@@ -752,7 +758,7 @@ const LandingPage = async () => {
       "@type": "HowToStep",
       "name": step.title,
       "text": step.description?.replace(/<[^>]*>/g, ''),
-      "url": `https://ai-green-tick-theta.vercel.app/#step-${idx + 1}`
+      "url": `${base}/#step-${idx + 1}`
     }))
   }
 
@@ -790,6 +796,24 @@ const LandingPage = async () => {
       <Header navigationData={navigationData} />
 
       <HeroSection40Block data={homepage.hero} />
+
+      {homepage.aiSnapshot && (
+        <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white py-6">
+          <div 
+            className="mx-auto max-w-4xl border border-[#C5C4C2] bg-[#ECEBE9]/20 p-5 relative"
+            style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px))' }}
+          >
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <span className="inline-block px-2 py-0.5 text-[9px] font-mono font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase tracking-wide shrink-0">
+                ⚡ AI Quick Summary
+              </span>
+              <p className="text-neutral-750 font-sans text-xs leading-relaxed font-medium text-left">
+                {homepage.aiSnapshot}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       <LogoCloud04Block heading={logoCloud.heading} logos={logoCloud.logos} />
 

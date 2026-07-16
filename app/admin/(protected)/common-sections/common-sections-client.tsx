@@ -289,6 +289,82 @@ export default function CommonSectionsClient({
       reader.readAsDataURL(file)
     }
   }
+  const [isUploadingNavbarLogo, setIsUploadingNavbarLogo] = useState(false)
+  const [isUploadingFooterLogo, setIsUploadingFooterLogo] = useState(false)
+
+  const handleNavbarLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setIsUploadingNavbarLogo(true)
+      const reader = new FileReader()
+      reader.onloadend = async () => {
+        try {
+          const base64Data = (reader.result as string).split(',')[1]
+          const cleanName = `navbar-logo-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              fileName: cleanName,
+              base64Data,
+              mimeType: file.type
+            })
+          })
+          const res = await response.json()
+          if (res?.publicUrl) {
+            setNavbar((prev: any) => ({ ...prev, logoImageUrl: res.publicUrl }))
+            showStatus('success', 'Navbar logo uploaded successfully!')
+          } else if (res?.error) {
+            alert(`Upload error: ${res.error}`)
+          }
+        } catch (err: any) {
+          alert(`Upload failed: ${err.message || err}`)
+        } finally {
+          setIsUploadingNavbarLogo(false)
+        }
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleFooterLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setIsUploadingFooterLogo(true)
+      const reader = new FileReader()
+      reader.onloadend = async () => {
+        try {
+          const base64Data = (reader.result as string).split(',')[1]
+          const cleanName = `footer-logo-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              fileName: cleanName,
+              base64Data,
+              mimeType: file.type
+            })
+          })
+          const res = await response.json()
+          if (res?.publicUrl) {
+            setFooter((prev: any) => ({ ...prev, logoImageUrl: res.publicUrl }))
+            showStatus('success', 'Footer logo uploaded successfully!')
+          } else if (res?.error) {
+            alert(`Upload error: ${res.error}`)
+          }
+        } catch (err: any) {
+          alert(`Upload failed: ${err.message || err}`)
+        } finally {
+          setIsUploadingFooterLogo(false)
+        }
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -342,13 +418,25 @@ export default function CommonSectionsClient({
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="logoImageUrl">Logo Image URL</Label>
-                  <Input
-                    id="logoImageUrl"
-                    value={navbar.logoImageUrl || ''}
-                    onChange={(e) => setNavbar({ ...navbar, logoImageUrl: e.target.value })}
-                    placeholder="/logo.svg"
-                    className="border-[#C5C4C2] h-10"
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      id="logoImageUrl"
+                      value={navbar.logoImageUrl || ''}
+                      onChange={(e) => setNavbar({ ...navbar, logoImageUrl: e.target.value })}
+                      placeholder="/logo-full.png"
+                      className="border-[#C5C4C2] h-10 flex-1 font-mono text-xs"
+                    />
+                    <label className="h-10 px-4 border border-[#C5C4C2] text-neutral-700 bg-white hover:bg-neutral-50 flex items-center justify-center text-xs font-semibold cursor-pointer shrink-0 rounded-lg shadow-sm select-none">
+                      {isUploadingNavbarLogo ? '...' : 'Upload'}
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        disabled={isUploadingNavbarLogo}
+                        onChange={handleNavbarLogoUpload}
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -1539,6 +1627,29 @@ export default function CommonSectionsClient({
                   placeholder="2026 AI Greentick, Made with ❤️ for a better web."
                   className="border-[#C5C4C2]"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="footerLogoImageUrl">Footer Logo Image URL</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="footerLogoImageUrl"
+                    value={footer.logoImageUrl || ''}
+                    onChange={(e) => setFooter({ ...footer, logoImageUrl: e.target.value })}
+                    placeholder="/logo-full.png"
+                    className="border-[#C5C4C2] h-10 flex-1 font-mono text-xs"
+                  />
+                  <label className="h-10 px-4 border border-[#C5C4C2] text-neutral-700 bg-white hover:bg-neutral-50 flex items-center justify-center text-xs font-semibold cursor-pointer shrink-0 rounded-lg shadow-sm select-none">
+                    {isUploadingFooterLogo ? '...' : 'Upload'}
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      disabled={isUploadingFooterLogo}
+                      onChange={handleFooterLogoUpload}
+                    />
+                  </label>
+                </div>
               </div>
 
               <div className="border-t border-[#C5C4C2]/30 pt-6">

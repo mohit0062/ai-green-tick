@@ -9,6 +9,24 @@ export function JsonLd({ data }: { data: Record<string, any> }) {
   )
 }
 
+/**
+ * Emits BreadcrumbList structured data. Helps Google render breadcrumb rich
+ * results and gives AI answer engines the page's position in the site hierarchy.
+ */
+export function BreadcrumbSchema({ items }: { items: { name: string; url: string }[] }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+  return <JsonLd data={data} />
+}
+
 interface ServicePageSchemaProps {
   data: any
   serviceName: string

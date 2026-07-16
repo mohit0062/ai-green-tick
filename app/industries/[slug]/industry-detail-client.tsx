@@ -269,6 +269,24 @@ export default function IndustryDetailClient({ slug, industry }: IndustryDetailP
           </div>
         </section>
 
+        {industry.aiSnapshot && (
+          <section className="px-4 sm:px-6 lg:px-8 border-b border-[#C5C4C2] bg-white py-6">
+            <div 
+              className="mx-auto max-w-4xl border border-[#C5C4C2] bg-[#ECEBE9]/20 p-5 relative"
+              style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px))' }}
+            >
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <span className="inline-block px-2 py-0.5 text-[9px] font-mono font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase tracking-wide shrink-0">
+                  ⚡ AI Quick Summary
+                </span>
+                <p className="text-neutral-750 font-sans text-xs leading-relaxed font-medium text-left">
+                  {industry.aiSnapshot}
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Client Logos Bar */}
         <LogoCloud brandLogos={brandLogos} />
 

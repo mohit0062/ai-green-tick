@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getSiteSection } from '@/utils/cms'
 import { DEFAULT_FALLBACKS } from '@/utils/cms-data'
+import { getSiteUrl } from '@/utils/site'
 import IntegrationsClient from './integrations-client'
 
 export const dynamic = 'force-dynamic'
@@ -18,7 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = integrationsData.seoTitle || 'App Integrations — Connect AI Greentick'
   const description = integrationsData.seoDesc || `Connect AI Greentick with HubSpot, Shopify, WooCommerce, Salesforce, Razorpay, Stripe, Zapier, and over 2000+ web applications.`
   const slug = integrationsData.seoUrl?.replace('aigreentick.com/', '') || 'integrations'
-  const canonicalUrl = `https://ai-green-tick-theta.vercel.app/${slug}`
+  const base = String(seo?.canonicalBase || getSiteUrl()).replace(/\/+$/, '')
+  const canonicalUrl = `${base}/${slug}`
 
   return {
     title,
@@ -26,6 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: canonicalUrl,
     },
+    ...(integrationsData.noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
       title,
       description,
