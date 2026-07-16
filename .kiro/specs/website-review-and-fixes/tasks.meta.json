@@ -1,0 +1,108 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Verify prior P0 security fixes still hold": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481063
+      },
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217506453
+      }
+    ],
+    "2. Remove dead `extracted_zip/` duplicate project": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481117
+      }
+    ],
+    "3. Adopt next/image for optimized images": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481196
+      }
+    ],
+    "4. Add SoftwareApplication structured data": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481255
+      }
+    ],
+    "5. Add FAQPage JSON-LD to detail pages": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481307
+      }
+    ],
+    "6. Accessibility sweep for interactive controls": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481354
+      }
+    ],
+    "7. Align industries editor to design tokens": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481404
+      }
+    ],
+    "8. Dynamic OG images": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481450
+      }
+    ],
+    "9. Review / AggregateRating structured data": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481497
+      }
+    ],
+    "10. Blog RSS feed": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481543
+      }
+    ],
+    "11. Accurate sitemap lastmod": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481603
+      }
+    ],
+    "12. Reliability: guard public-page external calls": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481671
+      }
+    ],
+    "13. Consolidate duplicate upload logic": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481718
+      }
+    ],
+    "14. Final verification and deploy": [
+      {
+        "executionId": "96e7c8a6-d977-4d2e-93e6-32b05fb1edb1",
+        "chatSessionId": "sess_6f164cf0-cdf6-489a-b051-a5c502cc2c5e",
+        "timestamp": 1784217481766
+      }
+    ]
+  }
+}
