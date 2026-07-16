@@ -12,6 +12,7 @@ import FollowUps from '@/components/shadcn-studio/blocks/hero-section-40/follow-
 import DataSync from '@/components/shadcn-studio/blocks/hero-section-40/data-sync'
 import Reporting from '@/components/shadcn-studio/blocks/hero-section-40/reporting'
 import ContentDrafting from '@/components/shadcn-studio/blocks/hero-section-40/content-drafting'
+import ChatbotRating from '@/components/shadcn-studio/blocks/hero-section-40/chatbot-rating'
 
 const IsometricSymbol = () => (
   <svg width="50" height="50" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-neutral-700 animate-bounce duration-1000">
@@ -45,7 +46,7 @@ const MetaBusinessPartnerLogo = () => (
   </div>
 )
 
-const AutoScrollingImage = ({ src, alt }: { src: string; alt: string }) => {
+const AutoScrollingImage = ({ src, alt, scale = 1, hasSidebar = false }: { src: string; alt: string; scale?: number; hasSidebar?: boolean }) => {
   const animName = `scroll-${src.replace(/[^a-zA-Z0-9]/g, '')}`
   return (
     <div className="scrolling-container w-full h-full flex overflow-hidden bg-white relative">
@@ -53,22 +54,23 @@ const AutoScrollingImage = ({ src, alt }: { src: string; alt: string }) => {
         @keyframes ${animName} {
           0%, 8% {
             top: 0;
-            transform: translateY(0);
+            transform: translateY(0) scale(${scale});
           }
           42%, 58% {
             top: 100%;
-            transform: translateY(-100%);
+            transform: translateY(-100%) scale(${scale});
           }
           92%, 100% {
             top: 0;
-            transform: translateY(0);
+            transform: translateY(0) scale(${scale});
           }
         }
         .animate-${animName} {
           position: absolute;
-          width: calc(100% / 0.948);
+          width: ${hasSidebar ? 'calc(100% / 0.948)' : '100%'};
           height: auto;
-          left: calc(-100% * (0.052 / 0.948));
+          left: ${hasSidebar ? 'calc(-100% * (0.052 / 0.948))' : '0'};
+          transform-origin: top center;
           animation: ${animName} 18s ease-in-out infinite;
         }
         .scrolling-container:hover .animate-${animName} {
@@ -77,17 +79,21 @@ const AutoScrollingImage = ({ src, alt }: { src: string; alt: string }) => {
       `}} />
       
       {/* 1. Left Sidebar (Fixed, no scroll) */}
-      <div className="w-[5.2%] h-full overflow-hidden relative">
-        <img
-          src={src}
-          alt={alt}
-          className="absolute top-0 left-0 max-w-none"
-          style={{
-            width: 'calc(100% / 0.052)',
-            height: 'auto',
-          }}
-        />
-      </div>
+      {hasSidebar && (
+        <div className="w-[5.2%] h-full overflow-hidden relative">
+          <img
+            src={src}
+            alt={alt}
+            className="absolute top-0 left-0 max-w-none"
+            style={{
+              width: 'calc(100% / 0.052)',
+              height: 'auto',
+              transform: `scale(${scale})`,
+              transformOrigin: 'top left',
+            }}
+          />
+        </div>
+      )}
       
       {/* 2. Right Content (Auto scrolling) */}
       <div className="flex-1 h-full overflow-hidden relative">
@@ -110,6 +116,7 @@ const tabs = [
       <AutoScrollingImage
         src="/screencapture-ai-greentick-dashboard-vercel-app-inbox-2026-06-18-19_15_57.png"
         alt="Unified Inbox Dashboard"
+        hasSidebar={true}
       />
     )
   },
@@ -145,12 +152,7 @@ const tabs = [
     name: 'Chatbot',
     value: 'chatbot',
     icon: <BotIcon className="size-4.5" />,
-    content: (
-      <AutoScrollingImage
-        src="/chatbot.png"
-        alt="Chatbot Manager Dashboard"
-      />
-    )
+    content: <ChatbotRating />
   },
   {
     name: 'AI Analytics',

@@ -64,29 +64,29 @@ const Features = ({ data }: { data: DataType[] }) => {
               </div>
 
               {/* Image Preview Container */}
-              <div className='relative flex-grow flex items-center justify-center overflow-hidden px-4 py-8 lg:py-12 max-lg:h-120 min-h-[360px] bg-neutral-50/20'>
+              <div className='relative flex-grow flex items-center justify-center overflow-hidden px-4 py-6 lg:py-12 max-lg:h-auto max-lg:min-h-0 bg-neutral-50/20'>
                 <DottedSheet className='absolute inset-0 h-full w-full opacity-60' />
                 <div className='absolute inset-0 bg-[radial-gradient(circle,transparent_0%,var(--background)_80%)]' />
-                <div className="relative z-10 w-full max-w-[440px] bg-white dark:bg-neutral-850 rounded-xl shadow-xl border border-neutral-200/80 flex items-center justify-center overflow-hidden aspect-[16/10]">
+                <div className="relative z-10 w-full max-w-[520px] bg-white dark:bg-neutral-850 rounded-xl border border-neutral-200/80 flex items-center justify-center overflow-hidden aspect-[16/10] p-0">
                   {activeTab === 'marketing' && (
                     <img 
-                      src="/images/marketing-workflow.jpg" 
+                      src="/images/marketing-workflow.png" 
                       alt="Marketing Workflow" 
-                      className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-300"
+                      className="w-full h-full object-contain animate-in fade-in zoom-in-95 duration-300"
                     />
                   )}
                   {activeTab === 'sales' && (
                     <img 
-                      src="/images/sales-workflow.jpg" 
+                      src="/images/sales-workflow.png" 
                       alt="Sales Workflow" 
-                      className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-300"
+                      className="w-full h-full object-contain animate-in fade-in zoom-in-95 duration-300"
                     />
                   )}
                   {activeTab === 'support' && (
                     <img 
-                      src="/images/support-workflow.jpg" 
+                      src="/images/support-workflow.png" 
                       alt="Support Workflow" 
-                      className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-300"
+                      className="w-full h-full object-contain animate-in fade-in zoom-in-95 duration-300"
                     />
                   )}
                 </div>
