@@ -235,7 +235,7 @@ const processSteps = [
     ),
     title: 'Connect your number',
     description:
-      'We help you onboard to the Official WhatsApp Business API, verify your business with Meta and apply for the Green Tick — all done in 10 minutes.',
+      'We help you onboard to the Official WhatsApp Business API, verify your business with Meta and apply for the Green Tick â€” all done in 10 minutes.',
     progress: 25,
     progressLabel: '25%',
     duration: '10 minutes'
@@ -304,7 +304,7 @@ const metricsData = [
     icon: (
       <TrendingUp />
     ),
-    value: '7×',
+    value: '7Ã—',
     title: 'Engagement',
     subtitle: 'vs email (Meta & Gartner research)'
   }
@@ -414,19 +414,19 @@ const faqTabs = [
         id: 'faq-1',
         question: 'What is the WhatsApp Business API and do I need it?',
         answer:
-          'WhatsApp Business API is the official Meta product designed for businesses that need to message customers at scale (5+ agents or 1000+ messages/day). Unlike the free WhatsApp Business app, the API supports automation, integrations and multi-agent inboxes. AI Greentick is an Official BSP — we get you set up in 10 minutes.'
+          'WhatsApp Business API is the official Meta product designed for businesses that need to message customers at scale (5+ agents or 1000+ messages/day). Unlike the free WhatsApp Business app, the API supports automation, integrations and multi-agent inboxes. AI Greentick is an Official BSP â€” we get you set up in 10 minutes.'
       },
       {
         id: 'faq-3',
         question: 'Can I get the Green Tick verification?',
         answer:
-          'Yes. We help you apply for the WhatsApp Green Tick (verified business badge) for free on all paid plans. Approval depends on Meta\'s criteria — typically requires public press mentions and active business presence.'
+          'Yes. We help you apply for the WhatsApp Green Tick (verified business badge) for free on all paid plans. Approval depends on Meta\'s criteria â€” typically requires public press mentions and active business presence.'
       },
       {
         id: 'faq-4',
         question: 'Will my existing WhatsApp Business app data transfer?',
         answer:
-          'When you move to the WhatsApp Business API, you migrate the number — but the chat history in the WhatsApp Business app doesn\'t carry over. We recommend backing up important conversations before migration.'
+          'When you move to the WhatsApp Business API, you migrate the number â€” but the chat history in the WhatsApp Business app doesn\'t carry over. We recommend backing up important conversations before migration.'
       },
       {
         id: 'faq-5',
@@ -450,13 +450,13 @@ const faqTabs = [
         id: 'faq-2',
         question: 'How much does AI Greentick cost?',
         answer:
-          'Plans start at ₹2,499/month for the Starter plan. WhatsApp also charges per-conversation fees directly (₹0.88 for marketing, ₹0.12 for utility messages in India). You pay AiSensy for the platform, Meta for conversations. No setup fees.'
+          'Plans start at â‚¹2,499/month for the Starter plan. WhatsApp also charges per-conversation fees directly (â‚¹0.88 for marketing, â‚¹0.12 for utility messages in India). You pay AiSensy for the platform, Meta for conversations. No setup fees.'
       },
       {
         id: 'faq-7',
         question: 'Is there a free trial?',
         answer:
-          'Yes — 14-day free trial on all paid plans. No credit card required to start.'
+          'Yes â€” 14-day free trial on all paid plans. No credit card required to start.'
       }
     ]
   }
@@ -601,17 +601,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const homepage = await getSiteSection<any>('homepage_data')
   const seo = await getSiteSection<any>('seo')
   
-  const title = homepage.hero?.heading 
+  const title = homepage.seoTitle || (homepage.hero?.heading 
     ? `${homepage.hero.heading.split('\n').join(' ')} | ${seo.siteTitle || 'AI Greentick'}`
-    : 'AI Greentick | WhatsApp Marketing & Automation Platform'
+    : 'AI Greentick | WhatsApp Marketing & Automation Platform')
   
-  const description = homepage.hero?.subheading?.replace(/<[^>]*>/g, '') || seo.defaultDescription
+  const description = homepage.seoDesc || homepage.hero?.subheading?.replace(/<[^>]*>/g, '') || seo.defaultDescription
   const base = String(seo?.canonicalBase || getSiteUrl()).replace(/\/+$/, '')
 
   return {
     title: title.slice(0, 70),
     description: description.slice(0, 160),
-    alternates: {
+    keywords: homepage.seoKeywords || seo.keywords || undefined,
+ ...(homepage.noindex ? { robots: { index: false, follow: false } } : {}),
+ alternates: {
       canonical: base,
     },
     openGraph: {
@@ -805,7 +807,7 @@ const LandingPage = async () => {
           >
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <span className="inline-block px-2 py-0.5 text-[9px] font-mono font-bold text-[#00b259] border border-[#00b259]/30 bg-[#00b259]/5 uppercase tracking-wide shrink-0">
-                ⚡ AI Quick Summary
+                âš¡ AI Quick Summary
               </span>
               <p className="text-neutral-750 font-sans text-xs leading-relaxed font-medium text-left">
                 {homepage.aiSnapshot}

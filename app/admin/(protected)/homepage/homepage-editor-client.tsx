@@ -595,7 +595,7 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                 <div className="space-y-1.5">
                   <Label className="font-semibold text-neutral-750">Metrics Arrow Button Link</Label>
                   <Input value={data.hero.arrowLink || ''} onChange={e => updateHero('arrowLink', e.target.value)} placeholder="/about" className="border-neutral-300 h-9 bg-white" />
-                  <p className="text-[10px] text-neutral-400">Where the green → arrow next to the hero metrics goes. Defaults to the About Us page.</p>
+                  <p className="text-[10px] text-neutral-400">Where the green â†’ arrow next to the hero metrics goes. Defaults to the About Us page.</p>
                 </div>
               </div>
 
@@ -618,7 +618,25 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                 </div>
               </div>
               
-              <div className="space-y-1.5 pt-4 border-t border-[#C5C4C2]/30">
+              <div className="grid gap-4 md:grid-cols-2 pt-4 border-t border-[#C5C4C2]/30">
+ <div className="space-y-1.5">
+ <Label className="font-semibold text-neutral-750">SEO Title (meta title)</Label>
+ <Input value={data.seoTitle || ""} onChange={e => setData({ ...data, seoTitle: e.target.value })} placeholder="Homepage meta title" className="border-neutral-300 h-9 bg-white" />
+ </div>
+ <div className="space-y-1.5">
+ <Label className="font-semibold text-neutral-750">SEO Keywords</Label>
+ <Input value={data.seoKeywords || ""} onChange={e => setData({ ...data, seoKeywords: e.target.value })} placeholder="comma, separated, keywords" className="border-neutral-300 h-9 bg-white" />
+ </div>
+ <div className="space-y-1.5 md:col-span-2">
+ <Label className="font-semibold text-neutral-750">SEO Meta Description</Label>
+ <Textarea value={data.seoDesc || ""} onChange={e => setData({ ...data, seoDesc: e.target.value })} placeholder="Meta description for search results" className="border-neutral-300 bg-white h-16 resize-none text-xs" />
+ </div>
+ <div className="flex items-center gap-2 md:col-span-2">
+ <input type="checkbox" id="hp-noindex" checked={!!data.noindex} onChange={e => setData({ ...data, noindex: e.target.checked })} className="h-4 w-4 accent-[#00b259]" />
+ <Label htmlFor="hp-noindex" className="text-xs font-medium text-neutral-600">Hide homepage from search engines (noindex)</Label>
+ </div>
+ </div>
+ <div className="space-y-1.5 pt-4 border-t border-[#C5C4C2]/30">
                 <Label className="font-semibold text-[#00b259]">AI Snapshot Direct Summary (AEO/AGO optimized)</Label>
                 <Textarea 
                   value={data.aiSnapshot || ''} 
@@ -935,7 +953,7 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                             }}
                             className="h-5 w-5 text-neutral-400 hover:text-black cursor-pointer text-[10px]"
                           >
-                            ↑
+                            â†‘
                           </Button>
                           <Button
                             type="button"
@@ -951,7 +969,7 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                             }}
                             className="h-5 w-5 text-neutral-400 hover:text-black cursor-pointer text-[10px]"
                           >
-                            ↓
+                            â†“
                           </Button>
                           <Button onClick={() => deleteIntegration(idx)} variant="ghost" size="icon" className="h-5 w-5 text-red-500 hover:text-red-655 hover:bg-red-55 cursor-pointer">
                             <X className="h-3.5 w-3.5" />

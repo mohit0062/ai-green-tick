@@ -277,14 +277,14 @@ const HeroSection = ({ data }: HeroSectionProps) => {
 
 
           {/* Corner Square Highlights (Green theme) */}
-          <span className="absolute top-2 left-2 text-[#00b259] text-[10px] select-none">■</span>
-          <span className="absolute top-2 right-2 text-[#00b259] text-[10px] select-none">■</span>
-          <span className="absolute bottom-2 right-2 text-[#00b259] text-[10px] select-none">■</span>
-          <span className="absolute bottom-2 left-2 text-[#00b259] text-[10px] select-none">■</span>
+          <span className="absolute top-2 left-2 text-[#00b259] text-[10px] select-none">â– </span>
+          <span className="absolute top-2 right-2 text-[#00b259] text-[10px] select-none">â– </span>
+          <span className="absolute bottom-2 right-2 text-[#00b259] text-[10px] select-none">â– </span>
+          <span className="absolute bottom-2 left-2 text-[#00b259] text-[10px] select-none">â– </span>
 
           {/* Small Subtitle in bottom-left */}
           <div className="absolute bottom-3 left-6 z-20 flex items-center gap-1.5">
-            <span className="text-[#00b259] text-[8px]">■</span>
+            <span className="text-[#00b259] text-[8px]">â– </span>
             <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-neutral-500">
               {tagline}
             </span>
@@ -293,10 +293,10 @@ const HeroSection = ({ data }: HeroSectionProps) => {
           <div className="relative z-10 w-full overflow-hidden select-none py-4">
             <div className="run-marquee gap-12 items-center">
               <span className="text-[8vw] lg:text-[110px] font-black tracking-widest text-black uppercase flex items-center gap-12 leading-none" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
-                {title} <span className="text-[#00b259] text-4xl sm:text-6xl">■</span>
+                {title} <span className="text-[#00b259] text-4xl sm:text-6xl">â– </span>
               </span>
               <span className="text-[8vw] lg:text-[110px] font-black tracking-widest text-black uppercase flex items-center gap-12 leading-none" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
-                {title} <span className="text-[#00b259] text-4xl sm:text-6xl">■</span>
+                {title} <span className="text-[#00b259] text-4xl sm:text-6xl">â– </span>
               </span>
             </div>
           </div>
@@ -364,9 +364,9 @@ const HeroSection = ({ data }: HeroSectionProps) => {
 
               {/* Product Identity */}
               <div className="mb-6">
-                <span className="text-xl font-black text-black font-sans uppercase tracking-tight">
+                <h1 className="text-xl font-black text-black font-sans uppercase tracking-tight">
                   {heading}
-                </span>
+                </h1>
               </div>
 
               {/* Copy Description */}
@@ -457,7 +457,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
                     {/* Icon */}
                     <span className="size-[14px] md:size-4 flex items-center justify-center shrink-0 [&>svg]:size-full">{icon}</span>
 
-                    {/* Label — active tab par hi dikhe mobile me, desktop par hamesha */}
+                    {/* Label â€” active tab par hi dikhe mobile me, desktop par hamesha */}
                     <span className="hidden group-data-[state=active]:block md:block leading-none truncate">{name}</span>
                   </TabsTrigger>
                 ))}
