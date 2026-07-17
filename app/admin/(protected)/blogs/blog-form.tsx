@@ -38,6 +38,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { ImageInput } from '@/components/admin/image-input'
 
 interface BlogFormProps {
   initialData?: {
@@ -1520,31 +1521,10 @@ export default function BlogForm({
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="image_url">Featured Image URL</Label>
-                <div className="relative">
-                  <Input
-                    id="image_url"
-                    name="image_url"
-                    required
-                    placeholder="https://images.unsplash.com/..."
-                    value={formData.image_url}
-                    onChange={handleInputChange}
-                    className="pr-8 border-[#C5C4C2]"
-                  />
-                  <ImageIcon className="absolute right-2.5 top-2.5 h-4 w-4 text-neutral-400" />
-                </div>
-                {formData.image_url && (
-                  <div className="mt-2 aspect-video w-full overflow-hidden rounded-lg border border-[#C5C4C2]/50 bg-neutral-100">
-                    <img
-                      src={formData.image_url}
-                      alt="Featured preview"
-                      className="h-full w-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-25.png'
-                      }}
-                    />
-                  </div>
-                )}
+                <ImageInput
+                  value={formData.image_url}
+                  onChange={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+                />
               </div>
             </CardContent>
           </Card>
@@ -1580,31 +1560,11 @@ export default function BlogForm({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="author_avatar">Author Avatar URL</Label>
-                <Input
-                  id="author_avatar"
-                  name="author_avatar"
-                  required
+                <ImageInput
+                  label="Author Avatar URL"
                   value={formData.author_avatar}
-                  onChange={handleInputChange}
-                  className="border-[#C5C4C2]"
+                  onChange={(url) => setFormData(prev => ({ ...prev, author_avatar: url }))}
                 />
-                {formData.author_avatar && (
-                  <div className="mt-2 flex items-center gap-3 bg-neutral-50/50 p-2 border border-[#C5C4C2]/30 rounded-lg">
-                    <img
-                      src={formData.author_avatar}
-                      alt="Avatar preview"
-                      className="h-10 w-10 rounded-full border bg-neutral-100"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mohit'
-                      }}
-                    />
-                    <div className="flex flex-col text-[10px] text-neutral-500 leading-normal">
-                      <span className="font-semibold text-foreground">{formData.author}</span>
-                      <span>{formData.author_role}</span>
-                    </div>
-                  </div>
-                )}
               </div>
             </CardContent>
           </Card>

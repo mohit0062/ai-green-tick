@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { updateSiteSectionAction } from '../cms-actions'
 import { useUnsavedChanges } from '@/hooks/use-unsaved-changes'
 import { cn } from '@/lib/utils'
+import { ImageInput } from '@/components/admin/image-input'
 import { 
   Sparkles, Check, X, Plus, Trash2, ArrowUp, ArrowDown, ArrowLeft,
   Info, Laptop, Smartphone, HelpCircle, Layers, ShieldCheck,
@@ -829,20 +830,11 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                         <Input value={test.designation} onChange={e => updateTestimonial(idx, 'designation', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[9px] text-neutral-400 font-bold uppercase">Avatar URL</Label>
-                        <div className="flex gap-2">
-                          <Input value={test.avatar} onChange={e => updateTestimonial(idx, 'avatar', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono flex-1" />
-                          <label className="h-8.5 px-2.5 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded-md">
-                            {uploadingState[`${idx}-avatar`] ? '...' : 'Upload'}
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              className="hidden" 
-                              disabled={uploadingState[`${idx}-avatar`]}
-                              onChange={e => handleFileUpload(e, idx, 'avatar')}
-                            />
-                          </label>
-                        </div>
+                        <ImageInput
+                          label="Avatar URL"
+                          value={test.avatar || ''}
+                          onChange={(url) => updateTestimonial(idx, 'avatar', url)}
+                        />
                       </div>
                     </div>
 
@@ -852,20 +844,11 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                         <Input value={test.companyName} onChange={e => updateTestimonial(idx, 'companyName', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-[9px] text-neutral-400 font-bold uppercase">Company Logo Link</Label>
-                        <div className="flex gap-2">
-                          <Input value={test.companyLogo} onChange={e => updateTestimonial(idx, 'companyLogo', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono flex-1" />
-                          <label className="h-8.5 px-2.5 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded-md">
-                            {uploadingState[`${idx}-companyLogo`] ? '...' : 'Upload'}
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              className="hidden" 
-                              disabled={uploadingState[`${idx}-companyLogo`]}
-                              onChange={e => handleFileUpload(e, idx, 'companyLogo')}
-                            />
-                          </label>
-                        </div>
+                        <ImageInput
+                          label="Company Logo Link"
+                          value={test.companyLogo || ''}
+                          onChange={(url) => updateTestimonial(idx, 'companyLogo', url)}
+                        />
                       </div>
                       <div className="space-y-1">
                         <Label className="text-[9px] text-neutral-400 font-bold uppercase">Fallback initials</Label>
@@ -983,20 +966,11 @@ export default function HomepageEditorClient({ initialData }: HomepageEditorClie
                       </div>
 
                       <div className="space-y-1 mt-1">
-                        <Label className="text-[9px] text-neutral-400 font-bold uppercase">Icon URL</Label>
-                        <div className="flex gap-2">
-                          <Input value={integration.image} onChange={e => updateIntegration(idx, 'image', e.target.value)} className="bg-white border-neutral-300 h-8.5 text-xs font-mono flex-1" />
-                          <label className="h-8.5 px-2 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded-md">
-                            {uploadingState[`${idx}-integration`] ? '...' : 'Upload'}
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              className="hidden" 
-                              disabled={uploadingState[`${idx}-integration`]}
-                              onChange={e => handleFileUpload(e, idx, 'integration')}
-                            />
-                          </label>
-                        </div>
+                        <ImageInput
+                          label="Icon URL"
+                          value={integration.image || ''}
+                          onChange={(url) => updateIntegration(idx, 'image', url)}
+                        />
                       </div>
                     </div>
                   </div>

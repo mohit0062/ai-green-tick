@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { updateSiteSectionAction } from '../cms-actions'
 import { DEFAULT_FALLBACKS } from '@/utils/cms-data'
 import { cn } from '@/lib/utils'
+import { ImageInput } from '@/components/admin/image-input'
 import { Check, Loader2, Plus, X, Globe, Mail, Phone, MapPin, Search, Trash2, Image as ImageIcon } from 'lucide-react'
 
 interface CommonSectionsClientProps {
@@ -417,26 +418,12 @@ export default function CommonSectionsClient({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="logoImageUrl">Logo Image URL</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="logoImageUrl"
-                      value={navbar.logoImageUrl || ''}
-                      onChange={(e) => setNavbar({ ...navbar, logoImageUrl: e.target.value })}
-                      placeholder="/logo-full.png"
-                      className="border-[#C5C4C2] h-10 flex-1 font-mono text-xs"
-                    />
-                    <label className="h-10 px-4 border border-[#C5C4C2] text-neutral-700 bg-white hover:bg-neutral-50 flex items-center justify-center text-xs font-semibold cursor-pointer shrink-0 rounded-lg shadow-sm select-none">
-                      {isUploadingNavbarLogo ? '...' : 'Upload'}
-                      <input 
-                        type="file" 
-                        accept="image/*" 
-                        className="hidden" 
-                        disabled={isUploadingNavbarLogo}
-                        onChange={handleNavbarLogoUpload}
-                      />
-                    </label>
-                  </div>
+                  <ImageInput
+                    label="Logo Image URL"
+                    value={navbar.logoImageUrl || ''}
+                    onChange={(url) => setNavbar({ ...navbar, logoImageUrl: url })}
+                    placeholder="/logo-full.png"
+                  />
                 </div>
               </div>
 
@@ -1630,26 +1617,12 @@ export default function CommonSectionsClient({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="footerLogoImageUrl">Footer Logo Image URL</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="footerLogoImageUrl"
-                    value={footer.logoImageUrl || ''}
-                    onChange={(e) => setFooter({ ...footer, logoImageUrl: e.target.value })}
-                    placeholder="/logo-full.png"
-                    className="border-[#C5C4C2] h-10 flex-1 font-mono text-xs"
-                  />
-                  <label className="h-10 px-4 border border-[#C5C4C2] text-neutral-700 bg-white hover:bg-neutral-50 flex items-center justify-center text-xs font-semibold cursor-pointer shrink-0 rounded-lg shadow-sm select-none">
-                    {isUploadingFooterLogo ? '...' : 'Upload'}
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      className="hidden" 
-                      disabled={isUploadingFooterLogo}
-                      onChange={handleFooterLogoUpload}
-                    />
-                  </label>
-                </div>
+                <ImageInput
+                  label="Footer Logo Image URL"
+                  value={footer.logoImageUrl || ''}
+                  onChange={(url) => setFooter({ ...footer, logoImageUrl: url })}
+                  placeholder="/logo-full.png"
+                />
               </div>
 
               <div className="border-t border-[#C5C4C2]/30 pt-6">
@@ -2148,10 +2121,12 @@ export default function CommonSectionsClient({
                   </div>
                 </div>
                 <div className="space-y-2 mt-4">
-                  <Label htmlFor="seoOgImage" className="flex items-center gap-2">
-                    <ImageIcon className="h-4 w-4 text-neutral-400" /> Default OG Image URL
-                  </Label>
-                  <Input id="seoOgImage" value={seo.ogImage || ''} onChange={(e) => setSeo({ ...seo, ogImage: e.target.value })} placeholder="/og-image.png" className="border-[#C5C4C2]" />
+                  <ImageInput
+                    label="Default OG Image URL"
+                    value={seo.ogImage || ''}
+                    onChange={(url) => setSeo({ ...seo, ogImage: url })}
+                    placeholder="/og-image.png"
+                  />
                 </div>
               </div>
 
@@ -2337,25 +2312,12 @@ export default function CommonSectionsClient({
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-xs">Logo Image URL</Label>
-                      <div className="flex gap-2">
-                        <Input
-                          value={newLogoImage}
-                          onChange={(e) => setNewLogoImage(e.target.value)}
-                          placeholder="Paste image link or upload..."
-                          className="bg-background h-9 text-xs border-[#C5C4C2] flex-1 font-mono text-[10px]"
-                        />
-                        <label className="h-9 px-2 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded">
-                          {isUploadingLogo ? '...' : 'Upload'}
-                          <input 
-                            type="file" 
-                            accept="image/*" 
-                            className="hidden" 
-                            disabled={isUploadingLogo}
-                            onChange={handleLogoImageUpload}
-                          />
-                        </label>
-                      </div>
+                      <ImageInput
+                        label="Logo Image URL"
+                        value={newLogoImage}
+                        onChange={(url) => setNewLogoImage(url)}
+                        placeholder="Paste image link or upload..."
+                      />
                     </div>
                   </div>
                   <Button

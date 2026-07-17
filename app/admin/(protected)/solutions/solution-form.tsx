@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { AeoChecklist } from '@/components/admin/aeo-checklist'
+import { ImageInput } from '@/components/admin/image-input'
 import { 
   Sparkles, Check, X, Plus, Trash2, ArrowLeft,
   Bold, Italic, List, ListOrdered, Quote,
@@ -1102,13 +1103,11 @@ Return a JSON object with EXACTLY these keys:
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="ogImage" className="text-xs font-semibold text-neutral-750">OpenGraph Image URL</Label>
-                <Input 
-                  id="ogImage" 
-                  value={ogImage} 
-                  onChange={e => setOgImage(e.target.value)} 
+                <ImageInput
+                  label="OpenGraph Image URL"
+                  value={ogImage}
+                  onChange={(url) => setOgImage(url)}
                   placeholder="/og-images/solution.png"
-                  className="border-neutral-200 h-9 font-mono text-[11px] bg-white font-normal focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none"
                 />
               </div>
 

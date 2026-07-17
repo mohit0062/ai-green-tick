@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { updateSiteSectionAction } from '../cms-actions'
 import { RichTextEditor } from '@/components/ui/rich-text-editor'
 import { AeoChecklist } from '@/components/admin/aeo-checklist'
+import { ImageInput } from '@/components/admin/image-input'
 import {
   ArrowLeft,
   Loader2,
@@ -277,14 +278,13 @@ export default function AboutCmsClient({ initialData }: AboutCmsClientProps) {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-semibold">Banner Image URL</Label>
-                  <Input
+                  <ImageInput
+                    label="Banner Image URL"
                     value={data.bannerSection?.imageUrl || ''}
-                    onChange={(e) => setData({
+                    onChange={(url) => setData({
                       ...data,
-                      bannerSection: { ...(data.bannerSection || {}), imageUrl: e.target.value }
+                      bannerSection: { ...(data.bannerSection || {}), imageUrl: url }
                     })}
-                    className="h-10 border-[#C5C4C2] text-black"
                   />
                 </div>
               </div>
@@ -521,14 +521,13 @@ export default function AboutCmsClient({ initialData }: AboutCmsClientProps) {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-semibold">Featured Mission Image URL</Label>
-                  <Input
+                  <ImageInput
+                    label="Featured Mission Image URL"
                     value={data.missionSection?.imageUrl || ''}
-                    onChange={(e) => setData({
+                    onChange={(url) => setData({
                       ...data,
-                      missionSection: { ...data.missionSection, imageUrl: e.target.value }
+                      missionSection: { ...data.missionSection, imageUrl: url }
                     })}
-                    className="h-10 border-[#C5C4C2]"
                   />
                 </div>
                 <div className="space-y-1.5">

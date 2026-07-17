@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { AeoChecklist } from '@/components/admin/aeo-checklist'
+import { ImageInput } from '@/components/admin/image-input'
 import { uploadCMSImageAction } from '../cms-actions'
 import { 
   Sparkles, Check, X, Plus, Trash2, ArrowUp, ArrowDown, ArrowLeft,
@@ -1039,66 +1040,12 @@ Return a JSON object with EXACTLY these keys:
                   
                   {/* Left Column: Image Upload / Preview */}
                   <div className="space-y-2.5">
-                    <Label className="text-xs font-bold text-neutral-750">1. Banner Mockup Image (File or URL)</Label>
-                    
-                    {heroImageUrl ? (
-                      <div className="flex items-center gap-3 p-2.5 border border-neutral-200 rounded-lg bg-neutral-50/50">
-                        <div className="relative size-14 border border-neutral-300 rounded overflow-hidden bg-white shrink-0">
-                          <img 
-                            src={heroImageUrl} 
-                            alt="Banner Preview" 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0 text-xs">
-                          <p className="font-semibold text-neutral-800 truncate">
-                            {heroImageUrl.startsWith('data:') ? 'uploaded-image.png' : heroImageUrl}
-                          </p>
-                          <p className="text-[9px] text-neutral-400">Renders inside the phone mockup.</p>
-                        </div>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setHeroImageUrl('')}
-                          className="h-7 text-[10px] text-red-500 hover:text-red-650 hover:bg-red-50 cursor-pointer border-neutral-300 font-bold shrink-0"
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center border-2 border-dashed border-neutral-300 rounded-lg p-5 bg-neutral-50 hover:bg-neutral-100/50 transition-colors relative h-24">
-                        {isUploadingImage ? (
-                          <>
-                            <span className="h-5 w-5 rounded-full border-2 border-[#00b259] border-t-transparent animate-spin inline-block mb-1" />
-                            <span className="text-[11px] font-bold text-[#00b259]">Uploading Image...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Upload className="h-5 w-5 text-neutral-400 mb-1" />
-                            <span className="text-[11px] font-bold text-neutral-700">Upload Banner Image File</span>
-                            <span className="text-[9px] text-neutral-400">Click to choose image file</span>
-                            <input 
-                              type="file" 
-                              disabled={isUploadingImage}
-                              accept="image/*" 
-                              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" 
-                              onChange={handleImageUpload}
-                            />
-                          </>
-                        )}
-                      </div>
-                    )}
-                    
-                    <div className="space-y-1">
-                      <Label className="text-[10px] font-semibold text-neutral-600">Or Paste Direct Image Link / Address</Label>
-                      <Input 
-                        value={heroImageUrl} 
-                        onChange={e => setHeroImageUrl(e.target.value)} 
-                        placeholder="https://example.com/images/my-image.png" 
-                        className="border-neutral-300 h-8 bg-white font-normal text-xs"
-                      />
-                    </div>
+                    <ImageInput
+                      label="1. Banner Mockup Image (File or URL)"
+                      value={heroImageUrl}
+                      onChange={(url) => setHeroImageUrl(url)}
+                      placeholder="https://example.com/images/my-image.png"
+                    />
                   </div>
 
                   {/* Right Column: Redirect Link */}
@@ -1339,36 +1286,13 @@ Return a JSON object with EXACTLY these keys:
 
                     {/* Use Case Image selection */}
                     <div className="space-y-2 p-2.5 border border-[#C5C4C2]/35 bg-white rounded-md">
-                      <Label className="text-[9px] text-neutral-400 uppercase font-semibold">Use Case Graphic Image (Optional)</Label>
-                      <div className="flex flex-col sm:flex-row gap-3 items-center">
-                        <div className="relative size-14 border border-neutral-300 rounded overflow-hidden bg-neutral-50 shrink-0 flex items-center justify-center bg-white">
-                          {uc.imageUrl ? (
-                            <img src={uc.imageUrl} alt="Use Case Preview" className="w-full h-full object-cover" />
-                          ) : (
-                            <Image className="h-5 w-5 text-neutral-300" />
-                          )}
-                        </div>
-                        <div className="flex-1 w-full space-y-1.5">
-                          <div className="flex gap-2">
-                            <Input 
-                              value={uc.imageUrl || ''} 
-                              onChange={e => updateUseCase(idx, 'imageUrl', e.target.value)} 
-                              placeholder="Or paste custom image link..." 
-                              className="bg-white h-8 text-xs border-neutral-300 flex-1 font-normal"
-                            />
-                            <label className="h-8 px-2 border border-neutral-300 text-neutral-700 bg-white hover:bg-neutral-100 flex items-center justify-center text-[10px] font-semibold cursor-pointer shrink-0 rounded">
-                              Upload
-                              <input 
-                                type="file" 
-                                accept="image/*" 
-                                className="hidden" 
-                                onChange={e => handleUseCaseImageUpload(idx, e)}
-                              />
-                            </label>
-                          </div>
-                          <p className="text-[8px] text-neutral-400 font-normal">If provided, this image will fill the graphic container instead of the chat mockup.</p>
-                        </div>
-                      </div>
+                      <ImageInput
+                        label="Use Case Graphic Image (Optional)"
+                        value={uc.imageUrl || ''}
+                        onChange={(url) => updateUseCase(idx, 'imageUrl', url)}
+                        placeholder="Or paste custom image link..."
+                      />
+                      <p className="text-[8px] text-neutral-400 font-normal">If provided, this image will fill the graphic container instead of the chat mockup.</p>
                     </div>
 
                     {/* checklist bullets */}
@@ -1562,13 +1486,11 @@ Return a JSON object with EXACTLY these keys:
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="ogImage" className="text-xs font-semibold text-neutral-750">OpenGraph Image URL</Label>
-                <Input 
-                  id="ogImage" 
-                  value={ogImage} 
-                  onChange={e => setOgImage(e.target.value)} 
-                  placeholder="/og-images/inbox.png" 
-                  className="border-neutral-300 h-9 font-mono text-[11px] bg-white font-normal"
+                <ImageInput
+                  label="OpenGraph Image URL"
+                  value={ogImage}
+                  onChange={(url) => setOgImage(url)}
+                  placeholder="/og-images/inbox.png"
                 />
               </div>
 
