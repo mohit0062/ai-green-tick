@@ -1,9 +1,16 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { type NextRequest } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
+import { handleCmsRedirect } from '@/utils/redirects'
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
-  
+
+  // CMS-managed URL redirects (WordPress "Redirection"-style). Checked first so
+  // a matched rule short-circuits before any session work. Excludes admin/api/
+  // _next/static paths and guards against redirect loops internally.
+  const redirect = await handleCmsRedirect(request)
+  if (redirect) return redirect
+
   // Set x-pathname header on request so it is forwarded downstream to server components
   request.headers.set('x-pathname', pathname)
 

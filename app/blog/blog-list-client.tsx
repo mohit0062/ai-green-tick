@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search, ArrowRight, Clock, BookOpen } from 'lucide-react'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Breadcrumb from '@/components/ui/breadcrumb'
@@ -162,10 +163,12 @@ export default function BlogListClient({ initialPosts }: { initialPosts: ClientP
               >
                 {/* Image */}
                 <div className="lg:col-span-7 h-[300px] lg:h-full w-full overflow-hidden relative border-b lg:border-b-0 lg:border-r border-[#C5C4C2]">
-                  <img 
+                  <Image 
                     src={featuredPost.image} 
                     alt={featuredPost.title} 
-                    className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500" 
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    className="object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500" 
                   />
                   <div className="absolute inset-0 bg-[#00b259]/10 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500" />
                 </div>
@@ -193,9 +196,11 @@ export default function BlogListClient({ initialPosts }: { initialPosts: ClientP
 
                   <div className="space-y-4 pt-6 border-t border-[#C5C4C2]/40">
                     <div className="flex items-center gap-3">
-                      <img 
+                      <Image 
                         src={featuredPost.author.avatar} 
                         alt={featuredPost.author.name} 
+                        width={32}
+                        height={32}
                         className="size-8 rounded-full border border-[#C5C4C2] grayscale"
                       />
                       <div>

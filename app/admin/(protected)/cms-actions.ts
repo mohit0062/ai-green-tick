@@ -36,6 +36,9 @@ function getCategoryForKey(key: string): string {
   if (key === 'integrations_page') {
     return 'integrations'
   }
+  if (key === 'redirects') {
+    return 'redirects'
+  }
   return 'common'
 }
 
@@ -108,6 +111,10 @@ export async function updateSiteSectionAction(key: string, content: any) {
     } else if (category === 'pricing') {
       revalidatePath('/')
       revalidatePath('/pricing')
+    } else if (category === 'redirects') {
+      // Redirect rules are consumed by the edge middleware; revalidate the
+      // whole layout so any cached fetch of the rules is refreshed promptly.
+      revalidatePath('/', 'layout')
     } else {
       // Revalidate layout (navbar, footer, global CTA, SEO etc) which affects all pages
       revalidatePath('/', 'layout')

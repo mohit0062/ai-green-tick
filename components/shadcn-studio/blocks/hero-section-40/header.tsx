@@ -5,6 +5,7 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Navigation } from './hero-navigation'
 import { AiGreenTickLogo } from './logo'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   DropdownMenu,
@@ -121,7 +122,7 @@ const Header = ({ className }: HeaderProps) => {
           <div className="col-span-2 h-full border-r border-[#C5C4C2] flex items-center pl-6">
             <a href="/" className="hover:opacity-90 transition-opacity flex items-center gap-2">
               {navbarData.logoImageUrl ? (
-                <img src={navbarData.logoImageUrl} alt={navbarData.logoText} className="h-8 max-w-[150px] object-contain" />
+                <Image src={navbarData.logoImageUrl} alt={navbarData.logoText} width={150} height={32} className="h-8 w-auto max-w-[150px] object-contain" />
               ) : (
                 <>
                   <span className="bg-[#00b259] text-white rounded-md px-2 py-0.5 text-xs font-mono font-bold">GT</span>
@@ -315,7 +316,7 @@ const Header = ({ className }: HeaderProps) => {
         <div className="lg:hidden flex h-16 items-center justify-between px-4 text-black font-sans relative z-10">
           <a href="/" className="hover:opacity-90 transition-opacity flex items-center gap-2">
             {navbarData.logoImageUrl ? (
-              <img src={navbarData.logoImageUrl} alt={navbarData.logoText} className="h-8 max-w-[120px] object-contain" />
+              <Image src={navbarData.logoImageUrl} alt={navbarData.logoText} width={120} height={32} className="h-8 w-auto max-w-[120px] object-contain" />
             ) : (
               <>
                 <span className="bg-[#00b259] text-white rounded px-1.5 py-0.5 text-xs font-mono font-bold">GT</span>
@@ -334,7 +335,7 @@ const Header = ({ className }: HeaderProps) => {
               <div className="flex h-16 items-center justify-between px-4 border-b border-[#C5C4C2] shrink-0">
                 <a href="/" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-90 transition-opacity flex items-center gap-2">
                   {navbarData.logoImageUrl ? (
-                    <img src={navbarData.logoImageUrl} alt={navbarData.logoText} className="h-8 max-w-[120px] object-contain" />
+                    <Image src={navbarData.logoImageUrl} alt={navbarData.logoText} width={120} height={32} className="h-8 w-auto max-w-[120px] object-contain" />
                   ) : (
                     <>
                       <span className="bg-[#00b259] text-white rounded px-1.5 py-0.5 text-xs font-mono font-bold">GT</span>

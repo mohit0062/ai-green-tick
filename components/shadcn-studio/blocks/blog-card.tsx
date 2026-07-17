@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Calendar, Clock } from 'lucide-react'
 import type { BlogPost } from '@/lib/blog-data'
 
@@ -15,10 +16,12 @@ export default function BlogCard({ post, className }: BlogCardProps) {
     >
       {/* Card Header Image */}
       <div className="aspect-video w-full overflow-hidden border-b border-[#C5C4C2] relative">
-        <img 
+        <Image 
           src={post.image} 
           alt={post.title} 
-          className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300" 
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300" 
         />
         <div className="absolute inset-0 bg-[#00b259]/10 mix-blend-multiply group-hover:opacity-0 transition-opacity" />
         
@@ -49,9 +52,11 @@ export default function BlogCard({ post, className }: BlogCardProps) {
 
         {/* Author */}
         <div className="flex items-center gap-2 mt-2 pt-4 border-t border-[#C5C4C2]/30">
-          <img 
+          <Image 
             src={post.author.avatar} 
             alt={post.author.name} 
+            width={24}
+            height={24}
             className="size-6 rounded-full border border-[#C5C4C2] grayscale"
           />
           <span className="text-[10px] font-bold text-neutral-600">{post.author.name}</span>

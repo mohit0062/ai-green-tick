@@ -11,6 +11,7 @@ export const NAV_PERMISSIONS: Record<string, AdminRole[]> = {
   '/admin/careers':          ['super_admin', 'admin'],
   '/admin/contact':          ['super_admin', 'admin'],
   '/admin/industries':       ['super_admin', 'admin'],
+  '/admin/redirects':        ['super_admin', 'admin'],
   '/admin/common-sections':  ['super_admin'],
   '/admin/users':            ['super_admin'],
 }

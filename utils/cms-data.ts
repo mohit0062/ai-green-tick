@@ -1,6 +1,9 @@
 import { brandLogos } from '@/lib/brand-logos'
 
 export const DEFAULT_FALLBACKS: Record<string, any> = {
+  // URL redirect rules managed via the admin "Redirects" page and enforced at
+  // the edge middleware. Each rule: { source, destination, permanent }.
+  redirects: [],
   navbar: {
     logoText: "AI Greentick",
     logoImageUrl: "/logo-full.png",

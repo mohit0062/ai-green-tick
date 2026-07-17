@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, Clock, Calendar, ArrowRight, CheckCircle, Mail, BookOpen } from 'lucide-react'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Breadcrumb from '@/components/ui/breadcrumb'
@@ -201,9 +202,11 @@ export default function BlogPostDetailClient({
 
               {/* Author Details */}
               <div className="flex items-center gap-3 pt-2 border-y border-[#C5C4C2]/30 py-4">
-                <img 
+                <Image 
                   src={post.author.avatar} 
                   alt={post.author.name} 
+                  width={40}
+                  height={40}
                   className="size-10 rounded-full border border-[#C5C4C2] grayscale"
                 />
                 <div>
@@ -218,10 +221,12 @@ export default function BlogPostDetailClient({
               className="border border-[#C5C4C2] overflow-hidden aspect-video w-full relative"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))' }}
             >
-              <img 
+              <Image 
                 src={post.image} 
                 alt={post.title} 
-                className="w-full h-full object-cover" 
+                fill
+                sizes="(max-width: 896px) 100vw, 896px"
+                className="object-cover" 
               />
               <div className="absolute inset-0 bg-[#00b259]/5 mix-blend-multiply" />
             </div>
@@ -313,10 +318,12 @@ export default function BlogPostDetailClient({
                   >
                     {/* Image */}
                     <div className="aspect-video w-full overflow-hidden border-b border-[#C5C4C2] relative">
-                      <img 
+                      <Image 
                         src={rPost.image} 
                         alt={rPost.title} 
-                        className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300" 
+                        fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        className="object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300" 
                       />
                       <div className="absolute inset-0 bg-[#00b259]/10 mix-blend-multiply group-hover:opacity-0 transition-opacity" />
                     </div>

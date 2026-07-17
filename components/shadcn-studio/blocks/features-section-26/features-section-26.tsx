@@ -3,6 +3,7 @@
 // React Imports
 import type { ReactNode } from 'react'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 import DottedSheet from '@/components/shadcn-studio/blocks/features-section-26/dotted-sheet'
 
@@ -69,24 +70,30 @@ const Features = ({ data }: { data: DataType[] }) => {
                 <div className='absolute inset-0 bg-[radial-gradient(circle,transparent_0%,var(--background)_80%)]' />
                 <div className="relative z-10 w-full max-w-[520px] bg-white dark:bg-neutral-850 rounded-xl border border-neutral-200/80 flex items-center justify-center overflow-hidden aspect-[16/10] p-0">
                   {activeTab === 'marketing' && (
-                    <img 
+                    <Image 
                       src="/images/marketing-workflow.png" 
                       alt="Marketing Workflow" 
-                      className="w-full h-full object-contain animate-in fade-in zoom-in-95 duration-300"
+                      fill
+                      sizes="(max-width: 520px) 100vw, 520px"
+                      className="object-contain animate-in fade-in zoom-in-95 duration-300"
                     />
                   )}
                   {activeTab === 'sales' && (
-                    <img 
+                    <Image 
                       src="/images/sales-workflow.png" 
                       alt="Sales Workflow" 
-                      className="w-full h-full object-contain animate-in fade-in zoom-in-95 duration-300"
+                      fill
+                      sizes="(max-width: 520px) 100vw, 520px"
+                      className="object-contain animate-in fade-in zoom-in-95 duration-300"
                     />
                   )}
                   {activeTab === 'support' && (
-                    <img 
+                    <Image 
                       src="/images/support-workflow.png" 
                       alt="Support Workflow" 
-                      className="w-full h-full object-contain animate-in fade-in zoom-in-95 duration-300"
+                      fill
+                      sizes="(max-width: 520px) 100vw, 520px"
+                      className="object-contain animate-in fade-in zoom-in-95 duration-300"
                     />
                   )}
                 </div>

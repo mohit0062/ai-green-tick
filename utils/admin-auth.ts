@@ -100,6 +100,7 @@ const CATEGORY_TO_ADMIN_PATH: Record<string, string> = {
   careers: '/admin/careers',
   contact: '/admin/contact',
   integrations: '/admin/integrations',
+  redirects: '/admin/redirects',
   settings: '/admin/users',
   common: '/admin/common-sections',
 }

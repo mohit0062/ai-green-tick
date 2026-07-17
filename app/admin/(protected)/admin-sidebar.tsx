@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, FileText, LogOut, Lock,
-  Globe, Shield, Smartphone, PhoneCall, Info, Briefcase, Layers, Home, CreditCard
+  Globe, Shield, Smartphone, PhoneCall, Info, Briefcase, Layers, Home, CreditCard, Signpost
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getRoleLabel, getRoleBadgeClasses, canAccess } from '@/utils/roles'
@@ -33,6 +33,7 @@ const navItems: NavItem[] = [
   { href: '/admin/contact', label: 'Contact Page',     icon: PhoneCall,               group: 'cms' },
   { href: '/admin/integrations', label: 'Integrations Page', icon: Globe,             group: 'cms' },
   { href: '/admin/common-sections', label: 'Common Sections', icon: Globe,         group: 'cms' },
+  { href: '/admin/redirects', label: 'Redirects', icon: Signpost,                   group: 'cms' },
   { href: '/admin/users',    label: 'Admin Users',     icon: Lock,                  group: 'cms' },
 ]
 

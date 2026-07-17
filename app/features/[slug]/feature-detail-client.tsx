@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, Check, Star } from 'lucide-react'
 import Header from '@/components/shadcn-studio/blocks/hero-section-40/header'
 import Breadcrumb from '@/components/ui/breadcrumb'
@@ -184,22 +185,26 @@ export default function FeatureDetailClient({ slug, feature }: FeatureDetailProp
               <div className="lg:col-span-6 flex justify-center lg:justify-end w-full">
                 {feature.hero?.imageUrl ? (
                   <div 
-                    className="w-full max-w-[550px] aspect-video border border-[#C5C4C2] bg-white overflow-hidden shadow-md flex items-center justify-center"
+                    className="relative w-full max-w-[550px] aspect-video border border-[#C5C4C2] bg-white overflow-hidden shadow-md flex items-center justify-center"
                     style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))' }}
                   >
                     {feature.hero.imageLink ? (
                       <Link href={feature.hero.imageLink} target="_blank" className="block w-full h-full">
-                        <img 
+                        <Image 
                           src={feature.hero.imageUrl} 
                           alt={feature.title} 
-                          className="w-full h-full object-cover transition-opacity hover:opacity-95"
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 550px"
+                          className="object-cover transition-opacity hover:opacity-95"
                         />
                       </Link>
                     ) : (
-                      <img 
+                      <Image 
                         src={feature.hero.imageUrl} 
                         alt={feature.title} 
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 550px"
+                        className="object-cover"
                       />
                     )}
                   </div>
@@ -341,14 +346,16 @@ export default function FeatureDetailClient({ slug, feature }: FeatureDetailProp
                     </div>
 
                     {/* Graphic block */}
-                    <div className={`flex-1 w-full ${uc.bg || 'bg-[#EAF3FF]'} border border-[#C5C4C2] flex flex-col justify-center items-center rounded-none shadow-sm aspect-video overflow-hidden`}
+                    <div className={`relative flex-1 w-full ${uc.bg || 'bg-[#EAF3FF]'} border border-[#C5C4C2] flex flex-col justify-center items-center rounded-none shadow-sm aspect-video overflow-hidden`}
                       style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))' }}
                     >
                       {uc.imageUrl ? (
-                        <img 
+                        <Image 
                           src={uc.imageUrl} 
                           alt={uc.title || "Use Case Graphic"} 
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="object-cover"
                         />
                       ) : (
                         <div className="w-full max-w-[280px] space-y-3 text-[11px] leading-relaxed p-8 sm:p-12">
